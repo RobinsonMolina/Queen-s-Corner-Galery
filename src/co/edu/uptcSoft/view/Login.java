@@ -48,19 +48,24 @@ public class Login {
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
-        title.setPreferredSize(new Dimension(350, 80));
+        title.setPreferredSize(new Dimension(350, 85));
         email.setMaximumSize(new Dimension(350, 40));
         password.setMaximumSize(new Dimension(350, 40));
         emailText.setMaximumSize(new Dimension(350,40));
         passwordText.setMaximumSize(new Dimension(350,40));
+        loginButton.setMaximumSize(new Dimension(350,40));
 
         infoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        infoPanel.add(Box.createVerticalStrut(98));
         infoPanel.add(title);
+        infoPanel.add(Box.createVerticalStrut(63));
         infoPanel.add(email);
         infoPanel.add(emailText);
+        infoPanel.add(Box.createVerticalStrut(18));
         infoPanel.add(password);
         infoPanel.add(passwordText);
+        infoPanel.add(Box.createVerticalStrut(62));
         infoPanel.add(loginButton);
 
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
