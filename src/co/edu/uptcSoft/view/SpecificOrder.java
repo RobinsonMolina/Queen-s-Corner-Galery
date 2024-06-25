@@ -1,24 +1,24 @@
 package co.edu.uptcSoft.view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class SpecificOrder {
     private JFrame specificOrderWindow;
     private JPanel menu;
     private JPanel head;
-    private JPanel specificData;
     private JPanel allInformation;
     private JPanel allInfoPanel;
     private JPanel window;
-
     private JPanel dataSpecificOrder;
+    private JTable table;
 
     public SpecificOrder() {
         specificOrderWindow = new JFrame("Orden Especifica");
         menu = new JPanel();
         head = new JPanel();
-        specificData = new JPanel(new GridLayout(6, 3));
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
         window = new JPanel(new BorderLayout());
@@ -39,37 +39,31 @@ public class SpecificOrder {
 
     public void addSpecificOrder(){
         JLabel title = new JLabel("Orden Especifica");
+
         allInformation.setPreferredSize(new Dimension(1366, 700));
         allInfoPanel.setPreferredSize(new Dimension(1366, 700));
 
         title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 40));
         title.setPreferredSize(new Dimension(389, 47));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
 
         allInfoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         allInfoPanel.add(Box.createVerticalStrut(30));
         allInfoPanel.add(title);
         allInfoPanel.add(Box.createVerticalStrut(35));
-        setSpecificData2();
+        setSpecificData();
+        dataSpecificOrder.setPreferredSize(new Dimension(1186, 160));
+
         allInfoPanel.add(dataSpecificOrder);
+
+        table();
         allInformation.add(allInfoPanel);
     }
 
     public void setSpecificData(){
-        JLabel product = new JLabel("Producto");
-        JTextField productTxt = new JTextField();
-
-        product.setPreferredSize(new Dimension(300, 26));
-        productTxt.setPreferredSize(new Dimension(300, 26));
-
-        dataSpecificOrder.add(product);
-        dataSpecificOrder.add(productTxt);
-
-        dataSpecificOrder.getComponent(1).setPreferredSize(new Dimension(300, 26));
-
-    }
-
-    public void setSpecificData2(){
         JLabel product = new JLabel("Producto");
         JLabel type = new JLabel("Tipo");
         JLabel customer = new JLabel("Cliente");
@@ -158,5 +152,35 @@ public class SpecificOrder {
         window.add(menu, BorderLayout.WEST);
         window.add(head, BorderLayout.NORTH);
         window.add(allInformation, BorderLayout.CENTER);
+    }
+
+    public void table(){
+        JPanel jPanel = new JPanel(new BorderLayout());
+        JLabel materialsTitle = new JLabel("Materiales Requeridos");
+
+        materialsTitle.setFont(new Font(materialsTitle.getFont().getName(), Font.PLAIN, 30));
+        materialsTitle.setPreferredSize(new Dimension(380, 47));
+        materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
+
+        // Table
+        String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo"};
+        Object[][] data = {
+                {"01", "Chenille", 5, 475000},
+                {"02", "Cuero Sintético", 5, 450000},
+                {"03", "Pana", 3, 300000}
+        };
+
+        table = new JTable(data, columnNames);
+
+        JScrollPane tableScrollPane = new JScrollPane(table);
+        tableScrollPane.setPreferredSize(new Dimension(1134, 216));
+        tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
+
+        jPanel.add(materialsTitle, BorderLayout.NORTH);
+        jPanel.add(tableScrollPane, BorderLayout.CENTER);
+        jPanel.setBorder(new EmptyBorder(0, 20, 0, 20));
+
+        jPanel.setMaximumSize(new Dimension(1366, 328));
+        allInfoPanel.add(jPanel);
     }
 }
