@@ -290,13 +290,16 @@ public class SpecificOrder {
             Graphics2D g2d = (Graphics2D) g.create();
 
             g2d.setColor(borderColor);
-            g2d.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+            if (borderColor == null) {
+                g2d.setStroke(new BasicStroke(4));
+            }
+            g2d.drawRoundRect(x, y, width, height, radius, radius);
             g2d.dispose();
         }
 
         @Override
         public Insets getBorderInsets(Component c) {
-            return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+            return new Insets(this.radius, this.radius, this.radius, this.radius);
         }
 
         @Override
@@ -332,6 +335,10 @@ public class SpecificOrder {
         delete.setPreferredSize(new Dimension(127, 32));
         update.setPreferredSize(new Dimension(127, 32));
         pdf.setPreferredSize(new Dimension(127, 32));
+
+        delete.setBorder((new RoundedBorder(10, null)));
+        update.setBorder((new RoundedBorder(10, null)));
+        pdf.setBorder((new RoundedBorder(10, null)));
 
         buttons.setBackground(Color.white);
         return buttons;
