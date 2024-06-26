@@ -9,7 +9,7 @@ public class Board extends JFrame {
     private JScrollPane cardScrollPanes;
 
     public Board() {
-        setTitle("Queen's Corner Gallery");
+        setTitle("Board");
         setSize(1366, 670);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -33,7 +33,7 @@ public class Board extends JFrame {
         contentPanel.setPreferredSize(new Dimension(1286, 590));
 
         // Title Center
-        JLabel titleLabel = new JLabel("BOARD");
+        JLabel titleLabel = new JLabel("TABLERO");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setForeground(Color.BLACK);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
