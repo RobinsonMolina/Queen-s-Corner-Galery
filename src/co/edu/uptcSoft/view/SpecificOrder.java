@@ -16,18 +16,13 @@ import java.util.Objects;
 
 public class SpecificOrder {
     private JFrame specificOrderWindow;
-    private JPanel menu;
-    private JPanel head;
     private JPanel allInformation;
     private JPanel allInfoPanel;
     private JPanel window;
     private JPanel dataSpecificOrder;
-    private JTable table;
 
     public SpecificOrder() {
         specificOrderWindow = new JFrame("Orden Especifica");
-        menu = new JPanel();
-        head = new JPanel();
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
         window = new JPanel(new BorderLayout());
@@ -38,12 +33,21 @@ public class SpecificOrder {
 
     public  void createWindow(){
         specificOrderWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        specificOrderWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
         specificOrderWindow.setSize(1366, 670);
 
         addSpecificOrder();
         setWindow();
         specificOrderWindow.add(window);
         specificOrderWindow.setVisible(true);
+    }
+
+    public  void setWindow(){
+        HeaderMenu headerMenu = new HeaderMenu();
+
+        window.add(headerMenu.getMenuPanel(), BorderLayout.WEST);
+        window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
+        window.add(allInformation, BorderLayout.CENTER);
     }
 
     public void addSpecificOrder(){
@@ -164,16 +168,6 @@ public class SpecificOrder {
         dataSpecificOrder.add(documentTxt);
     }
 
-    public  void setWindow(){
-        menu.setBackground(Color.decode("#2F1940"));
-        menu.setPreferredSize(new Dimension(80, 670));
-        head.setBackground(Color.decode("#2F1940"));
-        head.setPreferredSize(new Dimension(1286, 80));
-
-        window.add(menu, BorderLayout.WEST);
-        window.add(head, BorderLayout.NORTH);
-        window.add(allInformation, BorderLayout.CENTER);
-    }
 
     public void table(){
         JPanel jPanel = new JPanel(new BorderLayout());
