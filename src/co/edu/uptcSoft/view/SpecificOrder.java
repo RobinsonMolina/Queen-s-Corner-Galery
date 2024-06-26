@@ -57,12 +57,11 @@ public class SpecificOrder {
         allInfoPanel.add(title);
         allInfoPanel.add(Box.createVerticalStrut(35));
         setSpecificData();
-        dataSpecificOrder.setPreferredSize(new Dimension(1186, 160));
+        dataSpecificOrder.setPreferredSize(new Dimension(1186, 200));
 
         allInfoPanel.add(dataSpecificOrder);
 
         table();
-        buttons();
         allInformation.add(allInfoPanel);
     }
 
@@ -173,7 +172,7 @@ public class SpecificOrder {
         JLabel materialsTitle = new JLabel("Materiales Requeridos");
 
         materialsTitle.setFont(new Font(materialsTitle.getFont().getName(), Font.PLAIN, 30));
-        materialsTitle.setPreferredSize(new Dimension(380, 47));
+        materialsTitle.setPreferredSize(new Dimension(380, 30));
         materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
 
         Object[][] data = {
@@ -208,15 +207,15 @@ public class SpecificOrder {
         }
 
         JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(1134, 216));
+        tableScrollPane.setPreferredSize(new Dimension(1134, 136));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
         jPanel.add(buttons(), BorderLayout.SOUTH);
-        jPanel.setBorder(new EmptyBorder(0, 20, 0, 20));
+        jPanel.setBorder(new EmptyBorder(20, 20, 0, 20));
 
-        jPanel.setMaximumSize(new Dimension(1366, 328));
+        jPanel.setPreferredSize(new Dimension(1366, 136));
         allInfoPanel.add(jPanel);
     }
 
@@ -256,6 +255,7 @@ public class SpecificOrder {
         JButton update = new JButton("Actualizar");
         JButton pdf = new JButton("PDF");
 
+        buttons.add(Box.createHorizontalStrut(700));
         buttons.add(delete);
         buttons.add(update);
         buttons.add(pdf);
