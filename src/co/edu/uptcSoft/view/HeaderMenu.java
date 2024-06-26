@@ -15,7 +15,7 @@ public class HeaderMenu {
     public JPanel getHeaderPanel() {
         if (headerPanel == null) {
             headerPanel = new JPanel();
-            headerPanel.setPreferredSize(new Dimension(1286, 80));
+            headerPanel.setPreferredSize(new Dimension(1366, 80));
             headerPanel.setBackground(new Color(47, 25, 64));
 
             // Title
@@ -30,7 +30,7 @@ public class HeaderMenu {
     public JPanel getMenuPanel() {
         if (menuPanel == null) {
             menuPanel = new JPanel();
-            menuPanel.setPreferredSize(new Dimension(80, 670));
+            menuPanel.setPreferredSize(new Dimension(80, 590));
             menuPanel.setBackground(new Color(47, 25, 64));
             menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
