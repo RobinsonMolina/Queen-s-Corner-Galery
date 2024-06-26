@@ -1,9 +1,13 @@
 package co.edu.uptcSoft.view;
 
 import javax.swing.*;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.Objects;
 
 public class SpecificOrder {
     private JFrame specificOrderWindow;
@@ -84,7 +88,18 @@ public class SpecificOrder {
         JTextField deliveryDateTxt = new JTextField();
         JTextField documentTxt = new JTextField();
 
-        productionDateTxt.setPreferredSize(new Dimension(300, 30));
+        int borderRadius = 10;
+        Color borderColor = Color.decode("#2F1940");
+
+        productTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        typeTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        customerTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        stateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        productionDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        orderNumberTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        deliveryDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        documentTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
 
         product.setPreferredSize(new Dimension(99, 30));
         type.setPreferredSize(new Dimension(99, 30));
@@ -162,15 +177,36 @@ public class SpecificOrder {
         materialsTitle.setPreferredSize(new Dimension(380, 47));
         materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
 
-        // Table
-        String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo"};
         Object[][] data = {
                 {"01", "Chenille", 5, 475000},
                 {"02", "Cuero Sintético", 5, 450000},
                 {"03", "Pana", 3, 300000}
         };
 
-        table = new JTable(data, columnNames);
+        String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo", ""};
+
+        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+            @Override
+            public Class<?> getColumnClass(int column) {
+                if (column == 4) {
+                    return Icon.class;
+                }
+                return super.getColumnClass(column);
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        ImageIcon icon = new ImageIcon(("src/Utilities/Trash-Can.png"));
+
+        JTable table = new JTable(model);
+        table.setRowHeight(26);
+        for (int i = 0; i < table.getRowCount(); i++) {
+            model.setValueAt(icon, i, 4);
+        }
 
         JScrollPane tableScrollPane = new JScrollPane(table);
         tableScrollPane.setPreferredSize(new Dimension(1134, 216));
@@ -182,5 +218,35 @@ public class SpecificOrder {
 
         jPanel.setMaximumSize(new Dimension(1366, 328));
         allInfoPanel.add(jPanel);
+    }
+
+    public class RoundedBorder extends AbstractBorder {
+        private final int radius;
+        private final Color borderColor;
+
+        public RoundedBorder(int radius, Color borderColor) {
+            this.radius = radius;
+            this.borderColor = borderColor;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            Graphics2D g2d = (Graphics2D) g.create();
+
+            g2d.setColor(borderColor);
+            g2d.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+            g2d.dispose();
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c, Insets insets) {
+            insets.left = insets.top = insets.right = insets.bottom = this.radius;
+            return insets;
+        }
     }
 }
