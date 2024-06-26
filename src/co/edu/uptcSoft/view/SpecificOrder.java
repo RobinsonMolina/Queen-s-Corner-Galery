@@ -1,11 +1,16 @@
 package co.edu.uptcSoft.view;
 
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.util.Objects;
 
@@ -62,6 +67,9 @@ public class SpecificOrder {
         allInfoPanel.add(dataSpecificOrder);
 
         table();
+        allInfoPanel.setBackground(Color.WHITE);
+        dataSpecificOrder.setBackground(Color.WHITE);
+
         allInformation.add(allInfoPanel);
     }
 
@@ -176,9 +184,9 @@ public class SpecificOrder {
         materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
 
         Object[][] data = {
-                {"01", "Chenille", 5, 475000},
-                {"02", "Cuero Sintético", 5, 450000},
-                {"03", "Pana", 3, 300000}
+                {"01", "Chenille", 5, 475000, new ImageIcon("src/Utilities/Trash-Can.png")},
+                {"02", "Cuero Sintético", 5, 450000, new ImageIcon("src/Utilities/Trash-Can.png")},
+                {"03", "Pana", 3, 300000, new ImageIcon("src/Utilities/Trash-Can.png")}
         };
 
         String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo", ""};
@@ -198,13 +206,60 @@ public class SpecificOrder {
             }
         };
 
-        ImageIcon icon = new ImageIcon(("src/Utilities/Trash-Can.png"));
-
         JTable table = new JTable(model);
-        table.setRowHeight(26);
-        for (int i = 0; i < table.getRowCount(); i++) {
-            model.setValueAt(icon, i, 4);
-        }
+        table.setRowHeight(34);
+        table.setShowGrid(false);
+        table.getColumnModel().getColumn(4).setMaxWidth(50);
+
+        JTableHeader header = table.getTableHeader();
+        header.setBackground(Color.decode("#D9D9D9"));
+        header.setPreferredSize(new Dimension(283, 34));
+
+        header.setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                // Focuses the text
+                if (c instanceof JLabel) {
+                    JLabel label = (JLabel) c;
+                    label.setHorizontalAlignment(JLabel.CENTER);
+                    label.setVerticalAlignment(JLabel.CENTER);
+                }
+
+                // Change column header color
+                if (column == 4) {
+                    c.setBackground(Color.WHITE);
+                } else {
+                    c.setBackground(header.getBackground());
+                }
+
+                return c;
+            }
+        });
+
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                // Focuses the text
+                if (cell instanceof JLabel) {
+                    JLabel label = (JLabel) cell;
+                    label.setHorizontalAlignment(JLabel.CENTER);
+                    label.setVerticalAlignment(JLabel.CENTER);
+                }
+
+                // Change the color of the rows
+                if (row % 2 == 0) {
+                    cell.setBackground(Color.white);
+                } else {
+                    cell.setBackground(Color.decode("#D9D9D9"));
+                }
+
+                return cell;
+            }
+        });
 
         JScrollPane tableScrollPane = new JScrollPane(table);
         tableScrollPane.setPreferredSize(new Dimension(1134, 136));
@@ -213,9 +268,11 @@ public class SpecificOrder {
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
         jPanel.add(buttons(), BorderLayout.SOUTH);
-        jPanel.setBorder(new EmptyBorder(20, 20, 0, 20));
+        jPanel.setBorder(new EmptyBorder(10, 20, 0, 20));
 
         jPanel.setPreferredSize(new Dimension(1366, 136));
+        jPanel.setBackground(Color.white);
+        tableScrollPane.setBackground(Color.white);
         allInfoPanel.add(jPanel);
     }
 
@@ -276,6 +333,7 @@ public class SpecificOrder {
         update.setPreferredSize(new Dimension(127, 32));
         pdf.setPreferredSize(new Dimension(127, 32));
 
+        buttons.setBackground(Color.white);
         return buttons;
     }
 }
