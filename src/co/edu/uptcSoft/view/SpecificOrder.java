@@ -51,8 +51,6 @@ public class SpecificOrder {
         title.setPreferredSize(new Dimension(389, 47));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-
-
         allInfoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         allInfoPanel.add(Box.createVerticalStrut(30));
@@ -64,6 +62,7 @@ public class SpecificOrder {
         allInfoPanel.add(dataSpecificOrder);
 
         table();
+        buttons();
         allInformation.add(allInfoPanel);
     }
 
@@ -214,6 +213,7 @@ public class SpecificOrder {
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
+        jPanel.add(buttons(), BorderLayout.SOUTH);
         jPanel.setBorder(new EmptyBorder(0, 20, 0, 20));
 
         jPanel.setMaximumSize(new Dimension(1366, 328));
@@ -248,5 +248,34 @@ public class SpecificOrder {
             insets.left = insets.top = insets.right = insets.bottom = this.radius;
             return insets;
         }
+    }
+
+    public JPanel buttons() {
+        JPanel buttons = new JPanel(new FlowLayout());
+        JButton delete = new JButton("Eliminar");
+        JButton update = new JButton("Actualizar");
+        JButton pdf = new JButton("PDF");
+
+        buttons.add(delete);
+        buttons.add(update);
+        buttons.add(pdf);
+
+        delete.setBackground(Color.decode("#2F1940"));
+        update.setBackground(Color.decode("#2F1940"));
+        pdf.setBackground(Color.decode("#2F1940"));
+
+        delete.setFont(new Font(delete.getFont().getName(), Font.PLAIN, 20));
+        update.setFont(new Font(delete.getFont().getName(), Font.PLAIN, 20));
+        pdf.setFont(new Font(delete.getFont().getName(), Font.PLAIN, 20));
+
+        delete.setForeground(Color.white);
+        update.setForeground(Color.white);
+        pdf.setForeground(Color.white);
+
+        delete.setPreferredSize(new Dimension(127, 32));
+        update.setPreferredSize(new Dimension(127, 32));
+        pdf.setPreferredSize(new Dimension(127, 32));
+
+        return buttons;
     }
 }
