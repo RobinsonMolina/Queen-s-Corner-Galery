@@ -89,7 +89,7 @@ public class OrderList extends JFrame {
         ));
 
         // Añadir un icono a la derecha del campo de búsqueda
-        ImageIcon searchIcon = new ImageIcon("src/Utilities/NewOrder.png");
+        ImageIcon searchIcon = new ImageIcon("src\\Utilities\\Images\\NewOrder.png");
         Image scaledSearchIcon = searchIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         JLabel searchLabel = new JLabel(new ImageIcon(scaledSearchIcon));
         // Alinear el icono a la derecha dentro del campo de búsqueda
@@ -200,13 +200,13 @@ public class OrderList extends JFrame {
                     Image image;
                     switch (i) {
                         case 0:
-                            image = new ImageIcon("src\\\\Utilities\\Admin.png").getImage();
+                            image = new ImageIcon("src\\\\Utilities\\Images\\Admin.png").getImage();
                             break;
                         case 1:
-                            image = new ImageIcon("src\\\\Utilities\\LogOut.png").getImage();
+                            image = new ImageIcon("src\\\\Utilities\\Images\\LogOut.png").getImage();
                             break;
                         case 2:
-                            image = new ImageIcon("src\\\\Utilities\\Supplies.png").getImage();
+                            image = new ImageIcon("src\\\\Utilities\\Images\\Supplies.png").getImage();
                             break;
                         default:
                             image = new ImageIcon().getImage();

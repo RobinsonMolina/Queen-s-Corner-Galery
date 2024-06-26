@@ -36,13 +36,13 @@ public class HeaderMenu {
 
             // Rutas de las imágenes
             String[] imagePaths = {
-                    "src\\Utilities\\Board.png",
-                    "src\\Utilities\\OrderList.png",
-                    "src\\Utilities\\NewOrder.png",
-                    "src\\Utilities\\Customers.png",
-                    "src\\Utilities\\Supplies.png",
-                    "src\\Utilities\\LogOut.png",
-                    "src\\Utilities\\Admin.png",
+                    "src\\Utilities\\Images\\Board.png",
+                    "src\\Utilities\\Images\\OrderList.png",
+                    "src\\Utilities\\Images\\NewOrder.png",
+                    "src\\Utilities\\Images\\Customers.png",
+                    "src\\Utilities\\Images\\Supplies.png",
+                    "src\\Utilities\\Images\\LogOut.png",
+                    "src\\Utilities\\Images\\Admin.png",
             };
 
             // Crear y agregar JLabels con iconos redimensionados
@@ -83,13 +83,13 @@ public class HeaderMenu {
 
             // Rutas de las imágenes y nombres de las opciones
             String[][] menuItems = {
-                    {"src\\Utilities\\Board.png", "Board"},
-                    {"src\\Utilities\\OrderList.png", "Order List"},
-                    {"src\\Utilities\\NewOrder.png", "New Order"},
-                    {"src\\Utilities\\Customers.png", "Customers"},
-                    {"src\\Utilities\\Supplies.png", "Supplies"},
-                    {"src\\Utilities\\LogOut.png", "Log Out"},
-                    {"src\\Utilities\\Admin.png", "Admin"}
+                    {"src\\Utilities\\Images\\Board.png", "Board"},
+                    {"src\\Utilities\\Images\\OrderList.png", "Order List"},
+                    {"src\\Utilities\\Images\\NewOrder.png", "New Order"},
+                    {"src\\Utilities\\Images\\Customers.png", "Customers"},
+                    {"src\\Utilities\\Images\\Supplies.png", "Supplies"},
+                    {"src\\Utilities\\Images\\LogOut.png", "Log Out"},
+                    {"src\\Utilities\\Images\\Admin.png", "Admin"}
             };
 
             JPanel itemPanel = new JPanel();
