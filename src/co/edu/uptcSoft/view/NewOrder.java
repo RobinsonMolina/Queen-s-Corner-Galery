@@ -14,15 +14,15 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.util.Objects;
 
-public class SpecificOrder {
+public class NewOrder {
     private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
     private JPanel window;
     private JPanel dataSpecificOrder;
 
-    public SpecificOrder() {
-        specificOrderWindow = new JFrame("Orden Especifica");
+    public NewOrder() {
+        specificOrderWindow = new JFrame("Nueva Orden");
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
         window = new JPanel(new BorderLayout());
@@ -39,6 +39,7 @@ public class SpecificOrder {
         addSpecificOrder();
         setWindow();
         specificOrderWindow.add(window);
+
         specificOrderWindow.setVisible(true);
     }
 
@@ -51,7 +52,7 @@ public class SpecificOrder {
     }
 
     public void addSpecificOrder(){
-        JLabel title = new JLabel("Orden Especifica");
+        JLabel title = new JLabel("Nueva Orden");
 
         allInformation.setPreferredSize(new Dimension(1366, 700));
         allInfoPanel.setPreferredSize(new Dimension(1366, 700));
@@ -89,24 +90,15 @@ public class SpecificOrder {
         JLabel document = new JLabel("Documento");
 
         String[] options = {"Por Hacer", "En Progreso", "Entregado"};
-        JTextField productTxt = new JTextField("Sofacama");
-        JTextField typeTxt = new JTextField("Mueble");
-        JTextField customerTxt = new JTextField("Juan David Pérez");
+        JTextField productTxt = new JTextField();
+        JTextField typeTxt = new JTextField();
+        JTextField customerTxt = new JTextField();
         JComboBox <String> stateCombo = new JComboBox<> (options);
-        JTextField productionDateTxt = new JTextField("26/06/2024");
-        JTextField phoneTxt = new JTextField("3133333333");
-        JTextField orderNumberTxt = new JTextField("001");
-        JTextField deliveryDateTxt = new JTextField("30/06/2024");
-        JTextField documentTxt = new JTextField("10544444");
-
-        productTxt.setEditable(false);
-        typeTxt.setEditable(false);
-        customerTxt.setEditable(false);
-        productionDateTxt.setEditable(false);
-        phoneTxt.setEditable(false);
-        orderNumberTxt.setEditable(false);
-        deliveryDateTxt.setEditable(false);
-        documentTxt.setEditable(false);
+        JTextField productionDateTxt = new JTextField();
+        JTextField phoneTxt = new JTextField();
+        JTextField orderNumberTxt = new JTextField();
+        JTextField deliveryDateTxt = new JTextField();
+        JTextField documentTxt = new JTextField();
 
         // ComboBox
         stateCombo.setRenderer(new DefaultListCellRenderer() {
@@ -210,9 +202,7 @@ public class SpecificOrder {
         ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
         Object[][] data = {
-                {"01", "Chenille", 5, 475000, defIcon},
-                {"02", "Cuero Sintético", 5, 450000, defIcon},
-                {"03", "Pana", 3, 300000, defIcon},
+
         };
 
         String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo", ""};
@@ -299,6 +289,7 @@ public class SpecificOrder {
         jPanel.setPreferredSize(new Dimension(1366, 136));
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
+
         allInfoPanel.add(jPanel);
     }
 
@@ -337,34 +328,34 @@ public class SpecificOrder {
 
     public JPanel buttons() {
         JPanel buttons = new JPanel(new FlowLayout());
-        JButton delete = new JButton("Eliminar");
-        JButton update = new JButton("Actualizar");
-        JButton pdf = new JButton("PDF");
+        JButton add = new JButton("+ Material");
+        JButton save = new JButton("Aceptar");
+        JButton cancel = new JButton("Cancelar");
 
         buttons.add(Box.createHorizontalStrut(700));
-        buttons.add(delete);
-        buttons.add(update);
-        buttons.add(pdf);
+        buttons.add(add);
+        buttons.add(save);
+        buttons.add(cancel);
 
-        delete.setBackground(Color.decode("#2F1940"));
-        update.setBackground(Color.decode("#2F1940"));
-        pdf.setBackground(Color.decode("#2F1940"));
+        add.setBackground(Color.decode("#2F1940"));
+        save.setBackground(Color.decode("#2F1940"));
+        cancel.setBackground(Color.decode("#2F1940"));
 
-        delete.setFont(new Font(delete.getFont().getName(), Font.PLAIN, 20));
-        update.setFont(new Font(delete.getFont().getName(), Font.PLAIN, 20));
-        pdf.setFont(new Font(delete.getFont().getName(), Font.PLAIN, 20));
+        add.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
+        save.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
+        cancel.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
 
-        delete.setForeground(Color.white);
-        update.setForeground(Color.white);
-        pdf.setForeground(Color.white);
+        add.setForeground(Color.white);
+        save.setForeground(Color.white);
+        cancel.setForeground(Color.white);
 
-        delete.setPreferredSize(new Dimension(127, 32));
-        update.setPreferredSize(new Dimension(127, 32));
-        pdf.setPreferredSize(new Dimension(127, 32));
+        add.setPreferredSize(new Dimension(127, 32));
+        save.setPreferredSize(new Dimension(127, 32));
+        cancel.setPreferredSize(new Dimension(127, 32));
 
-        delete.setBorder((new RoundedBorder(10, null)));
-        update.setBorder((new RoundedBorder(10, null)));
-        pdf.setBorder((new RoundedBorder(10, null)));
+        add.setBorder((new RoundedBorder(10, null)));
+        save.setBorder((new RoundedBorder(10, null)));
+        cancel.setBorder((new RoundedBorder(10, null)));
 
         buttons.setBackground(Color.white);
         return buttons;
