@@ -19,6 +19,9 @@ public class Main {
         //updateOrder.createWindow();
 
         NewCustomer newCustomer = new NewCustomer();
-        newCustomer.createWindow();
+        //newCustomer.createWindow();
+
+        UpdateCustomer updateCustomer = new UpdateCustomer();
+        updateCustomer.createWindow();
     }
 }
