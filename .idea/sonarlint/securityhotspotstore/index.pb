@@ -13,11 +13,5 @@ W
 +src/co/edu/uptcSoft/view/SpecificOrder.java,a\9\a9e13d98b0e51bff62c6771ba4275570c86a92e5
 V
 &src/co/edu/uptcSoft/view/Supplies.java,f\3\f354a512a7ac309d26927d075892bee842363dca
-U
-%src/co/edu/uptcSoft/view/Prueba2.java,4\6\466b5f60ba86165efd438b223f63e4e0fe79f703
-W
-'src/co/edu/uptcSoft/view/Supplies2.java,7\3\73a1a5e18e7584bb66a6a73f2c839423930629be
-Z
-*src/co/edu/uptcSoft/view/CustomButton.java,1\5\1582689042210f419a151f36aa08f27ff53d293b
 Z
 *src/co/edu/uptcSoft/view/CustomerList.java,8\b\8b438edc864afde54ed41f4e5ad3af502a6779e0
