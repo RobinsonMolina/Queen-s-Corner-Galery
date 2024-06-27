@@ -9,7 +9,7 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class Supplies extends JFrame {
+public class CustomerList extends JFrame {
 
     JPanel contentPanel;
     JPanel contentTitle;
@@ -17,7 +17,7 @@ public class Supplies extends JFrame {
     JPanel contentButton;
     JLabel titleLabel;
 
-    public Supplies() {
+    public CustomerList() {
         setTitle("Insumos");
         setSize(1366, 670);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,7 +46,7 @@ public class Supplies extends JFrame {
         contentTitle.setPreferredSize(new Dimension(1286, 100));
 
         // Título centrado
-        titleLabel = new JLabel("Insumos");
+        titleLabel = new JLabel("Clientes");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setForeground(Color.BLACK);
         titleLabel.setBackground(Color.WHITE);
@@ -106,36 +106,54 @@ public class Supplies extends JFrame {
         ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
         // Datos de la tabla
-        String[] columnNames = {"Código", "Material", "Categoria", "Características", "Valor Unitario", "Cantidad", "Total", "", ""};
+        String[] columnNames = {"Documento", "Nombre", "Correo", "", "", ""};
         Object[][] data = {
-                {"T001", "Lino", "Telas", "Resistente, Transpirable, Beige", "80,000 /M", "50 Metros", "4,000,000", defIcon, defIcon},
-                {"T002", "Chenille", "Telas", "Textura Suave, Verde", "95,000 /M", "40 Metros", "3,800,000", defIcon, defIcon},
-                {"T003", "Terciopelo", "Telas", "Lujo, Suave, Rojo", "120,000 /M", "40 Metros", "4,800,000", defIcon, defIcon},
-                {"T004", "Cuero Sintético", "Telas", "Fácil De Limpiar, Resistente, Negro", "90,000 /M", "55 Metros", "4,950,000", defIcon, defIcon},
-                {"T005", "Pana", "Telas", "Textura Acanalada,Duradero,Maron", "100,000 /M", "30 Metros", "3,000,000", defIcon, defIcon},
-                {"T006", "Jacquard", "Telas", "Diseño Intrincado, Resistente, Azul", "110,000 /M", "35 Metros", "3,850,000", defIcon, defIcon},
-                {"T007", "Tweed", "Telas", "Textura Rugosa, Duradero, Gris", "75,000 /M", "50 Metros", "3,750,000", defIcon, defIcon},
-                {"T008", "Franela", "Telas", "Suave, Cálida, Color Gris Claro", "45,000 /M", "35 Metros", "1,575,000", defIcon, defIcon},
-                {"T009", "Seda", "Telas", "Brillante, Suave, Color Blanco Perla", "70,000 /M", "25 Metros", "1,750,000", defIcon, defIcon},
-                {"T010", "Gamuza", "Telas", "Suave Al Tacto, Elegante, Beige", "65,000 /M", "20 Metros", "1,300,000", defIcon, defIcon},
-                {"MCO01", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO02", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO03", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO04", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO05", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO06", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO07", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO08", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO09", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO10", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO11", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
-                {"MCO12", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"1012345678", "Juan David Pérez", "jdperez@example.com", defIcon, defIcon, defIcon},
+                {"1019876543", "María Alejandra Rodríguez", "mar@example.com", defIcon, defIcon, defIcon},
+                {"1023456789", "Carlos Andrés Gómez", "cag@example.com", defIcon, defIcon, defIcon},
+                {"1034567890", "Luisa Fernanda Fernández", "lff@example.com", defIcon, defIcon, defIcon},
+                {"1045678901", "Andrés Felipe López", "afl@example.com", defIcon, defIcon, defIcon},
+                {"1056789012", "Ana María Torres", "amt@example.com", defIcon, defIcon, defIcon},
+                {"1067890123", "Diego Alejandro Martínez", "dam@example.com", defIcon, defIcon, defIcon},
+                {"1078901234", "Laura Patricia Ramírez", "lpr@example.com", defIcon, defIcon, defIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon}
         };
+
+
+        // Creamos el modelo de la tabla
+        /*DefaultTableModel modelo = new DefaultTableModel(data.length, 6); // 5 filas y 5 columnas de ejemplo
+        modelo.setColumnIdentifiers(columnNames);
+
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[i].length; j++) {
+                if (j !=3 && j !=4 && j !=5) {
+                    JButton boton = new JButton(String.valueOf(data[i][j]));
+                    modelo.setValueAt(boton, i, j);
+                }else{
+                    modelo.setValueAt(data[i][j], i, j);
+                }
+            }
+        }*/
+
+        //JTable table = new JTable(modelo);
+
+        // Agregamos botones a cada celda
+        /*for (int i = 0; i < modelo.getRowCount(); i++) {
+            for (int j = 0; j < modelo.getColumnCount(); j++) {
+                JButton boton = new JButton(data[i][j]+"");
+                table.setValueAt(boton, i, j);
+            }
+        }*/
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames) {
             @Override
             public Class<?> getColumnClass(int column) {
-                if (column == 7 || column == 8) {
+                if (column == 3 || column == 4 || column == 5) {
                     return Icon.class;
                 }
                 return super.getColumnClass(column);
@@ -147,21 +165,16 @@ public class Supplies extends JFrame {
             }
         };
 
-//...
-
 // Configurar las columnas de la tabla
         JTable table = new JTable(model);
         table.setRowHeight(34);
         table.setShowGrid(false);
-        table.getColumnModel().getColumn(0).setMaxWidth(120);// Esto ajusta el ancho máximo de la columna 0
-        table.getColumnModel().getColumn(1).setMaxWidth(150);
-        table.getColumnModel().getColumn(2).setMaxWidth(150);
-        table.getColumnModel().getColumn(3).setMaxWidth(310);
-        table.getColumnModel().getColumn(4).setMaxWidth(150);
-        table.getColumnModel().getColumn(5).setMaxWidth(150);
-        table.getColumnModel().getColumn(6).setMaxWidth(120);
-        table.getColumnModel().getColumn(7).setMaxWidth(50);
-        table.getColumnModel().getColumn(8).setMaxWidth(50);
+        table.getColumnModel().getColumn(0).setMaxWidth(200);// Esto ajusta el ancho máximo de la columna 0
+        table.getColumnModel().getColumn(1).setMaxWidth(400);
+        table.getColumnModel().getColumn(2).setMaxWidth(400);
+        table.getColumnModel().getColumn(3).setMaxWidth(50);
+        table.getColumnModel().getColumn(4).setMaxWidth(50);
+        table.getColumnModel().getColumn(5).setMaxWidth(50);
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.decode("#D9D9D9"));
@@ -181,7 +194,7 @@ public class Supplies extends JFrame {
                 }
 
                 // Cambiar color del encabezado de la columna
-                if (column == 7 || column == 8) {
+                if (column == 3 || column == 4 || column == 5) {
                     c.setBackground(Color.WHITE);
                 } else {
                     c.setBackground(header.getBackground());
@@ -222,7 +235,7 @@ public class Supplies extends JFrame {
 
         JPanel jPanel = new JPanel(new BorderLayout());
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
-        jPanel.setBorder(new EmptyBorder(10, 40, 0, 40));
+        jPanel.setBorder(new EmptyBorder(10, 80, 0, 60));
 
         jPanel.setPreferredSize(new Dimension(1366, 136));
         jPanel.setBackground(Color.white);
@@ -235,7 +248,7 @@ public class Supplies extends JFrame {
         contentButton.setBackground(Color.WHITE);
         contentButton.setBorder(new EmptyBorder(23, 990, 25, 0));
 
-        RoundedButton createButton = new RoundedButton("Crear Insumo");
+        RoundedButton createButton = new RoundedButton("Agregar");
         createButton.setPreferredSize(new Dimension(150, 34));
         contentButton.add(createButton);
 
@@ -267,5 +280,10 @@ public class Supplies extends JFrame {
             super.paintComponent(g);
             g2.dispose();
         }
+    }
+
+    public static void main(String[] args) {
+        CustomerList customerList = new CustomerList();
+        customerList.setVisible(true);
     }
 }

@@ -19,3 +19,5 @@ W
 'src/co/edu/uptcSoft/view/Supplies2.java,7\3\73a1a5e18e7584bb66a6a73f2c839423930629be
 Z
 *src/co/edu/uptcSoft/view/CustomButton.java,1\5\1582689042210f419a151f36aa08f27ff53d293b
+Z
+*src/co/edu/uptcSoft/view/CustomerList.java,8\b\8b438edc864afde54ed41f4e5ad3af502a6779e0
