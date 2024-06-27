@@ -41,8 +41,8 @@ public class HeaderMenu {
                     "src\\Utilities\\Images\\NewOrder.png",
                     "src\\Utilities\\Images\\Customers.png",
                     "src\\Utilities\\Images\\Supplies.png",
-                    "src\\Utilities\\Images\\LogOut.png",
                     "src\\Utilities\\Images\\Admin.png",
+                    "src\\Utilities\\Images\\LogOut.png"
             };
 
             // Crear y agregar JLabels con iconos redimensionados
@@ -63,11 +63,11 @@ public class HeaderMenu {
             menuPanel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel);
-                    frame.remove(menuPanel);
-                    frame.add(getMenuPanel2(), BorderLayout.WEST);
-                    frame.revalidate();
-                    frame.repaint();
+                    JLayeredPane layeredPane = (JLayeredPane) SwingUtilities.getAncestorOfClass(JLayeredPane.class, menuPanel);
+                    layeredPane.add(getMenuPanel2(), JLayeredPane.PALETTE_LAYER);
+                    getMenuPanel2().setBounds(0, 0, 235, 700);
+                    layeredPane.revalidate();
+                    layeredPane.repaint();
                 }
             });
         }
@@ -88,8 +88,8 @@ public class HeaderMenu {
                     {"src\\Utilities\\Images\\NewOrder.png", "New Order"},
                     {"src\\Utilities\\Images\\Customers.png", "Customers"},
                     {"src\\Utilities\\Images\\Supplies.png", "Supplies"},
-                    {"src\\Utilities\\Images\\LogOut.png", "Log Out"},
-                    {"src\\Utilities\\Images\\Admin.png", "Admin"}
+                    {"src\\Utilities\\Images\\Admin.png", "Admin"},
+                    {"src\\Utilities\\Images\\LogOut.png", "Log Out"}
             };
 
             JPanel itemPanel = new JPanel();
@@ -136,10 +136,10 @@ public class HeaderMenu {
                             //customers();
                         }else if (item[1].equals("Supplies")) {
                             //supplies();
-                        }else if (item[1].equals("Log Out")) {
-                            //logOut();
                         }else if (item[1].equals("Admin")) {
                             //admin();
+                        }else if (item[1].equals("Log Out")) {
+                            //logOut();
                         }
                         System.out.println(item[1] + " button clicked");
                     }
@@ -154,11 +154,10 @@ public class HeaderMenu {
                 public void mouseExited(MouseEvent e) {
                     Point p = e.getPoint();
                     if (p.x < 0 || p.y < 0 || p.x >= menuPanel2.getWidth() || p.y >= menuPanel2.getHeight()) {
-                        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel2);
-                        frame.remove(menuPanel2);
-                        frame.add(getMenuPanel(), BorderLayout.WEST);
-                        frame.revalidate();
-                        frame.repaint();
+                        JLayeredPane layeredPane = (JLayeredPane) SwingUtilities.getAncestorOfClass(JLayeredPane.class, menuPanel2);
+                        layeredPane.remove(menuPanel2);
+                        layeredPane.revalidate();
+                        layeredPane.repaint();
                     }
                 }
             });
@@ -166,5 +165,3 @@ public class HeaderMenu {
         return menuPanel2;
     }
 }
-
-
