@@ -1,6 +1,7 @@
 package co.edu.uptcSoft.view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,7 +66,7 @@ public class HeaderMenu {
                 public void mouseEntered(MouseEvent e) {
                     JLayeredPane layeredPane = (JLayeredPane) SwingUtilities.getAncestorOfClass(JLayeredPane.class, menuPanel);
                     layeredPane.add(getMenuPanel2(), JLayeredPane.PALETTE_LAYER);
-                    getMenuPanel2().setBounds(0, 0, 235, 700);
+                    getMenuPanel2().setBounds(0, 0, 235, 750);
                     layeredPane.revalidate();
                     layeredPane.repaint();
                 }
@@ -77,9 +78,9 @@ public class HeaderMenu {
     public JPanel getMenuPanel2() {
         if (menuPanel2 == null) {
             menuPanel2 = new JPanel();
-            menuPanel2.setPreferredSize(new Dimension(235, 670));
             menuPanel2.setBackground(new Color(30, 30, 30));
             menuPanel2.setLayout(new BoxLayout(menuPanel2, BoxLayout.Y_AXIS));
+            menuPanel2.setBackground(new Color(47, 25, 64));
 
             // Rutas de las imágenes y nombres de las opciones
             String[][] menuItems = {
@@ -94,6 +95,7 @@ public class HeaderMenu {
 
             JPanel itemPanel = new JPanel();
             itemPanel.setBackground(new Color(47, 25, 64));
+            itemPanel.add(Box.createVerticalStrut(80));
 
             // Crear y agregar botones con iconos redimensionados y nombres
             for (String[] item : menuItems) {
@@ -146,6 +148,7 @@ public class HeaderMenu {
                 });
             }
 
+            menuPanel2.add(Box.createVerticalStrut(80));
             menuPanel2.add(itemPanel, BorderLayout.NORTH);
 
             // Añadir evento para volver a mostrar menuPanel al salir el mouse de menuPanel2
@@ -162,6 +165,7 @@ public class HeaderMenu {
                 }
             });
         }
+        menuPanel2.setPreferredSize(new Dimension());
         return menuPanel2;
     }
 }
