@@ -14,15 +14,15 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.util.Objects;
 
-public class NewOrder {
+public class ViewCustomer {
     private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
     private JPanel window;
     private JPanel dataSpecificOrder;
 
-    public NewOrder() {
-        specificOrderWindow = new JFrame("Nueva Orden");
+    public ViewCustomer() {
+        specificOrderWindow = new JFrame("Cliente");
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
         window = new JPanel(new BorderLayout());
@@ -52,7 +52,7 @@ public class NewOrder {
     }
 
     public void addSpecificOrder(){
-        JLabel title = new JLabel("Nueva Orden");
+        JLabel title = new JLabel("Cliente");
 
         allInformation.setPreferredSize(new Dimension(1366, 700));
         allInfoPanel.setPreferredSize(new Dimension(1366, 700));
@@ -65,9 +65,10 @@ public class NewOrder {
 
         allInfoPanel.add(Box.createVerticalStrut(30));
         allInfoPanel.add(title);
-        allInfoPanel.add(Box.createVerticalStrut(35));
+        allInfoPanel.add(Box.createVerticalStrut(30));
         setSpecificData();
-        dataSpecificOrder.setPreferredSize(new Dimension(1186, 200));
+        dataSpecificOrder.setPreferredSize(new Dimension(886, 170));
+        dataSpecificOrder.setBorder(new EmptyBorder(0, 145, 0, 145));
 
         allInfoPanel.add(dataSpecificOrder);
 
@@ -79,138 +80,98 @@ public class NewOrder {
     }
 
     public void setSpecificData(){
-        JLabel product = new JLabel("Producto");
-        JLabel type = new JLabel("Tipo");
-        JLabel customer = new JLabel("Cliente");
-        JLabel state = new JLabel("Estado");
-        JLabel productionDate = new JLabel("Fecha Producción");
+        JLabel name = new JLabel("Nombre");
+        JLabel email = new JLabel("Email");
         JLabel phone = new JLabel("Teléfono");
-        JLabel orderNumber = new JLabel("Número de orden");
-        JLabel deliveryDate = new JLabel("Fecha de Entrega");
         JLabel document = new JLabel("Documento");
+        JLabel address = new JLabel("Dirección");
 
-        String[] options = {"Por Hacer", "En Progreso", "Entregado"};
-        JTextField productTxt = new JTextField();
-        JTextField typeTxt = new JTextField();
-        JTextField customerTxt = new JTextField();
-        JComboBox <String> stateCombo = new JComboBox<> (options);
-        JTextField productionDateTxt = new JTextField();
-        JTextField phoneTxt = new JTextField();
-        JTextField orderNumberTxt = new JTextField();
-        JTextField deliveryDateTxt = new JTextField();
-        JTextField documentTxt = new JTextField();
+        JTextField nameTxt = new JTextField("Juan Davis Pérez");
+        JTextField emailTxt = new JTextField("dPerez@gmail.com");
+        JTextField phoneTxt = new JTextField("3133333333");
+        JTextField documentTxt = new JTextField("10533333");
+        JTextField addressTxt = new JTextField("Calle 10 #23-45, Sogamoso");
 
-        // ComboBox
-        stateCombo.setRenderer(new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-                if (isSelected) {
-                    c.setBackground(Color.decode("#D9D9D9"));
-                } else {
-                    c.setBackground(Color.WHITE);
-                }
-
-                return c;
-            }
-        });
-        stateCombo.setBackground(Color.WHITE);
-        stateCombo.isPopupVisible();
+        nameTxt.setEditable(false);
+        emailTxt.setEditable(false);
+        phoneTxt.setEditable(false);
+        documentTxt.setEditable(false);
+        addressTxt.setEditable(false);
 
         int borderRadius = 5;
         Color borderColor = Color.decode("#2F1940");
 
-        productTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        typeTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        customerTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        stateCombo.setBorder(new RoundedBorder(borderRadius, borderColor));
-        productionDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        nameTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        emailTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        addressTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        orderNumberTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        deliveryDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         documentTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
 
-        product.setPreferredSize(new Dimension(99, 30));
-        type.setPreferredSize(new Dimension(99, 30));
-        customer.setPreferredSize(new Dimension(99, 30));
+        name.setPreferredSize(new Dimension(143, 30));
+        email.setPreferredSize(new Dimension(143, 30));
+        address.setPreferredSize(new Dimension(143, 30));
 
-        productTxt.setPreferredSize(new Dimension(300, 30));
-        typeTxt.setPreferredSize(new Dimension(300, 30));
-        customerTxt.setPreferredSize(new Dimension(300, 30));
+        nameTxt.setPreferredSize(new Dimension(288, 30));
+        emailTxt.setPreferredSize(new Dimension(288, 30));
+        addressTxt.setPreferredSize(new Dimension(288, 30));
 
-        state.setPreferredSize(new Dimension(187, 30));
-        productionDate.setPreferredSize(new Dimension(187, 30));
-        phone.setPreferredSize(new Dimension(187, 30));
-        orderNumber.setPreferredSize(new Dimension(187, 30));
-        deliveryDate.setPreferredSize(new Dimension(187, 30));
-        document.setPreferredSize(new Dimension(187, 30));
+        phone.setPreferredSize(new Dimension(143, 30));
+        document.setPreferredSize(new Dimension(143, 30));
 
-        stateCombo.setPreferredSize(new Dimension(180, 30));
-        orderNumberTxt.setPreferredSize(new Dimension(180, 30));
-        productionDateTxt.setPreferredSize(new Dimension(180, 30));
-        deliveryDateTxt.setPreferredSize(new Dimension(180, 30));
-        phoneTxt.setPreferredSize(new Dimension(180, 30));
-        documentTxt.setPreferredSize(new Dimension(180, 30));
+        phoneTxt.setPreferredSize(new Dimension(288, 30));
+        documentTxt.setPreferredSize(new Dimension(288, 30));
 
-        dataSpecificOrder.add(product);
-        dataSpecificOrder.add(productTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(state);
-        dataSpecificOrder.add(stateCombo);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-
-        dataSpecificOrder.add(orderNumber);
-        dataSpecificOrder.add(orderNumberTxt);
-
-        dataSpecificOrder.add(type);
-        dataSpecificOrder.add(typeTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(productionDate);
-        dataSpecificOrder.add(productionDateTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(deliveryDate);
-        dataSpecificOrder.add(deliveryDateTxt);
-
-        dataSpecificOrder.add(customer);
-        dataSpecificOrder.add(customerTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(phone);
-        dataSpecificOrder.add(phoneTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
+        dataSpecificOrder.add(name);
+        dataSpecificOrder.add(nameTxt);
+        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
         dataSpecificOrder.add(document);
         dataSpecificOrder.add(documentTxt);
+        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+
+        dataSpecificOrder.add(email);
+        dataSpecificOrder.add(emailTxt);
+        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+
+        dataSpecificOrder.add(address);
+        dataSpecificOrder.add(addressTxt);
+        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+
+        dataSpecificOrder.add(phone);
+        dataSpecificOrder.add(phoneTxt);
+        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+
+        dataSpecificOrder.add(Box.createHorizontalStrut(451));
     }
 
 
     public void table(){
         JPanel jPanel = new JPanel(new BorderLayout());
-        JLabel materialsTitle = new JLabel("Materiales Requeridos");
+        JLabel materialsTitle = new JLabel("Productos Ordenados");
 
         materialsTitle.setFont(new Font(materialsTitle.getFont().getName(), Font.PLAIN, 30));
         materialsTitle.setPreferredSize(new Dimension(380, 30));
         materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
 
-        ImageIcon icon = new ImageIcon("src/Utilities/Images/Trash.png");
-        Image image = icon.getImage();
-        ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        ImageIcon iconTrash = new ImageIcon("src/Utilities/Images/Trash.png");
+        ImageIcon iconEdit = new ImageIcon("src/Utilities/Images/Edit.png");
+        Image imageTrash = iconTrash.getImage();
+        Image imageEdit = iconEdit.getImage();
+        ImageIcon defIconTrash = new ImageIcon(imageTrash.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        ImageIcon defIconEdit = new ImageIcon(imageEdit.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
         Object[][] data = {
-
+                {"001", "Sofacama", "01/07/2024", defIconEdit, defIconTrash},
+                {"002", "Silla", "01/07/2024", defIconEdit, defIconTrash},
+                {"003", "Sofacama", "01/07/2024", defIconEdit, defIconTrash},
         };
 
-        String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo", ""};
+        String[] columnNames = {"Numero de Orden", "Producto", "Fecha de Entrega", "", ""};
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames) {
             @Override
             public Class<?> getColumnClass(int column) {
-                if (column == 4) {
+                if (column == 3 || column == 4) {
                     return Icon.class;
                 }
                 return super.getColumnClass(column);
@@ -225,6 +186,7 @@ public class NewOrder {
         JTable table = new JTable(model);
         table.setRowHeight(34);
         table.setShowGrid(false);
+        table.getColumnModel().getColumn(3).setMaxWidth(50);
         table.getColumnModel().getColumn(4).setMaxWidth(50);
         table.setPreferredSize(new Dimension(1134, 156));
 
@@ -245,7 +207,7 @@ public class NewOrder {
                 }
 
                 // Change column header color
-                if (column == 4) {
+                if (column == 3 || column == 4) {
                     c.setBackground(Color.WHITE);
                 } else {
                     c.setBackground(header.getBackground());
@@ -281,6 +243,7 @@ public class NewOrder {
         JScrollPane tableScrollPane = new JScrollPane(table);
         tableScrollPane.setPreferredSize(new Dimension(1134, 136));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
+        //table.setPreferredSize(new Dimension(1134, 34));
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
@@ -291,6 +254,7 @@ public class NewOrder {
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
 
+        allInfoPanel.add(Box.createVerticalStrut(35));
         allInfoPanel.add(jPanel);
     }
 
@@ -329,35 +293,16 @@ public class NewOrder {
 
     public JPanel buttons() {
         JPanel buttons = new JPanel(new FlowLayout());
-        JButton add = new JButton("+ Material");
-        JButton save = new JButton("Aceptar");
-        JButton cancel = new JButton("Cancelar");
+        JButton exit = new JButton("Regresar");
 
-        buttons.add(Box.createHorizontalStrut(700));
-        buttons.add(add);
-        buttons.add(save);
-        buttons.add(cancel);
+        exit.setBackground(Color.decode("#2F1940"));
+        exit.setFont(new Font(exit.getFont().getName(), Font.PLAIN, 20));
+        exit.setForeground(Color.white);
+        exit.setPreferredSize(new Dimension(127, 32));
+        exit.setBorder((new RoundedBorder(10, null)));
 
-        add.setBackground(Color.decode("#2F1940"));
-        save.setBackground(Color.decode("#2F1940"));
-        cancel.setBackground(Color.decode("#2F1940"));
-
-        add.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
-        save.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
-        cancel.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
-
-        add.setForeground(Color.white);
-        save.setForeground(Color.white);
-        cancel.setForeground(Color.white);
-
-        add.setPreferredSize(new Dimension(127, 32));
-        save.setPreferredSize(new Dimension(127, 32));
-        cancel.setPreferredSize(new Dimension(127, 32));
-
-        add.setBorder((new RoundedBorder(10, null)));
-        save.setBorder((new RoundedBorder(10, null)));
-        cancel.setBorder((new RoundedBorder(10, null)));
-
+        buttons.add(Box.createHorizontalStrut(825));
+        buttons.add(exit);
         buttons.setBackground(Color.white);
         return buttons;
     }

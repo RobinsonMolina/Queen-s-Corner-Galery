@@ -236,6 +236,7 @@ public class SpecificOrder {
         JTable table = new JTable(model);
         table.setRowHeight(34);
         table.setShowGrid(false);
+        table.setPreferredSize(new Dimension(1134, 156));
         table.getColumnModel().getColumn(4).setMaxWidth(50);
 
         JTableHeader header = table.getTableHeader();
