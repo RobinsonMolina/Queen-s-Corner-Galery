@@ -22,7 +22,7 @@ public class UpdateCustomer {
     private JPanel dataSpecificOrder;
 
     public UpdateCustomer() {
-        specificOrderWindow = new JFrame("Acutualizar CLiente");
+        specificOrderWindow = new JFrame("Acutualizar Cliente");
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
         window = new JPanel(new BorderLayout());
@@ -52,7 +52,7 @@ public class UpdateCustomer {
     }
 
     public void addSpecificOrder(){
-        JLabel title = new JLabel("Acutualizar CLiente");
+        JLabel title = new JLabel("Acutualizar Cliente");
 
         allInformation.setPreferredSize(new Dimension(1366, 700));
         allInfoPanel.setPreferredSize(new Dimension(1366, 700));
