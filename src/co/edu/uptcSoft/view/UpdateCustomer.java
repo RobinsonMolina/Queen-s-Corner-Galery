@@ -22,7 +22,7 @@ public class UpdateCustomer {
     private JPanel dataSpecificOrder;
 
     public UpdateCustomer() {
-        specificOrderWindow = new JFrame("Crear Cliente");
+        specificOrderWindow = new JFrame("Acutualizar CLiente");
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
         window = new JPanel(new BorderLayout());
@@ -52,7 +52,7 @@ public class UpdateCustomer {
     }
 
     public void addSpecificOrder(){
-        JLabel title = new JLabel("Crear Cliente");
+        JLabel title = new JLabel("Acutualizar CLiente");
 
         allInformation.setPreferredSize(new Dimension(1366, 700));
         allInfoPanel.setPreferredSize(new Dimension(1366, 700));
@@ -86,11 +86,11 @@ public class UpdateCustomer {
         JLabel document = new JLabel("Documento");
         JLabel address = new JLabel("Dirección");
 
-        JTextField nameTxt = new JTextField();
-        JTextField emailTxt = new JTextField();
-        JTextField phoneTxt = new JTextField();
-        JTextField documentTxt = new JTextField();
-        JTextField addressTxt = new JTextField();
+        JTextField nameTxt = new JTextField("Juan Davis Pérez");
+        JTextField emailTxt = new JTextField("dPerez@gmail.com");
+        JTextField phoneTxt = new JTextField("3133333333");
+        JTextField documentTxt = new JTextField("10533333");
+        JTextField addressTxt = new JTextField("Calle 10 #23-45, Sogamoso");
 
         int borderRadius = 5;
         Color borderColor = Color.decode("#2F1940");
@@ -147,12 +147,17 @@ public class UpdateCustomer {
         materialsTitle.setPreferredSize(new Dimension(380, 30));
         materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
 
-        ImageIcon icon = new ImageIcon("src/Utilities/Images/Trash.png");
-        Image image = icon.getImage();
-        ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        ImageIcon iconTrash = new ImageIcon("src/Utilities/Images/Trash.png");
+        ImageIcon iconEdit = new ImageIcon("src/Utilities/Images/Edit.png");
+        Image imageTrash = iconTrash.getImage();
+        Image imageEdit = iconEdit.getImage();
+        ImageIcon defIconTrash = new ImageIcon(imageTrash.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        ImageIcon defIconEdit = new ImageIcon(imageEdit.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
         Object[][] data = {
-
+                {"001", "Sofacama", "01/07/2024", defIconEdit, defIconTrash},
+                {"002", "Silla", "01/07/2024", defIconEdit, defIconTrash},
+                {"003", "Sofacama", "01/07/2024", defIconEdit, defIconTrash},
         };
 
         String[] columnNames = {"Numero de Orden", "Producto", "Fecha de Entrega", "", ""};
