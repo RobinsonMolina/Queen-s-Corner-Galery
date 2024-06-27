@@ -1,6 +1,7 @@
 package co.edu.uptcSoft.view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +16,7 @@ public class HeaderMenu {
     public JPanel getHeaderPanel() {
         if (headerPanel == null) {
             headerPanel = new JPanel();
-            headerPanel.setPreferredSize(new Dimension(1286, 80));
+            headerPanel.setPreferredSize(new Dimension(1366, 80));
             headerPanel.setBackground(new Color(47, 25, 64));
 
             // Title
@@ -30,19 +31,19 @@ public class HeaderMenu {
     public JPanel getMenuPanel() {
         if (menuPanel == null) {
             menuPanel = new JPanel();
-            menuPanel.setPreferredSize(new Dimension(80, 670));
+            menuPanel.setPreferredSize(new Dimension(80, 590));
             menuPanel.setBackground(new Color(47, 25, 64));
             menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
             // Rutas de las imágenes
             String[] imagePaths = {
-                    "src\\Utilities\\Board.png",
-                    "src\\Utilities\\OrderList.png",
-                    "src\\Utilities\\NewOrder.png",
-                    "src\\Utilities\\Customers.png",
-                    "src\\Utilities\\Supplies.png",
-                    "src\\Utilities\\LogOut.png",
-                    "src\\Utilities\\Admin.png",
+                    "src\\Utilities\\Images\\Board.png",
+                    "src\\Utilities\\Images\\OrderList.png",
+                    "src\\Utilities\\Images\\NewOrder.png",
+                    "src\\Utilities\\Images\\Customers.png",
+                    "src\\Utilities\\Images\\Supplies.png",
+                    "src\\Utilities\\Images\\Admin.png",
+                    "src\\Utilities\\Images\\LogOut.png"
             };
 
             // Crear y agregar JLabels con iconos redimensionados
@@ -63,11 +64,11 @@ public class HeaderMenu {
             menuPanel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel);
-                    frame.remove(menuPanel);
-                    frame.add(getMenuPanel2(), BorderLayout.WEST);
-                    frame.revalidate();
-                    frame.repaint();
+                    JLayeredPane layeredPane = (JLayeredPane) SwingUtilities.getAncestorOfClass(JLayeredPane.class, menuPanel);
+                    layeredPane.add(getMenuPanel2(), JLayeredPane.PALETTE_LAYER);
+                    getMenuPanel2().setBounds(0, 0, 235, 750);
+                    layeredPane.revalidate();
+                    layeredPane.repaint();
                 }
             });
         }
@@ -77,23 +78,24 @@ public class HeaderMenu {
     public JPanel getMenuPanel2() {
         if (menuPanel2 == null) {
             menuPanel2 = new JPanel();
-            menuPanel2.setPreferredSize(new Dimension(235, 670));
             menuPanel2.setBackground(new Color(30, 30, 30));
             menuPanel2.setLayout(new BoxLayout(menuPanel2, BoxLayout.Y_AXIS));
+            menuPanel2.setBackground(new Color(47, 25, 64));
 
             // Rutas de las imágenes y nombres de las opciones
             String[][] menuItems = {
-                    {"src\\Utilities\\Board.png", "Board"},
-                    {"src\\Utilities\\OrderList.png", "Order List"},
-                    {"src\\Utilities\\NewOrder.png", "New Order"},
-                    {"src\\Utilities\\Customers.png", "Customers"},
-                    {"src\\Utilities\\Supplies.png", "Supplies"},
-                    {"src\\Utilities\\LogOut.png", "Log Out"},
-                    {"src\\Utilities\\Admin.png", "Admin"}
+                    {"src\\Utilities\\Images\\Board.png", "Board"},
+                    {"src\\Utilities\\Images\\OrderList.png", "Order List"},
+                    {"src\\Utilities\\Images\\NewOrder.png", "New Order"},
+                    {"src\\Utilities\\Images\\Customers.png", "Customers"},
+                    {"src\\Utilities\\Images\\Supplies.png", "Supplies"},
+                    {"src\\Utilities\\Images\\Admin.png", "Admin"},
+                    {"src\\Utilities\\Images\\LogOut.png", "Log Out"}
             };
 
             JPanel itemPanel = new JPanel();
             itemPanel.setBackground(new Color(47, 25, 64));
+            itemPanel.add(Box.createVerticalStrut(80));
 
             // Crear y agregar botones con iconos redimensionados y nombres
             for (String[] item : menuItems) {
@@ -136,16 +138,17 @@ public class HeaderMenu {
                             //customers();
                         }else if (item[1].equals("Supplies")) {
                             //supplies();
-                        }else if (item[1].equals("Log Out")) {
-                            //logOut();
                         }else if (item[1].equals("Admin")) {
                             //admin();
+                        }else if (item[1].equals("Log Out")) {
+                            //logOut();
                         }
                         System.out.println(item[1] + " button clicked");
                     }
                 });
             }
 
+            menuPanel2.add(Box.createVerticalStrut(80));
             menuPanel2.add(itemPanel, BorderLayout.NORTH);
 
             // Añadir evento para volver a mostrar menuPanel al salir el mouse de menuPanel2
@@ -154,17 +157,15 @@ public class HeaderMenu {
                 public void mouseExited(MouseEvent e) {
                     Point p = e.getPoint();
                     if (p.x < 0 || p.y < 0 || p.x >= menuPanel2.getWidth() || p.y >= menuPanel2.getHeight()) {
-                        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel2);
-                        frame.remove(menuPanel2);
-                        frame.add(getMenuPanel(), BorderLayout.WEST);
-                        frame.revalidate();
-                        frame.repaint();
+                        JLayeredPane layeredPane = (JLayeredPane) SwingUtilities.getAncestorOfClass(JLayeredPane.class, menuPanel2);
+                        layeredPane.remove(menuPanel2);
+                        layeredPane.revalidate();
+                        layeredPane.repaint();
                     }
                 }
             });
         }
+        menuPanel2.setPreferredSize(new Dimension());
         return menuPanel2;
     }
 }
-
-
