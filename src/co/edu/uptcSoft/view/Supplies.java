@@ -6,21 +6,18 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class OrderList extends JFrame {
+public class Supplies extends JFrame {
 
     JPanel contentPanel;
     JPanel contentTitle;
     JTextField searchField;
     JPanel contentButton;
     JLabel titleLabel;
-    JTable table;
-    JScrollPane scrollPane;
 
-    public OrderList() {
+    public Supplies() {
         setTitle("Insumos");
         setSize(1366, 670);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +46,7 @@ public class OrderList extends JFrame {
         contentTitle.setPreferredSize(new Dimension(1286, 100));
 
         // Título centrado
-        titleLabel = new JLabel("Lista De Ordenes");
+        titleLabel = new JLabel("INSUMOS");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setForeground(Color.BLACK);
         titleLabel.setBackground(Color.WHITE);
@@ -109,31 +106,36 @@ public class OrderList extends JFrame {
         ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
         // Datos de la tabla
-        String[] columnNames = {"Nº. Orden", "Producto", "Nombre Cliente", "Telefono", "Fecha De Entrega", "", "", ""};
+        String[] columnNames = {"Código", "Material", "Categoria", "Características", "Valor Unitario", "Cantidad", "Total", "", ""};
         Object[][] data = {
-                {"001", "SofaCama", "Juan David Pérez", "3001234567", "15/06/2024", defIcon, defIcon, defIcon},
-                {"002", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", defIcon, defIcon, defIcon},
-                {"003", "Cojines", "Carlos Andrés Gómez", "323456789", "15/06/2024", defIcon, defIcon, defIcon},
-                {"004", "Lampara", "Luisa Fernanda Fernández", "3109876543", "17/06/2024", defIcon, defIcon, defIcon},
-                {"005", "Sofa", "Andrés Felipe López", "316879801", "17/06/2024", defIcon, defIcon, defIcon},
-                {"006", "SofaCama", "Ana María Torres", "318678902", "20/06/2024", defIcon, defIcon, defIcon},
-                {"007", "SofaCama", "Diego Alejandro Martínez", "317890123", "20/06/2024", defIcon, defIcon, defIcon},
-                {"008", "SofaCama", "Laura Patricia Ramírez", "3198901234", "20/06/2024", defIcon, defIcon, defIcon},
-                {"009", "Lampara", "Pedro José Jiménez", "3109021345", "25/06/2024", defIcon, defIcon, defIcon},
-                {"010", "Mesa De Centro", "Sofía Margarita Morales", "3190173456", "25/06/2024", defIcon, defIcon, defIcon},
-                {"011", "Cojines", "Jorge Luis Ríos", "3111234567", "25/06/2024", defIcon, defIcon, defIcon},
-                {"012", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", defIcon, defIcon, defIcon},
-                {"013", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", defIcon, defIcon, defIcon},
-                {"014", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", defIcon, defIcon, defIcon},
-                {"015", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", defIcon, defIcon, defIcon},
-                {"016", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", defIcon, defIcon, defIcon},
-                {"017", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", defIcon, defIcon, defIcon}
+                {"T001", "Lino", "Telas", "Resistente, Transpirable, Beige", "80,000 /M", "50 Metros", "4,000,000", defIcon, defIcon},
+                {"T002", "Chenille", "Telas", "Textura Suave, Verde", "95,000 /M", "40 Metros", "3,800,000", defIcon, defIcon},
+                {"T003", "Terciopelo", "Telas", "Lujo, Suave, Rojo", "120,000 /M", "40 Metros", "4,800,000", defIcon, defIcon},
+                {"T004", "Cuero Sintético", "Telas", "Fácil De Limpiar, Resistente, Negro", "90,000 /M", "55 Metros", "4,950,000", defIcon, defIcon},
+                {"T005", "Pana", "Telas", "Textura Acanalada,Duradero,Maron", "100,000 /M", "30 Metros", "3,000,000", defIcon, defIcon},
+                {"T006", "Jacquard", "Telas", "Diseño Intrincado, Resistente, Azul", "110,000 /M", "35 Metros", "3,850,000", defIcon, defIcon},
+                {"T007", "Tweed", "Telas", "Textura Rugosa, Duradero, Gris", "75,000 /M", "50 Metros", "3,750,000", defIcon, defIcon},
+                {"T008", "Franela", "Telas", "Suave, Cálida, Color Gris Claro", "45,000 /M", "35 Metros", "1,575,000", defIcon, defIcon},
+                {"T009", "Seda", "Telas", "Brillante, Suave, Color Blanco Perla", "70,000 /M", "25 Metros", "1,750,000", defIcon, defIcon},
+                {"T010", "Gamuza", "Telas", "Suave Al Tacto, Elegante, Beige", "65,000 /M", "20 Metros", "1,300,000", defIcon, defIcon},
+                {"MCO01", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO02", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO03", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO04", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO05", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO06", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO07", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO08", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO09", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO10", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO11", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
+                {"MCO12", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", defIcon, defIcon},
         };
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames) {
             @Override
             public Class<?> getColumnClass(int column) {
-                if (column==5 || column == 6 || column == 7) {
+                if (column == 7 || column == 8) {
                     return Icon.class;
                 }
                 return super.getColumnClass(column);
@@ -151,14 +153,15 @@ public class OrderList extends JFrame {
         JTable table = new JTable(model);
         table.setRowHeight(34);
         table.setShowGrid(false);
-        table.getColumnModel().getColumn(0).setMaxWidth(150);// Esto ajusta el ancho máximo de la columna 0
-        table.getColumnModel().getColumn(1).setMaxWidth(200);
-        table.getColumnModel().getColumn(2).setMaxWidth(300);
-        table.getColumnModel().getColumn(3).setMaxWidth(200);
-        table.getColumnModel().getColumn(4).setMaxWidth(250);
-        table.getColumnModel().getColumn(5).setMaxWidth(50);
-        table.getColumnModel().getColumn(6).setMaxWidth(50);
+        table.getColumnModel().getColumn(0).setMaxWidth(120);// Esto ajusta el ancho máximo de la columna 0
+        table.getColumnModel().getColumn(1).setMaxWidth(150);
+        table.getColumnModel().getColumn(2).setMaxWidth(150);
+        table.getColumnModel().getColumn(3).setMaxWidth(310);
+        table.getColumnModel().getColumn(4).setMaxWidth(150);
+        table.getColumnModel().getColumn(5).setMaxWidth(150);
+        table.getColumnModel().getColumn(6).setMaxWidth(120);
         table.getColumnModel().getColumn(7).setMaxWidth(50);
+        table.getColumnModel().getColumn(8).setMaxWidth(50);
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.decode("#D9D9D9"));
@@ -178,7 +181,7 @@ public class OrderList extends JFrame {
                 }
 
                 // Cambiar color del encabezado de la columna
-                if (column == 5 || column == 6 || column == 7) {
+                if (column == 7 || column == 8) {
                     c.setBackground(Color.WHITE);
                 } else {
                     c.setBackground(header.getBackground());
@@ -230,9 +233,9 @@ public class OrderList extends JFrame {
         contentButton = new JPanel();
         contentButton.setLayout(new FlowLayout(FlowLayout.LEFT));
         contentButton.setBackground(Color.WHITE);
-        contentButton.setBorder(new EmptyBorder(23, 940, 25, 0));
+        contentButton.setBorder(new EmptyBorder(23, 990, 25, 0));
 
-        RoundedButton createButton = new RoundedButton("Agregar");
+        RoundedButton createButton = new RoundedButton("Crear Insumo");
         createButton.setPreferredSize(new Dimension(150, 34));
         contentButton.add(createButton);
 

@@ -29,6 +29,7 @@ public class SpecificOrder {
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
         allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
         dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+        createWindow();
     }
 
     public  void createWindow(){
