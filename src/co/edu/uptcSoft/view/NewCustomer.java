@@ -155,12 +155,12 @@ public class NewCustomer {
 
         };
 
-        String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo", ""};
+        String[] columnNames = {"Numero de Orden", "Producto", "Fecha de Entrega", "", ""};
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames) {
             @Override
             public Class<?> getColumnClass(int column) {
-                if (column == 4) {
+                if (column == 3 || column == 4) {
                     return Icon.class;
                 }
                 return super.getColumnClass(column);
@@ -175,6 +175,7 @@ public class NewCustomer {
         JTable table = new JTable(model);
         table.setRowHeight(34);
         table.setShowGrid(false);
+        table.getColumnModel().getColumn(3).setMaxWidth(50);
         table.getColumnModel().getColumn(4).setMaxWidth(50);
         table.setPreferredSize(new Dimension(1134, 156));
 
@@ -195,7 +196,7 @@ public class NewCustomer {
                 }
 
                 // Change column header color
-                if (column == 4) {
+                if (column == 3 || column == 4) {
                     c.setBackground(Color.WHITE);
                 } else {
                     c.setBackground(header.getBackground());
@@ -281,7 +282,7 @@ public class NewCustomer {
 
     public JPanel buttons() {
         JPanel buttons = new JPanel(new FlowLayout());
-        JButton add = new JButton("+ Material");
+        JButton add = new JButton("+ Orden");
         JButton save = new JButton("Aceptar");
         JButton cancel = new JButton("Cancelar");
 
