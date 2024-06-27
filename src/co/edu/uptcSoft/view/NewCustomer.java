@@ -14,15 +14,15 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.util.Objects;
 
-public class NewOrder {
+public class NewCustomer {
     private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
     private JPanel window;
     private JPanel dataSpecificOrder;
 
-    public NewOrder() {
-        specificOrderWindow = new JFrame("Nueva Orden");
+    public NewCustomer() {
+        specificOrderWindow = new JFrame("Nuevo Cliente");
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
         window = new JPanel(new BorderLayout());
@@ -52,7 +52,7 @@ public class NewOrder {
     }
 
     public void addSpecificOrder(){
-        JLabel title = new JLabel("Nueva Orden");
+        JLabel title = new JLabel("Nuevo Cliente");
 
         allInformation.setPreferredSize(new Dimension(1366, 700));
         allInfoPanel.setPreferredSize(new Dimension(1366, 700));
@@ -191,7 +191,7 @@ public class NewOrder {
 
     public void table(){
         JPanel jPanel = new JPanel(new BorderLayout());
-        JLabel materialsTitle = new JLabel("Materiales Requeridos");
+        JLabel materialsTitle = new JLabel("Productos Ordenados");
 
         materialsTitle.setFont(new Font(materialsTitle.getFont().getName(), Font.PLAIN, 30));
         materialsTitle.setPreferredSize(new Dimension(380, 30));
@@ -281,6 +281,7 @@ public class NewOrder {
         JScrollPane tableScrollPane = new JScrollPane(table);
         tableScrollPane.setPreferredSize(new Dimension(1134, 136));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
+        //table.setPreferredSize(new Dimension(1134, 34));
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);

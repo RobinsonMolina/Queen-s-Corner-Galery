@@ -227,6 +227,7 @@ public class UpdateOrder {
         table.setRowHeight(34);
         table.setShowGrid(false);
         table.getColumnModel().getColumn(4).setMaxWidth(50);
+        table.setPreferredSize(new Dimension(1134, 156));
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.decode("#D9D9D9"));
