@@ -16,9 +16,9 @@ public class Main {
         //newOrder.createWindow();
 
         UpdateOrder updateOrder = new UpdateOrder();
-        updateOrder.createWindow();
+        //updateOrder.createWindow();
 
         NewCustomer newCustomer = new NewCustomer();
-        //newCustomer.createWindow();
+        newCustomer.createWindow();
     }
 }

@@ -22,7 +22,7 @@ public class NewCustomer {
     private JPanel dataSpecificOrder;
 
     public NewCustomer() {
-        specificOrderWindow = new JFrame("Nuevo Cliente");
+        specificOrderWindow = new JFrame("Crear Cliente");
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
         window = new JPanel(new BorderLayout());
@@ -52,7 +52,7 @@ public class NewCustomer {
     }
 
     public void addSpecificOrder(){
-        JLabel title = new JLabel("Nuevo Cliente");
+        JLabel title = new JLabel("Crear Cliente");
 
         allInformation.setPreferredSize(new Dimension(1366, 700));
         allInfoPanel.setPreferredSize(new Dimension(1366, 700));
@@ -65,9 +65,10 @@ public class NewCustomer {
 
         allInfoPanel.add(Box.createVerticalStrut(30));
         allInfoPanel.add(title);
-        allInfoPanel.add(Box.createVerticalStrut(35));
+        allInfoPanel.add(Box.createVerticalStrut(30));
         setSpecificData();
-        dataSpecificOrder.setPreferredSize(new Dimension(1186, 200));
+        dataSpecificOrder.setPreferredSize(new Dimension(886, 170));
+        dataSpecificOrder.setBorder(new EmptyBorder(0, 145, 0, 145));
 
         allInfoPanel.add(dataSpecificOrder);
 
@@ -79,113 +80,62 @@ public class NewCustomer {
     }
 
     public void setSpecificData(){
-        JLabel product = new JLabel("Producto");
-        JLabel type = new JLabel("Tipo");
-        JLabel customer = new JLabel("Cliente");
-        JLabel state = new JLabel("Estado");
-        JLabel productionDate = new JLabel("Fecha Producción");
+        JLabel name = new JLabel("Nombre");
+        JLabel email = new JLabel("Email");
         JLabel phone = new JLabel("Teléfono");
-        JLabel orderNumber = new JLabel("Número de orden");
-        JLabel deliveryDate = new JLabel("Fecha de Entrega");
         JLabel document = new JLabel("Documento");
+        JLabel address = new JLabel("Dirección");
 
-        String[] options = {"Por Hacer", "En Progreso", "Entregado"};
-        JTextField productTxt = new JTextField();
-        JTextField typeTxt = new JTextField();
-        JTextField customerTxt = new JTextField();
-        JComboBox <String> stateCombo = new JComboBox<> (options);
-        JTextField productionDateTxt = new JTextField();
+        JTextField nameTxt = new JTextField();
+        JTextField emailTxt = new JTextField();
         JTextField phoneTxt = new JTextField();
-        JTextField orderNumberTxt = new JTextField();
-        JTextField deliveryDateTxt = new JTextField();
         JTextField documentTxt = new JTextField();
-
-        // ComboBox
-        stateCombo.setRenderer(new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-                if (isSelected) {
-                    c.setBackground(Color.decode("#D9D9D9"));
-                } else {
-                    c.setBackground(Color.WHITE);
-                }
-
-                return c;
-            }
-        });
-        stateCombo.setBackground(Color.WHITE);
-        stateCombo.isPopupVisible();
+        JTextField addressTxt = new JTextField();
 
         int borderRadius = 5;
         Color borderColor = Color.decode("#2F1940");
 
-        productTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        typeTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        customerTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        stateCombo.setBorder(new RoundedBorder(borderRadius, borderColor));
-        productionDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        nameTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        emailTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        addressTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        orderNumberTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        deliveryDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         documentTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
 
-        product.setPreferredSize(new Dimension(99, 30));
-        type.setPreferredSize(new Dimension(99, 30));
-        customer.setPreferredSize(new Dimension(99, 30));
+        name.setPreferredSize(new Dimension(143, 30));
+        email.setPreferredSize(new Dimension(143, 30));
+        address.setPreferredSize(new Dimension(143, 30));
 
-        productTxt.setPreferredSize(new Dimension(300, 30));
-        typeTxt.setPreferredSize(new Dimension(300, 30));
-        customerTxt.setPreferredSize(new Dimension(300, 30));
+        nameTxt.setPreferredSize(new Dimension(288, 30));
+        emailTxt.setPreferredSize(new Dimension(288, 30));
+        addressTxt.setPreferredSize(new Dimension(288, 30));
 
-        state.setPreferredSize(new Dimension(187, 30));
-        productionDate.setPreferredSize(new Dimension(187, 30));
-        phone.setPreferredSize(new Dimension(187, 30));
-        orderNumber.setPreferredSize(new Dimension(187, 30));
-        deliveryDate.setPreferredSize(new Dimension(187, 30));
-        document.setPreferredSize(new Dimension(187, 30));
+        phone.setPreferredSize(new Dimension(143, 30));
+        document.setPreferredSize(new Dimension(143, 30));
 
-        stateCombo.setPreferredSize(new Dimension(180, 30));
-        orderNumberTxt.setPreferredSize(new Dimension(180, 30));
-        productionDateTxt.setPreferredSize(new Dimension(180, 30));
-        deliveryDateTxt.setPreferredSize(new Dimension(180, 30));
-        phoneTxt.setPreferredSize(new Dimension(180, 30));
-        documentTxt.setPreferredSize(new Dimension(180, 30));
+        phoneTxt.setPreferredSize(new Dimension(288, 30));
+        documentTxt.setPreferredSize(new Dimension(288, 30));
 
-        dataSpecificOrder.add(product);
-        dataSpecificOrder.add(productTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(state);
-        dataSpecificOrder.add(stateCombo);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-
-        dataSpecificOrder.add(orderNumber);
-        dataSpecificOrder.add(orderNumberTxt);
-
-        dataSpecificOrder.add(type);
-        dataSpecificOrder.add(typeTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(productionDate);
-        dataSpecificOrder.add(productionDateTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(deliveryDate);
-        dataSpecificOrder.add(deliveryDateTxt);
-
-        dataSpecificOrder.add(customer);
-        dataSpecificOrder.add(customerTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(phone);
-        dataSpecificOrder.add(phoneTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
+        dataSpecificOrder.add(name);
+        dataSpecificOrder.add(nameTxt);
+        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
         dataSpecificOrder.add(document);
         dataSpecificOrder.add(documentTxt);
+        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+
+        dataSpecificOrder.add(email);
+        dataSpecificOrder.add(emailTxt);
+        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+
+        dataSpecificOrder.add(address);
+        dataSpecificOrder.add(addressTxt);
+        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+
+        dataSpecificOrder.add(phone);
+        dataSpecificOrder.add(phoneTxt);
+        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+
+        dataSpecificOrder.add(Box.createHorizontalStrut(451));
     }
 
 
@@ -292,6 +242,7 @@ public class NewCustomer {
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
 
+        allInfoPanel.add(Box.createVerticalStrut(35));
         allInfoPanel.add(jPanel);
     }
 
