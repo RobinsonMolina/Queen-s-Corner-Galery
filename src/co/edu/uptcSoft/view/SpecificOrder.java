@@ -88,23 +88,42 @@ public class SpecificOrder {
         JLabel deliveryDate = new JLabel("Fecha de Entrega");
         JLabel document = new JLabel("Documento");
 
+        String[] options = {"Por Hacer", "En Progreso", "Entregado"};
         JTextField productTxt = new JTextField();
         JTextField typeTxt = new JTextField();
         JTextField customerTxt = new JTextField();
-        JTextField stateTxt = new JTextField();
+        JComboBox <String> stateCombo = new JComboBox<> (options);
         JTextField productionDateTxt = new JTextField();
         JTextField phoneTxt = new JTextField();
         JTextField orderNumberTxt = new JTextField();
         JTextField deliveryDateTxt = new JTextField();
         JTextField documentTxt = new JTextField();
 
-        int borderRadius = 10;
+        // ComboBox
+        stateCombo.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                if (isSelected) {
+                    c.setBackground(Color.decode("#D9D9D9"));
+                } else {
+                    c.setBackground(Color.WHITE);
+                }
+
+                return c;
+            }
+        });
+        stateCombo.setBackground(Color.WHITE);
+        stateCombo.isPopupVisible();
+
+        int borderRadius = 5;
         Color borderColor = Color.decode("#2F1940");
 
         productTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         typeTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         customerTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        stateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        stateCombo.setBorder(new RoundedBorder(borderRadius, borderColor));
         productionDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         orderNumberTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
@@ -126,7 +145,7 @@ public class SpecificOrder {
         deliveryDate.setPreferredSize(new Dimension(187, 30));
         document.setPreferredSize(new Dimension(187, 30));
 
-        stateTxt.setPreferredSize(new Dimension(180, 30));
+        stateCombo.setPreferredSize(new Dimension(180, 30));
         orderNumberTxt.setPreferredSize(new Dimension(180, 30));
         productionDateTxt.setPreferredSize(new Dimension(180, 30));
         deliveryDateTxt.setPreferredSize(new Dimension(180, 30));
@@ -138,7 +157,7 @@ public class SpecificOrder {
         dataSpecificOrder.add(Box.createHorizontalStrut(15));
 
         dataSpecificOrder.add(state);
-        dataSpecificOrder.add(stateTxt);
+        dataSpecificOrder.add(stateCombo);
         dataSpecificOrder.add(Box.createHorizontalStrut(15));
 
 
@@ -177,10 +196,14 @@ public class SpecificOrder {
         materialsTitle.setPreferredSize(new Dimension(380, 30));
         materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
 
+        ImageIcon icon = new ImageIcon("src/Utilities/Images/Trash.png");
+        Image image = icon.getImage();
+        ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
         Object[][] data = {
-                {"01", "Chenille", 5, 475000, new ImageIcon("src/Utilities/Trash-Can.png")},
-                {"02", "Cuero Sintético", 5, 450000, new ImageIcon("src/Utilities/Trash-Can.png")},
-                {"03", "Pana", 3, 300000, new ImageIcon("src/Utilities/Trash-Can.png")}
+                {"01", "Chenille", 5, 475000, defIcon},
+                {"02", "Cuero Sintético", 5, 450000, defIcon},
+                {"03", "Pana", 3, 300000, defIcon},
         };
 
         String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo", ""};
