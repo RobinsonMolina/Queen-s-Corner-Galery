@@ -7,7 +7,7 @@ public class Main {
         Login login = new Login();
         //login.createWindow();
 
-        //Board board = new Board();
+        Board board = new Board();
 
         SpecificOrder specificOrder = new SpecificOrder();
         //specificOrder.createWindow();
@@ -25,6 +25,6 @@ public class Main {
         //updateCustomer.createWindow();
 
         ViewCustomer viewCustomer = new ViewCustomer();
-        viewCustomer.createWindow();
+        //viewCustomer.createWindow();
     }
 }
