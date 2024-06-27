@@ -5,6 +5,9 @@ out/
 .idea/sonarlint/
 .idea/sonarlint/issuestore/index.pb
 .idea/sonarlint/securityhotspotstore/index.pb
+.idea/sonarlint/issuestore/index.pb
+.idea/sonarlint/securityhotspotstore/index.pb
+
 
 ### Eclipse ###
 .apt_generated
