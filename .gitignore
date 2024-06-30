@@ -3,10 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .idea/sonarlint/
-.idea/sonarlint/issuestore/index.pb
-.idea/sonarlint/securityhotspotstore/index.pb
-.idea/sonarlint/issuestore/index.pb
-.idea/sonarlint/securityhotspotstore/index.pb
+*.idea/sonarlint/
 
 
 ### Eclipse ###

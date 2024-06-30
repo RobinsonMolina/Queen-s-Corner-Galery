@@ -5,26 +5,35 @@ public class Main {
     public static void main(String[] args) {
 
         Login login = new Login();
-        //login.createWindow();
+        login.createWindow();
 
         Board board = new Board();
 
         SpecificOrder specificOrder = new SpecificOrder();
-        //specificOrder.createWindow();
+        specificOrder.createWindow();
 
         NewOrder newOrder = new NewOrder();
-        //newOrder.createWindow();
+        newOrder.createWindow();
 
         UpdateOrder updateOrder = new UpdateOrder();
-        //updateOrder.createWindow();
+        updateOrder.createWindow();
+
+        CustomerList customerList = new CustomerList();
+        customerList.contentPanel();
+
+        NewSupplie newSupplies = new NewSupplie();
+        //newSupplies.createWindow();
+
+        OrderList orderList = new OrderList();
+
 
         NewCustomer newCustomer = new NewCustomer();
-        //newCustomer.createWindow();
+        newCustomer.createWindow();
 
         UpdateCustomer updateCustomer = new UpdateCustomer();
-        //updateCustomer.createWindow();
+        updateCustomer.createWindow();
 
         ViewCustomer viewCustomer = new ViewCustomer();
-        //viewCustomer.createWindow();
+        viewCustomer.createWindow();
     }
 }
