@@ -19,7 +19,7 @@ public class Main {
         updateOrder.createWindow();
 
         CustomerList customerList = new CustomerList();
-        customerList.contentPanel();
+        //customerList.contentPanel();
 
         NewSupplie newSupplies = new NewSupplie();
         //newSupplies.createWindow();

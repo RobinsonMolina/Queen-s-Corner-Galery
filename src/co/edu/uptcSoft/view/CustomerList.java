@@ -45,7 +45,7 @@ public class CustomerList extends JFrame {
         // Rounded button panel
         contentButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
         contentButton.setBackground(Color.WHITE);
-        contentButton.setBorder(new EmptyBorder(23, 990, 25, 0));
+        contentButton.setBorder(new EmptyBorder(23, 1055, 25, 0));
 
         JButton buttonAdd = createRoundedButton("Agregar");
         buttonAdd.setPreferredSize(new Dimension(150, 34));
@@ -94,7 +94,7 @@ public class CustomerList extends JFrame {
         searchTextField.setFont(createFont(1, 20));
 
         // Add icon to the right of the search field
-        ImageIcon searchIcon = new ImageIcon("src\\Utilities\\Images\\NewOrderB.png");
+        ImageIcon searchIcon = new ImageIcon("src\\Utilities\\Images\\Glass.png");
         Image scaledSearchIcon = searchIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         JLabel searchLabel = new JLabel(new ImageIcon(scaledSearchIcon));
         searchLabel.setBounds(5, 12, 24, 24);
@@ -162,26 +162,32 @@ public class CustomerList extends JFrame {
 
     private void initializeTable() {
 
-        ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\AdminB.png");
+
+        ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\Eye.png");
         Image image = icon.getImage();
-        ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        ImageIcon eyeIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        ImageIcon icon2 = new ImageIcon("src\\Utilities\\Images\\Edit.png");
+        Image image2 = icon2.getImage();
+        ImageIcon pencilIcon = new ImageIcon(image2.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        ImageIcon icon3 = new ImageIcon("src\\Utilities\\Images\\Trash.png");
+        Image image3 = icon3.getImage();
+        ImageIcon trashIcon = new ImageIcon(image3.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
         String[] columnNames = {"Documento", "Nombre", "Correo", "", "", ""};
         Object[][] data = {
-                {"1012345678", "Juan David Pérez", "jdperez@example.com", defIcon, defIcon, defIcon},
-                {"1019876543", "María Alejandra Rodríguez", "mar@example.com", defIcon, defIcon, defIcon},
-                {"1023456789", "Carlos Andrés Gómez", "cag@example.com", defIcon, defIcon, defIcon},
-                {"1034567890", "Luisa Fernanda Fernández", "lff@example.com", defIcon, defIcon, defIcon},
-                {"1045678901", "Andrés Felipe López", "afl@example.com", defIcon, defIcon, defIcon},
-                {"1056789012", "Ana María Torres", "amt@example.com", defIcon, defIcon, defIcon},
-                {"1067890123", "Diego Alejandro Martínez", "dam@example.com", defIcon, defIcon, defIcon},
-                {"1078901234", "Laura Patricia Ramírez", "lpr@example.com", defIcon, defIcon, defIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", defIcon, defIcon, defIcon}
+                {"1012345678", "Juan David Pérez", "jdperez@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1019876543", "María Alejandra Rodríguez", "mar@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1023456789", "Carlos Andrés Gómez", "cag@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1034567890", "Luisa Fernanda Fernández", "lff@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1045678901", "Andrés Felipe López", "afl@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1056789012", "Ana María Torres", "amt@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1067890123", "Diego Alejandro Martínez", "dam@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1078901234", "Laura Patricia Ramírez", "lpr@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", eyeIcon, pencilIcon, trashIcon},
+                {"1089012345", "Pedro José Jiménez", "pjj@example.com", eyeIcon, pencilIcon, trashIcon}
         };
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames) {
