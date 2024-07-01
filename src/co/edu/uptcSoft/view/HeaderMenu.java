@@ -135,6 +135,7 @@ public class HeaderMenu {
                         }else if (item[1].equals("New Order")) {
                             //newOrder();
                         }else if (item[1].equals("Customers")) {
+                            CustomerList customerList = new CustomerList();
                             //customers();
                         }else if (item[1].equals("Supplies")) {
                             Supplies supplies = new Supplies();
