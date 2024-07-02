@@ -58,11 +58,7 @@ public class CustomerList extends JFrame {
 
     private Font createFont(int style, int size) {
         try {
-            if (style == 0) {
-                return Font.createFont(Font.TRUETYPE_FONT, new File("src\\Utilities\\Fonts\\Buenard-Bold.ttf")).deriveFont(Font.PLAIN, size);
-            }else if (style == 1) {
-                return Font.createFont(Font.TRUETYPE_FONT, new File("src\\Utilities\\Fonts\\Buenard-Regular.ttf")).deriveFont(Font.PLAIN, size);
-            }
+            return (style == 0) ? Font.createFont(Font.TRUETYPE_FONT, new File("src\\Utilities\\Fonts\\Buenard-Bold.ttf")).deriveFont(Font.PLAIN, size) : Font.createFont(Font.TRUETYPE_FONT, new File("src\\Utilities\\Fonts\\Buenard-Regular.ttf")).deriveFont(Font.PLAIN, size);
         }catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
@@ -90,7 +86,7 @@ public class CustomerList extends JFrame {
         // Rounded search field
         JTextField searchTextField = createRoundedTextField(5);
         searchTextField.setBounds(875, 45, 200, 45);
-        searchTextField.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 5));
+        searchTextField.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 15));
         searchTextField.setFont(createFont(1, 20));
 
         // Add icon to the right of the search field
@@ -233,12 +229,12 @@ public class CustomerList extends JFrame {
     }
 
     private void setColumnWidths(JTable table) {
-        table.getColumnModel().getColumn(0).setMaxWidth(200);
-        table.getColumnModel().getColumn(1).setMaxWidth(400);
-        table.getColumnModel().getColumn(2).setMaxWidth(400);
-        table.getColumnModel().getColumn(3).setMaxWidth(50);
-        table.getColumnModel().getColumn(4).setMaxWidth(50);
-        table.getColumnModel().getColumn(5).setMaxWidth(50);
+        table.getColumnModel().getColumn(0).setPreferredWidth(200);
+        table.getColumnModel().getColumn(1).setPreferredWidth(400);
+        table.getColumnModel().getColumn(2).setPreferredWidth(400);
+        table.getColumnModel().getColumn(3).setPreferredWidth(50);
+        table.getColumnModel().getColumn(4).setPreferredWidth(50);
+        table.getColumnModel().getColumn(5).setPreferredWidth(50);
     }
 
     private DefaultTableCellRenderer createHeaderRenderer(Font headerFont) {
@@ -287,10 +283,5 @@ public class CustomerList extends JFrame {
                 return cell;
             }
         };
-    }
-
-    public static void main(String[] args) {
-        CustomerList customerList = new CustomerList();
-        customerList.setVisible(true);
     }
 }

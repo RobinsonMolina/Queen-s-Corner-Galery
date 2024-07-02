@@ -2,16 +2,34 @@ package co.edu.uptcSoft.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
+import java.io.File;
+import java.io.IOException;
 
 public class NewSupplie extends JFrame {
 
-    JPanel contentPanel;
-    JPanel contentTitle;
-    JPanel materialPanel;
-    JPanel quantityPanel;
-    JTextField searchField;
-    JPanel contentButton;
-    JLabel titleLabel;
+    private Components components;
+    private JPanel contentPanel;
+    private JPanel contentTitle;
+    private JPanel materialPanel;
+    private JPanel quantityPanel;
+    private JLabel materialLabel;
+    private JLabel categoryLabel;
+    private JLabel characteristicLabel;
+    private JLabel quantityLabel;
+    private JLabel measurementLabel;
+    private JLabel unitaryLabel;
+    private JLabel totalLabel;
+    private JTextField materialTextField;
+    private JTextField categoryTextField;
+    private JTextField characteristicTextField;
+    private JTextField unitaryTextField;
+    private JTextField totalTextField;
+    private JComboBox<Integer> comboBox;
+    private JComboBox<String> comboBox2;
+    private JButton addButton;
+    private JButton saveButton;
+    private JLabel titleLabel;
 
     public NewSupplie() {
         setTitle("Nuevo Insumo");
@@ -19,139 +37,192 @@ public class NewSupplie extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Maximizar la ventana al abrirla
+        // Maximice window on open
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
 
-        // Simulación de cabeceras personalizadas
+        // Menu
         HeaderMenu headerMenu = new HeaderMenu();
         add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
         add(headerMenu.getMenuPanel(), BorderLayout.WEST);
 
-        contentPanel();
+        components = new Components();
+        initializeContentPanel();
         setVisible(true);
     }
 
-    public void contentPanel() {
+    // Method for initializing content panel
+    public void initializeContentPanel() {
         contentPanel = new JPanel(null);
         contentPanel.setPreferredSize(new Dimension(1366, 670));
         contentPanel.setBackground(Color.WHITE);
 
-        // Panel de título
-        contentTitle = new JPanel(null);
-        contentTitle.setBackground(Color.WHITE);
-        contentTitle.setBounds(0, 0, 1366, 100);
+        // Panel title
+        initializeContentTitle();
 
-        JLabel titleLabel = new JLabel("Nuevo Insumo");
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 50));
+        // Panel de materiales
+        panelCenter();
+
+        // Panel cantidad
+        panelSouth();
+    }
+
+    // Method for creating title and search field
+    private void initializeContentTitle() {
+        contentTitle = new JPanel();
+        contentTitle.setLayout(null);
+        contentTitle.setBackground(Color.WHITE);
+        contentTitle.setForeground(Color.BLACK);
+        contentTitle.setPreferredSize(new Dimension(1286, 100));
+
+        // title label
+        titleLabel = new JLabel("Nuevo Insumo", JLabel.CENTER);
         titleLabel.setForeground(Color.BLACK);
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        titleLabel.setBounds(0, 0, 1366, 100);
+        titleLabel.setBackground(Color.WHITE);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        titleLabel.setBounds(0, 0, 1286, 100);
+
+        titleLabel.setFont(components.createFont(0, 40));
 
         contentTitle.add(titleLabel);
 
-        // Panel de materiales
+        contentTitle.setBounds(0, 0, 1286, 100);
+        contentPanel.add(contentTitle, BorderLayout.NORTH);
+    }
+
+    // Method for panel center
+    private void panelCenter(){
+        // Panel materiales
         materialPanel = new JPanel(null);
         materialPanel.setBackground(Color.decode("#D9D9D9"));
         materialPanel.setBounds(143, 100, 1000, 240);
 
-        JLabel materialLabel = new JLabel("Material");
-        materialLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        // Label material
+        materialLabel = new JLabel("Material");
+        materialLabel.setFont(components.createFont(0, 24));
         materialLabel.setForeground(Color.BLACK);
-        materialLabel.setBounds(60, 50, 400, 25);
+        materialLabel.setBounds(60, 40, 400, 25);
 
         materialPanel.add(materialLabel);
 
-        JLabel categoryLabel = new JLabel("Categoria");
-        categoryLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        // Label category
+        categoryLabel = new JLabel("Categoria");
+        categoryLabel.setFont(components.createFont(0, 24));
         categoryLabel.setForeground(Color.BLACK);
-        categoryLabel.setBounds(560, 50, 400, 25);
+        categoryLabel.setBounds(560, 32, 400, 35);
 
         materialPanel.add(categoryLabel);
 
-        JTextField materialTextField = new JTextField();
-        materialTextField.setBounds(60, 100, 400, 25);
+        // Text field material
+        materialTextField = components.createRoundedTextField(30,30);
+        materialTextField.setBounds(60, 90, 400, 34);
+        materialTextField.setFont(components.createFont(1, 20));
+        materialTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
         materialPanel.add(materialTextField);
 
-        JTextField categoryTextField = new JTextField();
-        categoryTextField.setBounds(560, 100, 400, 25);
+        // Text field category
+        categoryTextField = components.createRoundedTextField(30,30);
+        categoryTextField.setBounds(560, 90, 400, 34);
+        categoryTextField.setFont(components.createFont(1, 20));
+        categoryTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
         materialPanel.add(categoryTextField);
 
-        JLabel characteristicLabel = new JLabel("Características");
-        characteristicLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        // Label characteristic
+        characteristicLabel = new JLabel("Características");
+        characteristicLabel.setFont(components.createFont(0, 24));
         characteristicLabel.setForeground(Color.BLACK);
-        characteristicLabel.setBounds(60, 150, 400, 25);
-
+        characteristicLabel.setBounds(60, 140, 400, 25);
         materialPanel.add(characteristicLabel);
 
-        JTextField characteristicTextField = new JTextField();
-        characteristicTextField.setBounds(60, 200, 400, 25);
+        // Text field characteristic
+        characteristicTextField = components.createRoundedTextField(30,30);
+        characteristicTextField.setBounds(60, 190, 400, 34);
+        characteristicTextField.setFont(components.createFont(1, 20));
+        characteristicTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+        materialPanel.add(categoryTextField);
         materialPanel.add(characteristicTextField);
+    }
 
-        // Panel de cantidad
+    // Method for panel south
+    private void panelSouth(){
+        // Panel cantidad
         quantityPanel = new JPanel(null);
         quantityPanel.setBackground(Color.decode("#D9D9D9"));
         quantityPanel.setBounds(143, 350, 1000, 240);
 
-        JLabel quantityLabel = new JLabel("Cantidad");
-        quantityLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        // Label quantity
+        quantityLabel = new JLabel("Cantidad");
+        quantityLabel.setFont(components.createFont(0, 24));
         quantityLabel.setForeground(Color.BLACK);
-        quantityLabel.setBounds(60, 50, 200, 25);
-
+        quantityLabel.setBounds(60, 40, 200, 25);
         quantityPanel.add(quantityLabel);
 
-        JTextField quantityTextField = new JTextField();
-        quantityTextField.setBounds(60, 100, 50, 25);
-        quantityPanel.add(quantityTextField);
-        JTextField quantityTextField2 = new JTextField();
-        quantityTextField2.setBounds(110, 100, 50, 25);
-        quantityPanel.add(quantityTextField2);
+        // Combo box quantity
+        Integer options[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-        JLabel measurementLabel = new JLabel("Unidad");
-        measurementLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        // Combo box quantity
+        comboBox = new JComboBox<>(options);
+        comboBox.setFont(components.createFont(1, 20));
+        comboBox.setBounds(60, 90, 85, 30);
+        comboBox.setMaximumRowCount(4);
+        quantityPanel.add(comboBox);
+
+        // Label measurement
+        measurementLabel = new JLabel("Unidad");
+        measurementLabel.setFont(components.createFont(0, 24));
         measurementLabel.setForeground(Color.BLACK);
-        measurementLabel.setBounds(310, 50, 100, 25);
-
+        measurementLabel.setBounds(310, 40, 100, 25);
         quantityPanel.add(measurementLabel);
 
-        JTextField measurementTextField = new JTextField();
-        measurementTextField.setBounds(300, 100, 50, 25);
-        quantityPanel.add(measurementTextField);
-        JTextField measurementTextField2 = new JTextField();
-        measurementTextField2.setBounds(350, 100, 50, 25);
-        quantityPanel.add(measurementTextField2);
+        // Combo box measurement
+        String options2[] = {"cm", "CM²", "M", "m²", "Kg", "Unidades"};
 
-        JLabel unitaryLabel = new JLabel("Valor Unitario");
-        unitaryLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        // Combo box measurement
+        comboBox2 = new JComboBox<>(options2);
+        comboBox2.setFont(components.createFont(1, 20));
+        comboBox2.setBounds(296, 90, 105, 30);
+        comboBox2.setMaximumRowCount(4);
+        quantityPanel.add(comboBox2);
+
+        unitaryLabel = new JLabel("Valor Unitario");
+        unitaryLabel.setFont(components.createFont(0, 24));
         unitaryLabel.setForeground(Color.BLACK);
-        unitaryLabel.setBounds(560, 50, 400, 25);
-
+        unitaryLabel.setBounds(560, 40, 400, 25);
         quantityPanel.add(unitaryLabel);
 
-        JTextField unitaryTextField = new JTextField();
-        unitaryTextField.setBounds(560, 100, 400, 25);
+        // Text field unitary
+        unitaryTextField = components.createRoundedTextField(30,30);
+        unitaryTextField.setBounds(560, 90, 400, 34);
+        unitaryTextField.setFont(components.createFont(1, 20));
+        unitaryTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
         quantityPanel.add(unitaryTextField);
 
-        JLabel totalLabel = new JLabel("Total");
-        totalLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        // JLabel total
+        totalLabel = new JLabel("Total");
+        totalLabel.setFont(components.createFont(0, 24));
         totalLabel.setForeground(Color.BLACK);
-        totalLabel.setBounds(60, 150, 300, 25);
-
+        totalLabel.setBounds(60, 140, 300, 25);
         quantityPanel.add(totalLabel);
 
-        JTextField totalTextField = new JTextField();
-        totalTextField.setBounds(60, 200, 300, 25);
+        // Text field total
+        totalTextField = components.createRoundedTextField(30,30);
+        totalTextField.setBounds(60, 190, 300, 34);
+        totalTextField.setFont(components.createFont(1, 20));
+        totalTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+        materialPanel.add(totalTextField);
         quantityPanel.add(totalTextField);
 
         //Buttons cancel and save
-        RoundedButton cancelButton = new RoundedButton("Agregar");
-        cancelButton.setPreferredSize(new Dimension(150, 40));
-        cancelButton.setBounds(720, 190, 150, 40);
-        quantityPanel.add(cancelButton);
+        addButton = components.createRoundedButton("Agregar");
+        addButton.setFont(components.createFont(1, 20));
+        addButton.setPreferredSize(new Dimension(150, 40));
+        addButton.setBounds(810, 180, 150, 40);
+        quantityPanel.add(addButton);
 
-        RoundedButton saveButton = new RoundedButton("Cancalar");
+        saveButton = components.createRoundedButton("Cancelar");
+        saveButton.setFont(components.createFont(1, 20));
         saveButton.setPreferredSize(new Dimension(150, 40));
-        saveButton.setBounds(560, 190, 150, 40);
+        saveButton.setBounds(650, 180, 150, 40);
         quantityPanel.add(saveButton);
 
         contentPanel.add(contentTitle);
@@ -159,29 +230,6 @@ public class NewSupplie extends JFrame {
         contentPanel.add(quantityPanel);
 
         add(contentPanel);
-    }
-    // Clase para el botón redondeado
-    public class RoundedButton extends JButton {
-        public RoundedButton(String text) {
-            super(text);
-            setContentAreaFilled(false);
-            setFocusPainted(false);
-            setBorderPainted(false);
-            setOpaque(false);
-            setFont(new Font("Serif", Font.BOLD, 20));
-            setForeground(Color.WHITE);
-            setBackground(Color.decode("#2F1940"));
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(getBackground());
-            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
-            super.paintComponent(g);
-            g2.dispose();
-        }
     }
 
     public static void main(String[] args) {
