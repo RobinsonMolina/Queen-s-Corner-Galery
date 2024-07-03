@@ -9,7 +9,7 @@ public class Main {
 
         Board board = new Board();
 
-        SpecificOrder specificOrder = new SpecificOrder();
+        /*SpecificOrder specificOrder = new SpecificOrder();
         specificOrder.createWindow();
 
         NewOrder newOrder = new NewOrder();
@@ -34,6 +34,6 @@ public class Main {
         updateCustomer.createWindow();
 
         ViewCustomer viewCustomer = new ViewCustomer();
-        viewCustomer.createWindow();
+        viewCustomer.createWindow();*/
     }
 }

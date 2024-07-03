@@ -6,11 +6,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
 
-public class Supplies extends JFrame {
+public class Supplies extends JFrame implements ActionListener {
 
     private Components components;
     private JPanel contentButton;
@@ -51,8 +55,9 @@ public class Supplies extends JFrame {
         contentButton.setBackground(Color.WHITE);
         contentButton.setBorder(new EmptyBorder(23, 1055, 25, 0));
 
-        buttonAdd = components.createRoundedButton("Agregar");
+        buttonAdd = components.createRoundedButton("Agregar", "#000000", "#2F1940", 30, 30);
         buttonAdd.setPreferredSize(new Dimension(150, 34));
+        buttonAdd.addActionListener(this);
         contentButton.add(buttonAdd);
 
         contentPanel.add(contentButton, BorderLayout.SOUTH);
@@ -165,6 +170,9 @@ public class Supplies extends JFrame {
         header.setDefaultRenderer(createHeaderRenderer(header.getFont()));
         table.setDefaultRenderer(Object.class, createTableRowRenderer());
 
+        // Configurar el MouseListener para la tabla
+        setupTableMouseListener(table);
+
         // Scroll pane of table
         JScrollPane tableScrollPane = new JScrollPane(table);
         tableScrollPane.setPreferredSize(new Dimension(1134, 136));
@@ -246,5 +254,29 @@ public class Supplies extends JFrame {
                 return cell;
             }
         };
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == buttonAdd) {
+            dispose();
+            NewSupplie newSupplies = new NewSupplie();
+        }
+    }
+
+    // Method for configuring the MouseListener, view line 173
+    private void setupTableMouseListener(JTable table) {
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int column = table.columnAtPoint(e.getPoint());
+                if (column == 7) {
+                    components.windowConfirmation("¿Está seguro de eliminar esta insumo?", "Cancelar", "Eliminar", "Insumo eliminado con éxito");
+                } else if (column == 8) {
+                    dispose();
+                    UpdateSupplie updateSupplies = new UpdateSupplie();
+                }
+            }
+        });
     }
 }

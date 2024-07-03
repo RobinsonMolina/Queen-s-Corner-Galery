@@ -2,11 +2,13 @@ package co.edu.uptcSoft.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
 
-public class UpdateSupplie extends JFrame {
+public class UpdateSupplie extends JFrame implements ActionListener {
 
     private Components components;
     private JPanel contentPanel;
@@ -27,8 +29,8 @@ public class UpdateSupplie extends JFrame {
     private JTextField totalTextField;
     private JComboBox<Integer> comboBox;
     private JComboBox<String> comboBox2;
-    private JButton addButton;
-    private JButton saveButton;
+    private JButton updateButton;
+    private JButton cancelButton;
     private JLabel titleLabel;
 
     public UpdateSupplie() {
@@ -212,17 +214,20 @@ public class UpdateSupplie extends JFrame {
         quantityPanel.add(totalTextField);
 
         //Buttons cancel and save
-        addButton = components.createRoundedButton("Agregar");
-        addButton.setFont(components.createFont(1, 20));
-        addButton.setPreferredSize(new Dimension(150, 40));
-        addButton.setBounds(810, 180, 150, 40);
-        quantityPanel.add(addButton);
+        updateButton = components.createRoundedButton("Actualizar", "#000000", "#2F1940", 30, 30);
+        updateButton.setFont(components.createFont(1, 20));
+        updateButton.setPreferredSize(new Dimension(150, 40));
+        updateButton.setBounds(810, 180, 150, 40);
+        quantityPanel.add(updateButton);
 
-        saveButton = components.createRoundedButton("Cancelar");
-        saveButton.setFont(components.createFont(1, 20));
-        saveButton.setPreferredSize(new Dimension(150, 40));
-        saveButton.setBounds(650, 180, 150, 40);
-        quantityPanel.add(saveButton);
+        cancelButton = components.createRoundedButton("Cancelar", "#000000", "#2F1940", 30, 30);
+        cancelButton.setFont(components.createFont(1, 20));
+        cancelButton.setPreferredSize(new Dimension(150, 40));
+        cancelButton.setBounds(650, 180, 150, 40);
+        quantityPanel.add(cancelButton);
+
+        updateButton.addActionListener(this);
+        cancelButton.addActionListener(this);
 
         contentPanel.add(contentTitle);
         contentPanel.add(materialPanel);
@@ -231,7 +236,24 @@ public class UpdateSupplie extends JFrame {
         add(contentPanel);
     }
 
-    public static void main(String[] args) {
-        UpdateSupplie updateSupplies = new UpdateSupplie();
+    // method to choose the actions of the cancel button and the update button
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == updateButton) {
+            dispose();
+            Supplies supplies = new Supplies();
+            components.messageConfirmation("Insumo actualizado con éxito");
+            // Starts a timer to close the window after 1 seconds
+            Timer timer = new Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                    components.getConfirmationFrame2().dispose();
+                }
+            });
+            timer.setRepeats(false); // To make the timer only execute once
+            timer.start();
+        } else if (e.getSource() == cancelButton) {
+            Supplies supplies = new Supplies();
+        }
     }
 }

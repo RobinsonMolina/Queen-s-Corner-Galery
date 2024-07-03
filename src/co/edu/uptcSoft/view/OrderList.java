@@ -6,11 +6,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class OrderList extends JFrame {
+public class OrderList extends JFrame implements ActionListener {
 
     private Components components;
     private JPanel contentPanel;
@@ -19,7 +20,7 @@ public class OrderList extends JFrame {
     private JLabel titleLabel;
     private JTextField searchTextField;
     private JButton buttonAdd;
-    private Font font;
+    private JTable table;
 
     public OrderList() {
         setTitle("Lista De Ordenes");
@@ -52,9 +53,11 @@ public class OrderList extends JFrame {
         contentButton.setBorder(new EmptyBorder(23, 1058, 25, 0));
 
         // Button add
-        buttonAdd = components.createRoundedButton("Agregar");
+        buttonAdd = components.createRoundedButton("Agregar", "#000000", "#2F1940", 30, 30);
         buttonAdd.setPreferredSize(new Dimension(150, 34));
         contentButton.add(buttonAdd);
+
+        buttonAdd.addActionListener(this);
 
         contentPanel.add(contentButton, BorderLayout.SOUTH);
 
@@ -152,7 +155,7 @@ public class OrderList extends JFrame {
         };
 
         // Table
-        JTable table = new JTable(model);
+        table = new JTable(model);
         table.setFont(components.createFont(1, 20));
         table.setForeground(Color.decode("#2F2F2F"));
         table.setRowHeight(34);
@@ -168,6 +171,9 @@ public class OrderList extends JFrame {
         // Move configuration of renderer after setting font
         header.setDefaultRenderer(createHeaderRenderer(header.getFont()));
         table.setDefaultRenderer(Object.class, createTableRowRenderer());
+
+        // Configurar el MouseListener para la tabla
+        setupTableMouseListener(table);
 
         // Scroll pane of table
         JScrollPane tableScrollPane = new JScrollPane(table);
@@ -247,5 +253,34 @@ public class OrderList extends JFrame {
                 return cell;
             }
         };
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == buttonAdd) {
+            dispose();
+            NewOrder newOrder = new NewOrder();
+            newOrder.createWindow();
+        }
+    }
+
+    // Method for configuring the MouseListener, view line 175
+    private void setupTableMouseListener(JTable table) {
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int column = table.columnAtPoint(e.getPoint());
+                if (column == 5) {
+                    dispose();
+                    SpecificOrder specificOrder = new SpecificOrder();
+                } else if (column == 6) {
+                    dispose();
+                    UpdateOrder updateOrder = new UpdateOrder();
+                    updateOrder.createWindow();
+                } else if (column == 7) {
+                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito");
+                }
+            }
+        });
     }
 }

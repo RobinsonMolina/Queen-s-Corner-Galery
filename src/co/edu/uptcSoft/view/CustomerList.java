@@ -6,18 +6,23 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
 
-public class CustomerList extends JFrame {
+public class CustomerList extends JFrame implements ActionListener {
 
     private JPanel contentPanel;
     private JPanel contentTitle;
-    private JTextField searchField;
     private JPanel contentButton;
     private JLabel titleLabel;
-    private Font font;
+    private JButton addButton;
+    private JTextField searchField;
+    private Components components;
 
     public CustomerList() {
         setTitle("Clientes");
@@ -32,6 +37,7 @@ public class CustomerList extends JFrame {
         add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
         add(headerMenu.getMenuPanel(), BorderLayout.WEST);
 
+        components = new Components();
         initializeContentPanel();
         setVisible(true);
     }
@@ -47,9 +53,11 @@ public class CustomerList extends JFrame {
         contentButton.setBackground(Color.WHITE);
         contentButton.setBorder(new EmptyBorder(23, 1055, 25, 0));
 
-        JButton buttonAdd = createRoundedButton("Agregar");
-        buttonAdd.setPreferredSize(new Dimension(150, 34));
-        contentButton.add(buttonAdd);
+        addButton = createRoundedButton("Agregar");
+        addButton.setPreferredSize(new Dimension(150, 34));
+        contentButton.add(addButton);
+
+        addButton.addActionListener(this);
 
         contentPanel.add(contentButton, BorderLayout.SOUTH);
 
@@ -214,6 +222,9 @@ public class CustomerList extends JFrame {
         header.setDefaultRenderer(createHeaderRenderer(header.getFont()));
         table.setDefaultRenderer(Object.class, createTableRowRenderer());
 
+        // Configurar el MouseListener para la tabla
+        setupTableMouseListener(table);
+
         JScrollPane tableScrollPane = new JScrollPane(table);
         tableScrollPane.setPreferredSize(new Dimension(1134, 136));
         tableScrollPane.setBorder(new EmptyBorder(20, 0, 0, 0));
@@ -283,5 +294,36 @@ public class CustomerList extends JFrame {
                 return cell;
             }
         };
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == addButton) {
+            dispose();
+            NewCustomer newOrder = new NewCustomer();
+            newOrder.createWindow();
+        }
+    }
+
+    // Method for configuring the MouseListener, view line 225
+    private void setupTableMouseListener(JTable table) {
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int column = table.columnAtPoint(e.getPoint());
+                if (column == 3) {
+                    dispose();
+                    ViewCustomer viewCustomer = new ViewCustomer();
+                    viewCustomer.createWindow();
+                } else if (column == 4) {
+                    dispose();
+                    UpdateCustomer updateCustomer = new UpdateCustomer();
+                    updateCustomer.createWindow();
+                } else if (column == 5) {
+                    components.windowConfirmation("¿Está seguro de eliminar este cliente?", "Cancelar", "Eliminar", "Cliente eliminado con éxito");
+                }
+            }
+        });
     }
 }
