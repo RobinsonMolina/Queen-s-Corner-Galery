@@ -139,11 +139,10 @@ public class HeaderMenu {
                         }else if (item[1].equals("Supplies")) {
                             Supplies supplies = new Supplies();
                         }else if (item[1].equals("Admin")) {
-                            //admin();
+                            Admin admin = new Admin();
                         }else if (item[1].equals("Log Out")) {
                             //logOut();
                         }
-                        System.out.println(item[1] + " button clicked");
                     }
                 });
             }
