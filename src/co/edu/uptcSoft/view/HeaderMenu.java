@@ -133,7 +133,8 @@ public class HeaderMenu {
                         }else if (item[1].equals("Order List")) {
                             OrderList orderList = new OrderList();
                         }else if (item[1].equals("New Order")) {
-                            //newOrder();
+                            NewOrder newOrder = new NewOrder();
+                            newOrder.createWindow();
                         }else if (item[1].equals("Customers")) {
                             CustomerList customerList = new CustomerList();
                         }else if (item[1].equals("Supplies")) {
@@ -141,7 +142,8 @@ public class HeaderMenu {
                         }else if (item[1].equals("Admin")) {
                             Admin admin = new Admin();
                         }else if (item[1].equals("Log Out")) {
-                            //logOut();
+                            Login login = new Login();
+                            login.createWindow();
                         }
                     }
                 });

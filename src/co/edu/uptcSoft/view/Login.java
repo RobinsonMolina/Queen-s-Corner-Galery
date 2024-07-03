@@ -3,8 +3,10 @@ package co.edu.uptcSoft.view;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Login {
+public class Login implements ActionListener {
 
     private JFrame loginWindow;
     private ImageIcon icon;
@@ -12,6 +14,7 @@ public class Login {
     private JPanel mainPanel;
     private JPanel infoPanel;
     private JLabel imagePanel;
+    private JButton loginButton;
 
 
     public Login() {
@@ -41,7 +44,7 @@ public class Login {
         JLabel password = new JLabel("Contraseña");
         JTextField emailText = new JTextField("Ingrese el correo");
         JTextField passwordText = new JTextField("Ingrese la contraseña");
-        JButton loginButton = new JButton("Continuar");
+        loginButton = new JButton("Continuar");
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         email.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -85,6 +88,9 @@ public class Login {
         infoPanel.add(Box.createVerticalStrut(62));
         infoPanel.add(loginButton);
 
+        // Add action listener to the button
+        loginButton.addActionListener(this);
+
         infoPanel.setBackground(Color.decode("#2F1940"));
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setPreferredSize(new Dimension(554, 670));
@@ -121,6 +127,14 @@ public class Login {
         public Insets getBorderInsets(Component c, Insets insets) {
             insets.left = insets.top = insets.right = insets.bottom = this.radius;
             return insets;
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == loginButton) {
+            loginWindow.dispose();
+            Board board = new Board();
         }
     }
 }
