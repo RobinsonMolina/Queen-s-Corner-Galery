@@ -119,6 +119,7 @@ public class Board extends JFrame {
     private class OrderButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            dispose();
             JButton button = (JButton) e.getSource();
             String orderNumber = button.getText();
             SpecificOrder specificOrder = new SpecificOrder();

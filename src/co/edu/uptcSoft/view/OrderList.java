@@ -1,5 +1,8 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.model.Order;
+import co.edu.uptcSoft.logic.Logic;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -10,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class OrderList extends JFrame implements ActionListener {
 
@@ -21,6 +27,9 @@ public class OrderList extends JFrame implements ActionListener {
     private JTextField searchTextField;
     private JButton buttonAdd;
     private JTable table;
+    private DefaultTableModel model;
+    private Object orderListTable[][];
+    private Logic logic;
 
     public OrderList() {
         setTitle("Lista De Ordenes");
@@ -29,6 +38,8 @@ public class OrderList extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window on open
         setLayout(new BorderLayout());
+
+        logic = new Logic();
 
         // Menu
         HeaderMenu headerMenu = new HeaderMenu();
@@ -118,7 +129,7 @@ public class OrderList extends JFrame implements ActionListener {
 
         // Data of the table
         String[] columnNames = {"Nº. Orden", "Producto", "Nombre Cliente", "Telefono", "Fecha De Entrega", "", "", ""};
-        Object[][] data = {
+        /*Object[][] data = {
                 {"001", "SofaCama", "Juan David Pérez", "3001234567", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
                 {"002", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
                 {"003", "Cojines", "Carlos Andrés Gómez", "323456789", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
@@ -136,11 +147,11 @@ public class OrderList extends JFrame implements ActionListener {
                 {"015", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
                 {"016", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
                 {"017", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon}
-        };
+        };*/
 
 
         // Table model
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+        model = new DefaultTableModel(getOrderList(), columnNames) {
             // Method for setting the column class
             @Override
             public Class<?> getColumnClass(int column) {
@@ -180,14 +191,16 @@ public class OrderList extends JFrame implements ActionListener {
         tableScrollPane.setPreferredSize(new Dimension(1134, 136));
         tableScrollPane.setBorder(new EmptyBorder(20, 0, 0, 0));
         tableScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        tableScrollPane.getViewport().setBackground(Color.WHITE);// change background of content scroll pane
+        tableScrollPane.setBackground(Color.WHITE); // change background of scroll pane
 
         // Panel of table
         JPanel tablePanel = new JPanel(new BorderLayout());
         tablePanel.add(tableScrollPane, BorderLayout.CENTER);
         tablePanel.setBorder(new EmptyBorder(10, 80, 0, 60));
         tablePanel.setPreferredSize(new Dimension(1366, 136));
-        tablePanel.setBackground(Color.white);
-        tableScrollPane.setBackground(Color.white);
+        tablePanel.setBackground(Color.WHITE);
+
         contentPanel.add(tablePanel, BorderLayout.CENTER);
     }
 
@@ -279,8 +292,46 @@ public class OrderList extends JFrame implements ActionListener {
                     updateOrder.createWindow();
                 } else if (column == 7) {
                     components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito");
+
                 }
             }
         });
     }
+
+    // Method for getting the order list
+
+    public Object[][] getOrderList() {
+
+        ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\Eye.png");
+        Image image = icon.getImage();
+        ImageIcon eyeIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        ImageIcon icon2 = new ImageIcon("src\\Utilities\\Images\\Edit.png");
+        Image image2 = icon2.getImage();
+        ImageIcon pencilIcon = new ImageIcon(image2.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        ImageIcon icon3 = new ImageIcon("src\\Utilities\\Images\\Trash.png");
+        Image image3 = icon3.getImage();
+        ImageIcon trashIcon = new ImageIcon(image3.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        ArrayList<Order> orderList = new ArrayList<>(logic.getOrderList().values());
+
+        orderListTable = new Object[orderList.size()][8];
+        // Definimos el formato deseado
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+        for (int i = 0; i < orderList.size(); i++) {
+            orderListTable[i][0] = orderList.get(i).getOrderNumber();
+            orderListTable[i][1] = orderList.get(i).getProductName();
+            orderListTable[i][2] = orderList.get(i).getCustomer().getName();
+            orderListTable[i][3] = orderList.get(i).getCustomer().getPhoneNumber();
+            orderListTable[i][4] = formato.format(orderList.get(i).getDeliveryDate());
+            orderListTable[i][5] = eyeIcon;
+            orderListTable[i][6] = pencilIcon;
+            orderListTable[i][7] = trashIcon;
+        }
+
+        return orderListTable;
+    }
+
 }
