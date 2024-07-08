@@ -1,5 +1,6 @@
 package co.edu.uptcSoft.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Order implements Comparable<Order> {
@@ -11,11 +12,12 @@ public class Order implements Comparable<Order> {
     private Date productionDate;
     private Date deliveryDate;
     private Customer customer;
+    private ArrayList<Materials> materials;
 
     public Order() {
     }
 
-    public Order(String productName, String status, int orderNumber, String type, Date productionDate, Date deliveryDate, Customer customer) {
+    public Order(String productName, String status, int orderNumber, String type, Date productionDate, Date deliveryDate, Customer customer, ArrayList<Materials> materials) {
         this.productName = productName;
         this.status = status;
         this.orderNumber = orderNumber;
@@ -23,6 +25,7 @@ public class Order implements Comparable<Order> {
         this.productionDate = productionDate;
         this.deliveryDate = deliveryDate;
         this.customer = customer;
+        this.materials = materials;
     }
 
     public String getProductName() {
@@ -81,12 +84,12 @@ public class Order implements Comparable<Order> {
         this.customer = customer;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderNumber=" + orderNumber +
-                ", customer=" + customer.getName() +
-                '}';
+    public ArrayList<Materials> getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(ArrayList<Materials> materials) {
+        this.materials = materials;
     }
 
     @Override

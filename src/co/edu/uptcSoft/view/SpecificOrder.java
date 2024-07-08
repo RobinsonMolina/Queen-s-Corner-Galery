@@ -51,7 +51,7 @@ public class SpecificOrder {
         window.add(allInformation, BorderLayout.CENTER);
     }
 
-    public void addSpecificOrder(){
+    public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Orden Especifica");
 
         allInformation.setPreferredSize(new Dimension(1366, 700));
@@ -76,6 +76,8 @@ public class SpecificOrder {
         dataSpecificOrder.setBackground(Color.WHITE);
 
         allInformation.add(allInfoPanel);
+
+        return allInfoPanel;
     }
 
     public void setSpecificData(){

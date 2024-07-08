@@ -1,6 +1,7 @@
 package co.edu.uptcSoft.logic;
 
 import co.edu.uptcSoft.model.Customer;
+import co.edu.uptcSoft.model.Materials;
 import co.edu.uptcSoft.model.Order;
 
 import java.util.*;
@@ -36,12 +37,12 @@ public class Logic {
 
     // Method to load orders
     private void loadOrders() {
-        addOrder("Producto", "Pendiente", 1, "Pedido", new Date(), new Date(), "Andre", 12345,  123l);
-        addOrder("Producto", "Pendiente", 2, "Pedido", new Date(), new Date(), "Carlos", 12345,  123l);
-        addOrder("Producto", "Pendiente", 2, "Pedido", new Date(), new Date(), "Felipe", 12345,  123l);
-        addOrder("Producto", "Pendiente", 3, "Pedido", new Date(), new Date(), "Felipe", 12345,  123l);
-        addOrder("Producto", "Pendiente", 4, "Pedido", new Date(), new Date(), "Juan", 12345,  7890l);
-        addOrder("Producto", "Pendiente", 5, "Pedido", new Date(), new Date(), "esteban", 12345,7890l);
+        addOrder("Producto", "Pendiente", 1, "Pedido", new Date(), new Date(), "Andre", 12345,  123l, null);
+        addOrder("Producto", "Pendiente", 2, "Pedido", new Date(), new Date(), "Carlos", 12345,  123l, null);
+        addOrder("Producto", "Pendiente", 2, "Pedido", new Date(), new Date(), "Felipe", 12345,  123l, null);
+        addOrder("Producto", "Pendiente", 3, "Pedido", new Date(), new Date(), "Felipe", 12345,  123l, null);
+        addOrder("Producto", "Pendiente", 4, "Pedido", new Date(), new Date(), "Juan", 12345,  7890l, null);
+        addOrder("Producto", "Pendiente", 5, "Pedido", new Date(), new Date(), "esteban", 12345,7890l, null);
     }
 
     // Method to add customers
@@ -52,9 +53,9 @@ public class Logic {
     // Method to add orders
     public void addOrder(String productName, String status, int orderNumber, String type, Date productionDate,
                          Date deliveryDate, String name,long phoneNumber,
-                         long documentNumber) {
+                         long documentNumber, ArrayList<Materials> materials) {
 
-        order = new Order(productName, status, orderNumber, type, productionDate, deliveryDate, null);
+        order = new Order(productName, status, orderNumber, type, productionDate, deliveryDate, null, null);
 
         if (!customerList.containsKey(documentNumber)) { // If the customer does not exist
             addCustomer(name, documentNumber, "", "", phoneNumber);

@@ -21,7 +21,13 @@ public class NewOrder {
     private JPanel window;
     private JPanel dataSpecificOrder;
 
+
     public NewOrder() {
+        allInformation = new JPanel();
+        allInfoPanel = new JPanel();
+        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+    }
+    /*public NewOrder() {
         specificOrderWindow = new JFrame("Nueva Orden");
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
@@ -49,13 +55,13 @@ public class NewOrder {
         window.add(headerMenu.getMenuPanel(), BorderLayout.WEST);
         window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
         window.add(allInformation, BorderLayout.CENTER);
-    }
+    }*/
 
-    public void addSpecificOrder(){
+    public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Nueva Orden");
 
-        allInformation.setPreferredSize(new Dimension(1366, 700));
-        allInfoPanel.setPreferredSize(new Dimension(1366, 700));
+        allInformation.setPreferredSize(new Dimension(1266, 590));// change width of 1366 to 1266 and height of 700 to 590
+        allInfoPanel.setPreferredSize(new Dimension(1266, 590)); // change width of 1366 to 1266 and height of 700 to 590
 
         title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 40));
         title.setPreferredSize(new Dimension(389, 47));
@@ -76,6 +82,7 @@ public class NewOrder {
         dataSpecificOrder.setBackground(Color.WHITE);
 
         allInformation.add(allInfoPanel);
+        return allInfoPanel;
     }
 
     public void setSpecificData(){

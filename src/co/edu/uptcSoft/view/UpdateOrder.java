@@ -50,11 +50,11 @@ public class UpdateOrder {
         window.add(allInformation, BorderLayout.CENTER);
     }
 
-    public void addSpecificOrder(){
+    public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Actualizar Orden");
 
-        allInformation.setPreferredSize(new Dimension(1366, 700));
-        allInfoPanel.setPreferredSize(new Dimension(1366, 700));
+        allInformation.setPreferredSize(new Dimension(1266, 590)); // change width of 1366 to 1266 and height of 700 to 590
+        allInfoPanel.setPreferredSize(new Dimension(1266, 590)); // change width of 1366 to 1266 and height of 700 to 590
 
         title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 40));
         title.setPreferredSize(new Dimension(389, 47));
@@ -75,6 +75,7 @@ public class UpdateOrder {
         dataSpecificOrder.setBackground(Color.WHITE);
 
         allInformation.add(allInfoPanel);
+        return allInfoPanel;
     }
 
     public void setSpecificData(){

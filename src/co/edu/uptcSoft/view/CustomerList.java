@@ -23,26 +23,13 @@ public class CustomerList extends JFrame implements ActionListener {
     private JButton addButton;
     private JTextField searchField;
     private Components components;
+    private JPanel mainContentPanel;
 
-    public CustomerList() {
-        setTitle("Clientes");
-        setSize(1366, 670);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window on open
-        setLayout(new BorderLayout());
-
-        // Menu
-        HeaderMenu headerMenu = new HeaderMenu();
-        add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
-        add(headerMenu.getMenuPanel(), BorderLayout.WEST);
-
-        components = new Components();
-        initializeContentPanel();
-        setVisible(true);
+    public CustomerList(JPanel mainContentPanel) {
+        components = new Components(mainContentPanel);
     }
 
-    private void initializeContentPanel() {
+    public JPanel initializeContentPanel() {
         contentPanel = new JPanel(new BorderLayout());
 
         initializeContentTitle();
@@ -62,6 +49,7 @@ public class CustomerList extends JFrame implements ActionListener {
         contentPanel.add(contentButton, BorderLayout.SOUTH);
 
         add(contentPanel);
+        return contentPanel;
     }
 
     private Font createFont(int style, int size) {

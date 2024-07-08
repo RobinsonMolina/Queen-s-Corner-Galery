@@ -1,5 +1,7 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -7,11 +9,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 
-public class HeaderMenu {
+public class HeaderMenu extends JFrame {
     private JPanel menuPanel;
     private JPanel menuPanel2;
     private JPanel headerPanel;
+    private JPanel contentPanel;
+
+    public HeaderMenu() {
+        setTitle("Board");
+        setSize(1366, 670);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        // Maximizar la ventana al abrirla
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        setLayout(new BorderLayout());
+
+        add(getHeaderPanel(), BorderLayout.NORTH);
+        add(getMenuPanel(), BorderLayout.WEST);
+        contentPanel = new JPanel();
+        setVisible(true);
+    }
 
     public JPanel getHeaderPanel() {
         if (headerPanel == null) {
@@ -21,8 +43,13 @@ public class HeaderMenu {
 
             // Title
             JLabel headerLabel = new JLabel("QUEEN'S CORNER GALLERY");
-            headerLabel.setForeground(Color.WHITE);
-            headerLabel.setFont(new Font("Serif", Font.BOLD, 24));
+            try {
+                headerLabel.setFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\Utilities\\Fonts\\CinzelDecorative-Regular.ttf")).deriveFont(Font.PLAIN, 60));
+            } catch (FontFormatException | IOException e) {
+                e.printStackTrace();
+            }
+            headerLabel.setForeground(Color.decode("#E1B958"));
+            headerLabel.setBorder(BorderFactory.createEmptyBorder(-5, 0, 0, 0));
             headerPanel.add(headerLabel);
         }
         return headerPanel;
@@ -78,7 +105,7 @@ public class HeaderMenu {
     public JPanel getMenuPanel2() {
         if (menuPanel2 == null) {
             menuPanel2 = new JPanel();
-            menuPanel2.setBackground(new Color(30, 30, 30));
+            menuPanel2.setPreferredSize(new Dimension(235, 750));
             menuPanel2.setLayout(new BoxLayout(menuPanel2, BoxLayout.Y_AXIS));
             menuPanel2.setBackground(new Color(47, 25, 64));
 
@@ -126,22 +153,23 @@ public class HeaderMenu {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel2);
-                        frame.dispose(); // Cerrar la ventana actual
+                        //JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel2);
+                        //frame.dispose(); // Cerrar la ventana actual
                         if (item[1].equals("Board")) {
-                            Board board = new Board();
+                            paneles(new Board().contentPanel());
                         }else if (item[1].equals("Order List")) {
-                            OrderList orderList = new OrderList();
+                            paneles(new OrderList(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("New Order")) {
-                            NewOrder newOrder = new NewOrder();
-                            newOrder.createWindow();
+                            paneles(new NewOrder().addSpecificOrder());
                         }else if (item[1].equals("Customers")) {
-                            CustomerList customerList = new CustomerList();
+                            paneles(new CustomerList(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("Supplies")) {
-                            Supplies supplies = new Supplies();
+                            paneles(new Supplies(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("Admin")) {
-                            Admin admin = new Admin();
+                            paneles(new Admin(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("Log Out")) {
+                            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel2);
+                            frame.dispose(); // Cerrar la ventana actual
                             Login login = new Login();
                             login.createWindow();
                         }
@@ -166,7 +194,15 @@ public class HeaderMenu {
                 }
             });
         }
-        menuPanel2.setPreferredSize(new Dimension());
         return menuPanel2;
+    }
+
+    public void paneles(JPanel panel) {
+        contentPanel.removeAll();
+        contentPanel.setBackground(Color.WHITE);
+        contentPanel.add(panel);
+        add(contentPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 }

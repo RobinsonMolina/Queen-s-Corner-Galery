@@ -29,31 +29,18 @@ public class OrderList extends JFrame implements ActionListener {
     private JTable table;
     private DefaultTableModel model;
     private Object orderListTable[][];
-    private Logic logic;
+    private Logic logic = Logic.getInstance();
+    private JPanel mainContentPanel;
 
-    public OrderList() {
-        setTitle("Lista De Ordenes");
-        setSize(1366, 670);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window on open
-        setLayout(new BorderLayout());
-
-        logic = Logic.getInstance(); // Get the single instance of Logic
-
-        // Menu
-        HeaderMenu headerMenu = new HeaderMenu();
-        add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
-        add(headerMenu.getMenuPanel(), BorderLayout.WEST);
-
-        components = new Components();
-        initializeContentPanel();
-        setVisible(true);
+    public OrderList(JPanel mainContentPanel) {
+        this.mainContentPanel = mainContentPanel;
+        components = new Components(null);
+        contentPanel = new JPanel(new BorderLayout());
     }
 
     // Method for initializing content panel
-    private void initializeContentPanel() {
-        contentPanel = new JPanel(new BorderLayout());
+    public JPanel initializeContentPanel() {
+        contentPanel.setPreferredSize(new Dimension(1286, 590));
 
         initializeContentTitle();
         initializeTable();
@@ -73,6 +60,7 @@ public class OrderList extends JFrame implements ActionListener {
         contentPanel.add(contentButton, BorderLayout.SOUTH);
 
         add(contentPanel);
+        return contentPanel;
     }
 
     // Method for creating title
@@ -259,9 +247,11 @@ public class OrderList extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonAdd) {
-            dispose();
-            NewOrder newOrder = new NewOrder();
-            newOrder.createWindow();
+            // change the content of the main panel instead of opening a new window
+            mainContentPanel.removeAll();
+            mainContentPanel.add(new NewOrder().addSpecificOrder());
+            mainContentPanel.revalidate();
+            mainContentPanel.repaint();
         }
     }
 
@@ -273,12 +263,17 @@ public class OrderList extends JFrame implements ActionListener {
                 int column = table.columnAtPoint(e.getPoint());
                 int row = table.rowAtPoint(e.getPoint());
                 if (column == 5) {
-                    dispose();
-                    SpecificOrder specificOrder = new SpecificOrder();
+                    // change the content of the main panel instead of opening a new window
+                    mainContentPanel.removeAll();
+                    mainContentPanel.add(new SpecificOrder().addSpecificOrder());
+                    mainContentPanel.revalidate();
+                    mainContentPanel.repaint();
                 } else if (column == 6) {
-                    dispose();
-                    UpdateOrder updateOrder = new UpdateOrder();
-                    updateOrder.createWindow();
+                    // change the content of the main panel instead of opening a new window
+                    mainContentPanel.removeAll();
+                    mainContentPanel.add(new UpdateOrder().addSpecificOrder());
+                    mainContentPanel.revalidate();
+                    mainContentPanel.repaint();
                 } else if (column == 7) {
                     long valor = Long.parseLong(table.getValueAt(row, 0).toString());
                     components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);

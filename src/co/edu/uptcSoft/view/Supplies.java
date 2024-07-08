@@ -23,29 +23,19 @@ public class Supplies extends JFrame implements ActionListener {
     private JLabel titleLabel;
     private JTextField searchTextField;
     private JButton buttonAdd;
-    private Font font;
+    private JPanel mainContentPanel;
 
-    public Supplies(){
-        setTitle("Insumos");
-        setSize(1366, 670);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window on open
-        setLayout(new BorderLayout());
 
-        // Menu
-        HeaderMenu headerMenu = new HeaderMenu();
-        add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
-        add(headerMenu.getMenuPanel(), BorderLayout.WEST);
-
-        components = new Components();
-        initializeContentPanel();
-        setVisible(true);
+    public Supplies(JPanel mainContentPanel){
+        this.mainContentPanel = mainContentPanel;
+        components = new Components(mainContentPanel);
     }
 
+
     // Method for initializing content panel
-    private void initializeContentPanel() {
+    public JPanel initializeContentPanel() {
         contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setPreferredSize(new Dimension(1366, 590));
 
         initializeContentTitle();
         initializeTable();
@@ -63,6 +53,7 @@ public class Supplies extends JFrame implements ActionListener {
         contentPanel.add(contentButton, BorderLayout.SOUTH);
 
         add(contentPanel);
+        return contentPanel;
     }
 
     // Method for creating title and search field
@@ -259,10 +250,14 @@ public class Supplies extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonAdd) {
-            dispose();
-            NewSupplie newSupplies = new NewSupplie();
+            // change the content of the main panel instead of opening a new window
+            mainContentPanel.removeAll();
+            mainContentPanel.add(new NewSupplie(mainContentPanel).initializeContentPanel());
+            mainContentPanel.revalidate();
+            mainContentPanel.repaint();
         }
     }
+
 
     // Method for configuring the MouseListener, view line 173
     private void setupTableMouseListener(JTable table) {
@@ -273,8 +268,11 @@ public class Supplies extends JFrame implements ActionListener {
                 if (column == 7) {
                     components.windowConfirmation("¿Está seguro de eliminar esta insumo?", "Cancelar", "Eliminar", "Insumo eliminado con éxito");
                 } else if (column == 8) {
-                    dispose();
-                    UpdateSupplie updateSupplies = new UpdateSupplie();
+                    // change the content of the main panel instead of opening a new window
+                    mainContentPanel.removeAll();
+                    mainContentPanel.add(new UpdateSupplie(mainContentPanel).initializeContentPanel());
+                    mainContentPanel.revalidate();
+                    mainContentPanel.repaint();
                 }
             }
         });

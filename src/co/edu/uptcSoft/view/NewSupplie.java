@@ -32,29 +32,15 @@ public class NewSupplie extends JFrame implements ActionListener {
     private JButton addButton;
     private JButton cancelButton;
     private JLabel titleLabel;
+    private JPanel mainContentPanel;
 
-    public NewSupplie() {
-        setTitle("Nuevo Insumo");
-        setSize(1366, 670);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        // Maximice window on open
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setLayout(new BorderLayout());
-
-        // Menu
-        HeaderMenu headerMenu = new HeaderMenu();
-        add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
-        add(headerMenu.getMenuPanel(), BorderLayout.WEST);
-
-        components = new Components();
-        initializeContentPanel();
-        setVisible(true);
+    public NewSupplie(JPanel mainContentPanel) {
+        this.mainContentPanel = mainContentPanel;
+        components = new Components(mainContentPanel);
     }
 
     // Method for initializing content panel
-    public void initializeContentPanel() {
+    public JPanel initializeContentPanel() {
         contentPanel = new JPanel(null);
         contentPanel.setPreferredSize(new Dimension(1366, 670));
         contentPanel.setBackground(Color.WHITE);
@@ -67,6 +53,7 @@ public class NewSupplie extends JFrame implements ActionListener {
 
         // Panel cantidad
         panelSouth();
+        return contentPanel;
     }
 
     // Method for creating title and search field
@@ -75,7 +62,7 @@ public class NewSupplie extends JFrame implements ActionListener {
         contentTitle.setLayout(null);
         contentTitle.setBackground(Color.WHITE);
         contentTitle.setForeground(Color.BLACK);
-        contentTitle.setPreferredSize(new Dimension(1286, 100));
+        contentTitle.setPreferredSize(new Dimension(1366, 100));
 
         // title label
         titleLabel = new JLabel("Nuevo Insumo", JLabel.CENTER);
@@ -88,7 +75,7 @@ public class NewSupplie extends JFrame implements ActionListener {
 
         contentTitle.add(titleLabel);
 
-        contentTitle.setBounds(0, 0, 1286, 100);
+        contentTitle.setBounds(0, 0, 1366, 100);
         contentPanel.add(contentTitle, BorderLayout.NORTH);
     }
 
@@ -97,7 +84,7 @@ public class NewSupplie extends JFrame implements ActionListener {
         // Panel materiales
         materialPanel = new JPanel(null);
         materialPanel.setBackground(Color.decode("#D9D9D9"));
-        materialPanel.setBounds(143, 100, 1000, 240);
+        materialPanel.setBounds(183, 100, 1000, 240);
 
         // Label material
         materialLabel = new JLabel("Material");
@@ -150,7 +137,7 @@ public class NewSupplie extends JFrame implements ActionListener {
         // Panel cantidad
         quantityPanel = new JPanel(null);
         quantityPanel.setBackground(Color.decode("#D9D9D9"));
-        quantityPanel.setBounds(143, 350, 1000, 240);
+        quantityPanel.setBounds(183, 350, 1000, 240);
 
         // Label quantity
         quantityLabel = new JLabel("Cantidad");
@@ -242,7 +229,11 @@ public class NewSupplie extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
             dispose();
-            Supplies supplies = new Supplies();
+            // change the content of the main panel instead of opening a new window
+            mainContentPanel.removeAll();
+            mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+            mainContentPanel.revalidate();
+            mainContentPanel.repaint();
             components.messageConfirmation("Insumo agrgado con éxito");
             // Starts a timer to close the window after 1 seconds
             Timer timer = new Timer(1000, new ActionListener() {
@@ -254,7 +245,11 @@ public class NewSupplie extends JFrame implements ActionListener {
             timer.setRepeats(false); // To make the timer only execute once
             timer.start();
         } else if (e.getSource() == cancelButton) {
-            Supplies supplies = new Supplies();
+            // change the content of the main panel instead of opening a new window
+            mainContentPanel.removeAll();
+            mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+            mainContentPanel.revalidate();
+            mainContentPanel.repaint();
         }
     }
 }

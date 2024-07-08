@@ -21,7 +21,11 @@ public class Components implements ActionListener {
     private JPanel confirmationPanel;
     private Logic logic = logic = Logic.getInstance(); // Get the single instance of Logic
     private long row;
+    private JPanel mainContentPanel;
 
+    public Components(JPanel mainContentPanel) {
+        this.mainContentPanel = mainContentPanel;
+    }
     // Method for creating fonts
     public Font createFont(int style, int size) {
         try {
@@ -217,7 +221,12 @@ public class Components implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonYes) {
             logic.deleteOrder(row);
-            OrderList orderList = new OrderList();
+            // Cambiar el contenido del panel principal en lugar de abrir una nueva ventana
+            mainContentPanel.removeAll();
+            mainContentPanel.add(new OrderList(mainContentPanel).initializeContentPanel());
+            mainContentPanel.revalidate();
+            mainContentPanel.repaint();
+            OrderList orderList = new OrderList(mainContentPanel);
             orderList.initializeTable();
             confirmationFrame.dispose();
             messageConfirmation(message);

@@ -25,30 +25,14 @@ public class Admin extends JFrame implements ActionListener {
     private JTextField newEmailTextField;
     private JButton saveEmailButton;
     private JButton savePasswordButton;
+    private JPanel mainContentPanel;
 
-    public Admin() {
-        setTitle("Administrador");
-        setSize(1366, 670);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        // Maximice window on open
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setLayout(new BorderLayout());
-
-        // Menu
-        HeaderMenu headerMenu = new HeaderMenu();
-        add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
-        add(headerMenu.getMenuPanel(), BorderLayout.WEST);
-
-        components = new Components();
-        initializeContentPanel();
-        add(contentPanel, BorderLayout.CENTER);  // Añadir contentPanel al JFrame
-        setVisible(true);
+    public Admin(JPanel mainContentPanel) {
+        components = new Components(mainContentPanel);
     }
 
     // Method for initializing content panel
-    public void initializeContentPanel() {
+    public JPanel initializeContentPanel() {
         contentPanel = new JPanel(null);  // Usar null layout para posición absoluta
         contentPanel.setPreferredSize(new Dimension(1366, 670));
         //contentPanel.setBorder(BorderFactory.createEmptyBorder(75,40,0,0));
@@ -56,7 +40,7 @@ public class Admin extends JFrame implements ActionListener {
 
         datesPanel = new JPanel(null);
         datesPanel.setBackground(Color.WHITE);
-        datesPanel.setBounds(0, 100, 1366, 570);
+        datesPanel.setBounds(40, 100, 1366, 570);
 
         // Panel title
         initializeContentTitle();
@@ -66,6 +50,7 @@ public class Admin extends JFrame implements ActionListener {
 
         // Panel cantidad
         panelPassword();
+        return contentPanel;
     }
 
     // Method for creating title and search field

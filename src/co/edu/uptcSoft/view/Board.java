@@ -13,27 +13,10 @@ public class Board extends JFrame {
     private JScrollPane cardScrollPanes;
 
     public Board() {
-        setTitle("Board");
-        setSize(1366, 670);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        // Maximizar la ventana al abrirla
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        setLayout(new BorderLayout());
-
-        HeaderMenu headerMenu = new HeaderMenu();
-        add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
-        add(headerMenu.getMenuPanel(), BorderLayout.WEST);
-
-        components = new Components();
-
-        contentPanel();
-        setVisible(true);
+        components = new Components(null);
     }
 
-    public void contentPanel() {
+    public JPanel contentPanel() {
         contentPanel = new JPanel();
         contentPanel.setLayout(new BorderLayout());
         contentPanel.setBackground(Color.WHITE);
@@ -61,6 +44,7 @@ public class Board extends JFrame {
 
         contentPanel.add(cardsPanel);
         add(contentPanel, BorderLayout.CENTER);
+        return contentPanel;
     }
 
     private void addCard(String title, int position, String[] orders) {
