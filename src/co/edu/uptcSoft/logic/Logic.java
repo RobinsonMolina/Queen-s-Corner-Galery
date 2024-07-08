@@ -7,18 +7,27 @@ import java.util.*;
 
 public class Logic {
 
+    private static Logic instance; // Instancia única de Logic
     private TreeMap<Long, Customer> customerList;
     private TreeMap<Integer, Order> orderList;
     private Order order;
     private Customer customer;
     private int orderNumber;
 
-    public Logic() {
+    private Logic() {
         customerList = new TreeMap<>();
         orderList = new TreeMap<>();
         customer = new Customer();
         loadCustomers();
         loadOrders();
+    }
+
+    // Método estático para obtener la instancia única de Logic
+    public static Logic getInstance() {
+        if (instance == null) {
+            instance = new Logic();
+        }
+        return instance;
     }
 
     private void loadCustomers() {
@@ -70,6 +79,9 @@ public class Logic {
         return customerList;
     }
 
+    public void deleteOrder(long row) {
+        orderList.remove((int) row);
+    }
 
 
     /*public static void main(String[] args) {

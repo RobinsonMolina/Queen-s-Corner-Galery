@@ -39,7 +39,7 @@ public class OrderList extends JFrame implements ActionListener {
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window on open
         setLayout(new BorderLayout());
 
-        logic = new Logic();
+        logic = Logic.getInstance(); // Obtener la instancia única de Logic
 
         // Menu
         HeaderMenu headerMenu = new HeaderMenu();
@@ -113,7 +113,7 @@ public class OrderList extends JFrame implements ActionListener {
     }
 
     // Method for initializing table
-    private void initializeTable() {
+    public void initializeTable() {
 
         ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\Eye.png");
         Image image = icon.getImage();
@@ -283,6 +283,7 @@ public class OrderList extends JFrame implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int column = table.columnAtPoint(e.getPoint());
+                int row = table.rowAtPoint(e.getPoint());
                 if (column == 5) {
                     dispose();
                     SpecificOrder specificOrder = new SpecificOrder();
@@ -291,8 +292,8 @@ public class OrderList extends JFrame implements ActionListener {
                     UpdateOrder updateOrder = new UpdateOrder();
                     updateOrder.createWindow();
                 } else if (column == 7) {
-                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito");
-
+                    long valor = Long.parseLong(table.getValueAt(row, 0).toString());
+                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
                 }
             }
         });

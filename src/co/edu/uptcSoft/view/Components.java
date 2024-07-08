@@ -1,5 +1,7 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -17,6 +19,8 @@ public class Components implements ActionListener {
     private JFrame confirmationFrame2;
     private String message;
     private JPanel confirmationPanel;
+    private Logic logic = logic = Logic.getInstance(); // Obtener la instancia única de Logic
+    private long row;
 
     // Method for creating fonts
     public Font createFont(int style, int size) {
@@ -142,6 +146,50 @@ public class Components implements ActionListener {
         confirmationFrame.setVisible(true);
     }
 
+    // window method to confirm
+    public void windowConfirmation(String title, String button1, String button2, String message, long row) {
+
+        this.message = message;
+        this.row = row;
+        confirmationFrame = new JFrame();
+        confirmationFrame.setTitle("Confirmación");
+        confirmationFrame.setSize(500, 130);
+        confirmationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        confirmationFrame.setLocationRelativeTo(null);
+
+        confirmationPanel = new JPanel();
+        confirmationPanel.setBackground(Color.WHITE);
+        JLabel confirmationLabel = new JLabel(title);
+        confirmationLabel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        confirmationLabel.setFont(createFont(0, 20));
+        confirmationLabel.setForeground(Color.BLACK);
+        confirmationPanel.add(confirmationLabel, BorderLayout.NORTH);
+
+        // Rounded button panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.WHITE);
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        // Button yes
+        buttonNo = createRoundedButton(button1, "#000000", "#2F1940", 30, 30);
+        buttonNo.setPreferredSize(new Dimension(150, 34));
+        buttonPanel.add(buttonNo);
+
+        buttonNo.addActionListener(this);
+
+        // Button no
+        buttonYes = createRoundedButton(button2, "#000000", "#2F1940", 30, 30);
+        buttonYes.setPreferredSize(new Dimension(150, 34));
+        buttonPanel.add(buttonYes);
+
+
+        buttonYes.addActionListener(this);
+        confirmationPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        confirmationFrame.add(confirmationPanel);
+        confirmationFrame.setVisible(true);
+    }
+
     // Method for confirming the message after clicking on the yes button
     public void messageConfirmation(String message) {
         confirmationFrame2 = new JFrame();
@@ -167,6 +215,9 @@ public class Components implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonYes) {
+            logic.deleteOrder(row);
+            OrderList orderList = new OrderList();
+            orderList.initializeTable();
             confirmationFrame.dispose();
             messageConfirmation(message);
             // Starts a timer to close the window after 1 seconds
