@@ -19,7 +19,7 @@ public class Components implements ActionListener {
     private JFrame confirmationFrame2;
     private String message;
     private JPanel confirmationPanel;
-    private Logic logic = logic = Logic.getInstance(); // Obtener la instancia única de Logic
+    private Logic logic = logic = Logic.getInstance(); // Get the single instance of Logic
     private long row;
 
     // Method for creating fonts
@@ -73,7 +73,7 @@ public class Components implements ActionListener {
     public JTextField createRoundedTextField(int arcw, int arch) {
         return new JTextField() {
             @Override
-            // Establecemos el tamaño del campo
+            // Set the size of the field
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -85,7 +85,7 @@ public class Components implements ActionListener {
             }
 
             @Override
-            // Dibujamos el borde del campo
+            // Draw the border of the field
             protected void paintBorder(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -146,6 +146,7 @@ public class Components implements ActionListener {
         confirmationFrame.setVisible(true);
     }
 
+    //mehhod overloaded to confirm the message after clicking on the yes button
     // window method to confirm
     public void windowConfirmation(String title, String button1, String button2, String message, long row) {
 

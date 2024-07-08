@@ -7,12 +7,11 @@ import java.util.*;
 
 public class Logic {
 
-    private static Logic instance; // Instancia única de Logic
+    private static Logic instance; // Single instance of Logic
     private TreeMap<Long, Customer> customerList;
     private TreeMap<Integer, Order> orderList;
     private Order order;
     private Customer customer;
-    private int orderNumber;
 
     private Logic() {
         customerList = new TreeMap<>();
@@ -22,7 +21,7 @@ public class Logic {
         loadOrders();
     }
 
-    // Método estático para obtener la instancia única de Logic
+    // Static method to get the single instance of Logic
     public static Logic getInstance() {
         if (instance == null) {
             instance = new Logic();
@@ -30,10 +29,12 @@ public class Logic {
         return instance;
     }
 
+    // Method to load customers
     private void loadCustomers() {
         addCustomer("Carlos", 12345, "carlos@gmail.com", "A", 12345);
     }
 
+    // Method to load orders
     private void loadOrders() {
         addOrder("Producto", "Pendiente", 1, "Pedido", new Date(), new Date(), "Andre", 12345,  123l);
         addOrder("Producto", "Pendiente", 2, "Pedido", new Date(), new Date(), "Carlos", 12345,  123l);
@@ -43,23 +44,23 @@ public class Logic {
         addOrder("Producto", "Pendiente", 5, "Pedido", new Date(), new Date(), "esteban", 12345,7890l);
     }
 
+    // Method to add customers
     public void addCustomer(String name, long documentNumber, String email, String address, long phoneNumber) {
         customerList.put(documentNumber, new Customer(name, documentNumber, email, address, phoneNumber));
     }
 
+    // Method to add orders
     public void addOrder(String productName, String status, int orderNumber, String type, Date productionDate,
                          Date deliveryDate, String name,long phoneNumber,
                          long documentNumber) {
 
         order = new Order(productName, status, orderNumber, type, productionDate, deliveryDate, null);
 
-        if (!customerList.containsKey(documentNumber)) {
-            System.out.println("No existe");
+        if (!customerList.containsKey(documentNumber)) { // If the customer does not exist
             addCustomer(name, documentNumber, "", "", phoneNumber);
             customerList.get(documentNumber).addOrder(order);
             order.setCustomer(customerList.get(documentNumber));
-        } else {
-            System.out.println("Existe");
+        } else { // If the customer already exists
              customer = customerList.get(documentNumber);
              customer.setName(name);
              customer.setDocumentNumber(documentNumber);
@@ -82,39 +83,4 @@ public class Logic {
     public void deleteOrder(long row) {
         orderList.remove((int) row);
     }
-
-
-    /*public static void main(String[] args) {
-        logic l = new logic();
-
-        l.addOrder("Producto", "Pendiente", 1, "Pedido", new Date(), new Date(), "Andre", 12345,  123l);
-        l.addOrder("Producto", "Pendiente", 2, "Pedido", new Date(), new Date(), "Carlos", 12345,  123l);
-        l.addOrder("Producto", "Pendiente", 2, "Pedido", new Date(), new Date(), "Felipe", 12345,  123l);
-        l.addOrder("Producto", "Pendiente", 3, "Pedido", new Date(), new Date(), "Felipe", 12345,  123l);
-        l.addOrder("Producto", "Pendiente", 4, "Pedido", new Date(), new Date(), "Juan", 12345,  7890l);
-        l.addOrder("Producto", "Pendiente", 5, "Pedido", new Date(), new Date(), "esteban", 12345,7890l);
-
-        System.out.println(l.orderList.size());
-        for (Map.Entry<Integer, Order> entry : l.orderList.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-
-        System.out.println("------------------------------------------");
-
-        // Mostrar numero de documento, nombre y numero de orden
-        for (Map.Entry<Long, Customer> entry : l.customerList.entrySet()) {
-            //Cliente cliente = entry.getValue();
-            System.out.print("Nombre: " + entry.getValue().getName() + " ");
-            System.out.print(" Documento: " + entry.getValue().getDocumentNumber());
-            System.out.print(" Correo: " + entry.getValue().getEmail() + " ");
-            System.out.print(" Dirección: " + entry.getValue().getAddress() + " ");
-            System.out.print(" Teléfono: " + entry.getValue().getPhoneNumber() + " ");
-
-            System.out.print(" Órdenes: ");
-            for (Order order : entry.getValue().getOrders()) {
-                System.out.print(order.getOrderNumber() + ", ");
-            }
-            System.out.println();
-        }
-    }*/
 }

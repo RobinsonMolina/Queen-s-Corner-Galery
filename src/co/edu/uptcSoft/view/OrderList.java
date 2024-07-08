@@ -39,7 +39,7 @@ public class OrderList extends JFrame implements ActionListener {
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window on open
         setLayout(new BorderLayout());
 
-        logic = Logic.getInstance(); // Obtener la instancia única de Logic
+        logic = Logic.getInstance(); // Get the single instance of Logic
 
         // Menu
         HeaderMenu headerMenu = new HeaderMenu();
@@ -114,18 +114,6 @@ public class OrderList extends JFrame implements ActionListener {
 
     // Method for initializing table
     public void initializeTable() {
-
-        ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\Eye.png");
-        Image image = icon.getImage();
-        ImageIcon eyeIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-
-        ImageIcon icon2 = new ImageIcon("src\\Utilities\\Images\\Edit.png");
-        Image image2 = icon2.getImage();
-        ImageIcon pencilIcon = new ImageIcon(image2.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-
-        ImageIcon icon3 = new ImageIcon("src\\Utilities\\Images\\Trash.png");
-        Image image3 = icon3.getImage();
-        ImageIcon trashIcon = new ImageIcon(image3.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
         // Data of the table
         String[] columnNames = {"Nº. Orden", "Producto", "Nombre Cliente", "Telefono", "Fecha De Entrega", "", "", ""};
@@ -299,8 +287,7 @@ public class OrderList extends JFrame implements ActionListener {
         });
     }
 
-    // Method for getting the order list
-
+    // Method for getting the order list and its icons
     public Object[][] getOrderList() {
 
         ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\Eye.png");
@@ -318,7 +305,7 @@ public class OrderList extends JFrame implements ActionListener {
         ArrayList<Order> orderList = new ArrayList<>(logic.getOrderList().values());
 
         orderListTable = new Object[orderList.size()][8];
-        // Definimos el formato deseado
+        // change the format desired
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
         for (int i = 0; i < orderList.size(); i++) {
@@ -331,7 +318,6 @@ public class OrderList extends JFrame implements ActionListener {
             orderListTable[i][6] = pencilIcon;
             orderListTable[i][7] = trashIcon;
         }
-
         return orderListTable;
     }
 
