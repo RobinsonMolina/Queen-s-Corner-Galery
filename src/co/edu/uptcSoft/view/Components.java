@@ -26,6 +26,9 @@ public class Components implements ActionListener {
     public Components(JPanel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
     }
+
+    public Components() {
+    }
     // Method for creating fonts
     public Font createFont(int style, int size) {
         try {

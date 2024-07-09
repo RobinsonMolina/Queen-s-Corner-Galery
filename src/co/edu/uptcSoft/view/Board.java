@@ -11,10 +11,32 @@ public class Board extends JFrame {
     private JPanel cardsPanel;
     private JButton orderButton;
     private JScrollPane cardScrollPanes;
+    private JPanel mainContentPanel;
 
     public Board() {
+        //this.mainContentPanel = mainContentPanel;
         components = new Components(null);
     }
+
+    /*public Board() {
+        setTitle("Queen's Corner Gallery");
+        setSize(1366, 670);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        // Maximizar la ventana al abrirla
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        setLayout(new BorderLayout());
+
+        components = new Components();
+        HeaderMenu headerMenu = new HeaderMenu();
+        add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
+        add(headerMenu.getMenuPanel(), BorderLayout.WEST);
+
+        contentPanel();
+        setVisible(true);
+    }*/
 
     public JPanel contentPanel() {
         contentPanel = new JPanel();
@@ -106,8 +128,11 @@ public class Board extends JFrame {
             dispose();
             JButton button = (JButton) e.getSource();
             String orderNumber = button.getText();
-            SpecificOrder specificOrder = new SpecificOrder();
-            specificOrder.createWindow();
+            // change the content of the main panel instead of opening a new window
+            mainContentPanel.removeAll();
+            mainContentPanel.add(new SpecificOrder().addSpecificOrder());
+            mainContentPanel.revalidate();
+            mainContentPanel.repaint();
         }
     }
 }

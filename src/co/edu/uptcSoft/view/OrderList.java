@@ -34,7 +34,7 @@ public class OrderList extends JFrame implements ActionListener {
 
     public OrderList(JPanel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
-        components = new Components(null);
+        components = new Components(mainContentPanel);
         contentPanel = new JPanel(new BorderLayout());
     }
 

@@ -16,7 +16,6 @@ public class Login implements ActionListener {
     private JLabel imagePanel;
     private JButton loginButton;
 
-
     public Login() {
         loginWindow = new JFrame("Login");
         mainPanel = new JPanel(new BorderLayout());

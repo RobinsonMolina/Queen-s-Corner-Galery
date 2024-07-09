@@ -21,7 +21,13 @@ public class SpecificOrder {
     private JPanel window;
     private JPanel dataSpecificOrder;
 
+
     public SpecificOrder() {
+        allInformation = new JPanel();
+        allInfoPanel = new JPanel();
+        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+    }
+    /*public SpecificOrder() {
         specificOrderWindow = new JFrame("Orden Especifica");
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
@@ -49,7 +55,7 @@ public class SpecificOrder {
         window.add(headerMenu.getMenuPanel(), BorderLayout.WEST);
         window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
         window.add(allInformation, BorderLayout.CENTER);
-    }
+    }*/
 
     public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Orden Especifica");
