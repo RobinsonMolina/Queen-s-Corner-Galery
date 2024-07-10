@@ -351,13 +351,5 @@ public class OrderList extends JFrame implements ActionListener {
         } else {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
         }
-
-        // Depuración: Imprimir el contenido de cada celda en la consola
-        /*for (int row = 0; row < table.getRowCount(); row++) {
-            for (int col = 0; col < table.getColumnCount(); col++) {
-                System.out.print("[" + row + "," + col + "]: " + table.getValueAt(row, col) + "  ");
-            }
-            System.out.println();
-        }*/
     }
 }
