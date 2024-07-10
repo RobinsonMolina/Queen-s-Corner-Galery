@@ -5,9 +5,12 @@ import co.edu.uptcSoft.logic.Logic;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +34,7 @@ public class OrderList extends JFrame implements ActionListener {
     private Object orderListTable[][];
     private Logic logic = Logic.getInstance();
     private JPanel mainContentPanel;
+    private TableRowSorter<DefaultTableModel> sorter;
 
     public OrderList(JPanel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
@@ -98,6 +102,25 @@ public class OrderList extends JFrame implements ActionListener {
         titleLabel.add(searchTextField);
         contentTitle.setBounds(0, 0, 1286, 100);
         contentPanel.add(contentTitle, BorderLayout.NORTH);
+
+        // Agregar DocumentListener al JTextField para filtrar la tabla
+        searchTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterTable();
+            }
+        });
     }
 
     // Method for initializing table
@@ -148,6 +171,10 @@ public class OrderList extends JFrame implements ActionListener {
         table.setRowHeight(34);
         table.setShowGrid(false);
         setColumnWidths(table);
+
+        // TableRowSorter for filtering
+        sorter = new TableRowSorter<>(model);
+        table.setRowSorter(sorter);
 
         // Table header
         JTableHeader header = table.getTableHeader();
@@ -316,4 +343,21 @@ public class OrderList extends JFrame implements ActionListener {
         return orderListTable;
     }
 
+    // Method for filtering table
+    private void filterTable() {
+        String text = searchTextField.getText();
+        if (text.trim().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+        }
+
+        // Depuración: Imprimir el contenido de cada celda en la consola
+        /*for (int row = 0; row < table.getRowCount(); row++) {
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                System.out.print("[" + row + "," + col + "]: " + table.getValueAt(row, col) + "  ");
+            }
+            System.out.println();
+        }*/
+    }
 }

@@ -133,8 +133,8 @@ public class Login implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
             loginWindow.dispose();
-            HeaderMenu headerMenu = new HeaderMenu();
-            headerMenu.paneles(new Board().contentPanel());
+            HeaderMenu headerMenu = HeaderMenu.getInstance();
+            headerMenu.paneles(new Board(headerMenu.getContentPanel()).contentPanel());
         }
     }
 }

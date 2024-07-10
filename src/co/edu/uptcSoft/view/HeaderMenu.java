@@ -17,6 +17,7 @@ public class HeaderMenu extends JFrame {
     private JPanel menuPanel2;
     private JPanel headerPanel;
     private JPanel contentPanel;
+    private static HeaderMenu instance; // Single instance of HeaderMenu
 
     public HeaderMenu() {
         setTitle("Board");
@@ -33,6 +34,14 @@ public class HeaderMenu extends JFrame {
         add(getMenuPanel(), BorderLayout.WEST);
         contentPanel = new JPanel();
         setVisible(true);
+    }
+
+    // Static method to get the single instance of HeaderMenu
+    public static HeaderMenu getInstance() {
+        if (instance == null) {
+            instance = new HeaderMenu();
+        }
+        return instance;
     }
 
     public JPanel getHeaderPanel() {
@@ -156,7 +165,7 @@ public class HeaderMenu extends JFrame {
                         //JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel2);
                         //frame.dispose(); // Cerrar la ventana actual
                         if (item[1].equals("Board")) {
-                            paneles(new Board().contentPanel());
+                            paneles(new Board(contentPanel).contentPanel());
                         }else if (item[1].equals("Order List")) {
                             paneles(new OrderList(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("New Order")) {
@@ -195,6 +204,11 @@ public class HeaderMenu extends JFrame {
             });
         }
         return menuPanel2;
+    }
+
+    public JPanel getContentPanel() {
+        contentPanel = new JPanel();
+        return contentPanel;
     }
 
     public void paneles(JPanel panel) {

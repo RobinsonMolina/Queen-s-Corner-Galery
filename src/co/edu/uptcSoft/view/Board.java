@@ -1,5 +1,7 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,9 +15,14 @@ public class Board extends JFrame {
     private JScrollPane cardScrollPanes;
     private JPanel mainContentPanel;
 
-    public Board() {
+    /*public Board(String title) {
         //this.mainContentPanel = mainContentPanel;
         components = new Components(null);
+    }*/
+
+    public Board(JPanel mainContentPanel) {
+        this.mainContentPanel = mainContentPanel;
+        components = new Components(mainContentPanel);
     }
 
     /*public Board() {
@@ -125,9 +132,9 @@ public class Board extends JFrame {
     private class OrderButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            dispose();
+            System.out.println("hola");
+            //dispose();
             JButton button = (JButton) e.getSource();
-            String orderNumber = button.getText();
             // change the content of the main panel instead of opening a new window
             mainContentPanel.removeAll();
             mainContentPanel.add(new SpecificOrder().addSpecificOrder());
