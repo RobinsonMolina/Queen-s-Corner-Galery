@@ -304,6 +304,7 @@ public class OrderList extends JFrame implements ActionListener {
                 } else if (column == 7) {
                     long valor = Long.parseLong(table.getValueAt(row, 0).toString());
                     components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
+
                 }
             }
         });

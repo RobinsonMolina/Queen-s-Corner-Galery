@@ -13,6 +13,9 @@ public class Logic {
     private static Logic instance; // Single instance of Logic
     private TreeMap<Long, Customer> customerList;
     private TreeMap<Integer, Order> orderList;
+    private ArrayList<String> ordersDo;
+    private ArrayList<String> ordersProgress;
+    private ArrayList<String> ordersDelivered;
     private Order order;
     private Customer customer;
 
@@ -22,6 +25,7 @@ public class Logic {
         customer = new Customer();
         loadCustomers();
         loadOrders();
+        ordersCard();
     }
 
     // Static method to get the single instance of Logic
@@ -42,22 +46,55 @@ public class Logic {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         try {
             addOrder("SofaCama", "Por Hacer", 1, "Mueble", sdf.parse("10/06/2024"), sdf.parse("25/06/2024"), "Juan David Pérez", 3001234567L, 1234567890L, null);
-            addOrder("Mesa De Centro", "En Proceso", 2, "Mueble", sdf.parse("12/06/2024"), sdf.parse("27/06/2024"), "María Alejandra Rodríguez", 339876543L, 2345678901L, null);
+            addOrder("Mesa De Centro", "Entregado", 2, "Mueble", sdf.parse("12/06/2024"), sdf.parse("27/06/2024"), "María Alejandra Rodríguez", 339876543L, 2345678901L, null);
             addOrder("Cojines", "Por Hacer", 3, "Mueble", sdf.parse("15/06/2024"), sdf.parse("30/06/2024"), "Carlos Andrés Gómez", 323456789L, 3456789012L, null);
-            addOrder("Lampara", "En Proceso", 4, "Mueble", sdf.parse("17/06/2024"), sdf.parse("02/07/2024"), "Luisa Fernanda Fernández", 3109876543L, 4567890123L, null);
-            addOrder("Sofa", "Por Hacer", 5, "Mueble", sdf.parse("20/06/2024"), sdf.parse("05/07/2024"), "Andrés Felipe López", 316879801L, 5678901234L, null);
-            addOrder("SofaCama", "En Proceso", 6, "Mueble", sdf.parse("22/06/2024"), sdf.parse("07/07/2024"), "Ana María Torres", 318678902L, 6789012345L, null);
+            addOrder("Lampara", "En Progreso", 4, "Mueble", sdf.parse("17/06/2024"), sdf.parse("02/07/2024"), "Luisa Fernanda Fernández", 3109876543L, 4567890123L, null);
+            addOrder("Sofa", "Entregado", 5, "Mueble", sdf.parse("20/06/2024"), sdf.parse("05/07/2024"), "Andrés Felipe López", 316879801L, 5678901234L, null);
+            addOrder("SofaCama", "En Progreso", 6, "Mueble", sdf.parse("22/06/2024"), sdf.parse("07/07/2024"), "Ana María Torres", 318678902L, 6789012345L, null);
             addOrder("SofaCama", "Por Hacer", 7, "Mueble", sdf.parse("25/06/2024"), sdf.parse("10/07/2024"), "Diego Alejandro Martínez", 317890123L, 7890123456L, null);
-            addOrder("SofaCama", "En Proceso", 8, "Mueble", sdf.parse("27/06/2024"), sdf.parse("12/07/2024"), "Laura Patricia Ramírez", 3198901234L, 8901234567L, null);
+            addOrder("SofaCama", "Entregado", 8, "Mueble", sdf.parse("27/06/2024"), sdf.parse("12/07/2024"), "Laura Patricia Ramírez", 3198901234L, 8901234567L, null);
             addOrder("Lampara", "Por Hacer", 9, "Mueble", sdf.parse("29/06/2024"), sdf.parse("14/07/2024"), "Pedro José Jiménez", 3109021345L, 9012345678L, null);
-            addOrder("Mesa De Centro", "En Proceso", 10, "Mueble", sdf.parse("01/06/2024"), sdf.parse("16/06/2024"), "Sofía Margarita Morales", 3190173456L, 1234509876L, null);
-            addOrder("Cojines", "Por Hacer", 11, "Mueble", sdf.parse("03/06/2024"), sdf.parse("18/06/2024"), "Jorge Luis Ríos", 3111234567L, 2345609876L, null);
-            addOrder("Mesa De Centro", "En Proceso", 12, "Mueble", sdf.parse("05/06/2024"), sdf.parse("20/06/2024"), "María Alejandra Rodríguez", 3398763543L, 3456709876L, null);
-            addOrder("Mesa De Centro", "Por Hacer", 13, "Mueble", sdf.parse("07/06/2024"), sdf.parse("22/06/2024"), "Alberto Gómez", 3209876534L, 4567809876L, null);
-            addOrder("Mesa De Centro", "En Proceso", 14, "Mueble", sdf.parse("10/06/2024"), sdf.parse("24/06/2024"), "Santiago Herrera", 3123453678L, 5678909876L, null);
-            addOrder("Mesa De Centro", "Por Hacer", 15, "Mueble", sdf.parse("11/06/2024"), sdf.parse("26/06/2024"), "Ricardo Pérez", 3219876534L, 6789010987L, null);
-            addOrder("Mesa De Centro", "En Proceso", 16, "Mueble", sdf.parse("13/06/2024"), sdf.parse("28/06/2024"), "Daniela Torres", 3245678390L, 7890120987L, null);
+            addOrder("Mesa De Centro", "En Progreso", 10, "Mueble", sdf.parse("01/06/2024"), sdf.parse("16/06/2024"), "Sofía Margarita Morales", 3190173456L, 1234509876L, null);
+            addOrder("Cojines", "Entregado", 11, "Mueble", sdf.parse("03/06/2024"), sdf.parse("18/06/2024"), "Jorge Luis Ríos", 3111234567L, 2345609876L, null);
+            addOrder("Mesa De Centro", "En Progreso", 12, "Mueble", sdf.parse("05/06/2024"), sdf.parse("20/06/2024"), "María Alejandra Rodríguez", 3398763543L, 3456709876L, null);
+            addOrder("SofaCama", "Por Hacer", 13, "Mueble", sdf.parse("07/06/2024"), sdf.parse("22/06/2024"), "Alberto Gómez", 3209876534L, 4567809876L, null);
+            addOrder("Mesa De Centro", "En Progreso", 14, "Mueble", sdf.parse("10/06/2024"), sdf.parse("24/06/2024"), "Santiago Herrera", 3123453678L, 5678909876L, null);
+            addOrder("Lampara", "Entregado", 15, "Mueble", sdf.parse("11/06/2024"), sdf.parse("26/06/2024"), "Ricardo Pérez", 3219876534L, 6789010987L, null);
+            addOrder("Mesa De Centro", "En Progreso", 16, "Mueble", sdf.parse("13/06/2024"), sdf.parse("28/06/2024"), "Daniela Torres", 3245678390L, 7890120987L, null);
             addOrder("Mesa De Centro", "Por Hacer", 17, "Mueble", sdf.parse("15/06/2024"), sdf.parse("30/06/2024"), "Valeria Mendoza", 3256783901L, 8901230987L, null);
+            addOrder("SofaCama", "Entregado", 18, "Mueble", sdf.parse("10/06/2024"), sdf.parse("25/06/2024"), "Juan Carlos Ruiz", 3001234568L, 1234567891L, null);
+            addOrder("Mesa De Centro", "En Progreso", 19, "Mueble", sdf.parse("12/06/2024"), sdf.parse("27/06/2024"), "Paula Andrea García", 339876544L, 2345678902L, null);
+            addOrder("Cojines", "Por Hacer", 20, "Mueble", sdf.parse("15/06/2024"), sdf.parse("30/06/2024"), "Miguel Ángel Ríos", 323456790L, 3456789013L, null);
+            addOrder("Lampara", "En Progreso", 21, "Mueble", sdf.parse("17/06/2024"), sdf.parse("02/07/2024"), "Luis Fernando Martínez", 3109876544L, 4567890124L, null);
+            addOrder("Sofa", "Entregado", 22, "Mueble", sdf.parse("20/06/2024"), sdf.parse("05/07/2024"), "Laura Camila Torres", 316879802L, 5678901235L, null);
+            addOrder("SofaCama", "En Progreso", 23, "Mueble", sdf.parse("22/06/2024"), sdf.parse("07/07/2024"), "José Manuel Gómez", 318678903L, 6789012346L, null);
+            addOrder("SofaCama", "Por Hacer", 24, "Mueble", sdf.parse("25/06/2024"), sdf.parse("10/07/2024"), "Ana Patricia Ramírez", 317890124L, 7890123457L, null);
+            addOrder("SofaCama", "Entregado", 25, "Mueble", sdf.parse("27/06/2024"), sdf.parse("12/07/2024"), "Carlos Andrés López", 3198901235L, 8901234568L, null);
+            addOrder("Lampara", "Por Hacer", 26, "Mueble", sdf.parse("29/06/2024"), sdf.parse("14/07/2024"), "Mónica Isabel Pérez", 3109021346L, 9012345679L, null);
+            addOrder("Mesa De Centro", "En Progreso", 27, "Mueble", sdf.parse("01/06/2024"), sdf.parse("16/06/2024"), "Sergio Andrés Jiménez", 3190173457L, 1234509877L, null);
+            addOrder("Cojines", "Entregado", 28, "Mueble", sdf.parse("03/06/2024"), sdf.parse("18/06/2024"), "Lucía Fernanda Morales", 3111234568L, 2345609877L, null);
+            addOrder("Mesa De Centro", "En Progreso", 29, "Mueble", sdf.parse("05/06/2024"), sdf.parse("20/06/2024"), "Sofía Alejandra Rodríguez", 3398763544L, 3456709877L, null);
+            addOrder("SofaCama", "Por Hacer", 30, "Mueble", sdf.parse("07/06/2024"), sdf.parse("22/06/2024"), "Roberto Carlos Gómez", 3209876535L, 4567809877L, null);
+            addOrder("Mesa De Centro", "En Progreso", 31, "Mueble", sdf.parse("10/06/2024"), sdf.parse("24/06/2024"), "Valentina Herrera", 3123453679L, 5678909877L, null);
+            addOrder("Sofa", "Entregado", 32, "Mueble", sdf.parse("11/06/2024"), sdf.parse("26/06/2024"), "Ramón Pérez", 3219876535L, 6789010988L, null);
+            addOrder("Mesa De Centro", "En Progreso", 33, "Mueble", sdf.parse("13/06/2024"), sdf.parse("28/06/2024"), "Sebastián Torres", 3245678391L, 7890120988L, null);
+            addOrder("Sofa", "Por Hacer", 34, "Mueble", sdf.parse("15/06/2024"), sdf.parse("30/06/2024"), "Lina Mendoza", 3256783902L, 8901230988L, null);
+            addOrder("SofaCama", "Entregado", 35, "Mueble", sdf.parse("10/06/2024"), sdf.parse("25/06/2024"), "Natalia Ruiz", 3001234569L, 1234567892L, null);
+            addOrder("Mesa De Centro", "En Progreso", 36, "Mueble", sdf.parse("12/06/2024"), sdf.parse("27/06/2024"), "Javier García", 339876545L, 2345678903L, null);
+            addOrder("Cojines", "Por Hacer", 37, "Mueble", sdf.parse("15/06/2024"), sdf.parse("30/06/2024"), "Gabriela Ríos", 323456791L, 3456789014L, null);
+            addOrder("Lampara", "En Progreso", 38, "Mueble", sdf.parse("17/06/2024"), sdf.parse("02/07/2024"), "Mauricio Martínez", 3109876545L, 4567890125L, null);
+            addOrder("Sofa", "Entregado", 39, "Mueble", sdf.parse("20/06/2024"), sdf.parse("05/07/2024"), "Lorena Torres", 316879803L, 5678901236L, null);
+            addOrder("SofaCama", "En Progreso", 40, "Mueble", sdf.parse("22/06/2024"), sdf.parse("07/07/2024"), "Esteban Gómez", 318678904L, 6789012347L, null);
+            addOrder("SofaCama", "Por Hacer", 41, "Mueble", sdf.parse("25/06/2024"), sdf.parse("10/07/2024"), "Mariana Ramírez", 317890125L, 7890123458L, null);
+            addOrder("SofaCama", "Entregado", 42, "Mueble", sdf.parse("27/06/2024"), sdf.parse("12/07/2024"), "Felipe López", 3198901236L, 8901234569L, null);
+            addOrder("Lampara", "Por Hacer", 43, "Mueble", sdf.parse("29/06/2024"), sdf.parse("14/07/2024"), "Santiago Pérez", 3109021347L, 9012345680L, null);
+            addOrder("Mesa De Centro", "En Progreso", 44, "Mueble", sdf.parse("01/06/2024"), sdf.parse("16/06/2024"), "Valeria Jiménez", 3190173458L, 1234509878L, null);
+            addOrder("Cojines", "Entregado", 45, "Mueble", sdf.parse("03/06/2024"), sdf.parse("18/06/2024"), "Carolina Morales", 3111234569L, 2345609878L, null);
+            addOrder("Mesa De Centro", "En Progreso", 46, "Mueble", sdf.parse("05/06/2024"), sdf.parse("20/06/2024"), "Diego Rodríguez", 3398763545L, 3456709878L, null);
+            addOrder("Sofa", "Por Hacer", 47, "Mueble", sdf.parse("07/06/2024"), sdf.parse("22/06/2024"), "Miguel Gómez", 3209876536L, 4567809878L, null);
+            addOrder("Sofa", "En Progreso", 48, "Mueble", sdf.parse("10/06/2024"), sdf.parse("24/06/2024"), "Catalina Herrera", 3123453680L, 5678909878L, null);
+            addOrder("Mesa De Centro", "Entregado", 49, "Mueble", sdf.parse("11/06/2024"), sdf.parse("26/06/2024"), "Samuel Pérez", 3219876536L, 6789010989L, null);
+            addOrder("SofaCama", "En Progreso", 50, "Mueble", sdf.parse("13/06/2024"), sdf.parse("28/06/2024"), "Andrea Torres", 3245678392L, 7890120989L, null);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -87,7 +124,6 @@ public class Logic {
              order.setCustomer(customer);
              customer.addOrder(order);
         }
-
         orderList.put(orderNumber, order);
     }
 
@@ -101,5 +137,36 @@ public class Logic {
 
     public void deleteOrder(long row) {
         orderList.remove((int) row);
+        ordersCard();
+    }
+
+    public void ordersCard(){
+        ordersDo = new ArrayList<>();
+        ordersProgress = new ArrayList<>();
+        ordersDelivered = new ArrayList<>();
+
+        for (Map.Entry<Integer, Order> order : orderList.entrySet()) {
+            if (order.getValue().getStatus().equals("Por Hacer")) {
+                ordersDo.add("Orden No. "+order.getValue().getOrderNumber() + " " + order.getValue().getProductName());
+            }
+            if (order.getValue().getStatus().equals("En Progreso")) {
+                ordersProgress.add("Orden No. "+order.getValue().getOrderNumber() + " " + order.getValue().getProductName());
+            }
+            if (order.getValue().getStatus().equals("Entregado")) {
+                ordersDelivered.add("Orden No. "+order.getValue().getOrderNumber() + " " + order.getValue().getProductName());
+            }
+        }
+    }
+
+    public ArrayList<String> getOrdersDo() {
+        return ordersDo;
+    }
+
+    public ArrayList<String> getOrdersProgress() {
+        return ordersProgress;
+    }
+
+    public ArrayList<String> getOrdersDelivered() {
+        return ordersDelivered;
     }
 }

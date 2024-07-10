@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Board extends JFrame {
     private Components components;
@@ -14,6 +15,7 @@ public class Board extends JFrame {
     private JButton orderButton;
     private JScrollPane cardScrollPanes;
     private JPanel mainContentPanel;
+    private Logic logic = Logic.getInstance();
 
     /*public Board(String title) {
         //this.mainContentPanel = mainContentPanel;
@@ -67,16 +69,16 @@ public class Board extends JFrame {
 
 
         // Adding Cards
-        addCard("Por Hacer", 0, new String[]{"Orden No. 33 Sofácama REF 006", "Orden No. 34 Mesa De Centro REF 002", "Orden No. 35 Cojines REF 003", "Orden No. 36 Sofácama REF 006", "Orden No. 37 Sofá REF 005", "Orden No. 38 Cojines REF 003", "Orden No. 39 Mesa De Centro REF 002", "Orden No. 40 Sofácama REF 006", "Orden No. 41 Sofá REF 005", "Orden No. 42 Cojines REF 003", "Orden No. 43 Sofácama REF 006", "Orden No. 44 Mesa De Centro REF 002", "Orden No. 45 Lámpara REF 004", "Orden No. 46 Sofá REF 005", "Orden No. 47 Cojines REF 003", "Orden No. 48 Sofácama REF 006"});
-        addCard("En Progreso", 1, new String[]{"Orden No. 17 Sofá REF 005", "Orden No. 18 Mesa De Centro REF 002", "Orden No. 19 Cojines REF 003", "Orden No. 20 Sofácama REF 006", "Orden No. 21 Sofá REF 005", "Orden No. 22 Mesa De Centro REF 002", "Orden No. 23 Cojines REF 003", "Orden No. 24 Sofácama REF 006", "Orden No. 25 Sofá REF 005", "Orden No. 26 Mesa De Centro REF 002", "Orden No. 27 Cojines REF 003", "Orden No. 28 Sofácama REF 006", "Orden No. 29 Lámpara REF 004", "Orden No. 30 Sofá REF 005", "Orden No. 31 Cojines REF 003", "Orden No. 32 Sofácama REF 006"});
-        addCard("Entregado", 2, new String[]{"Orden No. 1 Sofácama REF 006", "Orden No. 2 Mesa De Centro REF 002", "Orden No. 3 Cojines REF 003", "Orden No. 4 Sofácama REF 006", "Orden No. 5 Sofá REF 005", "Orden No. 6 Cojines REF 003", "Orden No. 7 Mesa De Centro REF 002", "Orden No. 8 Sofácama REF 006", "Orden No. 9 Sofá REF 005", "Orden No. 10 Cojines REF 003", "Orden No. 11 Sofácama REF 006", "Orden No. 12 Mesa De Centro REF 002", "Orden No. 13 Lámpara REF 004", "Orden No. 14 Sofá REF 005", "Orden No. 15 Cojines REF 003", "Orden No. 16 Sofácama REF 006"});
+        addCard("Por Hacer", 0, logic.getOrdersDo());
+        addCard("En Progreso", 1, logic.getOrdersProgress());
+        addCard("Entregado", 2, logic.getOrdersDelivered());
 
         contentPanel.add(cardsPanel);
         add(contentPanel, BorderLayout.CENTER);
         return contentPanel;
     }
 
-    private void addCard(String title, int position, String[] orders) {
+    private void addCard(String title, int position, ArrayList<String> orders) {
         JPanel card = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
