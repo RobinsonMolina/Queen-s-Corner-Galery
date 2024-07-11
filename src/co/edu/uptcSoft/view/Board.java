@@ -27,6 +27,11 @@ public class Board extends JFrame {
         components = new Components(mainContentPanel);
     }
 
+    public Board() {
+        components = new Components();
+        contentPanel = new JPanel();
+    }
+
     /*public Board() {
         setTitle("Queen's Corner Gallery");
         setSize(1366, 670);
@@ -138,7 +143,7 @@ public class Board extends JFrame {
             JButton button = (JButton) e.getSource();
             // change the content of the main panel instead of opening a new window
             mainContentPanel.removeAll();
-            mainContentPanel.add(new SpecificOrder().addSpecificOrder());
+            mainContentPanel.add(new SpecificOrder(mainContentPanel).addSpecificOrder(1));
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
         }

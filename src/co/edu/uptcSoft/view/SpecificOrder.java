@@ -1,22 +1,17 @@
 package co.edu.uptcSoft.view;
 
-import org.w3c.dom.ls.LSOutput;
-
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Objects;
 
 public class SpecificOrder implements ActionListener {
     //private JFrame specificOrderWindow;
@@ -30,8 +25,13 @@ public class SpecificOrder implements ActionListener {
     private JButton delete;
     private JButton update;
     private JButton pdf;
+    private JButton goBack;
+    private int previousScreen;
 
-    public SpecificOrder() {
+    public SpecificOrder(JPanel mainContentPanel) {
+        allInfoPanel = mainContentPanel;
+        components = new Components(mainContentPanel);
+
         allInformation = new JPanel();
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
         allInfoPanel = new JPanel();
@@ -43,6 +43,8 @@ public class SpecificOrder implements ActionListener {
         delete = new JButton("Eliminar");
         update = new JButton("Actualizar");
         pdf = new JButton("PDF");
+        goBack = new JButton("Volver");
+        previousScreen = 0;
     }
     /*public SpecificOrder() {
         specificOrderWindow = new JFrame("Orden Especifica");
@@ -74,11 +76,12 @@ public class SpecificOrder implements ActionListener {
         window.add(allInformation, BorderLayout.CENTER);
     }*/
 
-    public JPanel addSpecificOrder(){
+    // Previous screen indicates if you are coming from Board (1) or List (2)
+    public JPanel addSpecificOrder(int previousScreen){
         JLabel title = new JLabel("Orden Especifica");
+        this.previousScreen = previousScreen;
 
-        allInformation.setPreferredSize(new Dimension(1176, 590));
-        allInfoPanel.setPreferredSize(new Dimension(1176, 590));
+        allInfoPanel.setPreferredSize(new Dimension(1286, 590));
 
         title.setFont(components.createFont(0, 40));
         title.setPreferredSize(new Dimension(389, 47));
@@ -90,7 +93,8 @@ public class SpecificOrder implements ActionListener {
         allInfoPanel.add(title);
         allInfoPanel.add(Box.createVerticalStrut(35));
         setSpecificData();
-        dataSpecificOrder.setPreferredSize(new Dimension(1186, 200));
+        dataSpecificOrder.setPreferredSize(new Dimension(1286, 200));
+        dataSpecificOrder.setBorder(new EmptyBorder(0, 55, 0, 55));
 
         allInfoPanel.add(dataSpecificOrder);
 
@@ -281,7 +285,7 @@ public class SpecificOrder implements ActionListener {
         JTable table = new JTable(model);
         table.setRowHeight(34);
         table.setShowGrid(false);
-        table.setPreferredSize(new Dimension(1134, 156));
+        table.setPreferredSize(new Dimension(1286, 156));
         table.getColumnModel().getColumn(4).setMaxWidth(50);
         setupTableMouseListener(table);
 
@@ -339,14 +343,14 @@ public class SpecificOrder implements ActionListener {
         header.setPreferredSize(new Dimension(283, 34));
         JScrollPane tableScrollPane = new JScrollPane(table);
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
-        tableScrollPane.setPreferredSize(new Dimension(1134, 155));
+        tableScrollPane.setPreferredSize(new Dimension(1286, 155));
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
         jPanel.add(buttons(), BorderLayout.SOUTH);
-        jPanel.setBorder(new EmptyBorder(10, 20, 0, 20));
+        jPanel.setBorder(new EmptyBorder(10, 55, 0, 55));
 
-        jPanel.setPreferredSize(new Dimension(1186, 155));
+        jPanel.setPreferredSize(new Dimension(1286, 155));
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
         allInfoPanel.add(jPanel);
@@ -386,7 +390,8 @@ public class SpecificOrder implements ActionListener {
     }
 
     public JPanel buttons() {
-        buttons.add(Box.createHorizontalStrut(700));
+        buttons.add(Box.createHorizontalStrut(600));
+        buttons.add(goBack);
         buttons.add(delete);
         buttons.add(update);
         buttons.add(pdf);
@@ -394,27 +399,33 @@ public class SpecificOrder implements ActionListener {
         delete.setBackground(Color.decode("#2F1940"));
         update.setBackground(Color.decode("#2F1940"));
         pdf.setBackground(Color.decode("#2F1940"));
+        goBack.setBackground(Color.decode("#2F1940"));
 
         delete.setFont(components.createFont(1, 20));
         update.setFont(components.createFont(1, 20));
         pdf.setFont(components.createFont(1, 20));
+        goBack.setFont(components.createFont(1, 20));
 
         delete.setForeground(Color.white);
         update.setForeground(Color.white);
         pdf.setForeground(Color.white);
         buttons.setBackground(Color.white);
+        goBack.setForeground(Color.white);
 
         delete.setPreferredSize(new Dimension(127, 32));
         update.setPreferredSize(new Dimension(127, 32));
         pdf.setPreferredSize(new Dimension(127, 32));
+        goBack.setPreferredSize(new Dimension(127, 32));
 
         delete.setBorder((new RoundedBorder(10, null)));
         update.setBorder((new RoundedBorder(10, null)));
         pdf.setBorder((new RoundedBorder(10, null)));
+        goBack.setBorder((new RoundedBorder(10, null)));
 
         delete.addActionListener(this);
         update.addActionListener(this);
         pdf.addActionListener(this);
+        goBack.addActionListener(this);
 
         return buttons;
     }
@@ -427,6 +438,19 @@ public class SpecificOrder implements ActionListener {
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
         }
+
+        if (e.getSource() == goBack) {
+            allInfoPanel.removeAll();
+
+            if (previousScreen == 1){
+                allInfoPanel.add(new Board(allInfoPanel).contentPanel());
+            } else if (previousScreen == 2) {
+                allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
+            }
+
+            allInfoPanel.revalidate();
+            allInfoPanel.repaint();
+        }
     }
 
     private void setupTableMouseListener(JTable table) {
@@ -436,16 +460,9 @@ public class SpecificOrder implements ActionListener {
                 int column = table.columnAtPoint(e.getPoint());
                 int row = table.rowAtPoint(e.getPoint());
 
-                if (column == 3) {
-                    // change the content of the main panel instead of opening a new window
-                    allInfoPanel.removeAll();
-                    allInfoPanel.add(new UpdateOrder().addSpecificOrder());
-                    allInfoPanel.revalidate();
-                    allInfoPanel.repaint();
-                } else if (column == 4) {
+                if (column == 4) {
                     long valor = Long.parseLong(table.getValueAt(row, 0).toString());
-                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
-
+                    components.windowConfirmation("¿Está seguro de eliminar este material?", "Cancelar", "Eliminar", "Material eliminado con éxito", valor);
                 }
             }
         });
