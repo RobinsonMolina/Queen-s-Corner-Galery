@@ -15,6 +15,7 @@ public class Login implements ActionListener {
     private JPanel infoPanel;
     private JLabel imagePanel;
     private JButton loginButton;
+    private Components components;
 
     public Login() {
         loginWindow = new JFrame("Login");
@@ -23,6 +24,7 @@ public class Login implements ActionListener {
         image = icon.getImage().getScaledInstance(812, 670, Image.SCALE_DEFAULT);
         imagePanel = new JLabel(new ImageIcon(image));
         infoPanel = new JPanel();
+        components = new Components();
     }
 
     public void createWindow(){
@@ -50,12 +52,12 @@ public class Login implements ActionListener {
         password.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 50));
-        email.setFont(new Font(title.getFont().getName(), Font.PLAIN, 20));
-        password.setFont(new Font(title.getFont().getName(), Font.PLAIN, 20));
-        emailText.setFont(new Font(title.getFont().getName(), Font.PLAIN, 20));
-        passwordText.setFont(new Font(title.getFont().getName(), Font.PLAIN, 20));
-        loginButton.setFont(new Font(title.getFont().getName(), Font.PLAIN, 20));
+        title.setFont(components.createFont(0, 50));
+        email.setFont(components.createFont(0, 20));
+        password.setFont(components.createFont(0, 20));
+        emailText.setFont(components.createFont(1, 20));
+        passwordText.setFont(components.createFont(1, 20));
+        loginButton.setFont(components.createFont(0, 20));
 
         title.setForeground(Color.white);
         email.setForeground(Color.white);
@@ -70,9 +72,9 @@ public class Login implements ActionListener {
         passwordText.setMaximumSize(new Dimension(350,40));
         loginButton.setMaximumSize(new Dimension(350,40));
 
-        emailText.setBorder(new RoundedBorder(10, null));
-        passwordText.setBorder(new RoundedBorder(10, null));
-        loginButton.setBorder(new RoundedBorder(10, null));
+        emailText.setBorder(new RoundedBorder(5, null));
+        passwordText.setBorder(new RoundedBorder(5, null));
+        loginButton.setBorder(new RoundedBorder(5, null));
 
         infoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 

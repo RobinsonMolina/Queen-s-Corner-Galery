@@ -120,13 +120,13 @@ public class HeaderMenu extends JFrame {
 
             // Rutas de las imágenes y nombres de las opciones
             String[][] menuItems = {
-                    {"src\\Utilities\\Images\\Board.png", "Board"},
-                    {"src\\Utilities\\Images\\OrderList.png", "Order List"},
-                    {"src\\Utilities\\Images\\NewOrder.png", "New Order"},
-                    {"src\\Utilities\\Images\\Customers.png", "Customers"},
-                    {"src\\Utilities\\Images\\Supplies.png", "Supplies"},
-                    {"src\\Utilities\\Images\\Admin.png", "Admin"},
-                    {"src\\Utilities\\Images\\LogOut.png", "Log Out"}
+                    {"src\\Utilities\\Images\\Board.png", "Tablero"},
+                    {"src\\Utilities\\Images\\OrderList.png", "Lista"},
+                    {"src\\Utilities\\Images\\NewOrder.png", "Nueva Orden"},
+                    {"src\\Utilities\\Images\\Customers.png", "Clientes"},
+                    {"src\\Utilities\\Images\\Supplies.png", "Insumos"},
+                    {"src\\Utilities\\Images\\Admin.png", "Administrador"},
+                    {"src\\Utilities\\Images\\LogOut.png", "Salir"}
             };
 
             JPanel itemPanel = new JPanel();
@@ -164,19 +164,19 @@ public class HeaderMenu extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         //JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel2);
                         //frame.dispose(); // Cerrar la ventana actual
-                        if (item[1].equals("Board")) {
+                        if (item[1].equals("Tablero de ordenes")) {
                             paneles(new Board(contentPanel).contentPanel());
-                        }else if (item[1].equals("Order List")) {
+                        }else if (item[1].equals("Lista de Ordenes")) {
                             paneles(new OrderList(contentPanel).initializeContentPanel());
-                        }else if (item[1].equals("New Order")) {
+                        }else if (item[1].equals("Nueva Orden")) {
                             paneles(new NewOrder().addSpecificOrder());
-                        }else if (item[1].equals("Customers")) {
+                        }else if (item[1].equals("Clientes")) {
                             paneles(new CustomerList(contentPanel).initializeContentPanel());
-                        }else if (item[1].equals("Supplies")) {
+                        }else if (item[1].equals("Insumos")) {
                             paneles(new Supplies(contentPanel).initializeContentPanel());
-                        }else if (item[1].equals("Admin")) {
+                        }else if (item[1].equals("Administrador")) {
                             paneles(new Admin(contentPanel).initializeContentPanel());
-                        }else if (item[1].equals("Log Out")) {
+                        }else if (item[1].equals("Salir")) {
                             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel2);
                             frame.dispose(); // Cerrar la ventana actual
                             Login login = new Login();
