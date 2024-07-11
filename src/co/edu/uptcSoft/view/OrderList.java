@@ -298,7 +298,7 @@ public class OrderList extends JFrame implements ActionListener {
                 } else if (column == 6) {
                     // change the content of the main panel instead of opening a new window
                     mainContentPanel.removeAll();
-                    mainContentPanel.add(new UpdateOrder().addSpecificOrder());
+                    mainContentPanel.add(new UpdateOrder(mainContentPanel).addSpecificOrder(2));
                     mainContentPanel.revalidate();
                     mainContentPanel.repaint();
                 } else if (column == 7) {

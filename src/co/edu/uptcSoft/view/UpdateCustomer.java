@@ -349,11 +349,11 @@ public class UpdateCustomer {
                 if (column == 3) {
                     // change the content of the main panel instead of opening a new window
                     allInfoPanel.removeAll();
-                    allInfoPanel.add(new UpdateOrder().addSpecificOrder());
+                    allInfoPanel.add(new UpdateOrder(allInfoPanel).addSpecificOrder(5));
                     allInfoPanel.revalidate();
                     allInfoPanel.repaint();
                 } else if (column == 4) {
-                    long valor = Long.parseLong(table.getValueAt(row, 0).toString());
+                    String valor = String.valueOf(table.getValueAt(row, 0).toString());
                     components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
 
                 }

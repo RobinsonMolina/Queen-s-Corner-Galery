@@ -12,9 +12,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
-public class UpdateOrder {
+public class UpdateOrder implements ActionListener {
     //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
@@ -22,13 +24,26 @@ public class UpdateOrder {
     private JPanel dataSpecificOrder;
     private Components components;
 
-    public UpdateOrder() {
-        allInformation = new JPanel();
+    private JButton add;
+    private JButton save;
+    private JButton cancel;
+
+    private int previousScreen;
+
+    public UpdateOrder(JPanel mainContentPanel) {
+        allInfoPanel = mainContentPanel;
         allInfoPanel = new JPanel();
+        components = new Components(mainContentPanel);
+
+        allInformation = new JPanel();
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
         allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
         dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
-        components = new Components();
+
+        add = new JButton("+ Material");
+        save = new JButton("Aceptar");
+        cancel = new JButton("Cancelar");
+        previousScreen = 0;
     }
     /*
     public UpdateOrder() {
@@ -62,11 +77,13 @@ public class UpdateOrder {
     }
     */
 
-    public JPanel addSpecificOrder(){
+    // Previous screen indicates if you are coming from Specific Order (1), List (2), Customer (3)
+    // NewCustomer (4), UpdateCustomer (5)
+    public JPanel addSpecificOrder(int previousScreen){
         JLabel title = new JLabel("Actualizar Orden");
+        this.previousScreen = previousScreen;
 
-        allInformation.setPreferredSize(new Dimension(1176, 590));
-        allInfoPanel.setPreferredSize(new Dimension(1176, 590));
+        allInfoPanel.setPreferredSize(new Dimension(1286, 590));
 
         title.setFont(components.createFont(0, 40));
         title.setPreferredSize(new Dimension(389, 47));
@@ -78,7 +95,8 @@ public class UpdateOrder {
         allInfoPanel.add(title);
         allInfoPanel.add(Box.createVerticalStrut(35));
         setSpecificData();
-        dataSpecificOrder.setPreferredSize(new Dimension(1186, 200));
+        dataSpecificOrder.setPreferredSize(new Dimension(1286, 200));
+        dataSpecificOrder.setBorder(new EmptyBorder(0, 55, 0, 55));
 
         allInfoPanel.add(dataSpecificOrder);
 
@@ -259,7 +277,7 @@ public class UpdateOrder {
         table.setRowHeight(34);
         table.setShowGrid(false);
         table.getColumnModel().getColumn(4).setMaxWidth(50);
-        table.setPreferredSize(new Dimension(1134, 156));
+        table.setPreferredSize(new Dimension(1286, 156));
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.decode("#D9D9D9"));
@@ -314,15 +332,15 @@ public class UpdateOrder {
         });
 
         JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(1134, 136));
+        tableScrollPane.setPreferredSize(new Dimension(1286, 136));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
         jPanel.add(buttons(), BorderLayout.SOUTH);
-        jPanel.setBorder(new EmptyBorder(10, 20, 0, 20));
+        jPanel.setBorder(new EmptyBorder(10, 55, 0, 55));
 
-        jPanel.setPreferredSize(new Dimension(1186, 155));
+        jPanel.setPreferredSize(new Dimension(1286, 155));
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
         allInfoPanel.add(jPanel);
@@ -363,9 +381,6 @@ public class UpdateOrder {
 
     public JPanel buttons() {
         JPanel buttons = new JPanel(new FlowLayout());
-        JButton add = new JButton("+ Material");
-        JButton save = new JButton("Aceptar");
-        JButton cancel = new JButton("Cancelar");
 
         buttons.add(Box.createHorizontalStrut(700));
         buttons.add(add);
@@ -392,7 +407,27 @@ public class UpdateOrder {
         save.setBorder((new RoundedBorder(10, null)));
         cancel.setBorder((new RoundedBorder(10, null)));
 
+        add.addActionListener(this);
+        save.addActionListener(this);
+        cancel.addActionListener(this);
+
         buttons.setBackground(Color.white);
         return buttons;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == cancel) {
+            allInfoPanel.removeAll();
+
+            if (previousScreen == 1){
+                allInfoPanel.add(new SpecificOrder(allInfoPanel).addSpecificOrder(0));
+            } else if (previousScreen == 2) {
+                allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
+            }
+
+            allInfoPanel.revalidate();
+            allInfoPanel.repaint();
+        }
     }
 }

@@ -30,14 +30,13 @@ public class SpecificOrder implements ActionListener {
 
     public SpecificOrder(JPanel mainContentPanel) {
         allInfoPanel = mainContentPanel;
+        allInfoPanel = new JPanel();
         components = new Components(mainContentPanel);
 
         allInformation = new JPanel();
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
-        allInfoPanel = new JPanel();
         allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
         dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
-        components = new Components();
 
         buttons = new JPanel(new FlowLayout());
         delete = new JButton("Eliminar");
@@ -434,7 +433,7 @@ public class SpecificOrder implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == update) {
             allInfoPanel.removeAll();
-            allInfoPanel.add(new NewOrder().addSpecificOrder());
+            allInfoPanel.add(new UpdateOrder(allInfoPanel).addSpecificOrder(1));
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
         }
@@ -461,7 +460,7 @@ public class SpecificOrder implements ActionListener {
                 int row = table.rowAtPoint(e.getPoint());
 
                 if (column == 4) {
-                    long valor = Long.parseLong(table.getValueAt(row, 0).toString());
+                    String valor = String.valueOf(table.getValueAt(row, 0).toString());
                     components.windowConfirmation("¿Está seguro de eliminar este material?", "Cancelar", "Eliminar", "Material eliminado con éxito", valor);
                 }
             }

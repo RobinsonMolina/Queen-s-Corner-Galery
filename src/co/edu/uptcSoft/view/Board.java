@@ -27,11 +27,6 @@ public class Board extends JFrame {
         components = new Components(mainContentPanel);
     }
 
-    public Board() {
-        components = new Components();
-        contentPanel = new JPanel();
-    }
-
     /*public Board() {
         setTitle("Queen's Corner Gallery");
         setSize(1366, 670);
