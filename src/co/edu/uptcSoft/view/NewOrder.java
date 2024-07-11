@@ -377,9 +377,9 @@ public class NewOrder {
         save.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
         cancel.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
 
-        add.setFont(components.createFont(0, 20));
-        save.setFont(components.createFont(0, 20));
-        cancel.setFont(components.createFont(0, 20));
+        add.setFont(components.createFont(1, 20));
+        save.setFont(components.createFont(1, 20));
+        cancel.setFont(components.createFont(1, 20));
 
         add.setForeground(Color.white);
         save.setForeground(Color.white);

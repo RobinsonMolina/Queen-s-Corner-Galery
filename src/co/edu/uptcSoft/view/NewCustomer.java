@@ -32,6 +32,7 @@ public class NewCustomer {
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
         allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
         dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+        components = new Components();
     }
 
     public  void createWindow(){
@@ -57,10 +58,10 @@ public class NewCustomer {
     public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Crear Cliente");
 
-        allInformation.setPreferredSize(new Dimension(1366, 700));
-        allInfoPanel.setPreferredSize(new Dimension(1366, 700));
+        allInformation.setPreferredSize(new Dimension(1366, 590));
+        allInfoPanel.setPreferredSize(new Dimension(1366, 590));
 
-        title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 40));
+        title.setFont(components.createFont(0, 40));
         title.setPreferredSize(new Dimension(389, 47));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -70,7 +71,7 @@ public class NewCustomer {
         allInfoPanel.add(title);
         allInfoPanel.add(Box.createVerticalStrut(30));
         setSpecificData();
-        dataSpecificOrder.setPreferredSize(new Dimension(886, 170));
+        dataSpecificOrder.setPreferredSize(new Dimension(886, 200));
         dataSpecificOrder.setBorder(new EmptyBorder(0, 145, 0, 145));
 
         allInfoPanel.add(dataSpecificOrder);
@@ -96,6 +97,18 @@ public class NewCustomer {
         JTextField documentTxt = new JTextField();
         JTextField addressTxt = new JTextField();
 
+        name.setFont(components.createFont(0, 20));
+        email.setFont(components.createFont(0, 20));
+        phone.setFont(components.createFont(0, 20));
+        document.setFont(components.createFont(0, 20));
+        address.setFont(components.createFont(0, 20));
+
+        nameTxt.setFont(components.createFont(1, 20));
+        emailTxt.setFont(components.createFont(1, 20));
+        phoneTxt.setFont(components.createFont(1, 20));
+        documentTxt.setFont(components.createFont(1, 20));
+        addressTxt.setFont(components.createFont(1, 20));
+
         int borderRadius = 5;
         Color borderColor = Color.decode("#2F1940");
 
@@ -109,15 +122,15 @@ public class NewCustomer {
         email.setPreferredSize(new Dimension(143, 30));
         address.setPreferredSize(new Dimension(143, 30));
 
-        nameTxt.setPreferredSize(new Dimension(288, 30));
-        emailTxt.setPreferredSize(new Dimension(288, 30));
-        addressTxt.setPreferredSize(new Dimension(288, 30));
+        nameTxt.setPreferredSize(new Dimension(288, 35));
+        emailTxt.setPreferredSize(new Dimension(288, 35));
+        addressTxt.setPreferredSize(new Dimension(288, 35));
 
         phone.setPreferredSize(new Dimension(143, 30));
         document.setPreferredSize(new Dimension(143, 30));
 
-        phoneTxt.setPreferredSize(new Dimension(288, 30));
-        documentTxt.setPreferredSize(new Dimension(288, 30));
+        phoneTxt.setPreferredSize(new Dimension(288, 35));
+        documentTxt.setPreferredSize(new Dimension(288, 35));
 
         dataSpecificOrder.add(name);
         dataSpecificOrder.add(nameTxt);
@@ -147,7 +160,7 @@ public class NewCustomer {
         JPanel jPanel = new JPanel(new BorderLayout());
         JLabel materialsTitle = new JLabel("Productos Ordenados");
 
-        materialsTitle.setFont(new Font(materialsTitle.getFont().getName(), Font.PLAIN, 30));
+        materialsTitle.setFont(components.createFont(0, 30));
         materialsTitle.setPreferredSize(new Dimension(380, 30));
         materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
 
@@ -195,6 +208,7 @@ public class NewCustomer {
                 // Focuses the text
                 if (c instanceof JLabel) {
                     JLabel label = (JLabel) c;
+                    label.setFont(components.createFont(0, 20));
                     label.setHorizontalAlignment(JLabel.CENTER);
                     label.setVerticalAlignment(JLabel.CENTER);
                 }
@@ -218,6 +232,7 @@ public class NewCustomer {
                 // Focuses the text
                 if (cell instanceof JLabel) {
                     JLabel label = (JLabel) cell;
+                    label.setFont(components.createFont(1, 20));
                     label.setHorizontalAlignment(JLabel.CENTER);
                     label.setVerticalAlignment(JLabel.CENTER);
                 }
@@ -235,7 +250,7 @@ public class NewCustomer {
 
         setupTableMouseListener(table);
         JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(1134, 136));
+        tableScrollPane.setPreferredSize(new Dimension(1134, 155));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
         //table.setPreferredSize(new Dimension(1134, 34));
 
@@ -244,7 +259,7 @@ public class NewCustomer {
         jPanel.add(buttons(), BorderLayout.SOUTH);
         jPanel.setBorder(new EmptyBorder(10, 20, 0, 20));
 
-        jPanel.setPreferredSize(new Dimension(1366, 136));
+        jPanel.setPreferredSize(new Dimension(1186, 155));
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
 
@@ -300,9 +315,9 @@ public class NewCustomer {
         save.setBackground(Color.decode("#2F1940"));
         cancel.setBackground(Color.decode("#2F1940"));
 
-        add.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
-        save.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
-        cancel.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
+        add.setFont(components.createFont(1, 20));
+        save.setFont(components.createFont(1, 20));
+        cancel.setFont(components.createFont(1, 20));
 
         add.setForeground(Color.white);
         save.setForeground(Color.white);

@@ -300,8 +300,8 @@ public class ViewCustomer {
         JPanel buttons = new JPanel(new FlowLayout());
         JButton exit = new JButton("Regresar");
 
+        exit.setFont(components.createFont(1, 20));
         exit.setBackground(Color.decode("#2F1940"));
-        exit.setFont(new Font(exit.getFont().getName(), Font.PLAIN, 20));
         exit.setForeground(Color.white);
         exit.setPreferredSize(new Dimension(127, 32));
         exit.setBorder((new RoundedBorder(10, null)));

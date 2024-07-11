@@ -392,9 +392,9 @@ public class SpecificOrder implements ActionListener {
         update.setBackground(Color.decode("#2F1940"));
         pdf.setBackground(Color.decode("#2F1940"));
 
-        delete.setFont(components.createFont(0, 20));
-        update.setFont(components.createFont(0, 20));
-        pdf.setFont(components.createFont(0, 20));
+        delete.setFont(components.createFont(1, 20));
+        update.setFont(components.createFont(1, 20));
+        pdf.setFont(components.createFont(1, 20));
 
         delete.setForeground(Color.white);
         update.setForeground(Color.white);

@@ -376,9 +376,9 @@ public class UpdateOrder {
         save.setBackground(Color.decode("#2F1940"));
         cancel.setBackground(Color.decode("#2F1940"));
 
-        add.setFont(components.createFont(0, 20));
-        save.setFont(components.createFont(0, 20));
-        cancel.setFont(components.createFont(0, 20));
+        add.setFont(components.createFont(1, 20));
+        save.setFont(components.createFont(1, 20));
+        cancel.setFont(components.createFont(1, 20));
 
         add.setForeground(Color.white);
         save.setForeground(Color.white);
