@@ -20,7 +20,7 @@ public class Components implements ActionListener {
     private String message;
     private JPanel confirmationPanel;
     private Logic logic = logic = Logic.getInstance(); // Get the single instance of Logic
-    private long row;
+    private String row;
     private JPanel mainContentPanel;
 
     public Components(JPanel mainContentPanel) {
@@ -155,7 +155,7 @@ public class Components implements ActionListener {
 
     //method overloaded to confirm the message after clicking on the yes button
     // window method to confirm
-    public void windowConfirmation(String title, String button1, String button2, String message, long row) {
+    public void windowConfirmation(String title, String button1, String button2, String message, String row) {
 
         this.message = message;
         this.row = row;
@@ -223,14 +223,25 @@ public class Components implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonYes) {
-            logic.deleteOrder(row);
             // Cambiar el contenido del panel principal en lugar de abrir una nueva ventana
             mainContentPanel.removeAll();
-            mainContentPanel.add(new OrderList(mainContentPanel).initializeContentPanel());
+            System.out.println(message);
+            System.out.println("orden ---- "+message.contains("Orden"));
+            System.out.println("insumo ---- "+message.contains("Insumo"));
+            if (message.contains("Orden")) {
+                System.out.println("delete order");
+                logic.deleteOrder(Long.parseLong(row));
+                mainContentPanel.add(new OrderList(mainContentPanel).initializeContentPanel());
+                OrderList orderList = new OrderList(mainContentPanel);
+                orderList.initializeTable();
+            } else if (message.contains("Insumo")) {
+                logic.deleteSupply(row);
+                mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+                /*Supplies supplies = new Supplies(mainContentPanel);
+                supplies.initializeContentPanel();*/
+            }
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
-            OrderList orderList = new OrderList(mainContentPanel);
-            orderList.initializeTable();
             confirmationFrame.dispose();
             messageConfirmation(message);
             // Starts a timer to close the window after 1 seconds
