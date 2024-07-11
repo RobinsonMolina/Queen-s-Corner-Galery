@@ -1,14 +1,15 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
+
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.RoundRectangle2D;
-import java.io.File;
-import java.io.IOException;
 
-public class NewSupplie extends JFrame implements ActionListener {
+public class NewSupply extends JFrame implements ActionListener {
 
     private Components components;
     private JPanel contentPanel;
@@ -33,8 +34,9 @@ public class NewSupplie extends JFrame implements ActionListener {
     private JButton cancelButton;
     private JLabel titleLabel;
     private JPanel mainContentPanel;
+    private Logic logic = Logic.getInstance();
 
-    public NewSupplie(JPanel mainContentPanel) {
+    public NewSupply(JPanel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
         components = new Components(mainContentPanel);
     }
@@ -151,10 +153,13 @@ public class NewSupplie extends JFrame implements ActionListener {
 
         // Combo box quantity
         comboBox = new JComboBox<>(options);
+        comboBox.setSelectedItem(1);
         comboBox.setFont(components.createFont(1, 20));
         comboBox.setBounds(60, 90, 85, 30);
         comboBox.setMaximumRowCount(4);
         quantityPanel.add(comboBox);
+
+        comboBox.addActionListener(this);
 
         // Label measurement
         measurementLabel = new JLabel("Unidad");
@@ -181,10 +186,29 @@ public class NewSupplie extends JFrame implements ActionListener {
 
         // Text field unitary
         unitaryTextField = components.createRoundedTextField(30,30);
+        unitaryTextField.setText("0");
         unitaryTextField.setBounds(560, 90, 400, 34);
         unitaryTextField.setFont(components.createFont(1, 20));
         unitaryTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
         quantityPanel.add(unitaryTextField);
+
+        unitaryTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateTotal();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateTotal();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateTotal();
+            }
+        });
 
         // JLabel total
         totalLabel = new JLabel("Total");
@@ -195,6 +219,8 @@ public class NewSupplie extends JFrame implements ActionListener {
 
         // Text field total
         totalTextField = components.createRoundedTextField(30,30);
+        totalTextField.setText(String.valueOf((Integer.parseInt(comboBox.getSelectedItem().toString()) * Integer.parseInt(unitaryTextField.getText()))));
+        totalTextField.setEditable(false);
         totalTextField.setBounds(60, 190, 300, 34);
         totalTextField.setFont(components.createFont(1, 20));
         totalTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
@@ -228,7 +254,8 @@ public class NewSupplie extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
-            dispose();
+            //dispose();
+            getMaterials();
             // change the content of the main panel instead of opening a new window
             mainContentPanel.removeAll();
             mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
@@ -250,6 +277,20 @@ public class NewSupplie extends JFrame implements ActionListener {
             mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
+        }else if (e.getSource() == comboBox) {
+            updateTotal();
         }
+    }
+
+    private void updateTotal() {
+            int quanty = (Integer) comboBox.getSelectedItem();
+            String unitPrice = unitaryTextField.getText().trim();
+            int price = unitPrice.isEmpty() ? 0 : Integer.parseInt(unitPrice);
+            int result = quanty * price;
+            totalTextField.setText(String.valueOf(result));
+    }
+
+    public void getMaterials() {
+        logic.addSupply(materialTextField.getText(), categoryTextField.getText(), characteristicTextField.getText(), comboBox.getSelectedIndex(), comboBox2.getSelectedItem().toString(), Integer.parseInt(unitaryTextField.getText()), Integer.parseInt(totalTextField.getText()));
     }
 }

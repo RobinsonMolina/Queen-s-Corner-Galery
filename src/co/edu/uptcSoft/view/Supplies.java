@@ -1,18 +1,24 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Order;
+import co.edu.uptcSoft.model.Supply;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
-import java.io.File;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class Supplies extends JFrame implements ActionListener {
 
@@ -24,11 +30,18 @@ public class Supplies extends JFrame implements ActionListener {
     private JTextField searchTextField;
     private JButton buttonAdd;
     private JPanel mainContentPanel;
+    private Object supplyListTable[][];
+    private Logic logic = Logic.getInstance();
+    private TableRowSorter<DefaultTableModel> filter;
 
 
     public Supplies(JPanel mainContentPanel){
         this.mainContentPanel = mainContentPanel;
         components = new Components(mainContentPanel);
+    }
+
+    public Supplies(){
+
     }
 
 
@@ -91,6 +104,25 @@ public class Supplies extends JFrame implements ActionListener {
         titleLabel.add(searchTextField);
         contentTitle.setBounds(0, 0, 1286, 100);
         contentPanel.add(contentTitle, BorderLayout.NORTH);
+
+        // Agregar DocumentListener al JTextField para filtrar la tabla
+        searchTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterTable();
+            }
+        });
     }
 
     // Method for initializing table
@@ -105,7 +137,7 @@ public class Supplies extends JFrame implements ActionListener {
 
         // Data of the table
         String[] columnNames = {"Código", "Material", "Categoria", "Características", "Valor Unitario", "Cantidad", "Total", "", ""};
-        Object[][] data = {
+        /*Object[][] data = {
                 {"T001", "Lino", "Telas", "Resistente, Transpirable, Beige", "80,000 /M", "50 Metros", "4,000,000", trashIcon, pencilIcon},
                 {"T002", "Chenille", "Telas", "Textura Suave, Verde", "95,000 /M", "40 Metros", "3,800,000", trashIcon, pencilIcon},
                 {"T003", "Terciopelo", "Telas", "Lujo, Suave, Rojo", "120,000 /M", "40 Metros", "4,800,000", trashIcon, pencilIcon},
@@ -128,10 +160,10 @@ public class Supplies extends JFrame implements ActionListener {
                 {"MCO10", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
                 {"MCO11", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
                 {"MCO12", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon}
-        };
+        };*/
 
         // Table model
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+        DefaultTableModel model = new DefaultTableModel(getSuppliesList(), columnNames) {
             @Override
             public Class<?> getColumnClass(int column) {
                 return (column == 7 || column == 8) ? Icon.class : super.getColumnClass(column);
@@ -150,6 +182,10 @@ public class Supplies extends JFrame implements ActionListener {
         table.setRowHeight(34);
         table.setShowGrid(false);
         setColumnWidths(table);
+
+        // TableRowSorter for filtering
+        filter = new TableRowSorter<>(model);
+        table.setRowSorter(filter);
 
         // Table header
         JTableHeader header = table.getTableHeader();
@@ -252,7 +288,7 @@ public class Supplies extends JFrame implements ActionListener {
         if (e.getSource() == buttonAdd) {
             // change the content of the main panel instead of opening a new window
             mainContentPanel.removeAll();
-            mainContentPanel.add(new NewSupplie(mainContentPanel).initializeContentPanel());
+            mainContentPanel.add(new NewSupply(mainContentPanel).initializeContentPanel());
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
         }
@@ -265,8 +301,10 @@ public class Supplies extends JFrame implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int column = table.columnAtPoint(e.getPoint());
+                int row = table.rowAtPoint(e.getPoint());
                 if (column == 7) {
-                    components.windowConfirmation("¿Está seguro de eliminar esta insumo?", "Cancelar", "Eliminar", "Insumo eliminado con éxito");
+                    String valor = table.getValueAt(row, 0).toString();
+                    components.windowConfirmation("¿Está seguro de eliminar esta insumo?", "Cancelar", "Eliminar", "Insumo eliminado con éxito", valor);
                 } else if (column == 8) {
                     // change the content of the main panel instead of opening a new window
                     mainContentPanel.removeAll();
@@ -276,5 +314,46 @@ public class Supplies extends JFrame implements ActionListener {
                 }
             }
         });
+    }
+
+    // Method for getting the order list and its icons
+    public Object[][] getSuppliesList() {
+
+        ImageIcon icon2 = new ImageIcon("src\\Utilities\\Images\\Edit.png");
+        Image image2 = icon2.getImage();
+        ImageIcon pencilIcon = new ImageIcon(image2.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        ImageIcon icon3 = new ImageIcon("src\\Utilities\\Images\\Trash.png");
+        Image image3 = icon3.getImage();
+        ImageIcon trashIcon = new ImageIcon(image3.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        ArrayList<Supply> supplyList = new ArrayList<>(logic.getSupplyList().values());
+
+        supplyListTable = new Object[supplyList.size()][9];
+        // change the format desired
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+        for (int i = 0; i < supplyList.size(); i++) {
+            supplyListTable[i][0] = supplyList.get(i).getId();
+            supplyListTable[i][1] = supplyList.get(i).getMaterial();
+            supplyListTable[i][2] = supplyList.get(i).getCategory();
+            supplyListTable[i][3] = supplyList.get(i).getCharacteristics();
+            supplyListTable[i][4] = supplyList.get(i).getUnitPrice();
+            supplyListTable[i][5] = supplyList.get(i).getQuantity();
+            supplyListTable[i][6] = supplyList.get(i).getTotalPrice();
+            supplyListTable[i][7] = trashIcon;
+            supplyListTable[i][8] = pencilIcon;
+        }
+        return supplyListTable;
+    }
+
+    // Method for filtering table
+    private void filterTable() {
+        String text = searchTextField.getText();
+        if (text.trim().length() == 0) {
+            filter.setRowFilter(null);
+        } else {
+            filter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+        }
     }
 }
