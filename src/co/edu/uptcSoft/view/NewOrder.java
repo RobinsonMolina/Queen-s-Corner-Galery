@@ -15,10 +15,10 @@ import java.awt.*;
 import java.util.Objects;
 
 public class NewOrder {
-    private JFrame specificOrderWindow;
+    //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
-    private JPanel window;
+    //private JPanel window;
     private JPanel dataSpecificOrder;
     private Components components;
 

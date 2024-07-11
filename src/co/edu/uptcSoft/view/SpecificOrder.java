@@ -12,15 +12,22 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
-public class SpecificOrder {
-    private JFrame specificOrderWindow;
+public class SpecificOrder implements ActionListener {
+    //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
-    private JPanel window;
+    //private JPanel window;
     private JPanel dataSpecificOrder;
     private Components components;
+
+    private JPanel buttons;
+    private JButton delete;
+    private JButton update;
+    private JButton pdf;
 
     public SpecificOrder() {
         allInformation = new JPanel();
@@ -29,6 +36,11 @@ public class SpecificOrder {
         allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
         dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
         components = new Components();
+
+        buttons = new JPanel(new FlowLayout());
+        delete = new JButton("Eliminar");
+        update = new JButton("Actualizar");
+        pdf = new JButton("PDF");
     }
     /*public SpecificOrder() {
         specificOrderWindow = new JFrame("Orden Especifica");
@@ -371,11 +383,6 @@ public class SpecificOrder {
     }
 
     public JPanel buttons() {
-        JPanel buttons = new JPanel(new FlowLayout());
-        JButton delete = new JButton("Eliminar");
-        JButton update = new JButton("Actualizar");
-        JButton pdf = new JButton("PDF");
-
         buttons.add(Box.createHorizontalStrut(700));
         buttons.add(delete);
         buttons.add(update);
@@ -392,6 +399,7 @@ public class SpecificOrder {
         delete.setForeground(Color.white);
         update.setForeground(Color.white);
         pdf.setForeground(Color.white);
+        buttons.setBackground(Color.white);
 
         delete.setPreferredSize(new Dimension(127, 32));
         update.setPreferredSize(new Dimension(127, 32));
@@ -401,8 +409,20 @@ public class SpecificOrder {
         update.setBorder((new RoundedBorder(10, null)));
         pdf.setBorder((new RoundedBorder(10, null)));
 
-        buttons.setBackground(Color.white);
+        delete.addActionListener(this);
+        update.addActionListener(this);
+        pdf.addActionListener(this);
 
         return buttons;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == update) {
+            allInfoPanel.removeAll();
+            allInfoPanel.add(new NewOrder().addSpecificOrder());
+            allInfoPanel.revalidate();
+            allInfoPanel.repaint();
+        }
     }
 }

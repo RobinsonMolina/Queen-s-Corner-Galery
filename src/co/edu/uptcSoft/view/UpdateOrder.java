@@ -15,13 +15,22 @@ import java.awt.*;
 import java.util.Objects;
 
 public class UpdateOrder {
-    private JFrame specificOrderWindow;
+    //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
-    private JPanel window;
+    //private JPanel window;
     private JPanel dataSpecificOrder;
     private Components components;
 
+    public UpdateOrder() {
+        allInformation = new JPanel();
+        allInfoPanel = new JPanel();
+        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
+        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
+        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+        components = new Components();
+    }
+    /*
     public UpdateOrder() {
         specificOrderWindow = new JFrame("Actualizar Orden");
         allInformation = new JPanel();
@@ -51,6 +60,7 @@ public class UpdateOrder {
         window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
         window.add(allInformation, BorderLayout.CENTER);
     }
+    */
 
     public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Actualizar Orden");

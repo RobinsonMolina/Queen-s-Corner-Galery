@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 public class UpdateCustomer {
@@ -20,6 +22,7 @@ public class UpdateCustomer {
     private JPanel allInfoPanel;
     private JPanel window;
     private JPanel dataSpecificOrder;
+    private Components components;
 
     public UpdateCustomer() {
         specificOrderWindow = new JFrame("Acutualizar Cliente");
@@ -29,6 +32,7 @@ public class UpdateCustomer {
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
         allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
         dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+        components = new Components();
     }
 
     public  void createWindow(){
@@ -234,6 +238,7 @@ public class UpdateCustomer {
             }
         });
 
+        setupTableMouseListener(table);
         JScrollPane tableScrollPane = new JScrollPane(table);
         tableScrollPane.setPreferredSize(new Dimension(1134, 136));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
@@ -318,5 +323,27 @@ public class UpdateCustomer {
 
         buttons.setBackground(Color.white);
         return buttons;
+    }
+
+    private void setupTableMouseListener(JTable table) {
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int column = table.columnAtPoint(e.getPoint());
+                int row = table.rowAtPoint(e.getPoint());
+
+                if (column == 3) {
+                    // change the content of the main panel instead of opening a new window
+                    allInfoPanel.removeAll();
+                    allInfoPanel.add(new UpdateOrder().addSpecificOrder());
+                    allInfoPanel.revalidate();
+                    allInfoPanel.repaint();
+                } else if (column == 4) {
+                    long valor = Long.parseLong(table.getValueAt(row, 0).toString());
+                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
+
+                }
+            }
+        });
     }
 }
