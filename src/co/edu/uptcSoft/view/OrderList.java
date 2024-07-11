@@ -34,7 +34,7 @@ public class OrderList extends JFrame implements ActionListener {
     private Object orderListTable[][];
     private Logic logic = Logic.getInstance();
     private JPanel mainContentPanel;
-    private TableRowSorter<DefaultTableModel> sorter;
+    private TableRowSorter<DefaultTableModel> filter;
 
     public OrderList(JPanel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
@@ -173,8 +173,8 @@ public class OrderList extends JFrame implements ActionListener {
         setColumnWidths(table);
 
         // TableRowSorter for filtering
-        sorter = new TableRowSorter<>(model);
-        table.setRowSorter(sorter);
+        filter = new TableRowSorter<>(model);
+        table.setRowSorter(filter);
 
         // Table header
         JTableHeader header = table.getTableHeader();
@@ -302,7 +302,7 @@ public class OrderList extends JFrame implements ActionListener {
                     mainContentPanel.revalidate();
                     mainContentPanel.repaint();
                 } else if (column == 7) {
-                    long valor = Long.parseLong(table.getValueAt(row, 0).toString());
+                    String valor = table.getValueAt(row, 0).toString();
                     components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
 
                 }
@@ -348,9 +348,9 @@ public class OrderList extends JFrame implements ActionListener {
     private void filterTable() {
         String text = searchTextField.getText();
         if (text.trim().length() == 0) {
-            sorter.setRowFilter(null);
+            filter.setRowFilter(null);
         } else {
-            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+            filter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
         }
     }
 }

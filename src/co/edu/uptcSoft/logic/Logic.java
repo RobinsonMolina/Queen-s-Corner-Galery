@@ -3,6 +3,7 @@ package co.edu.uptcSoft.logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Materials;
 import co.edu.uptcSoft.model.Order;
+import co.edu.uptcSoft.model.Supply;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ public class Logic {
     private ArrayList<String> ordersDo;
     private ArrayList<String> ordersProgress;
     private ArrayList<String> ordersDelivered;
+    private TreeMap<String, Supply> supplyList;
     private Order order;
     private Customer customer;
 
@@ -23,8 +25,10 @@ public class Logic {
         customerList = new TreeMap<>();
         orderList = new TreeMap<>();
         customer = new Customer();
+        supplyList = new TreeMap<>();
         loadCustomers();
         loadOrders();
+        loadSupplies();
         ordersCard();
     }
 
@@ -168,5 +172,57 @@ public class Logic {
 
     public ArrayList<String> getOrdersDelivered() {
         return ordersDelivered;
+    }
+
+    //////////////////////////////SUPPLY///////////////////////////////////////////
+
+
+    private void loadSupplies() {
+        addSupply("Lino", "Telas", "Resistente, Transpirable, Beige", 50, "Metros", 80000, 40000);
+        addSupply("Chenille", "Telas", "Textura Suave, Verde", 40, "Metros", 95000, 40000);
+        addSupply("Terciopelo", "Telas", "Lujo, Suave, Rojo", 40, "Metros", 120000, 40000);
+        addSupply("Cuero Sintético", "Telas", "Fácil De Limpiar, Resistente, Negro", 55, "Metros", 90000, 55000);
+        addSupply("Pana", "Telas", "Textura Acanalada,Duradero,Maron", 30, "Metros", 100000, 30000);
+        addSupply("Jacquard", "Telas", "Diseño Intrincado, Resistente, Azul", 35, "Metros", 110000, 35000);
+        addSupply("Tweed", "Telas", "Textura Rugosa, Duradero, Gris", 50, "Metros", 75000, 30000);
+        addSupply("Franela", "Telas", "Suave, Cálida, Color Gris Claro", 35, "Metros", 45000, 15000);
+        addSupply("Seda", "Telas", "Brillante, Suave, Color Blanco Perla", 25, "Metros", 70000, 15000);
+        addSupply("Gamuza", "Telas", "Suave Al Tacto, Elegante, Beige", 20, "Metros", 65000, 20000);
+        addSupply("Madera", "Muebles", "Rectangular, Color Nogal", 4, "Metros", 60000, 240000);
+        addSupply("Sarga", "Telas", "Duradera, Resistente, Verde Militar", 95, "Metros", 95000, 9025000);
+        addSupply("Lycra", "Telas", "Elástica, Suave, Color Negro", 50, "Metros", 50000, 2500000);
+        addSupply("Raso", "Telas", "Brillante, Suave, Rojo", 70, "Metros", 70000, 4900000);
+        addSupply("Batista", "Telas", "Ligera, Transpirable, Color Blanco", 55, "Metros", 55000, 3025000);
+        addSupply("Gasa", "Telas", "Ligera, Transparente, Color Rosa", 40, "Metros", 40000, 1600000);
+        addSupply("Encaje", "Telas", "Elegante, Decorativa, Color Blanco", 80, "Metros", 80000, 6400000);
+        addSupply("Fieltro", "Telas", "Densa, Resistente, Color Marrón", 45, "Metros", 45000, 2025000);
+        addSupply("Tafetán", "Telas", "Ligeramente Brillante, Suave, Color Violeta", 70, "Metros", 70000, 4900000);
+        addSupply("Madera", "Muebles", "Rectangular, Color Nogal", 4, "Metros", 60000, 240000);
+        addSupply("Metal", "Muebles", "Acero Inoxidable, Color Gris", 5, "Metros", 70000, 350000);
+        addSupply("Vidrio", "Muebles", "Templado, Transparente", 3, "Metros", 80000, 240000);
+        addSupply("Plástico", "Muebles", "Polipropileno, Color Negro", 6, "Metros", 50000, 300000);
+        addSupply("Ratán", "Muebles", "Natural, Color Marrón", 7, "Metros", 90000, 630000);
+        addSupply("Bambú", "Muebles", "Sostenible, Color Natural", 8, "Metros", 40000, 320000);
+        addSupply("Cuero", "Muebles", "Auténtico, Color Negro", 2, "Metros", 100000, 200000);
+        addSupply("Pino", "Muebles", "Blando, Color Claro", 5, "Metros", 45000, 225000);
+        addSupply("Mármol", "Muebles", "Blanco, Pulido", 1, "Metros", 150000, 150000);
+        addSupply("Granit", "Muebles", "Duradero, Color Oscuro", 3, "Metros", 120000, 360000);
+        addSupply("Acacia", "Muebles", "Madera Dura, Color Marrón", 4, "Metros", 65000, 260000);
+        addSupply("Teca", "Muebles", "Resistente, Color Natural", 6, "Metros", 85000, 510000);
+        addSupply("Roble", "Muebles", "Madera Dura, Color Claro", 5, "Metros", 75000, 375000);
+    }
+
+    public void addSupply(String material, String category, String characteristics, int quantity, String unit, int unitPrice, int totalPrice) {
+
+        String id = Character.toUpperCase(category.charAt(0)) + String.format("%03d", supplyList.size()+1);
+        supplyList.put(id, new Supply(id, material, category, characteristics, quantity, unit, unitPrice, totalPrice));
+    }
+
+    public TreeMap<String, Supply> getSupplyList() {
+        return supplyList;
+    }
+
+    public void deleteSupply(String row) {
+        supplyList.remove(row);
     }
 }
