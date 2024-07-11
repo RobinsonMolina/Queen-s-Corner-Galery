@@ -134,7 +134,6 @@ public class Board extends JFrame {
     private class OrderButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("hola");
             //dispose();
             JButton button = (JButton) e.getSource();
             // change the content of the main panel instead of opening a new window

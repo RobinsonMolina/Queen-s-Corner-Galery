@@ -24,7 +24,9 @@ public class SpecificOrder {
 
     public SpecificOrder() {
         allInformation = new JPanel();
+        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
         allInfoPanel = new JPanel();
+        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
         dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
         components = new Components();
     }
@@ -61,8 +63,8 @@ public class SpecificOrder {
     public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Orden Especifica");
 
-        allInformation.setPreferredSize(new Dimension(1366, 700));
-        allInfoPanel.setPreferredSize(new Dimension(1366, 700));
+        allInformation.setPreferredSize(new Dimension(1176, 590));
+        allInfoPanel.setPreferredSize(new Dimension(1176, 590));
 
         title.setFont(components.createFont(0, 40));
         title.setPreferredSize(new Dimension(389, 47));
@@ -162,7 +164,7 @@ public class SpecificOrder {
         productTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         typeTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         customerTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        stateCombo.setBorder(new RoundedBorder(0, borderColor));
+        stateCombo.setBorder(new RoundedBorder(borderRadius, borderColor));
         productionDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         orderNumberTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
@@ -270,7 +272,6 @@ public class SpecificOrder {
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.decode("#D9D9D9"));
-        header.setMinimumSize(new Dimension(283, 34));
 
         header.setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -320,17 +321,17 @@ public class SpecificOrder {
             }
         });
 
-        header.setPreferredSize(new Dimension(283, 30));
+        header.setPreferredSize(new Dimension(283, 34));
         JScrollPane tableScrollPane = new JScrollPane(table);
-        //tableScrollPane.setPreferredSize(new Dimension(1134, 136));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
+        tableScrollPane.setPreferredSize(new Dimension(1134, 155));
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
         jPanel.add(buttons(), BorderLayout.SOUTH);
         jPanel.setBorder(new EmptyBorder(10, 20, 0, 20));
 
-        jPanel.setPreferredSize(new Dimension(1186, 300));
+        jPanel.setPreferredSize(new Dimension(1186, 155));
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
         allInfoPanel.add(jPanel);
@@ -401,6 +402,7 @@ public class SpecificOrder {
         pdf.setBorder((new RoundedBorder(10, null)));
 
         buttons.setBackground(Color.white);
+
         return buttons;
     }
 }
