@@ -14,6 +14,8 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 public class SpecificOrder implements ActionListener {
@@ -281,6 +283,7 @@ public class SpecificOrder implements ActionListener {
         table.setShowGrid(false);
         table.setPreferredSize(new Dimension(1134, 156));
         table.getColumnModel().getColumn(4).setMaxWidth(50);
+        setupTableMouseListener(table);
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.decode("#D9D9D9"));
@@ -424,5 +427,27 @@ public class SpecificOrder implements ActionListener {
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
         }
+    }
+
+    private void setupTableMouseListener(JTable table) {
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int column = table.columnAtPoint(e.getPoint());
+                int row = table.rowAtPoint(e.getPoint());
+
+                if (column == 3) {
+                    // change the content of the main panel instead of opening a new window
+                    allInfoPanel.removeAll();
+                    allInfoPanel.add(new UpdateOrder().addSpecificOrder());
+                    allInfoPanel.revalidate();
+                    allInfoPanel.repaint();
+                } else if (column == 4) {
+                    long valor = Long.parseLong(table.getValueAt(row, 0).toString());
+                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
+
+                }
+            }
+        });
     }
 }

@@ -164,9 +164,9 @@ public class HeaderMenu extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         //JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel2);
                         //frame.dispose(); // Cerrar la ventana actual
-                        if (item[1].equals("Tablero de ordenes")) {
+                        if (item[1].equals("Tablero")) {
                             paneles(new Board(contentPanel).contentPanel());
-                        }else if (item[1].equals("Lista de Ordenes")) {
+                        }else if (item[1].equals("Lista")) {
                             paneles(new OrderList(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("Nueva Orden")) {
                             paneles(new NewOrder().addSpecificOrder());

@@ -153,7 +153,7 @@ public class Components implements ActionListener {
         confirmationFrame.setVisible(true);
     }
 
-    //mehhod overloaded to confirm the message after clicking on the yes button
+    //method overloaded to confirm the message after clicking on the yes button
     // window method to confirm
     public void windowConfirmation(String title, String button1, String button2, String message, long row) {
 

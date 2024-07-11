@@ -20,7 +20,7 @@ public class Login implements ActionListener {
     public Login() {
         loginWindow = new JFrame("Login");
         mainPanel = new JPanel(new BorderLayout());
-        icon = new ImageIcon(".\\src\\co\\edu\\uptcSoft\\resources\\Login.jpg");
+        icon = new ImageIcon("src\\Utilities\\Images\\Login.jpg");
         image = icon.getImage().getScaledInstance(812, 670, Image.SCALE_DEFAULT);
         imagePanel = new JLabel(new ImageIcon(image));
         infoPanel = new JPanel();
