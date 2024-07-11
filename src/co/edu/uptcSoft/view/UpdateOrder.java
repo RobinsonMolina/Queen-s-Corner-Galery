@@ -20,6 +20,7 @@ public class UpdateOrder {
     private JPanel allInfoPanel;
     private JPanel window;
     private JPanel dataSpecificOrder;
+    private Components components;
 
     public UpdateOrder() {
         specificOrderWindow = new JFrame("Actualizar Orden");
@@ -29,6 +30,7 @@ public class UpdateOrder {
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
         allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
         dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+        components = new Components();
     }
 
     public  void createWindow(){
@@ -53,10 +55,10 @@ public class UpdateOrder {
     public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Actualizar Orden");
 
-        allInformation.setPreferredSize(new Dimension(1266, 590)); // change width of 1366 to 1266 and height of 700 to 590
-        allInfoPanel.setPreferredSize(new Dimension(1266, 590)); // change width of 1366 to 1266 and height of 700 to 590
+        allInformation.setPreferredSize(new Dimension(1176, 590));
+        allInfoPanel.setPreferredSize(new Dimension(1176, 590));
 
-        title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 40));
+        title.setFont(components.createFont(0, 40));
         title.setPreferredSize(new Dimension(389, 47));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -100,6 +102,25 @@ public class UpdateOrder {
         JTextField deliveryDateTxt = new JTextField("30/06/2024");
         JTextField documentTxt = new JTextField("10544444");
 
+        product.setFont(components.createFont(0, 20));
+        type.setFont(components.createFont(0, 20));
+        customer.setFont(components.createFont(0, 20));
+        state.setFont(components.createFont(0, 20));
+        productionDate.setFont(components.createFont(0, 20));
+        phone.setFont(components.createFont(0, 20));
+        orderNumber.setFont(components.createFont(0, 20));
+        deliveryDate.setFont(components.createFont(0, 20));
+        document.setFont(components.createFont(0, 20));
+        productTxt.setFont(components.createFont(1, 20));
+        typeTxt.setFont(components.createFont(1, 20));
+        customerTxt.setFont(components.createFont(1, 20));
+        stateCombo.setFont(components.createFont(1, 20));
+        productionDateTxt.setFont(components.createFont(1, 20));
+        phoneTxt.setFont(components.createFont(1, 20));
+        orderNumberTxt.setFont(components.createFont(1, 20));
+        deliveryDateTxt.setFont(components.createFont(1, 20));
+        documentTxt.setFont(components.createFont(1, 20));
+
         // ComboBox
         stateCombo.setRenderer(new DefaultListCellRenderer() {
             @Override
@@ -135,9 +156,9 @@ public class UpdateOrder {
         type.setPreferredSize(new Dimension(99, 30));
         customer.setPreferredSize(new Dimension(99, 30));
 
-        productTxt.setPreferredSize(new Dimension(300, 30));
-        typeTxt.setPreferredSize(new Dimension(300, 30));
-        customerTxt.setPreferredSize(new Dimension(300, 30));
+        productTxt.setPreferredSize(new Dimension(300, 35));
+        typeTxt.setPreferredSize(new Dimension(300, 35));
+        customerTxt.setPreferredSize(new Dimension(300, 35));
 
         state.setPreferredSize(new Dimension(187, 30));
         productionDate.setPreferredSize(new Dimension(187, 30));
@@ -146,12 +167,12 @@ public class UpdateOrder {
         deliveryDate.setPreferredSize(new Dimension(187, 30));
         document.setPreferredSize(new Dimension(187, 30));
 
-        stateCombo.setPreferredSize(new Dimension(180, 30));
-        orderNumberTxt.setPreferredSize(new Dimension(180, 30));
-        productionDateTxt.setPreferredSize(new Dimension(180, 30));
-        deliveryDateTxt.setPreferredSize(new Dimension(180, 30));
-        phoneTxt.setPreferredSize(new Dimension(180, 30));
-        documentTxt.setPreferredSize(new Dimension(180, 30));
+        stateCombo.setPreferredSize(new Dimension(180, 35));
+        orderNumberTxt.setPreferredSize(new Dimension(180, 35));
+        productionDateTxt.setPreferredSize(new Dimension(180, 35));
+        deliveryDateTxt.setPreferredSize(new Dimension(180, 35));
+        phoneTxt.setPreferredSize(new Dimension(180, 35));
+        documentTxt.setPreferredSize(new Dimension(180, 35));
 
         dataSpecificOrder.add(product);
         dataSpecificOrder.add(productTxt);
@@ -193,7 +214,7 @@ public class UpdateOrder {
         JPanel jPanel = new JPanel(new BorderLayout());
         JLabel materialsTitle = new JLabel("Materiales Requeridos");
 
-        materialsTitle.setFont(new Font(materialsTitle.getFont().getName(), Font.PLAIN, 30));
+        materialsTitle.setFont(components.createFont(0, 30));
         materialsTitle.setPreferredSize(new Dimension(380, 30));
         materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
 
@@ -242,6 +263,7 @@ public class UpdateOrder {
                 // Focuses the text
                 if (c instanceof JLabel) {
                     JLabel label = (JLabel) c;
+                    label.setFont(components.createFont(0, 20));
                     label.setHorizontalAlignment(JLabel.CENTER);
                     label.setVerticalAlignment(JLabel.CENTER);
                 }
@@ -265,6 +287,7 @@ public class UpdateOrder {
                 // Focuses the text
                 if (cell instanceof JLabel) {
                     JLabel label = (JLabel) cell;
+                    label.setFont(components.createFont(1, 20));
                     label.setHorizontalAlignment(JLabel.CENTER);
                     label.setVerticalAlignment(JLabel.CENTER);
                 }
@@ -289,7 +312,7 @@ public class UpdateOrder {
         jPanel.add(buttons(), BorderLayout.SOUTH);
         jPanel.setBorder(new EmptyBorder(10, 20, 0, 20));
 
-        jPanel.setPreferredSize(new Dimension(1366, 136));
+        jPanel.setPreferredSize(new Dimension(1186, 155));
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
         allInfoPanel.add(jPanel);
@@ -343,9 +366,9 @@ public class UpdateOrder {
         save.setBackground(Color.decode("#2F1940"));
         cancel.setBackground(Color.decode("#2F1940"));
 
-        add.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
-        save.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
-        cancel.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
+        add.setFont(components.createFont(0, 20));
+        save.setFont(components.createFont(0, 20));
+        cancel.setFont(components.createFont(0, 20));
 
         add.setForeground(Color.white);
         save.setForeground(Color.white);
