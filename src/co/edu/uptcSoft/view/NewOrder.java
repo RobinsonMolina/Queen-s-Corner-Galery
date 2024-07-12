@@ -373,10 +373,6 @@ public class NewOrder {
         save.setBackground(Color.decode("#2F1940"));
         cancel.setBackground(Color.decode("#2F1940"));
 
-        add.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
-        save.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
-        cancel.setFont(new Font(add.getFont().getName(), Font.PLAIN, 20));
-
         add.setFont(components.createFont(1, 20));
         save.setFont(components.createFont(1, 20));
         cancel.setFont(components.createFont(1, 20));

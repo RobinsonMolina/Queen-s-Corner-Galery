@@ -421,9 +421,14 @@ public class UpdateOrder implements ActionListener {
             allInfoPanel.removeAll();
 
             if (previousScreen == 1){
-                allInfoPanel.add(new SpecificOrder(allInfoPanel).addSpecificOrder(0));
+                // Board
+                allInfoPanel.add(new SpecificOrder(allInfoPanel).addSpecificOrder(1));
             } else if (previousScreen == 2) {
+                // List
                 allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
+            } else if (previousScreen == 3) {
+                // List - Specific - Update
+                allInfoPanel.add(new SpecificOrder(allInfoPanel).addSpecificOrder(2));
             }
 
             allInfoPanel.revalidate();

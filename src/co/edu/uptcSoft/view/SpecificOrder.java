@@ -433,7 +433,7 @@ public class SpecificOrder implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == update) {
             allInfoPanel.removeAll();
-            allInfoPanel.add(new UpdateOrder(allInfoPanel).addSpecificOrder(1));
+            allInfoPanel.add(new UpdateOrder(allInfoPanel).addSpecificOrder(previousScreen));
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
         }
@@ -445,10 +445,15 @@ public class SpecificOrder implements ActionListener {
                 allInfoPanel.add(new Board(allInfoPanel).contentPanel());
             } else if (previousScreen == 2) {
                 allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
+            } else if (previousScreen == 3) {
+                System.out.println("asdfasdf");
+                allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
             }
 
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
+
+            //Board - nueva - actualizar - nueva - board
         }
     }
 
