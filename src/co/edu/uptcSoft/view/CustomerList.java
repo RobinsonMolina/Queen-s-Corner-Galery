@@ -302,13 +302,15 @@ public class CustomerList extends JFrame implements ActionListener {
             public void mouseClicked(MouseEvent e) {
                 int column = table.columnAtPoint(e.getPoint());
                 if (column == 3) {
-                    dispose();
-                    ViewCustomer viewCustomer = new ViewCustomer();
-                    viewCustomer.createWindow();
+                    contentPanel.removeAll();
+                    // (ViewCustomer) contentPanel.add(new NewCustomer(contentPanel).addSpecificOrder());
+                    contentPanel.revalidate();
+                    contentPanel.repaint();
                 } else if (column == 4) {
-                    dispose();
-                    UpdateCustomer updateCustomer = new UpdateCustomer();
-                    updateCustomer.createWindow();
+                    contentPanel.removeAll();
+                    contentPanel.add(new UpdateCustomer(contentPanel).addSpecificCustomer());
+                    contentPanel.revalidate();
+                    contentPanel.repaint();
                 } else if (column == 5) {
                     components.windowConfirmation("¿Está seguro de eliminar este cliente?", "Cancelar", "Eliminar", "Cliente eliminado con éxito");
                 }

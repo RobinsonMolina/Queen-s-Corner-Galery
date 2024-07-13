@@ -12,18 +12,37 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class UpdateCustomer {
-    private JFrame specificOrderWindow;
+public class UpdateCustomer implements ActionListener {
+    //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
-    private JPanel window;
+    //private JPanel window;
     private JPanel dataSpecificOrder;
     private Components components;
+    private JButton add;
+    private JButton save;
+    private JButton cancel;
 
+    public UpdateCustomer(JPanel mainContentPanel) {
+        allInfoPanel = mainContentPanel;
+        allInfoPanel = new JPanel();
+        components = new Components(mainContentPanel);
+        allInformation = new JPanel();
+        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
+        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
+        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
+
+        add = new JButton("+ Orden");
+        save = new JButton("Aceptar");
+        cancel = new JButton("Cancelar");
+    }
+    /*
     public UpdateCustomer() {
         specificOrderWindow = new JFrame("Acutualizar Cliente");
         allInformation = new JPanel();
@@ -38,7 +57,7 @@ public class UpdateCustomer {
     public  void createWindow(){
         specificOrderWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         specificOrderWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        specificOrderWindow.setSize(1366, 670);
+        specificOrderWindow.setSize(1286, 670);
 
         addSpecificOrder();
         setWindow();
@@ -54,12 +73,12 @@ public class UpdateCustomer {
         window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
         window.add(allInformation, BorderLayout.CENTER);
     }
-
-    public void addSpecificOrder(){
+    */
+    public JPanel addSpecificCustomer(){
         JLabel title = new JLabel("Acutualizar Cliente");
 
-        allInformation.setPreferredSize(new Dimension(1366, 590));
-        allInfoPanel.setPreferredSize(new Dimension(1366, 590));
+        allInformation.setPreferredSize(new Dimension(1286, 590));
+        allInfoPanel.setPreferredSize(new Dimension(1286, 590));
 
         title.setFont(components.createFont(0, 40));
         title.setPreferredSize(new Dimension(389, 47));
@@ -72,7 +91,7 @@ public class UpdateCustomer {
         allInfoPanel.add(Box.createVerticalStrut(30));
         setSpecificData();
         dataSpecificOrder.setPreferredSize(new Dimension(886, 200));
-        dataSpecificOrder.setBorder(new EmptyBorder(0, 145, 0, 145));
+        dataSpecificOrder.setBorder(new EmptyBorder(0, 200, 0, 200));
 
         allInfoPanel.add(dataSpecificOrder);
 
@@ -81,6 +100,7 @@ public class UpdateCustomer {
         dataSpecificOrder.setBackground(Color.WHITE);
 
         allInformation.add(allInfoPanel);
+        return allInfoPanel;
     }
 
     public void setSpecificData(){
@@ -117,41 +137,40 @@ public class UpdateCustomer {
         phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         documentTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
 
-        name.setPreferredSize(new Dimension(143, 30));
-        email.setPreferredSize(new Dimension(143, 30));
-        address.setPreferredSize(new Dimension(143, 30));
+        name.setPreferredSize(new Dimension(116, 30));
+        email.setPreferredSize(new Dimension(116, 30));
+        address.setPreferredSize(new Dimension(116, 30));
 
-        nameTxt.setPreferredSize(new Dimension(288, 35));
-        emailTxt.setPreferredSize(new Dimension(288, 35));
-        addressTxt.setPreferredSize(new Dimension(288, 35));
+        nameTxt.setPreferredSize(new Dimension(300, 35));
+        emailTxt.setPreferredSize(new Dimension(300, 35));
+        addressTxt.setPreferredSize(new Dimension(300, 35));
 
-        phone.setPreferredSize(new Dimension(143, 30));
-        document.setPreferredSize(new Dimension(143, 30));
+        phone.setPreferredSize(new Dimension(116, 30));
+        document.setPreferredSize(new Dimension(116, 30));
 
-        phoneTxt.setPreferredSize(new Dimension(288, 35));
-        documentTxt.setPreferredSize(new Dimension(288, 35));
+        phoneTxt.setPreferredSize(new Dimension(300, 35));
+        documentTxt.setPreferredSize(new Dimension(300, 35));
 
         dataSpecificOrder.add(name);
         dataSpecificOrder.add(nameTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+        dataSpecificOrder.add(Box.createHorizontalStrut(54));
 
         dataSpecificOrder.add(document);
         dataSpecificOrder.add(documentTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
         dataSpecificOrder.add(email);
         dataSpecificOrder.add(emailTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+
+        dataSpecificOrder.add(Box.createHorizontalStrut(54));
 
         dataSpecificOrder.add(address);
         dataSpecificOrder.add(addressTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
         dataSpecificOrder.add(phone);
         dataSpecificOrder.add(phoneTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
-        dataSpecificOrder.add(Box.createHorizontalStrut(451));
+        dataSpecificOrder.add(Box.createHorizontalStrut(470));
+
     }
 
 
@@ -198,7 +217,7 @@ public class UpdateCustomer {
         table.setShowGrid(false);
         table.getColumnModel().getColumn(3).setMaxWidth(50);
         table.getColumnModel().getColumn(4).setMaxWidth(50);
-        table.setPreferredSize(new Dimension(1134, 156));
+        table.setPreferredSize(new Dimension(1286, 156));
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.decode("#D9D9D9"));
@@ -254,16 +273,16 @@ public class UpdateCustomer {
 
         setupTableMouseListener(table);
         JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(1134, 155));
+        tableScrollPane.setPreferredSize(new Dimension(1286, 155));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
-        //table.setPreferredSize(new Dimension(1134, 34));
+        //table.setPreferredSize(new Dimension(1286, 34));
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
         jPanel.add(buttons(), BorderLayout.SOUTH);
-        jPanel.setBorder(new EmptyBorder(10, 20, 0, 20));
+        jPanel.setBorder(new EmptyBorder(10, 55, 0, 55));
 
-        jPanel.setPreferredSize(new Dimension(1366, 155));
+        jPanel.setPreferredSize(new Dimension(1286, 155));
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
 
@@ -306,9 +325,6 @@ public class UpdateCustomer {
 
     public JPanel buttons() {
         JPanel buttons = new JPanel(new FlowLayout());
-        JButton add = new JButton("+ Orden");
-        JButton save = new JButton("Aceptar");
-        JButton cancel = new JButton("Cancelar");
 
         buttons.add(Box.createHorizontalStrut(700));
         buttons.add(add);
@@ -336,6 +352,11 @@ public class UpdateCustomer {
         cancel.setBorder((new RoundedBorder(10, null)));
 
         buttons.setBackground(Color.white);
+
+        add.addActionListener(this);
+        save.addActionListener(this);
+        cancel.addActionListener(this);
+
         return buttons;
     }
 
@@ -354,10 +375,24 @@ public class UpdateCustomer {
                     allInfoPanel.repaint();
                 } else if (column == 4) {
                     String valor = String.valueOf(table.getValueAt(row, 0).toString());
-                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
+                    components.windowConfirmation("¿Está seguro de eliminar este cliente?", "Cancelar", "Eliminar", "Cliente eliminado con éxito", valor);
 
                 }
             }
         });
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == add) {
+
+        } else if (e.getSource() == save) {
+
+        } else if (e.getSource() == cancel) {
+            allInfoPanel.removeAll();
+            allInfoPanel.add(new CustomerList(allInfoPanel).initializeContentPanel());
+            allInfoPanel.revalidate();
+            allInfoPanel.repaint();
+        }
     }
 }

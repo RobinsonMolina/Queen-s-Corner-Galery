@@ -168,11 +168,6 @@ public class NewCustomer implements ActionListener {
         dataSpecificOrder.add(phoneTxt);
 
         dataSpecificOrder.add(Box.createHorizontalStrut(470));
-
-        dataSpecificOrder.setPreferredSize(new Dimension(886, 200));
-        dataSpecificOrder.setBorder(new EmptyBorder(0, 200, 0, 200));
-
-        System.out.println(dataSpecificOrder.getPreferredSize());
     }
 
 
