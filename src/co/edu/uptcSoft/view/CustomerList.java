@@ -288,9 +288,10 @@ public class CustomerList extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
-            dispose();
-            NewCustomer newOrder = new NewCustomer();
-            newOrder.createWindow();
+            contentPanel.removeAll();
+            contentPanel.add(new NewCustomer(contentPanel).addSpecificOrder());
+            contentPanel.revalidate();
+            contentPanel.repaint();
         }
     }
 

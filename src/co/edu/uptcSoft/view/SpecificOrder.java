@@ -75,7 +75,7 @@ public class SpecificOrder implements ActionListener {
         window.add(allInformation, BorderLayout.CENTER);
     }*/
 
-    // Previous screen indicates if you are coming from Board (1) or List (2)
+    // Previous screen indicates if you are coming from Board (1) or List (2) (3)
     public JPanel addSpecificOrder(int previousScreen){
         JLabel title = new JLabel("Orden Especifica");
         this.previousScreen = previousScreen;
@@ -436,24 +436,20 @@ public class SpecificOrder implements ActionListener {
             allInfoPanel.add(new UpdateOrder(allInfoPanel).addSpecificOrder(previousScreen));
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
-        }
 
-        if (e.getSource() == goBack) {
+        } else if (e.getSource() == goBack) {
             allInfoPanel.removeAll();
 
             if (previousScreen == 1){
+                // Board
                 allInfoPanel.add(new Board(allInfoPanel).contentPanel());
-            } else if (previousScreen == 2) {
-                allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
-            } else if (previousScreen == 3) {
-                System.out.println("asdfasdf");
+            } else if (previousScreen == 2 || previousScreen == 3) {
+                // List && List - Specific - Update
                 allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
             }
 
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
-
-            //Board - nueva - actualizar - nueva - board
         }
     }
 

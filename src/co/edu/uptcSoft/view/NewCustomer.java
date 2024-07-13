@@ -12,18 +12,37 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class NewCustomer {
-    private JFrame specificOrderWindow;
+public class NewCustomer implements ActionListener {
+    //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
-    private JPanel window;
+    //private JPanel window;
     private JPanel dataSpecificOrder;
     private Components components;
+    private JButton add;
+    private JButton save;
+    private JButton cancel;
 
+    public NewCustomer(JPanel mainContentPanel) {
+        allInfoPanel = mainContentPanel;
+        allInfoPanel = new JPanel();
+        components = new Components(mainContentPanel);
+        allInformation = new JPanel();
+        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
+        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
+        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+
+        add = new JButton("+ Orden");
+        save = new JButton("Aceptar");
+        cancel = new JButton("Cancelar");
+    }
+    /*
     public NewCustomer() {
         specificOrderWindow = new JFrame("Crear Cliente");
         allInformation = new JPanel();
@@ -38,7 +57,7 @@ public class NewCustomer {
     public  void createWindow(){
         specificOrderWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         specificOrderWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        specificOrderWindow.setSize(1366, 670);
+        specificOrderWindow.setSize(1286, 670);
 
         addSpecificOrder();
         setWindow();
@@ -53,13 +72,13 @@ public class NewCustomer {
         window.add(headerMenu.getMenuPanel(), BorderLayout.WEST);
         window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
         window.add(allInformation, BorderLayout.CENTER);
-    }
+    }*/
 
     public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Crear Cliente");
 
-        allInformation.setPreferredSize(new Dimension(1366, 590));
-        allInfoPanel.setPreferredSize(new Dimension(1366, 590));
+        allInformation.setPreferredSize(new Dimension(1286, 590));
+        allInfoPanel.setPreferredSize(new Dimension(1286, 590));
 
         title.setFont(components.createFont(0, 40));
         title.setPreferredSize(new Dimension(389, 47));
@@ -72,7 +91,7 @@ public class NewCustomer {
         allInfoPanel.add(Box.createVerticalStrut(30));
         setSpecificData();
         dataSpecificOrder.setPreferredSize(new Dimension(886, 200));
-        dataSpecificOrder.setBorder(new EmptyBorder(0, 145, 0, 145));
+        dataSpecificOrder.setBorder(new EmptyBorder(0, 400, 0, 400));
 
         allInfoPanel.add(dataSpecificOrder);
 
@@ -194,7 +213,7 @@ public class NewCustomer {
         table.setShowGrid(false);
         table.getColumnModel().getColumn(3).setMaxWidth(50);
         table.getColumnModel().getColumn(4).setMaxWidth(50);
-        table.setPreferredSize(new Dimension(1134, 156));
+        table.setPreferredSize(new Dimension(1286, 156));
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.decode("#D9D9D9"));
@@ -250,16 +269,16 @@ public class NewCustomer {
 
         setupTableMouseListener(table);
         JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(1134, 155));
+        tableScrollPane.setPreferredSize(new Dimension(1286, 155));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
-        //table.setPreferredSize(new Dimension(1134, 34));
+        //table.setPreferredSize(new Dimension(1286, 34));
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
         jPanel.add(buttons(), BorderLayout.SOUTH);
-        jPanel.setBorder(new EmptyBorder(10, 20, 0, 20));
+        jPanel.setBorder(new EmptyBorder(10, 55, 0, 55));
 
-        jPanel.setPreferredSize(new Dimension(1186, 155));
+        jPanel.setPreferredSize(new Dimension(1286, 155));
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
 
@@ -302,9 +321,6 @@ public class NewCustomer {
 
     public JPanel buttons() {
         JPanel buttons = new JPanel(new FlowLayout());
-        JButton add = new JButton("+ Orden");
-        JButton save = new JButton("Aceptar");
-        JButton cancel = new JButton("Cancelar");
 
         buttons.add(Box.createHorizontalStrut(700));
         buttons.add(add);
@@ -331,6 +347,10 @@ public class NewCustomer {
         save.setBorder((new RoundedBorder(10, null)));
         cancel.setBorder((new RoundedBorder(10, null)));
 
+        add.addActionListener(this);
+        save.addActionListener(this);
+        cancel.addActionListener(this);
+
         buttons.setBackground(Color.white);
         return buttons;
     }
@@ -355,5 +375,19 @@ public class NewCustomer {
                 }
             }
         });
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == add) {
+
+        } else if (e.getSource() == save) {
+
+        } else if (e.getSource() == cancel) {
+            allInfoPanel.removeAll();
+            allInfoPanel.add(new CustomerList(allInfoPanel).initializeContentPanel());
+            allInfoPanel.revalidate();
+            allInfoPanel.repaint();
+        }
     }
 }

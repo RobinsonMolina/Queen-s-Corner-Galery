@@ -12,15 +12,21 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
-public class NewOrder {
+public class NewOrder implements ActionListener {
     //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
     //private JPanel window;
     private JPanel dataSpecificOrder;
     private Components components;
+    private int previousScreen;
+    private JButton add;
+    private JButton save;
+    private JButton cancel;
 
     public NewOrder() {
         allInformation = new JPanel();
@@ -29,6 +35,10 @@ public class NewOrder {
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
         allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
         components = new Components();
+        previousScreen = 0;
+        add = new JButton("+ Material");
+        save = new JButton("Aceptar");
+        cancel = new JButton("Cancelar");
     }
     /*public NewOrder() {
         specificOrderWindow = new JFrame("Nueva Orden");
@@ -60,11 +70,12 @@ public class NewOrder {
         window.add(allInformation, BorderLayout.CENTER);
     }*/
 
-    public JPanel addSpecificOrder(){
+    public JPanel addSpecificOrder(int previousScreen){
         JLabel title = new JLabel("Nueva Orden");
+        this.previousScreen = previousScreen;
 
-        allInformation.setPreferredSize(new Dimension(1176, 590));
-        allInfoPanel.setPreferredSize(new Dimension(1176, 590));
+        allInformation.setPreferredSize(new Dimension(1286, 590));
+        allInfoPanel.setPreferredSize(new Dimension(1286, 590));
 
         title.setFont(components.createFont(0, 40));
         title.setPreferredSize(new Dimension(389, 47));
@@ -76,7 +87,8 @@ public class NewOrder {
         allInfoPanel.add(title);
         allInfoPanel.add(Box.createVerticalStrut(35));
         setSpecificData();
-        dataSpecificOrder.setPreferredSize(new Dimension(1186, 200));
+        dataSpecificOrder.setPreferredSize(new Dimension(1286, 200));
+        dataSpecificOrder.setBorder(new EmptyBorder(0, 55, 0, 55));
 
         allInfoPanel.add(dataSpecificOrder);
 
@@ -316,9 +328,9 @@ public class NewOrder {
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
         jPanel.add(buttons(), BorderLayout.SOUTH);
-        jPanel.setBorder(new EmptyBorder(10, 20, 0, 20));
+        jPanel.setBorder(new EmptyBorder(10, 55, 0, 55));
 
-        jPanel.setPreferredSize(new Dimension(1186, 155));
+        jPanel.setPreferredSize(new Dimension(1286, 155));
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
 
@@ -360,9 +372,6 @@ public class NewOrder {
 
     public JPanel buttons() {
         JPanel buttons = new JPanel(new FlowLayout());
-        JButton add = new JButton("+ Material");
-        JButton save = new JButton("Aceptar");
-        JButton cancel = new JButton("Cancelar");
 
         buttons.add(Box.createHorizontalStrut(700));
         buttons.add(add);
@@ -390,6 +399,29 @@ public class NewOrder {
         cancel.setBorder((new RoundedBorder(10, null)));
 
         buttons.setBackground(Color.white);
+
+        add.addActionListener(this);
+        save.addActionListener(this);
+        cancel.addActionListener(this);
+
         return buttons;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == cancel) {
+            allInfoPanel.removeAll();
+
+            if (previousScreen == 1){
+                // Menu
+                allInfoPanel.add(new Board(allInfoPanel).contentPanel());
+            } else if (previousScreen == 2) {
+                // OrderList
+                allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
+            }
+
+            allInfoPanel.revalidate();
+            allInfoPanel.repaint();
+        }
     }
 }
