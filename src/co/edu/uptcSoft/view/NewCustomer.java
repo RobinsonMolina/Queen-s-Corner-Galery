@@ -36,7 +36,7 @@ public class NewCustomer implements ActionListener {
         allInformation = new JPanel();
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
         allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
-        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
 
         add = new JButton("+ Orden");
         save = new JButton("Aceptar");
@@ -77,7 +77,6 @@ public class NewCustomer implements ActionListener {
     public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Crear Cliente");
 
-        allInformation.setPreferredSize(new Dimension(1286, 590));
         allInfoPanel.setPreferredSize(new Dimension(1286, 590));
 
         title.setFont(components.createFont(0, 40));
@@ -91,7 +90,7 @@ public class NewCustomer implements ActionListener {
         allInfoPanel.add(Box.createVerticalStrut(30));
         setSpecificData();
         dataSpecificOrder.setPreferredSize(new Dimension(886, 200));
-        dataSpecificOrder.setBorder(new EmptyBorder(0, 400, 0, 400));
+        dataSpecificOrder.setBorder(new EmptyBorder(0, 200, 0, 200));
 
         allInfoPanel.add(dataSpecificOrder);
 
@@ -137,41 +136,43 @@ public class NewCustomer implements ActionListener {
         phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         documentTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
 
-        name.setPreferredSize(new Dimension(143, 30));
-        email.setPreferredSize(new Dimension(143, 30));
-        address.setPreferredSize(new Dimension(143, 30));
+        name.setPreferredSize(new Dimension(116, 30));
+        email.setPreferredSize(new Dimension(116, 30));
+        address.setPreferredSize(new Dimension(116, 30));
 
-        nameTxt.setPreferredSize(new Dimension(288, 35));
-        emailTxt.setPreferredSize(new Dimension(288, 35));
-        addressTxt.setPreferredSize(new Dimension(288, 35));
+        nameTxt.setPreferredSize(new Dimension(300, 35));
+        emailTxt.setPreferredSize(new Dimension(300, 35));
+        addressTxt.setPreferredSize(new Dimension(300, 35));
 
-        phone.setPreferredSize(new Dimension(143, 30));
-        document.setPreferredSize(new Dimension(143, 30));
+        phone.setPreferredSize(new Dimension(116, 30));
+        document.setPreferredSize(new Dimension(116, 30));
 
-        phoneTxt.setPreferredSize(new Dimension(288, 35));
-        documentTxt.setPreferredSize(new Dimension(288, 35));
+        phoneTxt.setPreferredSize(new Dimension(300, 35));
+        documentTxt.setPreferredSize(new Dimension(300, 35));
 
         dataSpecificOrder.add(name);
         dataSpecificOrder.add(nameTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+        dataSpecificOrder.add(Box.createHorizontalStrut(54));
 
         dataSpecificOrder.add(document);
         dataSpecificOrder.add(documentTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
         dataSpecificOrder.add(email);
         dataSpecificOrder.add(emailTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+        dataSpecificOrder.add(Box.createHorizontalStrut(54));
 
         dataSpecificOrder.add(address);
         dataSpecificOrder.add(addressTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
         dataSpecificOrder.add(phone);
         dataSpecificOrder.add(phoneTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
-        dataSpecificOrder.add(Box.createHorizontalStrut(451));
+        dataSpecificOrder.add(Box.createHorizontalStrut(470));
+
+        dataSpecificOrder.setPreferredSize(new Dimension(886, 200));
+        dataSpecificOrder.setBorder(new EmptyBorder(0, 200, 0, 200));
+
+        System.out.println(dataSpecificOrder.getPreferredSize());
     }
 
 
@@ -271,7 +272,6 @@ public class NewCustomer implements ActionListener {
         JScrollPane tableScrollPane = new JScrollPane(table);
         tableScrollPane.setPreferredSize(new Dimension(1286, 155));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
-        //table.setPreferredSize(new Dimension(1286, 34));
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
         jPanel.add(tableScrollPane, BorderLayout.CENTER);
