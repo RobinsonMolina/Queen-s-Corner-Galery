@@ -12,18 +12,33 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class ViewCustomer {
-    private JFrame specificOrderWindow;
+public class ViewCustomer implements ActionListener {
+    // private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
-    private JPanel window;
+    // private JPanel window;
     private JPanel dataSpecificOrder;
     private Components components;
+    private JButton exit;
 
+    public ViewCustomer(JPanel mainContentPanel) {
+        allInfoPanel = mainContentPanel;
+        allInfoPanel = new JPanel();
+        components = new Components(mainContentPanel);
+        allInformation = new JPanel();
+        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
+        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
+        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
+        exit = new JButton("Regresar");
+    }
+
+    /*
     public ViewCustomer() {
         specificOrderWindow = new JFrame("Cliente");
         allInformation = new JPanel();
@@ -38,12 +53,11 @@ public class ViewCustomer {
     public  void createWindow(){
         specificOrderWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         specificOrderWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        specificOrderWindow.setSize(1366, 670);
+        specificOrderWindow.setSize(1286, 670);
 
         addSpecificOrder();
         setWindow();
         specificOrderWindow.add(window);
-
         specificOrderWindow.setVisible(true);
     }
 
@@ -53,13 +67,13 @@ public class ViewCustomer {
         window.add(headerMenu.getMenuPanel(), BorderLayout.WEST);
         window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
         window.add(allInformation, BorderLayout.CENTER);
-    }
+    }*/
 
-    public void addSpecificOrder(){
+    public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Cliente");
 
-        allInformation.setPreferredSize(new Dimension(1366, 590));
-        allInfoPanel.setPreferredSize(new Dimension(1366, 590));
+        allInformation.setPreferredSize(new Dimension(1286, 590));
+        allInfoPanel.setPreferredSize(new Dimension(1286, 590));
 
         title.setFont(components.createFont(0, 40));
         title.setPreferredSize(new Dimension(389, 47));
@@ -72,7 +86,7 @@ public class ViewCustomer {
         allInfoPanel.add(Box.createVerticalStrut(30));
         setSpecificData();
         dataSpecificOrder.setPreferredSize(new Dimension(886, 200));
-        dataSpecificOrder.setBorder(new EmptyBorder(0, 145, 0, 145));
+        dataSpecificOrder.setBorder(new EmptyBorder(0, 200, 0, 200));
 
         allInfoPanel.add(dataSpecificOrder);
 
@@ -81,6 +95,7 @@ public class ViewCustomer {
         dataSpecificOrder.setBackground(Color.WHITE);
 
         allInformation.add(allInfoPanel);
+        return allInfoPanel;
     }
 
     public void setSpecificData(){
@@ -123,41 +138,39 @@ public class ViewCustomer {
         phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
         documentTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
 
-        name.setPreferredSize(new Dimension(143, 30));
-        email.setPreferredSize(new Dimension(143, 30));
-        address.setPreferredSize(new Dimension(143, 30));
+        name.setPreferredSize(new Dimension(116, 30));
+        email.setPreferredSize(new Dimension(116, 30));
+        address.setPreferredSize(new Dimension(116, 30));
 
-        nameTxt.setPreferredSize(new Dimension(288, 35));
-        emailTxt.setPreferredSize(new Dimension(288, 35));
-        addressTxt.setPreferredSize(new Dimension(288, 35));
+        nameTxt.setPreferredSize(new Dimension(300, 35));
+        emailTxt.setPreferredSize(new Dimension(300, 35));
+        addressTxt.setPreferredSize(new Dimension(300, 35));
 
-        phone.setPreferredSize(new Dimension(143, 30));
-        document.setPreferredSize(new Dimension(143, 30));
+        phone.setPreferredSize(new Dimension(116, 30));
+        document.setPreferredSize(new Dimension(116, 30));
 
-        phoneTxt.setPreferredSize(new Dimension(288, 35));
-        documentTxt.setPreferredSize(new Dimension(288, 35));
+        phoneTxt.setPreferredSize(new Dimension(300, 35));
+        documentTxt.setPreferredSize(new Dimension(300, 35));
 
         dataSpecificOrder.add(name);
         dataSpecificOrder.add(nameTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+        dataSpecificOrder.add(Box.createHorizontalStrut(54));
 
         dataSpecificOrder.add(document);
         dataSpecificOrder.add(documentTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
         dataSpecificOrder.add(email);
         dataSpecificOrder.add(emailTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
+
+        dataSpecificOrder.add(Box.createHorizontalStrut(54));
 
         dataSpecificOrder.add(address);
         dataSpecificOrder.add(addressTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
         dataSpecificOrder.add(phone);
         dataSpecificOrder.add(phoneTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(20));
 
-        dataSpecificOrder.add(Box.createHorizontalStrut(451));
+        dataSpecificOrder.add(Box.createHorizontalStrut(470));
     }
 
 
@@ -269,7 +282,7 @@ public class ViewCustomer {
         jPanel.add(buttons(), BorderLayout.SOUTH);
         jPanel.setBorder(new EmptyBorder(10, 20, 0, 20));
 
-        jPanel.setPreferredSize(new Dimension(1366, 155));
+        jPanel.setPreferredSize(new Dimension(1286, 155));
         jPanel.setBackground(Color.white);
         tableScrollPane.setBackground(Color.white);
 
@@ -312,7 +325,6 @@ public class ViewCustomer {
 
     public JPanel buttons() {
         JPanel buttons = new JPanel(new FlowLayout());
-        JButton exit = new JButton("Regresar");
 
         exit.setFont(components.createFont(1, 20));
         exit.setBackground(Color.decode("#2F1940"));
@@ -323,6 +335,7 @@ public class ViewCustomer {
         buttons.add(Box.createHorizontalStrut(825));
         buttons.add(exit);
         buttons.setBackground(Color.white);
+        exit.addActionListener(this);
         return buttons;
     }
 
@@ -341,10 +354,20 @@ public class ViewCustomer {
                     allInfoPanel.repaint();
                 } else if (column == 4) {
                     String valor = String.valueOf(table.getValueAt(row, 0).toString());
-                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
+                    components.windowConfirmation("¿Está seguro de eliminar este cliente?", "Cancelar", "Eliminar", "Cliente eliminado con éxito", valor);
 
                 }
             }
         });
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == exit) {
+            allInfoPanel.removeAll();
+            allInfoPanel.add(new CustomerList(allInfoPanel).initializeContentPanel());
+            allInfoPanel.revalidate();
+            allInfoPanel.repaint();
+        }
     }
 }

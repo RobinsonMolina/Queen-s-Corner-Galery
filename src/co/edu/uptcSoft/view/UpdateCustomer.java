@@ -170,7 +170,6 @@ public class UpdateCustomer implements ActionListener {
         dataSpecificOrder.add(phoneTxt);
 
         dataSpecificOrder.add(Box.createHorizontalStrut(470));
-
     }
 
 

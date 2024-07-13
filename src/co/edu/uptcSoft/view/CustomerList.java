@@ -303,7 +303,7 @@ public class CustomerList extends JFrame implements ActionListener {
                 int column = table.columnAtPoint(e.getPoint());
                 if (column == 3) {
                     contentPanel.removeAll();
-                    // (ViewCustomer) contentPanel.add(new NewCustomer(contentPanel).addSpecificOrder());
+                    contentPanel.add(new ViewCustomer(contentPanel).addSpecificOrder());
                     contentPanel.revalidate();
                     contentPanel.repaint();
                 } else if (column == 4) {
