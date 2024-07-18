@@ -48,6 +48,7 @@ public class ManagementFile {
     }
 
     public void writeCustomersJsonToFile(String fileName, TreeMap<Long, Customer> customerList) {
+        System.out.println("Llefa");
         Gson gsonForCustomers = new GsonBuilder()
                 // Register type adapter to remove customers from customers
                 .registerTypeAdapter(Order.class, new JsonSerializer<Order>() {

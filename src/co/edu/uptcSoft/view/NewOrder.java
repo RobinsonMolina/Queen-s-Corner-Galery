@@ -1,5 +1,6 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.model.Customer;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
@@ -28,6 +29,11 @@ public class NewOrder implements ActionListener {
     private JButton save;
     private JButton cancel;
 
+    private Customer currentCustomer;
+    private JTextField customerTxt;
+    private JTextField phoneTxt;
+    private JTextField documentTxt;
+
     public NewOrder() {
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
@@ -39,6 +45,10 @@ public class NewOrder implements ActionListener {
         add = new JButton("+ Material");
         save = new JButton("Aceptar");
         cancel = new JButton("Cancelar");
+
+        customerTxt = new JTextField();
+        phoneTxt = new JTextField();
+        documentTxt = new JTextField();
     }
     /*public NewOrder() {
         specificOrderWindow = new JFrame("Nueva Orden");
@@ -70,7 +80,9 @@ public class NewOrder implements ActionListener {
         window.add(allInformation, BorderLayout.CENTER);
     }*/
 
+    // 1. Menu, 2. OrderList, 3. NewCustomer
     public JPanel addSpecificOrder(int previousScreen){
+        System.out.println(getCurrentCustomer().toString());
         JLabel title = new JLabel("Nueva Orden");
         this.previousScreen = previousScreen;
 
@@ -114,13 +126,10 @@ public class NewOrder implements ActionListener {
         String[] options = {"Por Hacer", "En Progreso", "Entregado"};
         JTextField productTxt = new JTextField();
         JTextField typeTxt = new JTextField();
-        JTextField customerTxt = new JTextField();
         JComboBox <String> stateCombo = new JComboBox<> (options);
         JTextField productionDateTxt = new JTextField();
-        JTextField phoneTxt = new JTextField();
         JTextField orderNumberTxt = new JTextField();
         JTextField deliveryDateTxt = new JTextField();
-        JTextField documentTxt = new JTextField();
 
         product.setFont(components.createFont(0, 20));
         type.setFont(components.createFont(0, 20));
@@ -227,6 +236,7 @@ public class NewOrder implements ActionListener {
 
         dataSpecificOrder.add(document);
         dataSpecificOrder.add(documentTxt);
+        newCustomer();
     }
 
 
@@ -423,5 +433,27 @@ public class NewOrder implements ActionListener {
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
         }
+    }
+
+    public void newCustomer(){
+        try {
+            if (getCurrentCustomer() != null){
+                customerTxt.setText(getCurrentCustomer().getName());
+                phoneTxt.setText(String.valueOf(getCurrentCustomer().getPhoneNumber()));
+                documentTxt.setText(String.valueOf(getCurrentCustomer().getDocumentNumber()));
+            }
+
+            System.out.println(customerTxt.getText());
+        } catch (Exception e){
+
+        }
+    }
+
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
+
+    public void setCurrentCustomer(Customer currentCustomer) {
+        this.currentCustomer = currentCustomer;
     }
 }

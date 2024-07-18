@@ -395,7 +395,15 @@ public class NewCustomer implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == add) {
+            allInfoPanel.removeAll();
+            addCurrent();
+            NewOrder order = new NewOrder();
+            order.setCurrentCustomer(getCustomer());
+            allInfoPanel.add(order.addSpecificOrder(3));
+            allInfoPanel.revalidate();
+            allInfoPanel.repaint();
         } else if (e.getSource() == save) {
+            addCurrent();
             addCustomer();
         } else if (e.getSource() == cancel) {
             allInfoPanel.removeAll();
@@ -405,8 +413,7 @@ public class NewCustomer implements ActionListener {
         }
     }
 
-    public void addCustomer(){
-
+    public void addCurrent(){
         name = nameTxt.getText();
         document = Long.parseLong(documentTxt.getText());
         email = emailTxt.getText();
@@ -414,7 +421,9 @@ public class NewCustomer implements ActionListener {
         phoneNumber = Long.parseLong(phoneTxt.getText());
 
         setCustomer(new Customer(name, document, email, address, phoneNumber));
+    }
 
+    public void addCustomer(){
         if (name.isEmpty() || document == 0 || email.isEmpty() || address.isEmpty() || phoneNumber == 0) {
             JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
         } else {
@@ -432,6 +441,6 @@ public class NewCustomer implements ActionListener {
     }
 
     public void addCustomerLogic(Customer custo){
-        logic.addCustomer(custo.getName(), custo.getDocumentNumber(), custo.getEmail(), custo.getAddress(), custo.getPhoneNumber());
+        logic.addCustomer(custo.getName(), custo.getDocumentNumber(), custo.getEmail(), custo.getAddress(), custo.getPhoneNumber(), null);
     }
 }

@@ -2,8 +2,8 @@
   "1234509876": {
     "name": "Sofía Margarita Morales",
     "documentNumber": 1234509876,
-    "email": "",
-    "address": "",
+    "email": "sofia.morales@example.com",
+    "address": "Calle 123 #45-67, Bogotá, Colombia",
     "phoneNumber": 3190173456,
     "orders": [
       {
@@ -19,8 +19,8 @@
   "1234509877": {
     "name": "Sergio Andrés Jiménez",
     "documentNumber": 1234509877,
-    "email": "",
-    "address": "",
+    "email": "sergio.jimenez@example.com",
+    "address": "Carrera 34 #56-78, Medellín, Colombia",
     "phoneNumber": 3190173457,
     "orders": [
       {
@@ -36,8 +36,8 @@
   "1234509878": {
     "name": "Valeria Jiménez",
     "documentNumber": 1234509878,
-    "email": "",
-    "address": "",
+    "email": "valeria.jimenez@example.com",
+    "address": "Avenida 12 #34-56, Cali, Colombia",
     "phoneNumber": 3190173458,
     "orders": [
       {
@@ -53,8 +53,8 @@
   "1234567890": {
     "name": "Juan David Pérez",
     "documentNumber": 1234567890,
-    "email": "",
-    "address": "",
+    "email": "juan.perez@example.com",
+    "address": "Calle 98 #76-54, Cartagena, Colombia",
     "phoneNumber": 3001234567,
     "orders": [
       {
@@ -70,8 +70,8 @@
   "1234567891": {
     "name": "Juan Carlos Ruiz",
     "documentNumber": 1234567891,
-    "email": "",
-    "address": "",
+    "email": "juan.ruiz@example.com",
+    "address": "Carrera 56 #34-12, Barranquilla, Colombia",
     "phoneNumber": 3001234568,
     "orders": [
       {
@@ -87,8 +87,8 @@
   "1234567892": {
     "name": "Natalia Ruiz",
     "documentNumber": 1234567892,
-    "email": "",
-    "address": "",
+    "email": "natalia.ruiz@example.com",
+    "address": "Avenida 45 #23-67, Bucaramanga, Colombia",
     "phoneNumber": 3001234569,
     "orders": [
       {
@@ -104,8 +104,8 @@
   "2345609876": {
     "name": "Jorge Luis Ríos",
     "documentNumber": 2345609876,
-    "email": "",
-    "address": "",
+    "email": "jorge.rios@example.com",
+    "address": "Calle 12 #34-56, Pereira, Colombia",
     "phoneNumber": 3111234567,
     "orders": [
       {

@@ -292,22 +292,17 @@ public class Components implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonYes) {
             // change the content of the main panel instead of opening a new window
-            if (message.contains("Orden")) {
                 mainContentPanel.removeAll();
+            if (message.contains("Orden")) {
                 logic.deleteOrder(Long.parseLong(row));
                 mainContentPanel.add(new OrderList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Insumo")) {
-                mainContentPanel.removeAll();
                 logic.deleteSupply(row);
                 mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Cliente añadido")) {
                 new NewCustomer(mainContentPanel).addCustomerLogic(currentCustomer);
-                mainContentPanel.removeAll();
                 mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Cliente eliminado")) {
-                mainContentPanel.removeAll();
-                // Aún no se eliminan ni se agregan de la tabla
-                mainContentPanel.removeAll();
                 logic.deleteCustomer(Long.parseLong(row));
                 mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());
             }
@@ -331,10 +326,6 @@ public class Components implements ActionListener {
 
     public JFrame getConfirmationFrame2() {
         return confirmationFrame2;
-    }
-
-    public Customer getCurrentCustomer() {
-        return currentCustomer;
     }
 
     public void setCurrentCustomer(Customer currentCustomer) {

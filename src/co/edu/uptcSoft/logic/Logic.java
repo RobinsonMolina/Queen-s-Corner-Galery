@@ -40,9 +40,11 @@ public class Logic {
     }
 
    public void addCustomer(String name, long documentNumber, String email, String address, long phoneNumber, Order order) {
+       System.out.println("11");
         Customer customer = new Customer(name, documentNumber, email, address, phoneNumber);
         customerList.put(documentNumber, customer);
         if (order != null) {
+       System.out.println("22");
             customer.addOrder(order);
             order.setCustomer(customer);
             managementFile.writeCustomersJsonToFile("Customers", customerList);
@@ -148,7 +150,6 @@ public class Logic {
     }
 
     public void deleteCustomer(long row) {
-        System.out.println(customerList.toString());
         customerList.remove(row);
     }
 }
