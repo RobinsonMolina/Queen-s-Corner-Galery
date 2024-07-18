@@ -1,15 +1,17 @@
 package co.edu.uptcSoft.model;
 
+import com.google.gson.annotations.Expose;
+
 public class Supply {
 
-    private String id;
-    private String material;
-    private String category;
-    private String characteristics;
-    private int quantity;
-    private String unit;
-    private int unitPrice;
-    private int totalPrice;
+    @Expose private String id;
+    @Expose private String material;
+    @Expose private String category;
+    @Expose private String characteristics;
+    @Expose private int quantity;
+    @Expose private String unit;
+    @Expose private int unitPrice;
+    @Expose private int totalPrice;
 
     public Supply() {
     }
@@ -87,5 +89,19 @@ public class Supply {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Supply{" +
+                "id='" + id + '\'' +
+                ", material='" + material + '\'' +
+                ", category='" + category + '\'' +
+                ", characteristics='" + characteristics + '\'' +
+                ", quantity=" + quantity +
+                ", unit='" + unit + '\'' +
+                ", unitPrice=" + unitPrice +
+                ", totalPrice=" + totalPrice +
+                '}';
     }
 }
