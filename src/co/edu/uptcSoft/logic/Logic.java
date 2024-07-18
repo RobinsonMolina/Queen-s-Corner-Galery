@@ -120,6 +120,16 @@ public class Logic {
         return supplyList;
     }
 
+    public Supply searchSupply(String id) {
+        return supplyList.get(id);
+    }
+
+    public void updateSupply(String id, String material, String category, String characteristics, int quantity, String unit, long unitPrice, long totalPrice) {
+        supplyList.remove(id);
+        supplyList.put(id, new Supply(id, material, category, characteristics, quantity, unit, unitPrice, totalPrice));
+        managementFile.writeJsonToFile("Supplies",supplyList);
+    }
+
     public void deleteSupply(String row) {
         supplyList.remove(row);
         managementFile.writeJsonToFile("Supplies",supplyList);

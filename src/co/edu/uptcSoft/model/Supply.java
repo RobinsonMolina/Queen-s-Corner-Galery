@@ -10,13 +10,13 @@ public class Supply {
     @Expose private String characteristics;
     @Expose private int quantity;
     @Expose private String unit;
-    @Expose private int unitPrice;
-    @Expose private int totalPrice;
+    @Expose private long unitPrice;
+    @Expose private long totalPrice;
 
     public Supply() {
     }
 
-    public Supply(String id, String material, String category, String characteristics, int quantity, String unit, int unitPrice, int totalPrice) {
+    public Supply(String id, String material, String category, String characteristics, int quantity, String unit, long unitPrice, long totalPrice) {
         this.id = id;
         this.material = material;
         this.category = category;
@@ -75,7 +75,7 @@ public class Supply {
         this.unit = unit;
     }
 
-    public int getUnitPrice() {
+    public long getUnitPrice() {
         return unitPrice;
     }
 
@@ -83,7 +83,7 @@ public class Supply {
         this.unitPrice = unitPrice;
     }
 
-    public int getTotalPrice() {
+    public long getTotalPrice() {
         return totalPrice;
     }
 

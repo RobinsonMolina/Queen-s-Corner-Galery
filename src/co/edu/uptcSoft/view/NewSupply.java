@@ -166,7 +166,13 @@ public class NewSupply extends JFrame implements ActionListener {
         comboBox.setMaximumRowCount(4);
         quantityPanel.add(comboBox);
 
-        comboBox.addActionListener(this);
+        // Add ActionListener to combo box
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateTotal();
+            }
+        });
 
         // Label measurement
         measurementLabel = new JLabel("Unidad");
