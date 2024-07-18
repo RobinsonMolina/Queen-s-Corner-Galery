@@ -52,15 +52,16 @@ public class Logic {
     }
 
     public void addOrder(String productName, String status, int orderNumber, String type, Date productionDate,
-                         Date deliveryDate, String name, long phoneNumber, long documentNumber, ArrayList<Materials> materials) {
-        Order order = new Order(productName, status, orderNumber, type, productionDate, deliveryDate, null, null);
-        if (!customerList.containsKey(documentNumber)) {
-            addCustomer(name, documentNumber, "", "", phoneNumber, order);
+                         Date deliveryDate, Customer customer, ArrayList<Materials> materials) {
+        Order order = new Order(productName, status, orderNumber, type, productionDate, deliveryDate, customer, null);
+        if (!customerList.containsKey(customer.getDocumentNumber())) {
+            addCustomer(customer.getName(), customer.getDocumentNumber(), customer.getEmail(), customer.getAddress(), customer.getPhoneNumber(), order);
         } else {
-            Customer customer = customerList.get(documentNumber);
-            customer.addOrder(order);
-            order.setCustomer(customer);
+            Customer customer2 = customerList.get(customer.getDocumentNumber());
+            customer2.addOrder(order);
+            order.setCustomer(customer2);
         }
+        System.out.println(order.toString());
         orderList.put(orderNumber, order);
         managementFile.writeOrdersJsonToFile("Orders", orderList);
     }
@@ -85,14 +86,18 @@ public class Logic {
         ordersDelivered = new ArrayList<>();
 
         for (Map.Entry<Integer, Order> order : orderList.entrySet()) {
-            if (order.getValue().getStatus().equals("Por Hacer")) {
-                ordersDo.add("Orden No. "+order.getValue().getOrderNumber() + " " + order.getValue().getProductName());
-            }
-            if (order.getValue().getStatus().equals("En Progreso")) {
-                ordersProgress.add("Orden No. "+order.getValue().getOrderNumber() + " " + order.getValue().getProductName());
-            }
-            if (order.getValue().getStatus().equals("Entregado")) {
-                ordersDelivered.add("Orden No. "+order.getValue().getOrderNumber() + " " + order.getValue().getProductName());
+            try {
+                if (order.getValue().getStatus().equals("Por Hacer")) {
+                    ordersDo.add("Orden No. "+order.getValue().getOrderNumber() + " " + order.getValue().getProductName());
+                }
+                if (order.getValue().getStatus().equals("En Progreso")) {
+                    ordersProgress.add("Orden No. "+order.getValue().getOrderNumber() + " " + order.getValue().getProductName());
+                }
+                if (order.getValue().getStatus().equals("Entregado")) {
+                    ordersDelivered.add("Orden No. "+order.getValue().getOrderNumber() + " " + order.getValue().getProductName());
+                }
+            }catch (Exception e){
+
             }
         }
     }

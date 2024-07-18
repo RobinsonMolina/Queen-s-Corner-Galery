@@ -46,6 +46,10 @@ public class NewCustomer implements ActionListener {
 
     private Customer customer;
 
+    public NewCustomer(){
+
+    }
+
     public NewCustomer(JPanel mainContentPanel) {
         allInfoPanel = mainContentPanel;
         allInfoPanel = new JPanel();
@@ -442,5 +446,15 @@ public class NewCustomer implements ActionListener {
 
     public void addCustomerLogic(Customer custo){
         logic.addCustomer(custo.getName(), custo.getDocumentNumber(), custo.getEmail(), custo.getAddress(), custo.getPhoneNumber(), null);
+    }
+
+    public void addCompleteCustomer(Customer customer){
+        nameTxt = new JTextField(customer.getName());
+        documentTxt = new JTextField(String.valueOf(customer.getDocumentNumber()));
+        emailTxt = new JTextField(customer.getEmail());
+        addressTxt = new JTextField(customer.getAddress());
+        phoneTxt = new JTextField(String.valueOf(customer.getPhoneNumber()));
+
+        setCustomer(customer);
     }
 }

@@ -1,62 +1,50 @@
 {
   "1": {
-    "productName": "SofaCama",
-    "status": "Por Hacer",
+    "productName": "1",
     "orderNumber": 1,
-    "type": "Mueble",
-    "productionDate": "Jun 10, 2024, 12:00:00 AM",
-    "deliveryDate": "Jun 25, 2024, 12:00:00 AM",
+    "type": "1",
     "customer": {
-      "name": "Juan David Pérez",
-      "documentNumber": 1234567890,
-      "email": "",
-      "address": "",
-      "phoneNumber": 3001234567
+      "name": "1",
+      "documentNumber": 1,
+      "email": "1",
+      "address": "1",
+      "phoneNumber": 1
     }
   },
   "2": {
-    "productName": "Mesa De Centro",
-    "status": "Entregado",
+    "productName": "2",
     "orderNumber": 2,
-    "type": "Mueble",
-    "productionDate": "Jun 12, 2024, 12:00:00 AM",
-    "deliveryDate": "Jun 27, 2024, 12:00:00 AM",
+    "type": "2",
     "customer": {
-      "name": "María Alejandra Rodríguez",
-      "documentNumber": 2345678901,
-      "email": "",
-      "address": "",
-      "phoneNumber": 339876543
+      "name": "2",
+      "documentNumber": 22,
+      "email": "2",
+      "address": "2",
+      "phoneNumber": 2
     }
   },
   "3": {
-    "productName": "Cojines",
-    "status": "Por Hacer",
+    "productName": "3",
     "orderNumber": 3,
-    "type": "Mueble",
-    "productionDate": "Jun 15, 2024, 12:00:00 AM",
-    "deliveryDate": "Jun 30, 2024, 12:00:00 AM",
+    "type": "3",
     "customer": {
-      "name": "Carlos Andrés Gómez",
-      "documentNumber": 3456789012,
-      "email": "",
-      "address": "",
-      "phoneNumber": 323456789
+      "name": "3",
+      "documentNumber": 3,
+      "email": "3",
+      "address": "3",
+      "phoneNumber": 3
     }
   },
   "4": {
-    "productName": "Lampara",
-    "status": "En Progreso",
+    "productName": "4",
     "orderNumber": 4,
-    "type": "Mueble",
-    "productionDate": "Jun 17, 2024, 12:00:00 AM",
-    "deliveryDate": "Jul 2, 2024, 12:00:00 AM",
+    "type": "4",
     "customer": {
-      "name": "Luisa Fernanda Fernández",
-      "documentNumber": 4567890123,
-      "email": "",
-      "address": "",
-      "phoneNumber": 3109876543
+      "name": "4",
+      "documentNumber": 4,
+      "email": "4",
+      "address": "4",
+      "phoneNumber": 4
     }
   },
   "5": {
@@ -150,18 +138,15 @@
     }
   },
   "11": {
-    "productName": "Cojines",
-    "status": "Entregado",
+    "productName": "Nose",
     "orderNumber": 11,
-    "type": "Mueble",
-    "productionDate": "Jun 3, 2024, 12:00:00 AM",
-    "deliveryDate": "Jun 18, 2024, 12:00:00 AM",
+    "type": "Sumaquina",
     "customer": {
-      "name": "Jorge Luis Ríos",
-      "documentNumber": 2345609876,
-      "email": "",
-      "address": "",
-      "phoneNumber": 3111234567
+      "name": "Dani",
+      "documentNumber": 234234,
+      "email": "jhbjh",
+      "address": "jhbjhb",
+      "phoneNumber": 9999
     }
   },
   "12": {
@@ -747,6 +732,54 @@
       "email": "",
       "address": "",
       "phoneNumber": 3245678392
+    }
+  },
+  "88": {
+    "productName": "88",
+    "orderNumber": 88,
+    "type": "88",
+    "customer": {
+      "name": "Ulti",
+      "documentNumber": 888,
+      "email": "88",
+      "address": "88",
+      "phoneNumber": 88
+    }
+  },
+  "99": {
+    "productName": "Mmm",
+    "orderNumber": 99,
+    "type": "99",
+    "customer": {
+      "name": "Jose",
+      "documentNumber": 99,
+      "email": "99",
+      "address": "99",
+      "phoneNumber": 99
+    }
+  },
+  "444": {
+    "productName": "Cama",
+    "orderNumber": 444,
+    "type": "Nose",
+    "customer": {
+      "name": "Pru",
+      "documentNumber": 9999,
+      "email": "asdadsfdf",
+      "address": "asadsfsdaf",
+      "phoneNumber": 878787
+    }
+  },
+  "999": {
+    "productName": "Casa",
+    "orderNumber": 999,
+    "type": "afasdfdsf",
+    "customer": {
+      "name": "Lau",
+      "documentNumber": 888888888,
+      "email": "afsdfasdf",
+      "address": "asdfdsf",
+      "phoneNumber": 2121212121
     }
   }
 }

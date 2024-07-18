@@ -1,6 +1,9 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
+import co.edu.uptcSoft.model.Materials;
+import co.edu.uptcSoft.model.Order;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
@@ -15,6 +18,8 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 public class NewOrder implements ActionListener {
@@ -34,6 +39,25 @@ public class NewOrder implements ActionListener {
     private JTextField phoneTxt;
     private JTextField documentTxt;
 
+    private JTextField productTxt;
+    private JTextField typeTxt;
+    private JTextField productionDateTxt;
+    private JTextField orderNumberTxt;
+    private JTextField deliveryDateTxt;
+    private String statusOp;
+
+    private Order order;
+    private String productName;
+    private String status;
+    private int orderNumber;
+    private String type;
+    private Date productionDate;
+    private Date deliveryDate;
+    private Customer customer;
+    private ArrayList<Materials> materials;
+
+    private Logic logic;
+
     public NewOrder() {
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
@@ -49,6 +73,16 @@ public class NewOrder implements ActionListener {
         customerTxt = new JTextField();
         phoneTxt = new JTextField();
         documentTxt = new JTextField();
+
+        order = new Order();
+        productTxt = new JTextField();
+        typeTxt = new JTextField();
+        productionDateTxt = new JTextField();
+        orderNumberTxt = new JTextField();
+        deliveryDateTxt = new JTextField();
+        statusOp = "";
+
+        logic = new Logic();
     }
     /*public NewOrder() {
         specificOrderWindow = new JFrame("Nueva Orden");
@@ -82,7 +116,7 @@ public class NewOrder implements ActionListener {
 
     // 1. Menu, 2. OrderList, 3. NewCustomer
     public JPanel addSpecificOrder(int previousScreen){
-        System.out.println(getCurrentCustomer().toString());
+
         JLabel title = new JLabel("Nueva Orden");
         this.previousScreen = previousScreen;
 
@@ -124,12 +158,14 @@ public class NewOrder implements ActionListener {
         JLabel document = new JLabel("Documento");
 
         String[] options = {"Por Hacer", "En Progreso", "Entregado"};
-        JTextField productTxt = new JTextField();
-        JTextField typeTxt = new JTextField();
         JComboBox <String> stateCombo = new JComboBox<> (options);
-        JTextField productionDateTxt = new JTextField();
-        JTextField orderNumberTxt = new JTextField();
-        JTextField deliveryDateTxt = new JTextField();
+
+        stateCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                statusOp = (String) stateCombo.getSelectedItem();
+            }
+        });
 
         product.setFont(components.createFont(0, 20));
         type.setFont(components.createFont(0, 20));
@@ -432,6 +468,22 @@ public class NewOrder implements ActionListener {
 
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
+        } if (e.getSource() == save){
+            addCurrentOrder();
+            allInfoPanel.removeAll();
+
+            if (previousScreen == 3){
+                //NewCustomer
+                //allInfoPanel.add(new NewCustomer(allInfoPanel).addSpecificOrder());
+                new NewCustomer(allInfoPanel).addCompleteCustomer(currentCustomer);
+
+                //no se actualiza bien la página
+            } else if (previousScreen == 4) {
+
+            }
+
+            allInfoPanel.revalidate();
+            allInfoPanel.repaint();
         }
     }
 
@@ -442,11 +494,21 @@ public class NewOrder implements ActionListener {
                 phoneTxt.setText(String.valueOf(getCurrentCustomer().getPhoneNumber()));
                 documentTxt.setText(String.valueOf(getCurrentCustomer().getDocumentNumber()));
             }
-
-            System.out.println(customerTxt.getText());
         } catch (Exception e){
-
+            e.printStackTrace();
         }
+    }
+
+    public void addCurrentOrder(){
+        productName = productTxt.getText();
+        orderNumber = Integer.parseInt(orderNumberTxt.getText());
+        type = typeTxt.getText();
+        //productionDate = DateproductionDateTxt.getText();
+        //deliveryDate = deliveryDateTxt.getText();
+        customer = currentCustomer;
+
+        setOrder(new Order(productName, status, orderNumber, type, productionDate, deliveryDate, customer, materials));
+        logic.addOrder(productName, status, orderNumber, type, productionDate, deliveryDate, customer, materials);
     }
 
     public Customer getCurrentCustomer() {
@@ -455,5 +517,13 @@ public class NewOrder implements ActionListener {
 
     public void setCurrentCustomer(Customer currentCustomer) {
         this.currentCustomer = currentCustomer;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
