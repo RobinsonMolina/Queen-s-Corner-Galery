@@ -5,8 +5,7 @@ import co.edu.uptcSoft.logic.Logic;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
@@ -76,6 +75,40 @@ public class Components implements ActionListener {
         };
     }
 
+    public void hoverButton(JButton buttonAdd){
+        buttonAdd.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                buttonAdd.setBackground(Color.decode("#411365"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                buttonAdd.setBackground(Color.decode("#2F1940"));
+            }
+        });
+    }
+
+    public void hoverButtonBoard(JButton buttonAdd){
+        buttonAdd.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                buttonAdd.setBackground(Color.decode("#2F1940"));
+                buttonAdd.setForeground(Color.WHITE);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                buttonAdd.setBackground(Color.WHITE);
+                buttonAdd.setForeground(Color.decode("#2F1940"));
+            }
+        });
+    }
+
     // Method for rounded text field
     public JTextField createRoundedTextField(int arcw, int arch) {
         return new JTextField() {
@@ -108,6 +141,29 @@ public class Components implements ActionListener {
                 return shape.contains(x, y);
             }
         };
+    }
+
+    // Method for creating a limit of characters introduced in the text field
+    public void limitTextField(JTextField textField, int limit) {
+        textField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textField.getText().length() >= 10)// if the length of the text is greater than 10
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
     }
 
     // window method to confirm
@@ -203,7 +259,7 @@ public class Components implements ActionListener {
         confirmationFrame2 = new JFrame();
         confirmationFrame2.setTitle("Confirmación");
         confirmationFrame2.setSize(500, 130);
-        confirmationFrame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        confirmationFrame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         confirmationFrame2.setLocationRelativeTo(null);
 
         JPanel confirmationPanel2 = new JPanel();
@@ -218,27 +274,29 @@ public class Components implements ActionListener {
 
         confirmationFrame2.add(confirmationPanel2);
         confirmationFrame2.setVisible(true);
+
+        // Starts a timer to close the window after 2 seconds
+        Timer timer = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                confirmationFrame2.dispose();
+            }
+        });
+        timer.setRepeats(false); // To make the timer only execute once
+        timer.start();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonYes) {
-            // Cambiar el contenido del panel principal en lugar de abrir una nueva ventana
+            // change the content of the main panel instead of opening a new window
             mainContentPanel.removeAll();
-            System.out.println(message);
-            System.out.println("orden ---- "+message.contains("Orden"));
-            System.out.println("insumo ---- "+message.contains("Insumo"));
             if (message.contains("Orden")) {
-                System.out.println("delete order");
                 logic.deleteOrder(Long.parseLong(row));
                 mainContentPanel.add(new OrderList(mainContentPanel).initializeContentPanel());
-                OrderList orderList = new OrderList(mainContentPanel);
-                orderList.initializeTable();
             } else if (message.contains("Insumo")) {
                 logic.deleteSupply(row);
                 mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
-                /*Supplies supplies = new Supplies(mainContentPanel);
-                supplies.initializeContentPanel();*/
             }
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
