@@ -1,5 +1,6 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
@@ -29,6 +30,14 @@ public class NewCustomer implements ActionListener {
     private JButton save;
     private JButton cancel;
 
+    private JTextField nameTxt;
+    private JTextField emailTxt;
+    private JTextField phoneTxt;
+    private JTextField documentTxt;
+    private JTextField addressTxt;
+
+    private Logic logic;
+
     public NewCustomer(JPanel mainContentPanel) {
         allInfoPanel = mainContentPanel;
         allInfoPanel = new JPanel();
@@ -41,6 +50,14 @@ public class NewCustomer implements ActionListener {
         add = new JButton("+ Orden");
         save = new JButton("Aceptar");
         cancel = new JButton("Cancelar");
+
+        nameTxt = new JTextField();
+        emailTxt = new JTextField();
+        phoneTxt = new JTextField();
+        documentTxt = new JTextField();
+        addressTxt = new JTextField();
+
+        logic = Logic.getInstance();
     }
     /*
     public NewCustomer() {
@@ -108,12 +125,6 @@ public class NewCustomer implements ActionListener {
         JLabel phone = new JLabel("Teléfono");
         JLabel document = new JLabel("Documento");
         JLabel address = new JLabel("Dirección");
-
-        JTextField nameTxt = new JTextField();
-        JTextField emailTxt = new JTextField();
-        JTextField phoneTxt = new JTextField();
-        JTextField documentTxt = new JTextField();
-        JTextField addressTxt = new JTextField();
 
         name.setFont(components.createFont(0, 20));
         email.setFont(components.createFont(0, 20));
@@ -375,14 +386,40 @@ public class NewCustomer implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == add) {
-
         } else if (e.getSource() == save) {
-
+            addCustomer();
         } else if (e.getSource() == cancel) {
             allInfoPanel.removeAll();
             allInfoPanel.add(new CustomerList(allInfoPanel).initializeContentPanel());
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
+        }
+    }
+
+    public void addCustomer(){
+        String name = nameTxt.getText();
+        long document = Long.parseLong(documentTxt.getText());
+        String email = emailTxt.getText();
+        String address = addressTxt.getText();
+        long phoneNumber = Long.parseLong(phoneTxt.getText());
+
+        System.out.println(document);
+        System.out.println(phoneNumber);
+        System.out.println("\n" + documentTxt.getText());
+        System.out.println(phoneTxt.getText());
+
+        if (name.isEmpty() || document == 0 || email.isEmpty() || address.isEmpty() || phoneNumber == 0) {
+            JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
+        } else {
+            logic.addCustomer(name, document, email, address, phoneNumber);
+            JOptionPane.showMessageDialog(null, "Hola");
+            nameTxt.setText("");
+            documentTxt.setText("");
+            emailTxt.setText("");
+            addressTxt.setText("");
+            phoneTxt.setText("");
+
+            System.out.println("Holaaa __________________________\n " + logic.getCustomerList().toString());
         }
     }
 }
