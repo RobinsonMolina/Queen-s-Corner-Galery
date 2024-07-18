@@ -1,14 +1,16 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Supply;
+
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.RoundRectangle2D;
-import java.io.File;
-import java.io.IOException;
 
-public class UpdateSupplie extends JFrame implements ActionListener {
+public class UpdateSupplY extends JFrame implements ActionListener {
 
     private Components components;
     private JPanel contentPanel;
@@ -23,26 +25,29 @@ public class UpdateSupplie extends JFrame implements ActionListener {
     private JLabel unitaryLabel;
     private JLabel totalLabel;
     private JTextField materialTextField;
-    private JTextField categoryTextField;
     private JTextField characteristicTextField;
     private JTextField unitaryTextField;
     private JTextField totalTextField;
-    private JComboBox<Integer> comboBox;
+    private JComboBox<String> comboBoxCategory;
+    private JComboBox<String> comboBox;
     private JComboBox<String> comboBox2;
     private JButton updateButton;
     private JButton cancelButton;
     private JLabel titleLabel;
     private JPanel mainContentPanel;
+    private Logic logic = Logic.getInstance();
+    private String id;
 
-    public UpdateSupplie(JPanel mainContentPanel) {
+    public UpdateSupplY(JPanel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
         components = new Components(mainContentPanel);
     }
 
-    public JPanel initializeContentPanel() {
+    public JPanel initializeContentPanel(String id) {
         contentPanel = new JPanel(null);
         contentPanel.setPreferredSize(new Dimension(1366, 670));
         contentPanel.setBackground(Color.WHITE);
+        this.id = id;
 
         // Panel title
         initializeContentTitle();
@@ -52,6 +57,7 @@ public class UpdateSupplie extends JFrame implements ActionListener {
 
         // Panel cantidad
         panelSouth();
+        getValues();
 
         return contentPanel;
     }
@@ -107,12 +113,18 @@ public class UpdateSupplie extends JFrame implements ActionListener {
         materialTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
         materialPanel.add(materialTextField);
 
-        // Text field category
-        categoryTextField = components.createRoundedTextField(30,30);
-        categoryTextField.setBounds(560, 90, 400, 34);
-        categoryTextField.setFont(components.createFont(1, 20));
-        categoryTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        materialPanel.add(categoryTextField);
+        // Combo box category
+        String options[] = {"Telas", "Muebles", "Decorativos", "Artesanias"};
+
+        // Combo box quantity
+        comboBoxCategory = new JComboBox<>(options);
+        comboBoxCategory.setSelectedItem(1);
+        comboBoxCategory.setFont(components.createFont(1, 20));
+        comboBoxCategory.setBounds(560, 90, 150, 30);
+        comboBoxCategory.setMaximumRowCount(4);
+        materialPanel.add(comboBoxCategory);
+
+        comboBoxCategory.addActionListener(this);
 
         // Label characteristic
         characteristicLabel = new JLabel("Características");
@@ -126,7 +138,6 @@ public class UpdateSupplie extends JFrame implements ActionListener {
         characteristicTextField.setBounds(60, 190, 400, 34);
         characteristicTextField.setFont(components.createFont(1, 20));
         characteristicTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        materialPanel.add(categoryTextField);
         materialPanel.add(characteristicTextField);
     }
 
@@ -145,7 +156,7 @@ public class UpdateSupplie extends JFrame implements ActionListener {
         quantityPanel.add(quantityLabel);
 
         // Combo box quantity
-        Integer options[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        String options[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
         // Combo box quantity
         comboBox = new JComboBox<>(options);
@@ -153,6 +164,14 @@ public class UpdateSupplie extends JFrame implements ActionListener {
         comboBox.setBounds(60, 90, 85, 30);
         comboBox.setMaximumRowCount(6);
         quantityPanel.add(comboBox);
+
+        // Add ActionListener to combo box
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateTotal();
+            }
+        });
 
         // Label measurement
         measurementLabel = new JLabel("Unidad");
@@ -184,6 +203,25 @@ public class UpdateSupplie extends JFrame implements ActionListener {
         unitaryTextField.setFont(components.createFont(1, 20));
         unitaryTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
         quantityPanel.add(unitaryTextField);
+
+        // Method for updating the total when the unitary text field changes
+        unitaryTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateTotal();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateTotal();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateTotal();
+            }
+        });
 
         // JLabel total
         totalLabel = new JLabel("Total");
@@ -227,7 +265,7 @@ public class UpdateSupplie extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == updateButton) {
-            dispose();
+            getMaterials();
             // Cambiar el contenido del panel principal en lugar de abrir una nueva ventana
             mainContentPanel.removeAll();
             mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
@@ -250,5 +288,29 @@ public class UpdateSupplie extends JFrame implements ActionListener {
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
         }
+    }
+
+    public void getMaterials() {
+        logic.updateSupply(id, materialTextField.getText(), comboBoxCategory.getSelectedItem().toString(), characteristicTextField.getText(), Integer.parseInt(comboBox.getSelectedItem().toString()), comboBox2.getSelectedItem().toString(), Long.parseLong(unitaryTextField.getText()), Long.parseLong(totalTextField.getText()));
+    }
+
+
+    private void updateTotal() {
+        int quanty = Integer.parseInt(comboBox.getSelectedItem().toString());
+        String unitPrice = unitaryTextField.getText();
+        int price = unitPrice.isEmpty() ? 0 : Integer.parseInt(unitPrice);
+        int result = quanty * price;
+        totalTextField.setText(String.valueOf(result));
+    }
+
+    public void getValues() {
+        Supply supply = logic.searchSupply(id);
+        materialTextField.setText(supply.getMaterial());
+        comboBoxCategory.setSelectedItem(supply.getCategory());
+        characteristicTextField.setText(supply.getCharacteristics());
+        comboBox.setSelectedItem(String.valueOf(supply.getQuantity()));
+        comboBox2.setSelectedItem(supply.getUnit());
+        unitaryTextField.setText(String.valueOf(supply.getUnitPrice()));
+        totalTextField.setText(String.valueOf(supply.getTotalPrice()));
     }
 }

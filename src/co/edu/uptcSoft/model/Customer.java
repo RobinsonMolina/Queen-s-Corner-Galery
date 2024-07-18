@@ -1,16 +1,19 @@
 package co.edu.uptcSoft.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.Since;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
 public class Customer implements Comparable<Customer> {
 
-    private String name;
-    private long documentNumber;
-    private String email;
-    private String address;
-    private long phoneNumber;
+    @Expose private String name;
+    @Expose private long documentNumber;
+    @Expose private String email;
+    @Expose private String address;
+    @Expose private long phoneNumber;
     private TreeSet<Order> orders;
 
     public Customer() {
@@ -69,6 +72,8 @@ public class Customer implements Comparable<Customer> {
     public TreeSet<Order> getOrders() {
         return orders;
     }
+
+    public void setOrders(TreeSet<Order> orders) {this.orders = orders;}
 
     public void addOrder(Order order) {
         this.orders.add(order);

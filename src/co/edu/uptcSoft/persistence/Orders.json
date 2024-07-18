@@ -1,0 +1,752 @@
+{
+  "1": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 1,
+    "type": "Mueble",
+    "productionDate": "Jun 10, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 25, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Juan David Pérez",
+      "documentNumber": 1234567890,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3001234567
+    }
+  },
+  "2": {
+    "productName": "Mesa De Centro",
+    "status": "Entregado",
+    "orderNumber": 2,
+    "type": "Mueble",
+    "productionDate": "Jun 12, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 27, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "María Alejandra Rodríguez",
+      "documentNumber": 2345678901,
+      "email": "",
+      "address": "",
+      "phoneNumber": 339876543
+    }
+  },
+  "3": {
+    "productName": "Cojines",
+    "status": "Por Hacer",
+    "orderNumber": 3,
+    "type": "Mueble",
+    "productionDate": "Jun 15, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 30, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Carlos Andrés Gómez",
+      "documentNumber": 3456789012,
+      "email": "",
+      "address": "",
+      "phoneNumber": 323456789
+    }
+  },
+  "4": {
+    "productName": "Lampara",
+    "status": "En Progreso",
+    "orderNumber": 4,
+    "type": "Mueble",
+    "productionDate": "Jun 17, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 2, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Luisa Fernanda Fernández",
+      "documentNumber": 4567890123,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3109876543
+    }
+  },
+  "5": {
+    "productName": "Sofa",
+    "status": "Entregado",
+    "orderNumber": 5,
+    "type": "Mueble",
+    "productionDate": "Jun 20, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 5, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Andrés Felipe López",
+      "documentNumber": 5678901234,
+      "email": "",
+      "address": "",
+      "phoneNumber": 316879801
+    }
+  },
+  "6": {
+    "productName": "SofaCama",
+    "status": "En Progreso",
+    "orderNumber": 6,
+    "type": "Mueble",
+    "productionDate": "Jun 22, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 7, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Ana María Torres",
+      "documentNumber": 6789012345,
+      "email": "",
+      "address": "",
+      "phoneNumber": 318678902
+    }
+  },
+  "7": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 7,
+    "type": "Mueble",
+    "productionDate": "Jun 25, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 10, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Diego Alejandro Martínez",
+      "documentNumber": 7890123456,
+      "email": "",
+      "address": "",
+      "phoneNumber": 317890123
+    }
+  },
+  "8": {
+    "productName": "SofaCama",
+    "status": "Entregado",
+    "orderNumber": 8,
+    "type": "Mueble",
+    "productionDate": "Jun 27, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 12, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Laura Patricia Ramírez",
+      "documentNumber": 8901234567,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3198901234
+    }
+  },
+  "9": {
+    "productName": "Lampara",
+    "status": "Por Hacer",
+    "orderNumber": 9,
+    "type": "Mueble",
+    "productionDate": "Jun 29, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 14, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Pedro José Jiménez",
+      "documentNumber": 9012345678,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3109021345
+    }
+  },
+  "10": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 10,
+    "type": "Mueble",
+    "productionDate": "Jun 1, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 16, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Sofía Margarita Morales",
+      "documentNumber": 1234509876,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3190173456
+    }
+  },
+  "11": {
+    "productName": "Cojines",
+    "status": "Entregado",
+    "orderNumber": 11,
+    "type": "Mueble",
+    "productionDate": "Jun 3, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 18, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Jorge Luis Ríos",
+      "documentNumber": 2345609876,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3111234567
+    }
+  },
+  "12": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 12,
+    "type": "Mueble",
+    "productionDate": "Jun 5, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 20, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "María Alejandra Rodríguez",
+      "documentNumber": 3456709876,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3398763543
+    }
+  },
+  "13": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 13,
+    "type": "Mueble",
+    "productionDate": "Jun 7, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 22, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Alberto Gómez",
+      "documentNumber": 4567809876,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3209876534
+    }
+  },
+  "14": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 14,
+    "type": "Mueble",
+    "productionDate": "Jun 10, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 24, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Santiago Herrera",
+      "documentNumber": 5678909876,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3123453678
+    }
+  },
+  "15": {
+    "productName": "Lampara",
+    "status": "Entregado",
+    "orderNumber": 15,
+    "type": "Mueble",
+    "productionDate": "Jun 11, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 26, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Ricardo Pérez",
+      "documentNumber": 6789010987,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3219876534
+    }
+  },
+  "16": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 16,
+    "type": "Mueble",
+    "productionDate": "Jun 13, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 28, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Daniela Torres",
+      "documentNumber": 7890120987,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3245678390
+    }
+  },
+  "17": {
+    "productName": "Mesa De Centro",
+    "status": "Por Hacer",
+    "orderNumber": 17,
+    "type": "Mueble",
+    "productionDate": "Jun 15, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 30, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Valeria Mendoza",
+      "documentNumber": 8901230987,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3256783901
+    }
+  },
+  "18": {
+    "productName": "SofaCama",
+    "status": "Entregado",
+    "orderNumber": 18,
+    "type": "Mueble",
+    "productionDate": "Jun 10, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 25, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Juan Carlos Ruiz",
+      "documentNumber": 1234567891,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3001234568
+    }
+  },
+  "19": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 19,
+    "type": "Mueble",
+    "productionDate": "Jun 12, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 27, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Paula Andrea García",
+      "documentNumber": 2345678902,
+      "email": "",
+      "address": "",
+      "phoneNumber": 339876544
+    }
+  },
+  "20": {
+    "productName": "Cojines",
+    "status": "Por Hacer",
+    "orderNumber": 20,
+    "type": "Mueble",
+    "productionDate": "Jun 15, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 30, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Miguel Ángel Ríos",
+      "documentNumber": 3456789013,
+      "email": "",
+      "address": "",
+      "phoneNumber": 323456790
+    }
+  },
+  "21": {
+    "productName": "Lampara",
+    "status": "En Progreso",
+    "orderNumber": 21,
+    "type": "Mueble",
+    "productionDate": "Jun 17, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 2, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Luis Fernando Martínez",
+      "documentNumber": 4567890124,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3109876544
+    }
+  },
+  "22": {
+    "productName": "Sofa",
+    "status": "Entregado",
+    "orderNumber": 22,
+    "type": "Mueble",
+    "productionDate": "Jun 20, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 5, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Laura Camila Torres",
+      "documentNumber": 5678901235,
+      "email": "",
+      "address": "",
+      "phoneNumber": 316879802
+    }
+  },
+  "23": {
+    "productName": "SofaCama",
+    "status": "En Progreso",
+    "orderNumber": 23,
+    "type": "Mueble",
+    "productionDate": "Jun 22, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 7, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "José Manuel Gómez",
+      "documentNumber": 6789012346,
+      "email": "",
+      "address": "",
+      "phoneNumber": 318678903
+    }
+  },
+  "24": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 24,
+    "type": "Mueble",
+    "productionDate": "Jun 25, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 10, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Ana Patricia Ramírez",
+      "documentNumber": 7890123457,
+      "email": "",
+      "address": "",
+      "phoneNumber": 317890124
+    }
+  },
+  "25": {
+    "productName": "SofaCama",
+    "status": "Entregado",
+    "orderNumber": 25,
+    "type": "Mueble",
+    "productionDate": "Jun 27, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 12, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Carlos Andrés López",
+      "documentNumber": 8901234568,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3198901235
+    }
+  },
+  "26": {
+    "productName": "Lampara",
+    "status": "Por Hacer",
+    "orderNumber": 26,
+    "type": "Mueble",
+    "productionDate": "Jun 29, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 14, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Mónica Isabel Pérez",
+      "documentNumber": 9012345679,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3109021346
+    }
+  },
+  "27": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 27,
+    "type": "Mueble",
+    "productionDate": "Jun 1, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 16, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Sergio Andrés Jiménez",
+      "documentNumber": 1234509877,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3190173457
+    }
+  },
+  "28": {
+    "productName": "Cojines",
+    "status": "Entregado",
+    "orderNumber": 28,
+    "type": "Mueble",
+    "productionDate": "Jun 3, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 18, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Lucía Fernanda Morales",
+      "documentNumber": 2345609877,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3111234568
+    }
+  },
+  "29": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 29,
+    "type": "Mueble",
+    "productionDate": "Jun 5, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 20, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Sofía Alejandra Rodríguez",
+      "documentNumber": 3456709877,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3398763544
+    }
+  },
+  "30": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 30,
+    "type": "Mueble",
+    "productionDate": "Jun 7, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 22, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Roberto Carlos Gómez",
+      "documentNumber": 4567809877,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3209876535
+    }
+  },
+  "31": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 31,
+    "type": "Mueble",
+    "productionDate": "Jun 10, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 24, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Valentina Herrera",
+      "documentNumber": 5678909877,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3123453679
+    }
+  },
+  "32": {
+    "productName": "Sofa",
+    "status": "Entregado",
+    "orderNumber": 32,
+    "type": "Mueble",
+    "productionDate": "Jun 11, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 26, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Ramón Pérez",
+      "documentNumber": 6789010988,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3219876535
+    }
+  },
+  "33": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 33,
+    "type": "Mueble",
+    "productionDate": "Jun 13, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 28, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Sebastián Torres",
+      "documentNumber": 7890120988,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3245678391
+    }
+  },
+  "34": {
+    "productName": "Sofa",
+    "status": "Por Hacer",
+    "orderNumber": 34,
+    "type": "Mueble",
+    "productionDate": "Jun 15, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 30, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Lina Mendoza",
+      "documentNumber": 8901230988,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3256783902
+    }
+  },
+  "35": {
+    "productName": "SofaCama",
+    "status": "Entregado",
+    "orderNumber": 35,
+    "type": "Mueble",
+    "productionDate": "Jun 10, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 25, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Natalia Ruiz",
+      "documentNumber": 1234567892,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3001234569
+    }
+  },
+  "36": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 36,
+    "type": "Mueble",
+    "productionDate": "Jun 12, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 27, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Javier García",
+      "documentNumber": 2345678903,
+      "email": "",
+      "address": "",
+      "phoneNumber": 339876545
+    }
+  },
+  "37": {
+    "productName": "Cojines",
+    "status": "Por Hacer",
+    "orderNumber": 37,
+    "type": "Mueble",
+    "productionDate": "Jun 15, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 30, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Gabriela Ríos",
+      "documentNumber": 3456789014,
+      "email": "",
+      "address": "",
+      "phoneNumber": 323456791
+    }
+  },
+  "38": {
+    "productName": "Lampara",
+    "status": "En Progreso",
+    "orderNumber": 38,
+    "type": "Mueble",
+    "productionDate": "Jun 17, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 2, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Mauricio Martínez",
+      "documentNumber": 4567890125,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3109876545
+    }
+  },
+  "39": {
+    "productName": "Sofa",
+    "status": "Entregado",
+    "orderNumber": 39,
+    "type": "Mueble",
+    "productionDate": "Jun 20, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 5, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Lorena Torres",
+      "documentNumber": 5678901236,
+      "email": "",
+      "address": "",
+      "phoneNumber": 316879803
+    }
+  },
+  "40": {
+    "productName": "SofaCama",
+    "status": "En Progreso",
+    "orderNumber": 40,
+    "type": "Mueble",
+    "productionDate": "Jun 22, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 7, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Esteban Gómez",
+      "documentNumber": 6789012347,
+      "email": "",
+      "address": "",
+      "phoneNumber": 318678904
+    }
+  },
+  "41": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 41,
+    "type": "Mueble",
+    "productionDate": "Jun 25, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 10, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Mariana Ramírez",
+      "documentNumber": 7890123458,
+      "email": "",
+      "address": "",
+      "phoneNumber": 317890125
+    }
+  },
+  "42": {
+    "productName": "SofaCama",
+    "status": "Entregado",
+    "orderNumber": 42,
+    "type": "Mueble",
+    "productionDate": "Jun 27, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 12, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Felipe López",
+      "documentNumber": 8901234569,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3198901236
+    }
+  },
+  "43": {
+    "productName": "Lampara",
+    "status": "Por Hacer",
+    "orderNumber": 43,
+    "type": "Mueble",
+    "productionDate": "Jun 29, 2024, 12:00:00 AM",
+    "deliveryDate": "Jul 14, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Santiago Pérez",
+      "documentNumber": 9012345680,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3109021347
+    }
+  },
+  "44": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 44,
+    "type": "Mueble",
+    "productionDate": "Jun 1, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 16, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Valeria Jiménez",
+      "documentNumber": 1234509878,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3190173458
+    }
+  },
+  "45": {
+    "productName": "Cojines",
+    "status": "Entregado",
+    "orderNumber": 45,
+    "type": "Mueble",
+    "productionDate": "Jun 3, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 18, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Carolina Morales",
+      "documentNumber": 2345609878,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3111234569
+    }
+  },
+  "46": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 46,
+    "type": "Mueble",
+    "productionDate": "Jun 5, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 20, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Diego Rodríguez",
+      "documentNumber": 3456709878,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3398763545
+    }
+  },
+  "47": {
+    "productName": "Sofa",
+    "status": "Por Hacer",
+    "orderNumber": 47,
+    "type": "Mueble",
+    "productionDate": "Jun 7, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 22, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Miguel Gómez",
+      "documentNumber": 4567809878,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3209876536
+    }
+  },
+  "48": {
+    "productName": "Sofa",
+    "status": "En Progreso",
+    "orderNumber": 48,
+    "type": "Mueble",
+    "productionDate": "Jun 10, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 24, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Catalina Herrera",
+      "documentNumber": 5678909878,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3123453680
+    }
+  },
+  "49": {
+    "productName": "Mesa De Centro",
+    "status": "Entregado",
+    "orderNumber": 49,
+    "type": "Mueble",
+    "productionDate": "Jun 11, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 26, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Samuel Pérez",
+      "documentNumber": 6789010989,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3219876536
+    }
+  },
+  "50": {
+    "productName": "SofaCama",
+    "status": "En Progreso",
+    "orderNumber": 50,
+    "type": "Mueble",
+    "productionDate": "Jun 13, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 28, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Andrea Torres",
+      "documentNumber": 7890120989,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3245678392
+    }
+  }
+}

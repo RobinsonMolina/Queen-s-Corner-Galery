@@ -275,8 +275,9 @@ public class Supplies extends JFrame implements ActionListener {
                     components.windowConfirmation("¿Está seguro de eliminar esta insumo?", "Cancelar", "Eliminar", "Insumo eliminado con éxito", valor);
                 } else if (column == 8) {
                     // change the content of the main panel instead of opening a new window
+                    String  valor = table.getValueAt(row, 0).toString();
                     mainContentPanel.removeAll();
-                    mainContentPanel.add(new UpdateSupplie(mainContentPanel).initializeContentPanel());
+                    mainContentPanel.add(new UpdateSupplY(mainContentPanel).initializeContentPanel(valor));
                     mainContentPanel.revalidate();
                     mainContentPanel.repaint();
                 }

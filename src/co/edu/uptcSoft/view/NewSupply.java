@@ -166,7 +166,13 @@ public class NewSupply extends JFrame implements ActionListener {
         comboBox.setMaximumRowCount(4);
         quantityPanel.add(comboBox);
 
-        comboBox.addActionListener(this);
+        // Add ActionListener to combo box
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateTotal();
+            }
+        });
 
         // Label measurement
         measurementLabel = new JLabel("Unidad");
@@ -298,11 +304,11 @@ public class NewSupply extends JFrame implements ActionListener {
     }
 
     private void updateTotal() {
-            int quanty = Integer.parseInt(comboBox.getSelectedItem().toString());
-            String unitPrice = unitaryTextField.getText();
-            int price = unitPrice.isEmpty() ? 0 : Integer.parseInt(unitPrice);
-            int result = quanty * price;
-            totalTextField.setText(String.valueOf(result));
+        int quanty = Integer.parseInt(comboBox.getSelectedItem().toString());
+        String unitPrice = unitaryTextField.getText();
+        int price = unitPrice.isEmpty() ? 0 : Integer.parseInt(unitPrice);
+        int result = quanty * price;
+        totalTextField.setText(String.valueOf(result));
     }
 
     private boolean validateFields() {

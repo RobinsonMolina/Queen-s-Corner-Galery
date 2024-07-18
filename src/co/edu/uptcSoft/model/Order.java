@@ -1,18 +1,20 @@
 package co.edu.uptcSoft.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Order implements Comparable<Order> {
 
-    private String productName;
-    private String status;
-    private int orderNumber;
-    private String type;
-    private Date productionDate;
-    private Date deliveryDate;
-    private Customer customer;
-    private ArrayList<Materials> materials;
+    @Expose private String productName;
+    @Expose private String status;
+    @Expose private int orderNumber;
+    @Expose private String type;
+    @Expose private Date productionDate;
+    @Expose private Date deliveryDate;
+    @Expose private Customer customer;
+    @Expose private ArrayList<Materials> materials;
 
     public Order() {
     }
