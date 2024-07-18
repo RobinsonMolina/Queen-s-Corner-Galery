@@ -74,6 +74,7 @@ public class Logic {
     public void deleteOrder(long row) {
         orderList.remove((int) row);
         ordersCard();
+        managementFile.writeOrdersJsonToFile("Orders", orderList);
     }
 
     public void ordersCard(){
@@ -121,6 +122,7 @@ public class Logic {
 
     public void deleteSupply(String row) {
         supplyList.remove(row);
+        managementFile.writeJsonToFile("Supplies",supplyList);
     }
 
     public void loadOrders() {
