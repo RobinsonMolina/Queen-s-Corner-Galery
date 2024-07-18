@@ -1,10 +1,17 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Customer;
+import co.edu.uptcSoft.model.Order;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +20,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class CustomerList extends JFrame implements ActionListener {
 
@@ -21,9 +30,14 @@ public class CustomerList extends JFrame implements ActionListener {
     private JPanel contentButton;
     private JLabel titleLabel;
     private JButton addButton;
-    private JTextField searchField;
+    private JTextField searchTextField;
     private Components components;
     private JPanel mainContentPanel;
+    private JTable table;
+    private DefaultTableModel model;
+    private TableRowSorter<DefaultTableModel> filter;
+    private Object customerTable[][];
+    private Logic logic = Logic.getInstance();
 
     public CustomerList(JPanel mainContentPanel) {
         components = new Components(mainContentPanel);
@@ -80,7 +94,7 @@ public class CustomerList extends JFrame implements ActionListener {
         contentTitle.add(titleLabel);
 
         // Rounded search field
-        JTextField searchTextField = createRoundedTextField(5);
+        searchTextField = createRoundedTextField(5);
         searchTextField.setBounds(875, 45, 200, 45);
         searchTextField.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 15));
         searchTextField.setFont(createFont(1, 20));
@@ -95,6 +109,25 @@ public class CustomerList extends JFrame implements ActionListener {
         titleLabel.add(searchTextField);
         contentTitle.setBounds(0, 0, 1286, 100);
         contentPanel.add(contentTitle, BorderLayout.NORTH);
+
+        // Agregar DocumentListener al JTextField para filtrar la tabla
+        searchTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterTable();
+            }
+        });
     }
 
     private JTextField createRoundedTextField(int columns) {
@@ -154,35 +187,9 @@ public class CustomerList extends JFrame implements ActionListener {
 
     private void initializeTable() {
 
-
-        ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\Eye.png");
-        Image image = icon.getImage();
-        ImageIcon eyeIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-        ImageIcon icon2 = new ImageIcon("src\\Utilities\\Images\\Edit.png");
-        Image image2 = icon2.getImage();
-        ImageIcon pencilIcon = new ImageIcon(image2.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-        ImageIcon icon3 = new ImageIcon("src\\Utilities\\Images\\Trash.png");
-        Image image3 = icon3.getImage();
-        ImageIcon trashIcon = new ImageIcon(image3.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-
         String[] columnNames = {"Documento", "Nombre", "Correo", "", "", ""};
-        Object[][] data = {
-                {"1012345678", "Juan David Pérez", "jdperez@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1019876543", "María Alejandra Rodríguez", "mar@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1023456789", "Carlos Andrés Gómez", "cag@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1034567890", "Luisa Fernanda Fernández", "lff@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1045678901", "Andrés Felipe López", "afl@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1056789012", "Ana María Torres", "amt@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1067890123", "Diego Alejandro Martínez", "dam@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1078901234", "Laura Patricia Ramírez", "lpr@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", eyeIcon, pencilIcon, trashIcon},
-                {"1089012345", "Pedro José Jiménez", "pjj@example.com", eyeIcon, pencilIcon, trashIcon}
-        };
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+        model = new DefaultTableModel(getOrderList(), columnNames) {
             @Override
             public Class<?> getColumnClass(int column) {
                 return (column == 3 || column == 4 || column == 5) ? Icon.class : super.getColumnClass(column);
@@ -194,12 +201,16 @@ public class CustomerList extends JFrame implements ActionListener {
             }
         };
 
-        JTable table = new JTable(model);
+        table = new JTable(model);
         table.setFont(createFont(1, 20));
         table.setForeground(Color.decode("#2F2F2F"));
         table.setRowHeight(34);
         table.setShowGrid(false);
         setColumnWidths(table);
+
+        // TableRowSorter for filtering
+        filter = new TableRowSorter<>(model);
+        table.setRowSorter(filter);
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.decode("#D9D9D9"));
@@ -301,6 +312,8 @@ public class CustomerList extends JFrame implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int column = table.columnAtPoint(e.getPoint());
+                int row = table.rowAtPoint(e.getPoint());
+
                 if (column == 3) {
                     contentPanel.removeAll();
                     contentPanel.add(new ViewCustomer(contentPanel).addSpecificOrder());
@@ -312,9 +325,49 @@ public class CustomerList extends JFrame implements ActionListener {
                     contentPanel.revalidate();
                     contentPanel.repaint();
                 } else if (column == 5) {
-                    components.windowConfirmation("¿Está seguro de eliminar este cliente?", "Cancelar", "Eliminar", "Cliente eliminado con éxito");
+                    String valor = table.getValueAt(row, 0).toString();
+                    components.windowConfirmation("¿Está seguro de eliminar este cliente?", "Cancelar", "Eliminar", "Cliente eliminado con éxito", valor);
                 }
             }
         });
+    }
+
+    public Object[][] getOrderList() {
+
+        ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\Eye.png");
+        Image image = icon.getImage();
+        ImageIcon eyeIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        ImageIcon icon2 = new ImageIcon("src\\Utilities\\Images\\Edit.png");
+        Image image2 = icon2.getImage();
+        ImageIcon pencilIcon = new ImageIcon(image2.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        ImageIcon icon3 = new ImageIcon("src\\Utilities\\Images\\Trash.png");
+        Image image3 = icon3.getImage();
+        ImageIcon trashIcon = new ImageIcon(image3.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        ArrayList<Customer> customers = new ArrayList<>(logic.getCustomerList().values());
+
+        customerTable = new Object[customers.size()][6];
+
+        for (int i = 0; i < customers.size(); i++) {
+            customerTable[i][0] = customers.get(i).getDocumentNumber();
+            customerTable[i][1] = customers.get(i).getName();
+            customerTable[i][2] = customers.get(i).getEmail();
+            customerTable[i][3] = eyeIcon;
+            customerTable[i][4] = pencilIcon;
+            customerTable[i][5] = trashIcon;
+        }
+        return customerTable;
+    }
+
+    // Method for filtering table
+    private void filterTable() {
+        String text = searchTextField.getText();
+        if (text.trim().length() == 0) {
+            filter.setRowFilter(null);
+        } else {
+            filter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+        }
     }
 }

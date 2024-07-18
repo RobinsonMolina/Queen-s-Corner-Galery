@@ -225,4 +225,9 @@ public class Logic {
     public void deleteSupply(String row) {
         supplyList.remove(row);
     }
+
+    public void deleteCustomer(long row) {
+        System.out.println(customerList.toString());
+        customerList.remove(row);
+    }
 }

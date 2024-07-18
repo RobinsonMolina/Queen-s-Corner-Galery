@@ -1,6 +1,7 @@
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Customer;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -21,6 +22,7 @@ public class Components implements ActionListener {
     private Logic logic = logic = Logic.getInstance(); // Get the single instance of Logic
     private String row;
     private JPanel mainContentPanel;
+    private Customer currentCustomer = new Customer();
 
     public Components(JPanel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
@@ -290,13 +292,24 @@ public class Components implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonYes) {
             // change the content of the main panel instead of opening a new window
-            mainContentPanel.removeAll();
             if (message.contains("Orden")) {
+                mainContentPanel.removeAll();
                 logic.deleteOrder(Long.parseLong(row));
                 mainContentPanel.add(new OrderList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Insumo")) {
+                mainContentPanel.removeAll();
                 logic.deleteSupply(row);
                 mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+            } else if (message.contains("Cliente añadido")) {
+                new NewCustomer(mainContentPanel).addCustomerLogic(currentCustomer);
+                mainContentPanel.removeAll();
+                mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());
+            } else if (message.contains("Cliente eliminado")) {
+                mainContentPanel.removeAll();
+                // Aún no se eliminan ni se agregan de la tabla
+                mainContentPanel.removeAll();
+                logic.deleteCustomer(Long.parseLong(row));
+                mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());
             }
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
@@ -318,5 +331,13 @@ public class Components implements ActionListener {
 
     public JFrame getConfirmationFrame2() {
         return confirmationFrame2;
+    }
+
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
+
+    public void setCurrentCustomer(Customer currentCustomer) {
+        this.currentCustomer = currentCustomer;
     }
 }

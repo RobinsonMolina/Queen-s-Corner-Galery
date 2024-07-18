@@ -1,6 +1,7 @@
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Customer;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
@@ -37,6 +38,13 @@ public class NewCustomer implements ActionListener {
     private JTextField addressTxt;
 
     private Logic logic;
+    private String name;
+    private long document;
+    private String email;
+    private String address;
+    private long phoneNumber;
+
+    private Customer customer;
 
     public NewCustomer(JPanel mainContentPanel) {
         allInfoPanel = mainContentPanel;
@@ -58,6 +66,7 @@ public class NewCustomer implements ActionListener {
         addressTxt = new JTextField();
 
         logic = Logic.getInstance();
+        customer = new Customer();
     }
     /*
     public NewCustomer() {
@@ -397,29 +406,32 @@ public class NewCustomer implements ActionListener {
     }
 
     public void addCustomer(){
-        String name = nameTxt.getText();
-        long document = Long.parseLong(documentTxt.getText());
-        String email = emailTxt.getText();
-        String address = addressTxt.getText();
-        long phoneNumber = Long.parseLong(phoneTxt.getText());
 
-        System.out.println(document);
-        System.out.println(phoneNumber);
-        System.out.println("\n" + documentTxt.getText());
-        System.out.println(phoneTxt.getText());
+        name = nameTxt.getText();
+        document = Long.parseLong(documentTxt.getText());
+        email = emailTxt.getText();
+        address = addressTxt.getText();
+        phoneNumber = Long.parseLong(phoneTxt.getText());
+
+        setCustomer(new Customer(name, document, email, address, phoneNumber));
 
         if (name.isEmpty() || document == 0 || email.isEmpty() || address.isEmpty() || phoneNumber == 0) {
             JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
         } else {
-            logic.addCustomer(name, document, email, address, phoneNumber);
-            JOptionPane.showMessageDialog(null, "Hola");
-            nameTxt.setText("");
-            documentTxt.setText("");
-            emailTxt.setText("");
-            addressTxt.setText("");
-            phoneTxt.setText("");
-
-            System.out.println("Holaaa __________________________\n " + logic.getCustomerList().toString());
+            components.windowConfirmation("¿Está seguro de añadir este cliente?", "Cancelar", "Añadir", "Cliente añadido con éxito");
+            components.setCurrentCustomer(getCustomer());
         }
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void addCustomerLogic(Customer custo){
+        logic.addCustomer(custo.getName(), custo.getDocumentNumber(), custo.getEmail(), custo.getAddress(), custo.getPhoneNumber());
     }
 }

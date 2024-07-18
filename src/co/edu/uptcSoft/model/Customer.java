@@ -78,4 +78,15 @@ public class Customer implements Comparable<Customer> {
     public int compareTo(Customer o) {
         return Long.compare(this.documentNumber, o.documentNumber);
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "name='" + name + '\'' +
+                ", documentNumber=" + documentNumber +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                '}';
+    }
 }
