@@ -6,8 +6,10 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 public class NewSupply extends JFrame implements ActionListener {
 
@@ -24,11 +26,11 @@ public class NewSupply extends JFrame implements ActionListener {
     private JLabel unitaryLabel;
     private JLabel totalLabel;
     private JTextField materialTextField;
-    private JTextField categoryTextField;
     private JTextField characteristicTextField;
     private JTextField unitaryTextField;
     private JTextField totalTextField;
-    private JComboBox<Integer> comboBox;
+    private JComboBox<String> comboBoxCategory;
+    private JComboBox<String> comboBox;
     private JComboBox<String> comboBox2;
     private JButton addButton;
     private JButton cancelButton;
@@ -111,12 +113,18 @@ public class NewSupply extends JFrame implements ActionListener {
         materialTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
         materialPanel.add(materialTextField);
 
-        // Text field category
-        categoryTextField = components.createRoundedTextField(30,30);
-        categoryTextField.setBounds(560, 90, 400, 34);
-        categoryTextField.setFont(components.createFont(1, 20));
-        categoryTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        materialPanel.add(categoryTextField);
+        // Combo box category
+        String options[] = {"Telas", "Muebles", "Decorativos", "Artesanias"};
+
+        // Combo box quantity
+        comboBoxCategory = new JComboBox<>(options);
+        comboBoxCategory.setSelectedItem(1);
+        comboBoxCategory.setFont(components.createFont(1, 20));
+        comboBoxCategory.setBounds(560, 90, 150, 30);
+        comboBoxCategory.setMaximumRowCount(4);
+        materialPanel.add(comboBoxCategory);
+
+        comboBoxCategory.addActionListener(this);
 
         // Label characteristic
         characteristicLabel = new JLabel("Características");
@@ -130,7 +138,6 @@ public class NewSupply extends JFrame implements ActionListener {
         characteristicTextField.setBounds(60, 190, 400, 34);
         characteristicTextField.setFont(components.createFont(1, 20));
         characteristicTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        materialPanel.add(categoryTextField);
         materialPanel.add(characteristicTextField);
     }
 
@@ -149,7 +156,7 @@ public class NewSupply extends JFrame implements ActionListener {
         quantityPanel.add(quantityLabel);
 
         // Combo box quantity
-        Integer options[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        String options[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
         // Combo box quantity
         comboBox = new JComboBox<>(options);
@@ -169,7 +176,7 @@ public class NewSupply extends JFrame implements ActionListener {
         quantityPanel.add(measurementLabel);
 
         // Combo box measurement
-        String options2[] = {"cm", "CM²", "M", "m²", "Kg", "Unidades"};
+        String options2[] = {"Cm", "Cm²", "M", "M²", "Kg", "Unidades"};
 
         // Combo box measurement
         comboBox2 = new JComboBox<>(options2);
@@ -186,12 +193,15 @@ public class NewSupply extends JFrame implements ActionListener {
 
         // Text field unitary
         unitaryTextField = components.createRoundedTextField(30,30);
-        unitaryTextField.setText("0");
+        components.limitTextField(unitaryTextField, 10);
+        unitaryTextField.setColumns(9);
+        //unitaryTextField.setText("0");
         unitaryTextField.setBounds(560, 90, 400, 34);
         unitaryTextField.setFont(components.createFont(1, 20));
         unitaryTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
         quantityPanel.add(unitaryTextField);
 
+        // Method for updating the total when the unitary text field changes
         unitaryTextField.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
@@ -219,7 +229,7 @@ public class NewSupply extends JFrame implements ActionListener {
 
         // Text field total
         totalTextField = components.createRoundedTextField(30,30);
-        totalTextField.setText(String.valueOf((Integer.parseInt(comboBox.getSelectedItem().toString()) * Integer.parseInt(unitaryTextField.getText()))));
+        totalTextField.setText(String.valueOf((Integer.parseInt(comboBox.getSelectedItem().toString()) * (unitaryTextField.getText().isEmpty() ? 0 : Integer.parseInt(unitaryTextField.getText())))));
         totalTextField.setEditable(false);
         totalTextField.setBounds(60, 190, 300, 34);
         totalTextField.setFont(components.createFont(1, 20));
@@ -241,7 +251,10 @@ public class NewSupply extends JFrame implements ActionListener {
         quantityPanel.add(cancelButton);
 
         addButton.addActionListener(this);
+        components.hoverButton(addButton);
+
         cancelButton.addActionListener(this);
+        components.hoverButton(cancelButton);
 
         contentPanel.add(contentTitle);
         contentPanel.add(materialPanel);
@@ -253,24 +266,26 @@ public class NewSupply extends JFrame implements ActionListener {
     // method to choose the actions of the cancel button and the update button
     @Override
     public void actionPerformed(ActionEvent e) {
+        boolean validInput = false;
         if (e.getSource() == addButton) {
-            //dispose();
-            getMaterials();
-            // change the content of the main panel instead of opening a new window
-            mainContentPanel.removeAll();
-            mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
-            mainContentPanel.revalidate();
-            mainContentPanel.repaint();
-            components.messageConfirmation("Insumo agrgado con éxito");
-            // Starts a timer to close the window after 1 seconds
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-                    components.getConfirmationFrame2().dispose();
-                }
-            });
-            timer.setRepeats(false); // To make the timer only execute once
-            timer.start();
+            if (validateFields()) {
+                getMaterials();
+                mainContentPanel.removeAll();
+                mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+                mainContentPanel.revalidate();
+                mainContentPanel.repaint();
+                components.messageConfirmation("Insumo agregado con éxito");
+
+                // Close the confirmation window after 1 second
+                Timer timer = new Timer(1000, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        components.getConfirmationFrame2().dispose();
+                    }
+                });
+                timer.setRepeats(false);
+                timer.start();
+            }
         } else if (e.getSource() == cancelButton) {
             // change the content of the main panel instead of opening a new window
             mainContentPanel.removeAll();
@@ -283,14 +298,30 @@ public class NewSupply extends JFrame implements ActionListener {
     }
 
     private void updateTotal() {
-            int quanty = (Integer) comboBox.getSelectedItem();
-            String unitPrice = unitaryTextField.getText().trim();
+            int quanty = Integer.parseInt(comboBox.getSelectedItem().toString());
+            String unitPrice = unitaryTextField.getText();
             int price = unitPrice.isEmpty() ? 0 : Integer.parseInt(unitPrice);
             int result = quanty * price;
             totalTextField.setText(String.valueOf(result));
     }
 
+    private boolean validateFields() {
+        if (materialTextField.getText().isEmpty()) {
+            components.messageConfirmation("El material no puede estar vacío");
+            return false;
+        }
+        if (characteristicTextField.getText().isEmpty()) {
+            components.messageConfirmation("La característica no puede estar vacía");
+            return false;
+        }
+        if (unitaryTextField.getText().isEmpty()) {
+            components.messageConfirmation("El valor unitario no puede ser 0");
+            return false;
+        }
+        return true;
+    }
+
     public void getMaterials() {
-        logic.addSupply(materialTextField.getText(), categoryTextField.getText(), characteristicTextField.getText(), comboBox.getSelectedIndex(), comboBox2.getSelectedItem().toString(), Integer.parseInt(unitaryTextField.getText()), Integer.parseInt(totalTextField.getText()));
+        logic.addSupply(materialTextField.getText(), comboBoxCategory.getSelectedItem().toString(), characteristicTextField.getText(), Integer.parseInt(comboBox.getSelectedItem().toString()), comboBox2.getSelectedItem().toString(), Integer.parseInt(unitaryTextField.getText()), Integer.parseInt(totalTextField.getText()));
     }
 }

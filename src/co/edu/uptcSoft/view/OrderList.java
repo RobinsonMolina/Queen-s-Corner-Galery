@@ -60,6 +60,7 @@ public class OrderList extends JFrame implements ActionListener {
         contentButton.add(buttonAdd);
 
         buttonAdd.addActionListener(this);
+        components.hoverButton(buttonAdd); // configure the button to change the background color when hovered
 
         contentPanel.add(contentButton, BorderLayout.SOUTH);
 
@@ -103,7 +104,7 @@ public class OrderList extends JFrame implements ActionListener {
         contentTitle.setBounds(0, 0, 1286, 100);
         contentPanel.add(contentTitle, BorderLayout.NORTH);
 
-        // Agregar DocumentListener al JTextField para filtrar la tabla
+        // Add DocumentListener to the JTextField to filter the table
         searchTextField.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
@@ -128,26 +129,6 @@ public class OrderList extends JFrame implements ActionListener {
 
         // Data of the table
         String[] columnNames = {"Nº. Orden", "Producto", "Nombre Cliente", "Telefono", "Fecha De Entrega", "", "", ""};
-        /*Object[][] data = {
-                {"001", "SofaCama", "Juan David Pérez", "3001234567", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"002", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"003", "Cojines", "Carlos Andrés Gómez", "323456789", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"004", "Lampara", "Luisa Fernanda Fernández", "3109876543", "17/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"005", "Sofa", "Andrés Felipe López", "316879801", "17/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"006", "SofaCama", "Ana María Torres", "318678902", "20/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"007", "SofaCama", "Diego Alejandro Martínez", "317890123", "20/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"008", "SofaCama", "Laura Patricia Ramírez", "3198901234", "20/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"009", "Lampara", "Pedro José Jiménez", "3109021345", "25/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"010", "Mesa De Centro", "Sofía Margarita Morales", "3190173456", "25/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"011", "Cojines", "Jorge Luis Ríos", "3111234567", "25/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"012", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"013", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"014", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"015", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"016", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"017", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon}
-        };*/
-
 
         // Table model
         model = new DefaultTableModel(getOrderList(), columnNames) {
@@ -209,7 +190,7 @@ public class OrderList extends JFrame implements ActionListener {
 
     // Method for setting column widths
     private void setColumnWidths(JTable table) {
-        table.getColumnModel().getColumn(0).setPreferredWidth(150);// Esto ajusta el ancho máximo de la columna 0
+        table.getColumnModel().getColumn(0).setPreferredWidth(150);// This adjusts the maximum width of column 0
         table.getColumnModel().getColumn(1).setPreferredWidth(200);
         table.getColumnModel().getColumn(2).setPreferredWidth(300);
         table.getColumnModel().getColumn(3).setPreferredWidth(200);
@@ -287,25 +268,25 @@ public class OrderList extends JFrame implements ActionListener {
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int column = table.columnAtPoint(e.getPoint());
-                int row = table.rowAtPoint(e.getPoint());
-                if (column == 5) {
-                    // change the content of the main panel instead of opening a new window
-                    mainContentPanel.removeAll();
-                    mainContentPanel.add(new SpecificOrder(mainContentPanel).addSpecificOrder(2));
-                    mainContentPanel.revalidate();
-                    mainContentPanel.repaint();
-                } else if (column == 6) {
-                    // change the content of the main panel instead of opening a new window
-                    mainContentPanel.removeAll();
-                    mainContentPanel.add(new UpdateOrder(mainContentPanel).addSpecificOrder(2));
-                    mainContentPanel.revalidate();
-                    mainContentPanel.repaint();
-                } else if (column == 7) {
-                    String valor = table.getValueAt(row, 0).toString();
-                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
+            int column = table.columnAtPoint(e.getPoint());
+            int row = table.rowAtPoint(e.getPoint());
+            if (column == 5) {
+                // change the content of the main panel instead of opening a new window
+                mainContentPanel.removeAll();
+                mainContentPanel.add(new SpecificOrder(mainContentPanel).addSpecificOrder(2));
+                mainContentPanel.revalidate();
+                mainContentPanel.repaint();
+            } else if (column == 6) {
+                // change the content of the main panel instead of opening a new window
+                mainContentPanel.removeAll();
+                mainContentPanel.add(new UpdateOrder(mainContentPanel).addSpecificOrder(2));
+                mainContentPanel.revalidate();
+                mainContentPanel.repaint();
+            } else if (column == 7) {
+                String valor = table.getValueAt(row, 0).toString();
+                components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
 
-                }
+            }
             }
         });
     }

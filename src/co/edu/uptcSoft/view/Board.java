@@ -17,35 +17,10 @@ public class Board extends JFrame {
     private JPanel mainContentPanel;
     private Logic logic = Logic.getInstance();
 
-    /*public Board(String title) {
-        //this.mainContentPanel = mainContentPanel;
-        components = new Components(null);
-    }*/
-
     public Board(JPanel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
         components = new Components(mainContentPanel);
     }
-
-    /*public Board() {
-        setTitle("Queen's Corner Gallery");
-        setSize(1366, 670);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        // Maximizar la ventana al abrirla
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        setLayout(new BorderLayout());
-
-        components = new Components();
-        HeaderMenu headerMenu = new HeaderMenu();
-        add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
-        add(headerMenu.getMenuPanel(), BorderLayout.WEST);
-
-        contentPanel();
-        setVisible(true);
-    }*/
 
     public JPanel contentPanel() {
         contentPanel = new JPanel();
@@ -115,11 +90,12 @@ public class Board extends JFrame {
             orderButton.setPreferredSize(new Dimension(350, 30));
             orderButton.setMaximumSize(new Dimension(350, 30));
             orderButton.setMinimumSize(new Dimension(350, 30));
-            orderButton.addActionListener(new OrderButtonListener()); // Agregar ActionListener al botón
+            changeWindow(orderButton);// permited to go to the specific order
+            components.hoverButtonBoard(orderButton);
+
             orderPanel.add(Box.createVerticalStrut(8)); // add vertical space between buttons
             orderPanel.add(orderButton);
         }
-
         cardScrollPanes = new JScrollPane(orderPanel);
         cardScrollPanes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         cardScrollPanes.setPreferredSize(new Dimension(360, 100));
@@ -130,18 +106,17 @@ public class Board extends JFrame {
         cardsPanel.add(card);
     }
 
-    // Listener for the buttons
-    private class OrderButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            //dispose();
-            JButton button = (JButton) e.getSource();
-            // change the content of the main panel instead of opening a new window
-            mainContentPanel.removeAll();
-            mainContentPanel.add(new SpecificOrder(mainContentPanel).addSpecificOrder(1));
-            mainContentPanel.revalidate();
-            mainContentPanel.repaint();
-        }
+    public void changeWindow(JButton orderButton){
+        orderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // change the content of the main panel instead of opening a new window
+                mainContentPanel.removeAll();
+                mainContentPanel.add(new SpecificOrder(mainContentPanel).addSpecificOrder(1));
+                mainContentPanel.revalidate();
+                mainContentPanel.repaint();
+            }
+        });
     }
 }
 

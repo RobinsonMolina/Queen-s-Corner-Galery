@@ -1,7 +1,6 @@
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
-import co.edu.uptcSoft.model.Order;
 import co.edu.uptcSoft.model.Supply;
 
 import javax.swing.*;
@@ -13,10 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -40,11 +36,6 @@ public class Supplies extends JFrame implements ActionListener {
         components = new Components(mainContentPanel);
     }
 
-    public Supplies(){
-
-    }
-
-
     // Method for initializing content panel
     public JPanel initializeContentPanel() {
         contentPanel = new JPanel(new BorderLayout());
@@ -60,7 +51,9 @@ public class Supplies extends JFrame implements ActionListener {
 
         buttonAdd = components.createRoundedButton("Agregar", "#000000", "#2F1940", 30, 30);
         buttonAdd.setPreferredSize(new Dimension(150, 34));
-        buttonAdd.addActionListener(this);
+        buttonAdd.addActionListener(this); // permited to go to the new supply window
+        components.hoverButton(buttonAdd); // configure the button to change the background color when hovered
+
         contentButton.add(buttonAdd);
 
         contentPanel.add(contentButton, BorderLayout.SOUTH);
@@ -105,7 +98,7 @@ public class Supplies extends JFrame implements ActionListener {
         contentTitle.setBounds(0, 0, 1286, 100);
         contentPanel.add(contentTitle, BorderLayout.NORTH);
 
-        // Agregar DocumentListener al JTextField para filtrar la tabla
+        // Add DocumentListener to the JTextField to filter the table
         searchTextField.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
@@ -137,30 +130,6 @@ public class Supplies extends JFrame implements ActionListener {
 
         // Data of the table
         String[] columnNames = {"Código", "Material", "Categoria", "Características", "Valor Unitario", "Cantidad", "Total", "", ""};
-        /*Object[][] data = {
-                {"T001", "Lino", "Telas", "Resistente, Transpirable, Beige", "80,000 /M", "50 Metros", "4,000,000", trashIcon, pencilIcon},
-                {"T002", "Chenille", "Telas", "Textura Suave, Verde", "95,000 /M", "40 Metros", "3,800,000", trashIcon, pencilIcon},
-                {"T003", "Terciopelo", "Telas", "Lujo, Suave, Rojo", "120,000 /M", "40 Metros", "4,800,000", trashIcon, pencilIcon},
-                {"T004", "Cuero Sintético", "Telas", "Fácil De Limpiar, Resistente, Negro", "90,000 /M", "55 Metros", "4,950,000", trashIcon, pencilIcon},
-                {"T005", "Pana", "Telas", "Textura Acanalada,Duradero,Maron", "100,000 /M", "30 Metros", "3,000,000", trashIcon, pencilIcon},
-                {"T006", "Jacquard", "Telas", "Diseño Intrincado, Resistente, Azul", "110,000 /M", "35 Metros", "3,850,000", trashIcon, pencilIcon},
-                {"T007", "Tweed", "Telas", "Textura Rugosa, Duradero, Gris", "75,000 /M", "50 Metros", "3,750,000", trashIcon, pencilIcon},
-                {"T008", "Franela", "Telas", "Suave, Cálida, Color Gris Claro", "45,000 /M", "35 Metros", "1,575,000", trashIcon, pencilIcon},
-                {"T009", "Seda", "Telas", "Brillante, Suave, Color Blanco Perla", "70,000 /M", "25 Metros", "1,750,000", trashIcon, pencilIcon},
-                {"T010", "Gamuza", "Telas", "Suave Al Tacto, Elegante, Beige", "65,000 /M", "20 Metros", "1,300,000", trashIcon, pencilIcon},
-                {"MCO01", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO02", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO03", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO04", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO05", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO06", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO07", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO08", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO09", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO10", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO11", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon},
-                {"MCO12", "Madera", "Muebles", "Rectangular, Color Nogal", "60,000", "4", "240,000", trashIcon, pencilIcon}
-        };*/
 
         // Table model
         DefaultTableModel model = new DefaultTableModel(getSuppliesList(), columnNames) {
@@ -197,7 +166,7 @@ public class Supplies extends JFrame implements ActionListener {
         header.setDefaultRenderer(createHeaderRenderer(header.getFont()));
         table.setDefaultRenderer(Object.class, createTableRowRenderer());
 
-        // Configurar el MouseListener para la tabla
+        // configure the MouseListener for the table
         setupTableMouseListener(table);
 
         // Scroll pane of table
@@ -293,7 +262,6 @@ public class Supplies extends JFrame implements ActionListener {
             mainContentPanel.repaint();
         }
     }
-
 
     // Method for configuring the MouseListener, view line 173
     private void setupTableMouseListener(JTable table) {
