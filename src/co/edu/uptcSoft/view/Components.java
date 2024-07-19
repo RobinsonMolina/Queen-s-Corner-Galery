@@ -145,6 +145,40 @@ public class Components implements ActionListener {
         };
     }
 
+    // Method for rounded text field
+    public JPasswordField createRoundedPasswordField(int arcw, int arch) {
+        return new JPasswordField() {
+            @Override
+            // Set the size of the field
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(Color.WHITE);
+                g2.fill(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch));
+                setOpaque(false);
+                super.paintComponent(g2);
+                g2.dispose();
+            }
+
+            @Override
+            // Draw the border of the field
+            protected void paintBorder(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getForeground());
+                g2.draw(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch));
+                setOpaque(false);
+                g2.dispose();
+            }
+
+            @Override
+            public boolean contains(int x, int y) {
+                Shape shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch);
+                return shape.contains(x, y);
+            }
+        };
+    }
+
     // Method for creating a limit of characters introduced in the text field
     public void limitTextField(JTextField textField, int limit) {
         textField.addKeyListener(new KeyListener() {
@@ -298,13 +332,15 @@ public class Components implements ActionListener {
                 mainContentPanel.add(new OrderList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Insumo")) {
                 logic.deleteSupply(row);
-                mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+                mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Cliente añadido")) {
                 new NewCustomer(mainContentPanel).addCustomerLogic(currentCustomer);
                 mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Cliente eliminado")) {
                 logic.deleteCustomer(Long.parseLong(row));
                 mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());
+            } else if (message.contains("Insumo agregado")) {
+                mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
             }
             mainContentPanel.revalidate();
             mainContentPanel.repaint();

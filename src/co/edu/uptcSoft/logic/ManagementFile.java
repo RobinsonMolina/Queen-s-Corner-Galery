@@ -1,5 +1,6 @@
 package co.edu.uptcSoft.logic;
 
+import co.edu.uptcSoft.model.Administrator;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Order;
 import co.edu.uptcSoft.model.Supply;
@@ -69,9 +70,17 @@ public class ManagementFile {
         }
     }
 
-    public void writeJsonToFile(String fileName, TreeMap<String, Supply> supplyList) {
+    public void writeSuppliyJsonToFile(String fileName, TreeMap<String, Supply> supplyList) {
         try (FileWriter writer = new FileWriter(filePath + fileName + fileExtension)) {
             gson.toJson(supplyList, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeAdministratorJsonToFile(String fileName, Administrator administrator) {
+        try (FileWriter writer = new FileWriter(filePath + fileName + fileExtension)) {
+            gson.toJson(administrator, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,6 +110,16 @@ public class ManagementFile {
         try (FileReader reader = new FileReader(filePath + "Supplies" + fileExtension)) {
             Type supplyListType = new TypeToken<TreeMap<String, Supply>>() {}.getType();
             return gson.fromJson(reader, supplyListType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Administrator readAdministratorFromJson() {
+        try (FileReader reader = new FileReader(filePath + "Administrator" + fileExtension)) {
+            Type administratorType = new TypeToken<Administrator>() {}.getType();
+            return gson.fromJson(reader, administratorType);
         } catch (IOException e) {
             e.printStackTrace();
         }

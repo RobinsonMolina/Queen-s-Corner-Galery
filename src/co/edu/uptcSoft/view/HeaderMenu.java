@@ -1,9 +1,6 @@
 package co.edu.uptcSoft.view;
 
-import co.edu.uptcSoft.logic.Logic;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -173,7 +170,7 @@ public class HeaderMenu extends JFrame {
                         }else if (item[1].equals("Clientes")) {
                             paneles(new CustomerList(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("Insumos")) {
-                            paneles(new Supplies(contentPanel).initializeContentPanel());
+                            paneles(new SupplyList(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("Administrador")) {
                             paneles(new Admin(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("Salir")) {

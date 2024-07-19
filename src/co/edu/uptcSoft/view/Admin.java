@@ -1,9 +1,13 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Admin extends JFrame implements ActionListener {
 
@@ -15,17 +19,19 @@ public class Admin extends JFrame implements ActionListener {
     private JPanel datesPanel;
     private JLabel titleLabel;
     private JLabel emailLabel;
-    private JLabel newEmailLabel;
     private JLabel passwordLabel;
+    private JLabel iconLabel;
+    private JLabel iconLabel2;
+    private JLabel newEmailLabel;
     private JLabel newPasswordLabel;
     private JLabel titlePassword;
-    private JTextField passwordTextField;
-    private JTextField newPasswordTextField;
+    private JPasswordField passwordField;
+    private JPasswordField newPasswordField;
     private JTextField emailTextField;
-    private JTextField newEmailTextField;
     private JButton saveEmailButton;
     private JButton savePasswordButton;
-    private JPanel mainContentPanel;
+    private Logic logic = Logic.getInstance();
+    private boolean isPasswordVisible = false;
 
     public Admin(JPanel mainContentPanel) {
         components = new Components(mainContentPanel);
@@ -126,10 +132,30 @@ public class Admin extends JFrame implements ActionListener {
         passwordLabel.setBounds(60, 120, 200, 40);
         passwordPanel.add(passwordLabel);
 
-        passwordTextField = components.createRoundedTextField(30,30);
-        passwordTextField.setBounds(250, 120, 250, 34);
-        passwordTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        passwordPanel.add(passwordTextField);
+        passwordField = components.createRoundedPasswordField(30,30);
+        passwordField.setBounds(250, 120, 250, 34);
+        passwordField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+        passwordPanel.add(passwordField);
+
+        ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\Eye.png");
+        Image image = icon.getImage();
+        ImageIcon eyeIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
+        iconLabel = new JLabel(eyeIcon);
+        iconLabel.setBounds(525, 125, 20, 20);
+        passwordPanel.add(iconLabel);
+
+        iconLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                isPasswordVisible = !isPasswordVisible;
+                if (isPasswordVisible) {
+                    passwordField.setEchoChar((char) 0); // allows you to view the password
+                } else {
+                    passwordField.setEchoChar('*'); // hide the password
+                }
+            }
+        });
 
         newPasswordLabel = new JLabel("Nueva Contraseña");
         newPasswordLabel.setForeground(Color.BLACK);
@@ -137,10 +163,26 @@ public class Admin extends JFrame implements ActionListener {
         newPasswordLabel.setBounds(60, 180, 200, 40);
         passwordPanel.add(newPasswordLabel);
 
-        newPasswordTextField = components.createRoundedTextField(30,30);
-        newPasswordTextField.setBounds(250, 180, 250, 34);
-        newPasswordTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        passwordPanel.add(newPasswordTextField);
+        newPasswordField = components.createRoundedPasswordField(30,30);
+        newPasswordField.setBounds(250, 180, 250, 34);
+        newPasswordField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+        passwordPanel.add(newPasswordField);
+
+        iconLabel2 = new JLabel(eyeIcon);
+        iconLabel2.setBounds(525, 185, 20, 20);
+        passwordPanel.add(iconLabel2);
+
+        iconLabel2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                isPasswordVisible = !isPasswordVisible;
+                if (isPasswordVisible) {
+                    newPasswordField.setEchoChar((char) 0); // allows you to view the password
+                } else {
+                    newPasswordField.setEchoChar('*'); // hide the password
+                }
+            }
+        });
 
         savePasswordButton = components.createRoundedButton("Actualizar", "#000000", "#2F1940", 30, 30);
         savePasswordButton.setBounds(60, 260, 150, 34);
@@ -155,7 +197,18 @@ public class Admin extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveEmailButton) {
-            components.messageConfirmation("Correo actualizado con éxito");
+
+            if (emailTextField.getText().isEmpty()) {
+                components.messageConfirmation("El correo no puede estar vacío");
+            }else {
+                String message = logic.Email(emailTextField.getText());
+                if (!message.equals("Creado")) {
+                    components.messageConfirmation(message);
+                }else {
+                    emailTextField.setText("");
+                    components.messageConfirmation("Correo actualizado con éxito");
+                }
+            }
             // Starts a timer to close the window after 1 seconds
             Timer timer = new Timer(1000, new ActionListener() {
                 @Override
@@ -167,7 +220,26 @@ public class Admin extends JFrame implements ActionListener {
             timer.start();
         }
         else if (e.getSource() == savePasswordButton) {
-            components.messageConfirmation("Contraseña actualizada con éxito");
+
+            if (passwordField.getText().isEmpty() || newPasswordField.getText().isEmpty()) {
+                components.messageConfirmation("El campo de la contraseña no puede estar vacío");
+            }else if (!passwordField.getText().equals(logic.getPassword())) {
+                passwordField.setText("");
+                components.messageConfirmation("La contraseña actual no coincide con la contraseña actual");
+            }else if (passwordField.getText().equals(newPasswordField.getText())) {
+                newPasswordField.setText("");
+                components.messageConfirmation("La nueva contraseña no puede ser igual a la actual");
+            }else {
+                String message = logic.Password(newPasswordField.getText());
+                if (!message.equals("Creado")) {
+                    newPasswordField.setText("");
+                    components.messageConfirmation(message);
+                }else {
+                    passwordField.setText("");
+                    newPasswordField.setText("");
+                    components.messageConfirmation("Contraseña actualizada con éxito");
+                }
+            }
             // Starts a timer to close the window after 1 seconds
             Timer timer = new Timer(1000, new ActionListener() {
                 @Override

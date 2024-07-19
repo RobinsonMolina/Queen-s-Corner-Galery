@@ -268,7 +268,7 @@ public class UpdateSupplY extends JFrame implements ActionListener {
             getMaterials();
             // Cambiar el contenido del panel principal en lugar de abrir una nueva ventana
             mainContentPanel.removeAll();
-            mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+            mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
             components.messageConfirmation("Insumo actualizado con éxito");
@@ -284,7 +284,7 @@ public class UpdateSupplY extends JFrame implements ActionListener {
         } else if (e.getSource() == cancelButton) {
             // Cambiar el contenido del panel principal en lugar de abrir una nueva ventana
             mainContentPanel.removeAll();
-            mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+            mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
         }

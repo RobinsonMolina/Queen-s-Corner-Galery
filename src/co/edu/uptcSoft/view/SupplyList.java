@@ -16,7 +16,7 @@ import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class Supplies extends JFrame implements ActionListener {
+public class SupplyList extends JFrame implements ActionListener {
 
     private Components components;
     private JPanel contentButton;
@@ -31,7 +31,7 @@ public class Supplies extends JFrame implements ActionListener {
     private TableRowSorter<DefaultTableModel> filter;
 
 
-    public Supplies(JPanel mainContentPanel){
+    public SupplyList(JPanel mainContentPanel){
         this.mainContentPanel = mainContentPanel;
         components = new Components(mainContentPanel);
     }
@@ -265,7 +265,7 @@ public class Supplies extends JFrame implements ActionListener {
                 String valor;
                 if (column == 7) {
                     valor = table.getValueAt(row, 0).toString();
-                    components.windowConfirmation("¿Está seguro de eliminar esta insumo?", "Cancelar", "Eliminar", "Insumo eliminado con éxito", valor);
+                    components.windowConfirmation("¿Está seguro de eliminar este insumo?", "Cancelar", "Eliminar", "Insumo eliminado con éxito", valor);
                 } else if (column == 8) {
                     // change the content of the main panel instead of opening a new window
                     valor = table.getValueAt(row, 0).toString();

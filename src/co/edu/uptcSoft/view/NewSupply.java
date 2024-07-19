@@ -6,10 +6,8 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 
 public class NewSupply extends JFrame implements ActionListener {
 
@@ -277,11 +275,10 @@ public class NewSupply extends JFrame implements ActionListener {
             if (validateFields()) {
                 getMaterials();
                 mainContentPanel.removeAll();
-                mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+                mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
                 mainContentPanel.revalidate();
                 mainContentPanel.repaint();
                 components.messageConfirmation("Insumo agregado con éxito");
-
                 // Close the confirmation window after 1 second
                 Timer timer = new Timer(1000, new ActionListener() {
                     @Override
@@ -295,7 +292,7 @@ public class NewSupply extends JFrame implements ActionListener {
         } else if (e.getSource() == cancelButton) {
             // change the content of the main panel instead of opening a new window
             mainContentPanel.removeAll();
-            mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+            mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
         }else if (e.getSource() == comboBox) {

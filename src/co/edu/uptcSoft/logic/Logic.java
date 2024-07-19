@@ -1,9 +1,7 @@
 package co.edu.uptcSoft.logic;
 
-import co.edu.uptcSoft.model.Customer;
-import co.edu.uptcSoft.model.Materials;
-import co.edu.uptcSoft.model.Order;
-import co.edu.uptcSoft.model.Supply;
+import co.edu.uptcSoft.model.*;
+
 import java.util.*;
 
 public class Logic {
@@ -16,15 +14,14 @@ public class Logic {
     private ArrayList<String> ordersProgress;
     private ArrayList<String> ordersDelivered;
     private TreeMap<String, Supply> supplyList;
-    private Order order;
-    private Customer customer;
+    private Administrator administrator;
 
     public Logic() {
         this.orderList = new TreeMap<>();
         this.customerList = new TreeMap<>();
-        this.customer = new Customer();
         this.supplyList = new TreeMap<>();
         this.managementFile = new ManagementFile();
+        this.administrator = new Administrator();
         loadOrders();
         loadCustomers();
         loadSupply();
@@ -100,7 +97,7 @@ public class Logic {
 
         String id = Character.toUpperCase(category.charAt(0)) + String.format("%03d", supplyList.size()+1);
         supplyList.put(id, new Supply(id, material, category, characteristics, quantity, unit, unitPrice, totalPrice));
-        managementFile.writeJsonToFile("Supplies",supplyList);
+        managementFile.writeSuppliyJsonToFile("Supplies",supplyList);
     }
 
     public TreeMap<String, Supply> getSupplyList() {
@@ -114,12 +111,12 @@ public class Logic {
     public void updateSupply(String id, String material, String category, String characteristics, int quantity, String unit, long unitPrice, long totalPrice) {
         supplyList.remove(id);
         supplyList.put(id, new Supply(id, material, category, characteristics, quantity, unit, unitPrice, totalPrice));
-        managementFile.writeJsonToFile("Supplies",supplyList);
+        managementFile.writeSuppliyJsonToFile("Supplies",supplyList);
     }
 
     public void deleteSupply(String row) {
         supplyList.remove(row);
-        managementFile.writeJsonToFile("Supplies",supplyList);
+        managementFile.writeSuppliyJsonToFile("Supplies",supplyList);
     }
 
     public void loadOrders() {
@@ -168,5 +165,77 @@ public class Logic {
     public void deleteCustomer(Long row) {
         customerList.remove(row);
         managementFile.writeCustomersJsonToFile("Customers", customerList);
+    }
+
+    public String Email(String email) {
+
+        String[] parts = email.split("@");
+
+        if (parts.length != 2) {
+            if (email.contains("@")) {
+                return "Correo no válido";
+            }
+            return "El correo debe tener un @";
+        }
+
+        if (parts[0].length() == 0) {
+            return "El correo debe tener caracteres antes del @";
+        }
+
+        if (parts[0].length() < 4) {
+            return "El correo debe tener al menos 5 caracteres";
+        }
+
+        if (parts[1].length() == 0) {
+            return "El correo debe tener un dominio";
+        }
+
+        if (!parts[1].contains(".")) {
+            return "El correo no tiene un dominio";
+        }
+
+        if (parts[1].length() < 4) {
+            return "El correo debe tener un dominio de al menos 5 caracteres";
+        }
+
+        administrator.setEmail(email);
+        administrator.setPassword(getPassword());
+        managementFile.writeAdministratorJsonToFile("Administrator", administrator);
+        return "Creado";
+    }
+
+    public String Password(String password) {
+
+        if (password.length() < 8) {
+            return "La contraseña debe tener al menos 8 caracteres";
+        }
+
+        if (password.length() > 16) {
+            return "La contraseña debe tener menos de 16 caracteres";
+        }
+
+        if (!password.matches(".*[0-9].*")) {
+            return "La contraseña debe tener al menos un número";
+        }
+
+        if (!password.matches(".*[a-z].*")) {
+            return "La contraseña debe tener al menos una letra";
+        }
+
+        if (!password.matches(".*[A-Z].*")) {
+            return "La contraseña debe tener al menos una mayúscula";
+        }
+        administrator.setEmail(getEmail());
+        administrator.setPassword(password);
+        managementFile.writeAdministratorJsonToFile("Administrator", administrator);
+        return "Creado";
+    }
+
+    public String getPassword() {
+        return managementFile.readAdministratorFromJson().getPassword();
+    }
+
+    public String getEmail() {
+        return managementFile.readAdministratorFromJson().getEmail();
     }
 }
