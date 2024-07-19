@@ -297,6 +297,9 @@ public class Components implements ActionListener {
             } else if (message.contains("Insumo")) {
                 logic.deleteSupply(row);
                 mainContentPanel.add(new Supplies(mainContentPanel).initializeContentPanel());
+            } else if (message.contains("Cliente")) {
+                logic.deleteCustomer(row);
+                mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());
             }
             mainContentPanel.revalidate();
             mainContentPanel.repaint();

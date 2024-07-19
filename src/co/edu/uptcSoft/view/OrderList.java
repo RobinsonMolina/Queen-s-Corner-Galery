@@ -103,7 +103,7 @@ public class OrderList extends JFrame implements ActionListener {
         contentTitle.setBounds(0, 0, 1286, 100);
         contentPanel.add(contentTitle, BorderLayout.NORTH);
 
-        // Agregar DocumentListener al JTextField para filtrar la tabla
+        // Add DocumentListener to the JTextField to filter the table
         searchTextField.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
@@ -125,29 +125,8 @@ public class OrderList extends JFrame implements ActionListener {
 
     // Method for initializing table
     public void initializeTable() {
-
         // Data of the table
         String[] columnNames = {"Nº. Orden", "Producto", "Nombre Cliente", "Telefono", "Fecha De Entrega", "", "", ""};
-        /*Object[][] data = {
-                {"001", "SofaCama", "Juan David Pérez", "3001234567", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"002", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"003", "Cojines", "Carlos Andrés Gómez", "323456789", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"004", "Lampara", "Luisa Fernanda Fernández", "3109876543", "17/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"005", "Sofa", "Andrés Felipe López", "316879801", "17/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"006", "SofaCama", "Ana María Torres", "318678902", "20/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"007", "SofaCama", "Diego Alejandro Martínez", "317890123", "20/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"008", "SofaCama", "Laura Patricia Ramírez", "3198901234", "20/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"009", "Lampara", "Pedro José Jiménez", "3109021345", "25/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"010", "Mesa De Centro", "Sofía Margarita Morales", "3190173456", "25/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"011", "Cojines", "Jorge Luis Ríos", "3111234567", "25/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"012", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"013", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"014", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"015", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"016", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon},
-                {"017", "Mesa De Centro", "María Alejandra Rodríguez", "339876543", "15/06/2024", eyeIcon, pencilIcon, trashIcon}
-        };*/
-
 
         // Table model
         model = new DefaultTableModel(getOrderList(), columnNames) {

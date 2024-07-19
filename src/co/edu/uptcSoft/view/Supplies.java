@@ -270,12 +270,13 @@ public class Supplies extends JFrame implements ActionListener {
             public void mouseClicked(MouseEvent e) {
                 int column = table.columnAtPoint(e.getPoint());
                 int row = table.rowAtPoint(e.getPoint());
+                String valor;
                 if (column == 7) {
-                    String valor = table.getValueAt(row, 0).toString();
+                    valor = table.getValueAt(row, 0).toString();
                     components.windowConfirmation("¿Está seguro de eliminar esta insumo?", "Cancelar", "Eliminar", "Insumo eliminado con éxito", valor);
                 } else if (column == 8) {
                     // change the content of the main panel instead of opening a new window
-                    String  valor = table.getValueAt(row, 0).toString();
+                    valor = table.getValueAt(row, 0).toString();
                     mainContentPanel.removeAll();
                     mainContentPanel.add(new UpdateSupplY(mainContentPanel).initializeContentPanel(valor));
                     mainContentPanel.revalidate();
