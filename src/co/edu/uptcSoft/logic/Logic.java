@@ -42,15 +42,16 @@ public class Logic {
     }
 
     public void addOrder(String productName, String status, int orderNumber, String type, Date productionDate,
-                         Date deliveryDate, String name, long phoneNumber, long documentNumber, ArrayList<Materials> materials) {
-        Order order = new Order(productName, status, orderNumber, type, productionDate, deliveryDate, null, null);
-        if (!customerList.containsKey(documentNumber)) {
-            addCustomer(name, documentNumber, "", "", phoneNumber, order);
+                         Date deliveryDate, Customer customer, ArrayList<Materials> materials) {
+        Order order = new Order(productName, status, orderNumber, type, productionDate, deliveryDate, customer, null);
+        if (!customerList.containsKey(customer.getDocumentNumber())) {
+            addCustomer(customer.getName(), customer.getDocumentNumber(), customer.getEmail(), customer.getAddress(), customer.getPhoneNumber(), order);
         } else {
-            Customer customer = customerList.get(documentNumber);
-            customer.addOrder(order);
-            order.setCustomer(customer);
+            Customer customer2 = customerList.get(customer.getDocumentNumber());
+            customer2.addOrder(order);
+            order.setCustomer(customer2);
         }
+        System.out.println(order.toString());
         orderList.put(orderNumber, order);
         managementFile.writeOrdersJsonToFile("Orders", orderList);
     }
@@ -252,8 +253,8 @@ public class Logic {
         addCustomer("Juan José Gómez", 9901234567L, "juan@gomez.com", "Calle 123, Piso 1, Edificio 1", 3109021357L, new Order());
     }
 
-    public void deleteCustomer(String row) {
-        customerList.remove(Long.parseLong(row));
+    public void deleteCustomer(Long row) {
+        customerList.remove(row);
         managementFile.writeCustomersJsonToFile("Customers", customerList);
     }
 }
