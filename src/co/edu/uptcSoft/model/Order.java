@@ -98,4 +98,18 @@ public class Order implements Comparable<Order> {
     public int compareTo(Order o) {
         return Integer.compare(this.orderNumber, o.orderNumber);
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "productName='" + productName + '\'' +
+                ", status='" + status + '\'' +
+                ", orderNumber=" + orderNumber +
+                ", type='" + type + '\'' +
+                ", productionDate=" + productionDate +
+                ", deliveryDate=" + deliveryDate +
+                ", customer=" + customer +
+                ", materials=" + materials +
+                '}';
+    }
 }

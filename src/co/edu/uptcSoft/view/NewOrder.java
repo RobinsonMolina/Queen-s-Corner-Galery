@@ -56,10 +56,10 @@ public class NewOrder implements ActionListener {
     private Customer customer;
     private ArrayList<Materials> materials;
 
-    private Logic logic;
+    private Logic logic = Logic.getInstance();
 
-    public NewOrder() {
-        allInformation = new JPanel();
+    public NewOrder(JPanel mainContentPanel) {
+        allInformation = mainContentPanel;
         allInfoPanel = new JPanel();
         dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
@@ -81,8 +81,6 @@ public class NewOrder implements ActionListener {
         orderNumberTxt = new JTextField();
         deliveryDateTxt = new JTextField();
         statusOp = "";
-
-        logic = new Logic();
     }
     /*public NewOrder() {
         specificOrderWindow = new JFrame("Nueva Orden");
@@ -501,14 +499,20 @@ public class NewOrder implements ActionListener {
 
     public void addCurrentOrder(){
         productName = productTxt.getText();
+        status = statusOp;
         orderNumber = Integer.parseInt(orderNumberTxt.getText());
         type = typeTxt.getText();
-        //productionDate = DateproductionDateTxt.getText();
-        //deliveryDate = deliveryDateTxt.getText();
+        productionDate = new Date(productionDateTxt.getText());
+        deliveryDate = new Date(deliveryDateTxt.getText());
         customer = currentCustomer;
 
         setOrder(new Order(productName, status, orderNumber, type, productionDate, deliveryDate, customer, materials));
+
         logic.addOrder(productName, status, orderNumber, type, productionDate, deliveryDate, customer, materials);
+        allInformation.removeAll();
+        allInformation.add(new OrderList(allInformation).initializeContentPanel());
+        allInformation.revalidate();
+        allInformation.repaint();
     }
 
     public Customer getCurrentCustomer() {

@@ -72,37 +72,6 @@ public class NewCustomer implements ActionListener {
         logic = Logic.getInstance();
         customer = new Customer();
     }
-    /*
-    public NewCustomer() {
-        specificOrderWindow = new JFrame("Crear Cliente");
-        allInformation = new JPanel();
-        allInfoPanel = new JPanel();
-        window = new JPanel(new BorderLayout());
-        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
-        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
-        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
-        components = new Components();
-    }
-
-    public  void createWindow(){
-        specificOrderWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        specificOrderWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        specificOrderWindow.setSize(1286, 670);
-
-        addSpecificOrder();
-        setWindow();
-        specificOrderWindow.add(window);
-
-        specificOrderWindow.setVisible(true);
-    }
-
-    public  void setWindow(){
-        HeaderMenu headerMenu = new HeaderMenu();
-
-        window.add(headerMenu.getMenuPanel(), BorderLayout.WEST);
-        window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
-        window.add(allInformation, BorderLayout.CENTER);
-    }*/
 
     public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Crear Cliente");
@@ -401,7 +370,7 @@ public class NewCustomer implements ActionListener {
         if (e.getSource() == add) {
             allInfoPanel.removeAll();
             addCurrent();
-            NewOrder order = new NewOrder();
+            NewOrder order = new NewOrder(allInfoPanel);
             order.setCurrentCustomer(getCustomer());
             allInfoPanel.add(order.addSpecificOrder(3));
             allInfoPanel.revalidate();

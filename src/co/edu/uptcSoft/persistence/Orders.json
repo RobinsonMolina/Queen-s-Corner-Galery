@@ -433,5 +433,20 @@
       "address": "Calle 123, Piso 1, Edificio 1",
       "phoneNumber": 3190173457
     }
+  },
+  "100": {
+    "productName": "BBB",
+    "status": "Por Hacer",
+    "orderNumber": 100,
+    "type": "BBBBB",
+    "productionDate": "Oct 10, 2024, 12:00:00 AM",
+    "deliveryDate": "Aug 10, 2025, 12:00:00 AM",
+    "customer": {
+      "name": "AAA",
+      "documentNumber": 111,
+      "email": "AAAA",
+      "address": "AAAAA",
+      "phoneNumber": 22222
+    }
   }
 }

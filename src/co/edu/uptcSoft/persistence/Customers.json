@@ -1,20 +1,17 @@
 {
+  "111": {
+    "name": "AAA",
+    "documentNumber": 111,
+    "email": "AAAA",
+    "address": "AAAAA",
+    "phoneNumber": 22222
+  },
   "1234509876": {
     "name": "Sofía Margarita Morales",
     "documentNumber": 1234509876,
     "email": "sofia@morales.com",
     "address": "Calle 123, Piso 1, Edificio 1",
-    "phoneNumber": 3190173456,
-    "orders": [
-      {
-        "productName": "Mesa De Centro",
-        "status": "En Progreso",
-        "orderNumber": 10,
-        "type": "Mueble",
-        "productionDate": "Jul 18, 2024, 6:59:08 AM",
-        "deliveryDate": "Jul 18, 2024, 6:59:08 AM"
-      }
-    ]
+    "phoneNumber": 3190173456
   },
   "1234509877": {
     "name": "Lucía Fernanda Morales",

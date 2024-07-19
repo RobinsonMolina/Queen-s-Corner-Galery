@@ -120,14 +120,6 @@ public class Supplies extends JFrame implements ActionListener {
 
     // Method for initializing table
     private void initializeTable() {
-
-        ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\Edit.png");
-        Image image = icon.getImage();
-        ImageIcon pencilIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-        ImageIcon icon1 = new ImageIcon("src\\Utilities\\Images\\Trash.png");
-        Image image1 = icon1.getImage();
-        ImageIcon trashIcon = new ImageIcon(image1.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-
         // Data of the table
         String[] columnNames = {"Código", "Material", "Categoria", "Características", "Valor Unitario", "Cantidad", "Total", "", ""};
 

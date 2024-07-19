@@ -255,7 +255,7 @@ public class OrderList extends JFrame implements ActionListener {
         if (e.getSource() == buttonAdd) {
             // change the content of the main panel instead of opening a new window
             mainContentPanel.removeAll();
-            mainContentPanel.add(new NewOrder().addSpecificOrder(2));
+            mainContentPanel.add(new NewOrder(mainContentPanel).addSpecificOrder(2));
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
         }

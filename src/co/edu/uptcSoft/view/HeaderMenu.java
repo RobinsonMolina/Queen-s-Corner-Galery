@@ -169,7 +169,7 @@ public class HeaderMenu extends JFrame {
                         }else if (item[1].equals("Lista")) {
                             paneles(new OrderList(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("Nueva Orden")) {
-                            paneles(new NewOrder().addSpecificOrder(1));
+                            paneles(new NewOrder(contentPanel).addSpecificOrder(1));
                         }else if (item[1].equals("Clientes")) {
                             paneles(new CustomerList(contentPanel).initializeContentPanel());
                         }else if (item[1].equals("Insumos")) {
