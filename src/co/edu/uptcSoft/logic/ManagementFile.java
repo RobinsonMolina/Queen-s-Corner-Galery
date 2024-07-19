@@ -51,11 +51,11 @@ public class ManagementFile {
         System.out.println("Llefa");
         Gson gsonForCustomers = new GsonBuilder()
                 // Register type adapter to remove customers from customers
-                .registerTypeAdapter(Order.class, new JsonSerializer<Order>() {
+                .registerTypeAdapter(Customer.class, new JsonSerializer<Customer>() {
                     @Override
-                    public JsonElement serialize(Order src, Type typeOfSrc, JsonSerializationContext context) {
+                    public JsonElement serialize(Customer src, Type typeOfSrc, JsonSerializationContext context) {
                         JsonObject jsonObject = (JsonObject) gson.toJsonTree(src);
-                        jsonObject.remove("customer");
+                        jsonObject.remove("Customer");
                         return jsonObject;
                     }
                 })
