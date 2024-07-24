@@ -59,8 +59,10 @@ public class NewOrder implements ActionListener {
     private Logic logic = Logic.getInstance();
 
     public NewOrder(JPanel mainContentPanel) {
-        allInformation = mainContentPanel;
+        allInfoPanel = mainContentPanel;
         allInfoPanel = new JPanel();
+        allInformation = new JPanel();
+
         dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
         allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
         allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
@@ -118,7 +120,6 @@ public class NewOrder implements ActionListener {
         JLabel title = new JLabel("Nueva Orden");
         this.previousScreen = previousScreen;
 
-        allInformation.setPreferredSize(new Dimension(1286, 590));
         allInfoPanel.setPreferredSize(new Dimension(1286, 590));
 
         title.setFont(components.createFont(0, 40));
@@ -310,8 +311,8 @@ public class NewOrder implements ActionListener {
         JTable table = new JTable(model);
         table.setRowHeight(34);
         table.setShowGrid(false);
+        table.setPreferredSize(new Dimension(1286, 156));
         table.getColumnModel().getColumn(4).setMaxWidth(50);
-        table.setPreferredSize(new Dimension(1134, 156));
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.decode("#D9D9D9"));
@@ -366,7 +367,7 @@ public class NewOrder implements ActionListener {
         });
 
         JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(1134, 155));
+        tableScrollPane.setPreferredSize(new Dimension(1286, 155));
         tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
 
         jPanel.add(materialsTitle, BorderLayout.NORTH);
