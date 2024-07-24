@@ -460,18 +460,22 @@ public class NewOrder implements ActionListener {
             } else if (previousScreen == 2) {
                 // OrderList
                 allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
+            } else if (previousScreen == 3) {
+                // NewCustomer
+                allInfoPanel.add(new NewCustomer(allInfoPanel).addSpecificOrder());
             }
 
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
         } if (e.getSource() == save){
             addCurrentOrder();
-            //allInfoPanel.removeAll();
 
             if (previousScreen == 3){
                 //NewCustomer
                 //allInfoPanel.add(new NewCustomer(allInfoPanel).addSpecificOrder());
+                //allInfoPanel.removeAll();
                 new NewCustomer(allInfoPanel).addCompleteCustomer(currentCustomer);
+                //allInfoPanel.add(new CustomerList(allInfoPanel).initializeContentPanel());
 
                 //no se actualiza bien la página
             } else if (previousScreen == 4) {

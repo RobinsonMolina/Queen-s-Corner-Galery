@@ -395,15 +395,6 @@ public class Components implements ActionListener {
             timer.start();
         } else if (e.getSource() == buttonNo) {
             confirmationFrame.dispose();
-//            if (message.contains("Datos del Cliente")||message.contains("Producto Ordenado")) {
-//                mainContentPanel.add(new NewCustomer(mainContentPanel).addSpecificOrder());
-//            }  else if (message.contains("Datos de la Orden")||message.contains("Material Requerido")) {
-//                System.out.println("Lllegggaaa");
-//                NewOrder order = new NewOrder(mainContentPanel);
-//                System.out.println(order.getPreviousScreen());
-//                mainContentPanel = new JPanel();
-//                mainContentPanel.add(order.addSpecificOrder(order.getPreviousScreen()));
-//            }
         }
     }
 
