@@ -462,7 +462,10 @@ public class NewOrder implements ActionListener {
                 allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
             } else if (previousScreen == 3) {
                 // NewCustomer
-                allInfoPanel.add(new NewCustomer(allInfoPanel).addSpecificOrder());
+                updateCustomer();
+                NewCustomer newCustomer = new NewCustomer(allInfoPanel);
+                newCustomer.addCompleteCustomer(getCurrentCustomer());
+                allInfoPanel.add(newCustomer.addSpecificOrder());
             }
 
             allInfoPanel.revalidate();
@@ -489,7 +492,7 @@ public class NewOrder implements ActionListener {
 
     public void newCustomer(){
         try {
-            if (getCurrentCustomer() != null){
+            if (getCurrentCustomer() != null && getCurrentCustomer().getPhoneNumber() != 0 && getCurrentCustomer().getDocumentNumber() != 0){
                 customerTxt.setText(getCurrentCustomer().getName());
                 phoneTxt.setText(String.valueOf(getCurrentCustomer().getPhoneNumber()));
                 documentTxt.setText(String.valueOf(getCurrentCustomer().getDocumentNumber()));
@@ -500,7 +503,6 @@ public class NewOrder implements ActionListener {
     }
 
     public void addCurrentOrder(){
-
         try {
             productName = productTxt.getText();
             status = statusOp;
@@ -530,7 +532,15 @@ public class NewOrder implements ActionListener {
             allInformation.revalidate();
             allInformation.repaint();
         }
+    }
 
+    public void updateCustomer(){
+        Customer updateCus;
+        updateCus = getCurrentCustomer();
+        updateCus.setName(customerTxt.getText());
+        updateCus.setPhoneNumber(Long.parseLong(phoneTxt.getText()));
+        updateCus.setDocumentNumber(Long.parseLong(documentTxt.getText()));
+        setCurrentCustomer(updateCus);
     }
 
     public Customer getCurrentCustomer() {

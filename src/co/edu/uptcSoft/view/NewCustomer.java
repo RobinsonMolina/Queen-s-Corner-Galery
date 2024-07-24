@@ -364,13 +364,20 @@ public class NewCustomer implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == add) {
-            allInfoPanel.removeAll();
             addCurrent();
-            NewOrder order = new NewOrder(allInfoPanel);
-            order.setCurrentCustomer(getCustomer());
-            allInfoPanel.add(order.addSpecificOrder(3));
-            allInfoPanel.revalidate();
-            allInfoPanel.repaint();
+            if (name.isEmpty() || document == 0 || email.isEmpty() || address.isEmpty() || phoneNumber == 0) {
+                components.windowConfirmation("Ingrese todos los datos del cliente", "Aceptar", "Datos del Cliente");
+            } else {
+
+                allInfoPanel.removeAll();
+                NewOrder order = new NewOrder(allInfoPanel);
+                order.setCurrentCustomer(getCustomer());
+
+                allInfoPanel.add(order.addSpecificOrder(3));
+                allInfoPanel.revalidate();
+                allInfoPanel.repaint();
+            }
+
         } else if (e.getSource() == save) {
             addCurrent();
             addCustomer();
