@@ -322,9 +322,46 @@ public class Components implements ActionListener {
         timer.start();
     }
 
+    // Error message
+    public void windowConfirmation(String title, String button1) {
+
+        this.message = "Todos los datos";
+        confirmationFrame = new JFrame();
+        confirmationFrame.setTitle("Error");
+        confirmationFrame.setSize(500, 130);
+        confirmationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        confirmationFrame.setLocationRelativeTo(null);
+
+        confirmationPanel = new JPanel();
+        confirmationPanel.setBackground(Color.WHITE);
+        JLabel confirmationLabel = new JLabel(title);
+        confirmationLabel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        confirmationLabel.setFont(createFont(0, 20));
+        confirmationLabel.setForeground(Color.BLACK);
+        confirmationPanel.add(confirmationLabel, BorderLayout.NORTH);
+
+        // Rounded button panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.WHITE);
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setPreferredSize(new Dimension(500, 130));
+
+        // Button yes
+        buttonNo = createRoundedButton(button1, "#000000", "#2F1940", 30, 30);
+        buttonNo.setPreferredSize(new Dimension(150, 34));
+        buttonPanel.add(buttonNo);
+
+        buttonNo.addActionListener(this);
+        confirmationPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        confirmationFrame.add(confirmationPanel);
+        confirmationFrame.setVisible(true);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonYes) {
+
             // change the content of the main panel instead of opening a new window
                 mainContentPanel.removeAll();
             if (message.contains("Orden")) {
@@ -341,7 +378,10 @@ public class Components implements ActionListener {
                 mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Insumo agregado")) {
                 mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
+            } else if (message.contains("Todos los datos")) {
+                mainContentPanel.add(new NewCustomer(mainContentPanel).addSpecificOrder());
             }
+
             mainContentPanel.revalidate();
             mainContentPanel.repaint();
             confirmationFrame.dispose();

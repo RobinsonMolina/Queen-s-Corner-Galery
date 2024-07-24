@@ -2,23 +2,17 @@ package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
-import org.w3c.dom.ls.LSOutput;
-
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Objects;
 
 public class NewCustomer implements ActionListener {
     //private JFrame specificOrderWindow;
@@ -45,6 +39,7 @@ public class NewCustomer implements ActionListener {
     private long phoneNumber;
 
     private Customer customer;
+    private JTable table;
 
     public NewCustomer(){
 
@@ -71,6 +66,7 @@ public class NewCustomer implements ActionListener {
 
         logic = Logic.getInstance();
         customer = new Customer();
+        table = new JTable();
     }
 
     public JPanel addSpecificOrder(){
@@ -197,7 +193,7 @@ public class NewCustomer implements ActionListener {
             }
         };
 
-        JTable table = new JTable(model);
+        table = new JTable(model);
         table.setRowHeight(34);
         table.setShowGrid(false);
         table.getColumnModel().getColumn(3).setMaxWidth(50);
@@ -358,7 +354,7 @@ public class NewCustomer implements ActionListener {
                     allInfoPanel.repaint();
                 } else if (column == 4) {
                     String valor = String.valueOf(table.getValueAt(row, 0).toString());
-                    components.windowConfirmation("¿Está seguro de eliminar este cliente?", "Cancelar", "Eliminar", "Cliente eliminado con éxito", valor);
+                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
 
                 }
             }
@@ -387,18 +383,24 @@ public class NewCustomer implements ActionListener {
     }
 
     public void addCurrent(){
-        name = nameTxt.getText();
-        document = Long.parseLong(documentTxt.getText());
-        email = emailTxt.getText();
-        address = addressTxt.getText();
-        phoneNumber = Long.parseLong(phoneTxt.getText());
+        try {
+            name = nameTxt.getText();
+            document = Long.parseLong(documentTxt.getText());
+            email = emailTxt.getText();
+            address = addressTxt.getText();
+            phoneNumber = Long.parseLong(phoneTxt.getText());
+            setCustomer(new Customer(name, document, email, address, phoneNumber));
+        } catch (Exception e){
+            //e.printStackTrace();
+        }
 
-        setCustomer(new Customer(name, document, email, address, phoneNumber));
     }
 
     public void addCustomer(){
         if (name.isEmpty() || document == 0 || email.isEmpty() || address.isEmpty() || phoneNumber == 0) {
-            JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
+            components.windowConfirmation("Ingrese todos los datos del cliente", "Aceptar");
+        } else if (table.getRowCount() == 0) {
+            components.windowConfirmation("Debe de tener al menos una Orden de Producción", "Aceptar");
         } else {
             components.windowConfirmation("¿Está seguro de añadir este cliente?", "Cancelar", "Añadir", "Cliente añadido con éxito");
             components.setCurrentCustomer(getCustomer());

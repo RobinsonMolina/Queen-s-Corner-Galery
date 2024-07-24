@@ -390,10 +390,10 @@ public class SpecificOrder implements ActionListener {
 
     public JPanel buttons() {
         buttons.add(Box.createHorizontalStrut(600));
-        buttons.add(goBack);
         buttons.add(delete);
         buttons.add(update);
         buttons.add(pdf);
+        buttons.add(goBack);
 
         delete.setBackground(Color.decode("#2F1940"));
         update.setBackground(Color.decode("#2F1940"));
