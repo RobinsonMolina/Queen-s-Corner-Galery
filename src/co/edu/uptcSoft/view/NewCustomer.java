@@ -398,9 +398,9 @@ public class NewCustomer implements ActionListener {
 
     public void addCustomer(){
         if (name.isEmpty() || document == 0 || email.isEmpty() || address.isEmpty() || phoneNumber == 0) {
-            components.windowConfirmation("Ingrese todos los datos del cliente", "Aceptar");
+            components.windowConfirmation("Ingrese todos los datos del cliente", "Aceptar", "Datos del Cliente");
         } else if (table.getRowCount() == 0) {
-            components.windowConfirmation("Debe de tener al menos una Orden de Producción", "Aceptar");
+            components.windowConfirmation("Debe de tener al menos una Producto Ordenado", "Aceptar", "Producto Ordenado");
         } else {
             components.windowConfirmation("¿Está seguro de añadir este cliente?", "Cancelar", "Añadir", "Cliente añadido con éxito");
             components.setCurrentCustomer(getCustomer());

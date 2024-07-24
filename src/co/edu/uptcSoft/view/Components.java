@@ -323,9 +323,9 @@ public class Components implements ActionListener {
     }
 
     // Error message
-    public void windowConfirmation(String title, String button1) {
+    public void windowConfirmation(String title, String button1, String message) {
 
-        this.message = "Todos los datos";
+        this.message = message;
         confirmationFrame = new JFrame();
         confirmationFrame.setTitle("Error");
         confirmationFrame.setSize(500, 130);
@@ -378,8 +378,6 @@ public class Components implements ActionListener {
                 mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Insumo agregado")) {
                 mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
-            } else if (message.contains("Todos los datos")) {
-                mainContentPanel.add(new NewCustomer(mainContentPanel).addSpecificOrder());
             }
 
             mainContentPanel.revalidate();
@@ -397,6 +395,15 @@ public class Components implements ActionListener {
             timer.start();
         } else if (e.getSource() == buttonNo) {
             confirmationFrame.dispose();
+//            if (message.contains("Datos del Cliente")||message.contains("Producto Ordenado")) {
+//                mainContentPanel.add(new NewCustomer(mainContentPanel).addSpecificOrder());
+//            }  else if (message.contains("Datos de la Orden")||message.contains("Material Requerido")) {
+//                System.out.println("Lllegggaaa");
+//                NewOrder order = new NewOrder(mainContentPanel);
+//                System.out.println(order.getPreviousScreen());
+//                mainContentPanel = new JPanel();
+//                mainContentPanel.add(order.addSpecificOrder(order.getPreviousScreen()));
+//            }
         }
     }
 

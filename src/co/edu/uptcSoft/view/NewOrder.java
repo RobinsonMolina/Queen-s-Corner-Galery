@@ -4,23 +4,17 @@ import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Materials;
 import co.edu.uptcSoft.model.Order;
-import org.w3c.dom.ls.LSOutput;
-
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
 
 public class NewOrder implements ActionListener {
     //private JFrame specificOrderWindow;
@@ -55,6 +49,7 @@ public class NewOrder implements ActionListener {
     private Date deliveryDate;
     private Customer customer;
     private ArrayList<Materials> materials;
+    private JTable table;
 
     private Logic logic = Logic.getInstance();
 
@@ -82,7 +77,9 @@ public class NewOrder implements ActionListener {
         productionDateTxt = new JTextField();
         orderNumberTxt = new JTextField();
         deliveryDateTxt = new JTextField();
-        statusOp = "";
+        statusOp = "Por Hacer";
+
+        table = new JTable();
     }
     /*public NewOrder() {
         specificOrderWindow = new JFrame("Nueva Orden");
@@ -308,7 +305,7 @@ public class NewOrder implements ActionListener {
             }
         };
 
-        JTable table = new JTable(model);
+        table = new JTable(model);
         table.setRowHeight(34);
         table.setShowGrid(false);
         table.setPreferredSize(new Dimension(1286, 156));
@@ -469,7 +466,7 @@ public class NewOrder implements ActionListener {
             allInfoPanel.repaint();
         } if (e.getSource() == save){
             addCurrentOrder();
-            allInfoPanel.removeAll();
+            //allInfoPanel.removeAll();
 
             if (previousScreen == 3){
                 //NewCustomer
@@ -499,21 +496,37 @@ public class NewOrder implements ActionListener {
     }
 
     public void addCurrentOrder(){
-        productName = productTxt.getText();
-        status = statusOp;
-        orderNumber = Integer.parseInt(orderNumberTxt.getText());
-        type = typeTxt.getText();
-        productionDate = new Date(productionDateTxt.getText());
-        deliveryDate = new Date(deliveryDateTxt.getText());
-        customer = currentCustomer;
 
-        setOrder(new Order(productName, status, orderNumber, type, productionDate, deliveryDate, customer, materials));
+        try {
+            productName = productTxt.getText();
+            status = statusOp;
+            orderNumber = Integer.parseInt(orderNumberTxt.getText());
+            type = typeTxt.getText();
+            productionDate = new Date(productionDateTxt.getText());
+            deliveryDate = new Date(deliveryDateTxt.getText());
+            customer = currentCustomer;
+        } catch (Exception e){
 
-        logic.addOrder(productName, status, orderNumber, type, productionDate, deliveryDate, customer, materials);
-        allInformation.removeAll();
-        allInformation.add(new OrderList(allInformation).initializeContentPanel());
-        allInformation.revalidate();
-        allInformation.repaint();
+        }
+
+        if (productName.isEmpty() || status.isEmpty() || orderNumber == 0 || type.isEmpty() || productionDate.toString().isEmpty() || deliveryDate.toString().isEmpty()) {
+            components.windowConfirmation("Ingrese todos los datos de la orden", "Aceptar", "Datos de la Orden");
+        } else if (table.getRowCount() == 0) {
+            components.windowConfirmation("Debe de tener al menos una Material Requerido", "Aceptar", "Material Requerido");
+        } else {
+
+            components.windowConfirmation("¿Está seguro de añadir esta orden?", "Cancelar", "Añadir", "Orden añadida con éxito");
+            components.setCurrentCustomer(getCurrentCustomer());
+
+            setOrder(new Order(productName, status, orderNumber, type, productionDate, deliveryDate, customer, materials));
+
+            logic.addOrder(productName, status, orderNumber, type, productionDate, deliveryDate, customer, materials);
+            allInformation.removeAll();
+            allInformation.add(new OrderList(allInformation).initializeContentPanel());
+            allInformation.revalidate();
+            allInformation.repaint();
+        }
+
     }
 
     public Customer getCurrentCustomer() {
@@ -530,5 +543,9 @@ public class NewOrder implements ActionListener {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public int getPreviousScreen() {
+        return previousScreen;
     }
 }
