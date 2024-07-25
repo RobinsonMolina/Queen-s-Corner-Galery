@@ -4,6 +4,8 @@ import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Materials;
 import co.edu.uptcSoft.model.Order;
+import co.edu.uptcSoft.model.Supply;
+
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
@@ -52,6 +54,7 @@ public class NewOrder implements ActionListener {
     private JTable table;
 
     private Logic logic = Logic.getInstance();
+    private Supply supply;
 
     public NewOrder(JPanel mainContentPanel) {
         allInfoPanel = mainContentPanel;
@@ -80,6 +83,7 @@ public class NewOrder implements ActionListener {
         statusOp = "Por Hacer";
 
         table = new JTable();
+        supply = new Supply();
     }
     /*public NewOrder() {
         specificOrderWindow = new JFrame("Nueva Orden");
@@ -487,6 +491,11 @@ public class NewOrder implements ActionListener {
 
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
+        } else if (e.getSource() == add) {
+            allInfoPanel.removeAll();
+            allInfoPanel.add(new AddSupply(allInfoPanel).initializeContentPanel());
+            allInfoPanel.revalidate();
+            allInfoPanel.repaint();
         }
     }
 
@@ -559,7 +568,7 @@ public class NewOrder implements ActionListener {
         this.order = order;
     }
 
-    public int getPreviousScreen() {
-        return previousScreen;
+    public void setSupply(Supply supply) {
+        this.supply = supply;
     }
 }
