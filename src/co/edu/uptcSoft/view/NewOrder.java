@@ -15,6 +15,7 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -55,6 +56,8 @@ public class NewOrder implements ActionListener {
 
     private Logic logic = Logic.getInstance();
     private Supply supply;
+    private Object supplyListTable[][];
+    private ArrayList<Supply> supplyList;
 
     public NewOrder(JPanel mainContentPanel) {
         allInfoPanel = mainContentPanel;
@@ -84,6 +87,7 @@ public class NewOrder implements ActionListener {
 
         table = new JTable();
         supply = new Supply();
+        supplyList = new ArrayList<>();
     }
     /*public NewOrder() {
         specificOrderWindow = new JFrame("Nueva Orden");
@@ -288,13 +292,9 @@ public class NewOrder implements ActionListener {
         Image image = icon.getImage();
         ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
-        Object[][] data = {
-
-        };
-
         String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo", ""};
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+        DefaultTableModel model = new DefaultTableModel(getSuppliesList(), columnNames) {
             @Override
             public Class<?> getColumnClass(int column) {
                 if (column == 4) {
@@ -381,6 +381,18 @@ public class NewOrder implements ActionListener {
         tableScrollPane.setBackground(Color.white);
 
         allInfoPanel.add(jPanel);
+    }
+
+    public Object[][] getSuppliesList() {
+        supplyListTable = new Object[supplyList.size()][4];
+
+        for (int i = 0; i < supplyList.size(); i++) {
+            supplyListTable[i][0] = supplyList.get(i).getId();
+            supplyListTable[i][1] = supplyList.get(i).getMaterial();
+            supplyListTable[i][2] = supplyList.get(i).getQuantity();
+            supplyListTable[i][3] = supplyList.get(i).getTotalPrice();
+        }
+        return supplyListTable;
     }
 
     public class RoundedBorder extends AbstractBorder {
@@ -493,7 +505,11 @@ public class NewOrder implements ActionListener {
             allInfoPanel.repaint();
         } else if (e.getSource() == add) {
             allInfoPanel.removeAll();
-            allInfoPanel.add(new AddSupply(allInfoPanel).initializeContentPanel());
+
+            AddSupply addSupply = new AddSupply(allInfoPanel);
+            addSupply.setSupplyList(getSupplyList());
+
+            allInfoPanel.add(addSupply.initializeContentPanel());
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
         }
@@ -568,7 +584,15 @@ public class NewOrder implements ActionListener {
         this.order = order;
     }
 
-    public void setSupply(Supply supply) {
-        this.supply = supply;
+    public void addSupply(Supply supply) {
+        this.supplyList.add(supply);
+    }
+
+    public void setSupplyList(ArrayList<Supply> supplyList) {
+        this.supplyList = supplyList;
+    }
+
+    public ArrayList<Supply> getSupplyList() {
+        return supplyList;
     }
 }

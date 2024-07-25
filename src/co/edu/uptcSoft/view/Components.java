@@ -2,6 +2,7 @@ package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
+import co.edu.uptcSoft.model.Supply;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -10,6 +11,7 @@ import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Components implements ActionListener {
 
@@ -23,6 +25,7 @@ public class Components implements ActionListener {
     private String row;
     private JPanel mainContentPanel;
     private Customer currentCustomer = new Customer();
+    private Supply currentSupply = new Supply();
 
     public Components(JPanel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
@@ -367,7 +370,7 @@ public class Components implements ActionListener {
             if (message.contains("Orden")) {
                 logic.deleteOrder(Long.parseLong(row));
                 mainContentPanel.add(new OrderList(mainContentPanel).initializeContentPanel());
-            } else if (message.contains("Insumo")) {
+            } else if (message.contains("Insumo eliminado")) {
                 logic.deleteSupply(row);
                 mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Cliente añadido")) {
@@ -378,6 +381,9 @@ public class Components implements ActionListener {
                 mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Insumo agregado")) {
                 mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
+            } else if (message.contains("Insumo añadido")) {
+                NewOrder order = new NewOrder(mainContentPanel);
+                mainContentPanel.add(order.addSpecificOrder(0));
             }
 
             mainContentPanel.revalidate();
@@ -404,5 +410,13 @@ public class Components implements ActionListener {
 
     public void setCurrentCustomer(Customer currentCustomer) {
         this.currentCustomer = currentCustomer;
+    }
+
+    public Supply getCurrentSupply() {
+        return currentSupply;
+    }
+
+    public void setCurrentSupply(Supply currentSupply) {
+        this.currentSupply = currentSupply;
     }
 }

@@ -32,11 +32,13 @@ public class AddSupply extends JFrame implements ActionListener {
     private Logic logic = Logic.getInstance();
     private TableRowSorter<DefaultTableModel> filter;
     private String idSupply;
+    private ArrayList<Supply> supplyList;
 
 
     public AddSupply(JPanel mainContentPanel){
         this.mainContentPanel = mainContentPanel;
         components = new Components(mainContentPanel);
+        supplyList = new ArrayList();
     }
 
     // Method for initializing content panel
@@ -246,14 +248,21 @@ public class AddSupply extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonAdd) {
-            mainContentPanel.removeAll();
+            try {
+                if (idSupply != null){
+                    components.windowConfirmation("¿Está seguro de añadir el insumo: " + idSupply + "?", "Cancelar", "Añadir", "Insumo añadido con éxito");
+                    supplyList.add(logic.searchSupply(idSupply));
+                    NewOrder order = new NewOrder(mainContentPanel);
+                    mainContentPanel.add(order.addSpecificOrder(0));
+                    order.setSupplyList(getSupplyList());
+                    //components.setCurrentSupply(logic.searchSupply(idSupply));
+                } else {
+                    components.windowConfirmation("Seleccione un insumo", "Aceptar", "Insumo null");
+                }
+            } catch (Exception exception){
 
-            NewOrder order = new NewOrder(mainContentPanel);
-            order.setSupply(logic.searchSupply(idSupply));
-            mainContentPanel.add(order.addSpecificOrder(0));
+            }
 
-            mainContentPanel.revalidate();
-            mainContentPanel.repaint();
         }
     }
 
@@ -284,5 +293,13 @@ public class AddSupply extends JFrame implements ActionListener {
         } else {
             filter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
         }
+    }
+
+    public void setSupplyList(ArrayList<Supply> supplyList) {
+        this.supplyList = supplyList;
+    }
+
+    public ArrayList<Supply> getSupplyList() {
+        return supplyList;
     }
 }
