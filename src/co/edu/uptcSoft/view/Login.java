@@ -139,12 +139,14 @@ public class Login implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
-            if (emailText.getText().equals(Logic.getInstance().getEmail()) && passwordText.getText().equals(Logic.getInstance().getPassword())) {
+            if (!emailText.getText().equals(Logic.getInstance().getEmail())) {
+                components.messageConfirmation("Correo incorrecto");
+            }else if (!passwordText.getText().equals(Logic.getInstance().getPassword())){
+                components.messageConfirmation("Contraseña incorrecta");
+            }else{
                 loginWindow.dispose();
                 HeaderMenu headerMenu = HeaderMenu.getInstance();
                 headerMenu.paneles(new Board(headerMenu.getContentPanel()).contentPanel());
-            }else{
-                components.messageConfirmation("Correo o contraseña incorrectos");
             }
         }
     }
