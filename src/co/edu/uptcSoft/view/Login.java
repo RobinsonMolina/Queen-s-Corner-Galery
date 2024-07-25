@@ -1,5 +1,7 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
+
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import java.awt.*;
@@ -16,6 +18,9 @@ public class Login implements ActionListener {
     private JLabel imagePanel;
     private JButton loginButton;
     private Components components;
+    private JTextField emailText;
+    private JTextField passwordText;
+    private Logic logic = Logic.getInstance();
 
     public Login() {
         loginWindow = new JFrame("Login");
@@ -43,8 +48,8 @@ public class Login implements ActionListener {
         JLabel title = new JLabel("Iniciar Sesión");
         JLabel email = new JLabel("Correo");
         JLabel password = new JLabel("Contraseña");
-        JTextField emailText = new JTextField("Ingrese el correo");
-        JTextField passwordText = new JTextField("Ingrese la contraseña");
+        emailText = new JTextField("");
+        passwordText = new JTextField("");
         loginButton = new JButton("Continuar");
 
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -134,9 +139,13 @@ public class Login implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
-            loginWindow.dispose();
-            HeaderMenu headerMenu = HeaderMenu.getInstance();
-            headerMenu.paneles(new Board(headerMenu.getContentPanel()).contentPanel());
+            if (emailText.getText().equals(Logic.getInstance().getEmail()) && passwordText.getText().equals(Logic.getInstance().getPassword())) {
+                loginWindow.dispose();
+                HeaderMenu headerMenu = HeaderMenu.getInstance();
+                headerMenu.paneles(new Board(headerMenu.getContentPanel()).contentPanel());
+            }else{
+                components.messageConfirmation("Correo o contraseña incorrectos");
+            }
         }
     }
 }
