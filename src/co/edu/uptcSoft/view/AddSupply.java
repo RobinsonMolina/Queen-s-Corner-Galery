@@ -1,3 +1,4 @@
+
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
@@ -263,7 +264,7 @@ public class AddSupply extends JFrame implements ActionListener {
 
     // Method for getting the order list and its icons
     public Object[][] getSuppliesList() {
-                ArrayList<Supply> supplyList = new ArrayList<>(logic.getSupplyList().values());
+        ArrayList<Supply> supplyList = new ArrayList<>(logic.getSupplyList().values());
 
         supplyListTable = new Object[supplyList.size()][6];
         // change the format desired
