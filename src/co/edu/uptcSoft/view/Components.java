@@ -26,9 +26,13 @@ public class Components implements ActionListener {
     private JPanel mainContentPanel;
     private Customer currentCustomer = new Customer();
     private Supply currentSupply = new Supply();
+    private ArrayList<Supply> supplyList;
+    private NewOrder order;
 
     public Components(JPanel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
+        supplyList = new ArrayList<>();
+        order = new NewOrder(mainContentPanel);
     }
 
     public Components() {
@@ -382,7 +386,7 @@ public class Components implements ActionListener {
             } else if (message.contains("Insumo agregado")) {
                 mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Insumo añadido")) {
-                NewOrder order = new NewOrder(mainContentPanel);
+                order.setSupplyList(getSupplyList());
                 mainContentPanel.add(order.addSpecificOrder(0));
             }
 
@@ -418,5 +422,21 @@ public class Components implements ActionListener {
 
     public void setCurrentSupply(Supply currentSupply) {
         this.currentSupply = currentSupply;
+    }
+
+    public NewOrder getOrder() {
+        return order;
+    }
+
+    public void setOrder(NewOrder order) {
+        this.order = order;
+    }
+
+    public ArrayList<Supply> getSupplyList() {
+        return supplyList;
+    }
+
+    public void setSupplyList(ArrayList<Supply> supplyList) {
+        this.supplyList = supplyList;
     }
 }

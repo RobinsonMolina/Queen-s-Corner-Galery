@@ -34,11 +34,9 @@ public class AddSupply extends JFrame implements ActionListener {
     private String idSupply;
     private ArrayList<Supply> supplyList;
 
-
     public AddSupply(JPanel mainContentPanel){
         this.mainContentPanel = mainContentPanel;
         components = new Components(mainContentPanel);
-        supplyList = new ArrayList();
     }
 
     // Method for initializing content panel
@@ -251,11 +249,8 @@ public class AddSupply extends JFrame implements ActionListener {
             try {
                 if (idSupply != null){
                     components.windowConfirmation("¿Está seguro de añadir el insumo: " + idSupply + "?", "Cancelar", "Añadir", "Insumo añadido con éxito");
-                    supplyList.add(logic.searchSupply(idSupply));
-                    NewOrder order = new NewOrder(mainContentPanel);
-                    mainContentPanel.add(order.addSpecificOrder(0));
-                    order.setSupplyList(getSupplyList());
-                    //components.setCurrentSupply(logic.searchSupply(idSupply));
+                    addSupplyList(logic.searchSupply(idSupply));
+                    components.setSupplyList(getSupplyList());
                 } else {
                     components.windowConfirmation("Seleccione un insumo", "Aceptar", "Insumo null");
                 }
@@ -295,11 +290,15 @@ public class AddSupply extends JFrame implements ActionListener {
         }
     }
 
+    public ArrayList<Supply> getSupplyList() {
+        return supplyList;
+    }
+
     public void setSupplyList(ArrayList<Supply> supplyList) {
         this.supplyList = supplyList;
     }
 
-    public ArrayList<Supply> getSupplyList() {
-        return supplyList;
+    public void addSupplyList(Supply supply) {
+        this.supplyList.add(supply);
     }
 }

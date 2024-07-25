@@ -58,6 +58,10 @@ public class NewOrder implements ActionListener {
     private Supply supply;
     private Object supplyListTable[][];
     private ArrayList<Supply> supplyList;
+    private AddSupply addSupply;
+
+    public NewOrder() {
+    }
 
     public NewOrder(JPanel mainContentPanel) {
         allInfoPanel = mainContentPanel;
@@ -121,7 +125,6 @@ public class NewOrder implements ActionListener {
 
     // 1. Menu, 2. OrderList, 3. NewCustomer
     public JPanel addSpecificOrder(int previousScreen){
-
         JLabel title = new JLabel("Nueva Orden");
         this.previousScreen = previousScreen;
 
@@ -506,7 +509,7 @@ public class NewOrder implements ActionListener {
         } else if (e.getSource() == add) {
             allInfoPanel.removeAll();
 
-            AddSupply addSupply = new AddSupply(allInfoPanel);
+            addSupply = new AddSupply(allInfoPanel);
             addSupply.setSupplyList(getSupplyList());
 
             allInfoPanel.add(addSupply.initializeContentPanel());
@@ -582,10 +585,6 @@ public class NewOrder implements ActionListener {
 
     public void setOrder(Order order) {
         this.order = order;
-    }
-
-    public void addSupply(Supply supply) {
-        this.supplyList.add(supply);
     }
 
     public void setSupplyList(ArrayList<Supply> supplyList) {
