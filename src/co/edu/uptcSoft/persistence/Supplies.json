@@ -1,0 +1,322 @@
+{
+  "M011": {
+    "id": "M011",
+    "material": "Madera",
+    "category": "Muebles",
+    "characteristics": "Rectangular, Color Nogal",
+    "quantity": 3,
+    "unit": "cm",
+    "unitPrice": 60000,
+    "totalPrice": 180000
+  },
+  "M020": {
+    "id": "M020",
+    "material": "Madera",
+    "category": "Muebles",
+    "characteristics": "Rectangular, Color Nogal",
+    "quantity": 4,
+    "unit": "Metros",
+    "unitPrice": 60000,
+    "totalPrice": 240000
+  },
+  "M021": {
+    "id": "M021",
+    "material": "Metal",
+    "category": "Muebles",
+    "characteristics": "Acero Inoxidable, Color Gris",
+    "quantity": 5,
+    "unit": "Metros",
+    "unitPrice": 70000,
+    "totalPrice": 350000
+  },
+  "M022": {
+    "id": "M022",
+    "material": "Vidrio",
+    "category": "Muebles",
+    "characteristics": "Templado, Transparente",
+    "quantity": 3,
+    "unit": "Metros",
+    "unitPrice": 80000,
+    "totalPrice": 240000
+  },
+  "M023": {
+    "id": "M023",
+    "material": "Plástico",
+    "category": "Muebles",
+    "characteristics": "Polipropileno, Color Negro",
+    "quantity": 6,
+    "unit": "Metros",
+    "unitPrice": 50000,
+    "totalPrice": 300000
+  },
+  "M024": {
+    "id": "M024",
+    "material": "Ratán",
+    "category": "Muebles",
+    "characteristics": "Natural, Color Marrón",
+    "quantity": 7,
+    "unit": "Metros",
+    "unitPrice": 90000,
+    "totalPrice": 630000
+  },
+  "M025": {
+    "id": "M025",
+    "material": "Bambú",
+    "category": "Muebles",
+    "characteristics": "Sostenible, Color Natural",
+    "quantity": 8,
+    "unit": "Metros",
+    "unitPrice": 40000,
+    "totalPrice": 320000
+  },
+  "M026": {
+    "id": "M026",
+    "material": "Cuero",
+    "category": "Muebles",
+    "characteristics": "Auténtico, Color Negro",
+    "quantity": 2,
+    "unit": "Metros",
+    "unitPrice": 100000,
+    "totalPrice": 200000
+  },
+  "M027": {
+    "id": "M027",
+    "material": "Pino",
+    "category": "Muebles",
+    "characteristics": "Blando, Color Claro",
+    "quantity": 5,
+    "unit": "Metros",
+    "unitPrice": 45000,
+    "totalPrice": 225000
+  },
+  "M028": {
+    "id": "M028",
+    "material": "Mármol",
+    "category": "Muebles",
+    "characteristics": "Blanco, Pulido",
+    "quantity": 1,
+    "unit": "Metros",
+    "unitPrice": 150000,
+    "totalPrice": 150000
+  },
+  "M029": {
+    "id": "M029",
+    "material": "Granit",
+    "category": "Muebles",
+    "characteristics": "Duradero, Color Oscuro",
+    "quantity": 3,
+    "unit": "Metros",
+    "unitPrice": 120000,
+    "totalPrice": 360000
+  },
+  "M030": {
+    "id": "M030",
+    "material": "Acacia",
+    "category": "Muebles",
+    "characteristics": "Madera Dura, Color Marrón",
+    "quantity": 4,
+    "unit": "Metros",
+    "unitPrice": 65000,
+    "totalPrice": 260000
+  },
+  "M031": {
+    "id": "M031",
+    "material": "Teca",
+    "category": "Muebles",
+    "characteristics": "Resistente, Color Natural",
+    "quantity": 6,
+    "unit": "Metros",
+    "unitPrice": 85000,
+    "totalPrice": 510000
+  },
+  "M032": {
+    "id": "M032",
+    "material": "Roble",
+    "category": "Muebles",
+    "characteristics": "Madera Dura, Color Claro",
+    "quantity": 5,
+    "unit": "Metros",
+    "unitPrice": 75000,
+    "totalPrice": 375000
+  },
+  "T001": {
+    "id": "T001",
+    "material": "Lino",
+    "category": "Telas",
+    "characteristics": "Resistente, Transpirable, Beige",
+    "quantity": 50,
+    "unit": "Metros",
+    "unitPrice": 80000,
+    "totalPrice": 40000
+  },
+  "T002": {
+    "id": "T002",
+    "material": "Chenille",
+    "category": "Telas",
+    "characteristics": "Textura Suave, Verde",
+    "quantity": 40,
+    "unit": "Metros",
+    "unitPrice": 95000,
+    "totalPrice": 40000
+  },
+  "T003": {
+    "id": "T003",
+    "material": "Terciopelo",
+    "category": "Telas",
+    "characteristics": "Lujo, Suave, Rojo",
+    "quantity": 40,
+    "unit": "Metros",
+    "unitPrice": 120000,
+    "totalPrice": 40000
+  },
+  "T004": {
+    "id": "T004",
+    "material": "Cuero Sintético",
+    "category": "Telas",
+    "characteristics": "Fácil De Limpiar, Resistente, Negro",
+    "quantity": 55,
+    "unit": "Metros",
+    "unitPrice": 90000,
+    "totalPrice": 55000
+  },
+  "T005": {
+    "id": "T005",
+    "material": "Pana",
+    "category": "Telas",
+    "characteristics": "Textura Acanalada,Duradero,Maron",
+    "quantity": 30,
+    "unit": "Metros",
+    "unitPrice": 100000,
+    "totalPrice": 30000
+  },
+  "T006": {
+    "id": "T006",
+    "material": "Jacquard",
+    "category": "Telas",
+    "characteristics": "Diseño Intrincado, Resistente, Azul",
+    "quantity": 35,
+    "unit": "Metros",
+    "unitPrice": 110000,
+    "totalPrice": 35000
+  },
+  "T007": {
+    "id": "T007",
+    "material": "Tweed",
+    "category": "Telas",
+    "characteristics": "Textura Rugosa, Duradero, Gris",
+    "quantity": 50,
+    "unit": "Metros",
+    "unitPrice": 75000,
+    "totalPrice": 30000
+  },
+  "T008": {
+    "id": "T008",
+    "material": "Franela",
+    "category": "Telas",
+    "characteristics": "Suave, Cálida, Color Gris Claro",
+    "quantity": 35,
+    "unit": "Metros",
+    "unitPrice": 45000,
+    "totalPrice": 15000
+  },
+  "T009": {
+    "id": "T009",
+    "material": "Seda",
+    "category": "Telas",
+    "characteristics": "Brillante, Suave, Color Blanco Perla",
+    "quantity": 25,
+    "unit": "Metros",
+    "unitPrice": 70000,
+    "totalPrice": 15000
+  },
+  "T010": {
+    "id": "T010",
+    "material": "Gamuza",
+    "category": "Telas",
+    "characteristics": "Suave Al Tacto, Elegante, Beige",
+    "quantity": 20,
+    "unit": "Metros",
+    "unitPrice": 65000,
+    "totalPrice": 20000
+  },
+  "T012": {
+    "id": "T012",
+    "material": "Sarga",
+    "category": "Telas",
+    "characteristics": "Duradera, Resistente, Verde Militar",
+    "quantity": 95,
+    "unit": "Metros",
+    "unitPrice": 95000,
+    "totalPrice": 9025000
+  },
+  "T013": {
+    "id": "T013",
+    "material": "Lycra",
+    "category": "Telas",
+    "characteristics": "Elástica, Suave, Color Negro",
+    "quantity": 50,
+    "unit": "Metros",
+    "unitPrice": 50000,
+    "totalPrice": 2500000
+  },
+  "T014": {
+    "id": "T014",
+    "material": "Raso",
+    "category": "Telas",
+    "characteristics": "Brillante, Suave, Rojo",
+    "quantity": 70,
+    "unit": "Metros",
+    "unitPrice": 70000,
+    "totalPrice": 4900000
+  },
+  "T015": {
+    "id": "T015",
+    "material": "Batista",
+    "category": "Telas",
+    "characteristics": "Ligera, Transpirable, Color Blanco",
+    "quantity": 55,
+    "unit": "Metros",
+    "unitPrice": 55000,
+    "totalPrice": 3025000
+  },
+  "T016": {
+    "id": "T016",
+    "material": "Gasa",
+    "category": "Telas",
+    "characteristics": "Ligera, Transparente, Color Rosa",
+    "quantity": 40,
+    "unit": "Metros",
+    "unitPrice": 40000,
+    "totalPrice": 1600000
+  },
+  "T017": {
+    "id": "T017",
+    "material": "Encaje",
+    "category": "Telas",
+    "characteristics": "Elegante, Decorativa, Color Blanco",
+    "quantity": 80,
+    "unit": "Metros",
+    "unitPrice": 80000,
+    "totalPrice": 6400000
+  },
+  "T018": {
+    "id": "T018",
+    "material": "Fieltro",
+    "category": "Telas",
+    "characteristics": "Densa, Resistente, Color Marrón",
+    "quantity": 45,
+    "unit": "Metros",
+    "unitPrice": 45000,
+    "totalPrice": 2025000
+  },
+  "T019": {
+    "id": "T019",
+    "material": "Tafetán",
+    "category": "Telas",
+    "characteristics": "Ligeramente Brillante, Suave, Color Violeta",
+    "quantity": 70,
+    "unit": "Metros",
+    "unitPrice": 70000,
+    "totalPrice": 4900000
+  }
+}

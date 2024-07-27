@@ -1,0 +1,452 @@
+{
+  "1": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 1,
+    "type": "Mueble",
+    "productionDate": "Jun 10, 2024, 12:00:00 AM",
+    "deliveryDate": "Jun 25, 2024, 12:00:00 AM",
+    "customer": {
+      "name": "Juan David Pérez",
+      "documentNumber": 1234567890,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3001234567
+    }
+  },
+  "2": {
+    "productName": "Mesa De Centro",
+    "status": "Entregado",
+    "orderNumber": 2,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "María Alejandra Rodríguez",
+      "documentNumber": 2345678901,
+      "email": "mar@alejandra.com",
+      "address": "Calle 456, Ciudad 2",
+      "phoneNumber": 339876543
+    }
+  },
+  "3": {
+    "productName": "Cojines",
+    "status": "Por Hacer",
+    "orderNumber": 3,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Carlos Andrés Gómez",
+      "documentNumber": 3456789012,
+      "email": "carlos@gomez.com",
+      "address": "Calle 789, Ciudad 3",
+      "phoneNumber": 323456789
+    }
+  },
+  "4": {
+    "productName": "Lampara",
+    "status": "En Progreso",
+    "orderNumber": 4,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Luisa Fernanda Fernández",
+      "documentNumber": 4567890123,
+      "email": "luisa@fernandez.com",
+      "address": "Calle 101, Ciudad 4",
+      "phoneNumber": 3109876543
+    }
+  },
+  "5": {
+    "productName": "Sofa",
+    "status": "Entregado",
+    "orderNumber": 5,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Andrés Felipe López",
+      "documentNumber": 5678901234,
+      "email": "andres@lopez.com",
+      "address": "Calle 112, Ciudad 5",
+      "phoneNumber": 316879801
+    }
+  },
+  "6": {
+    "productName": "SofaCama",
+    "status": "En Progreso",
+    "orderNumber": 6,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Ana María Torres",
+      "documentNumber": 6789012345,
+      "email": "ana@torres.com",
+      "address": "Calle 131, Ciudad 6",
+      "phoneNumber": 318678902
+    }
+  },
+  "7": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 7,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Diego Alejandro Martínez",
+      "documentNumber": 7890123456,
+      "email": "diego@martinez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 317890123
+    }
+  },
+  "8": {
+    "productName": "SofaCama",
+    "status": "Entregado",
+    "orderNumber": 8,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Laura Patricia Ramírez",
+      "documentNumber": 8901234567,
+      "email": "laura@ramirez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3198901234
+    }
+  },
+  "9": {
+    "productName": "Lampara",
+    "status": "Por Hacer",
+    "orderNumber": 9,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Lucas Alejandro Torres",
+      "documentNumber": 9012345678,
+      "email": "lucas@torres.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3109021354
+    }
+  },
+  "10": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 10,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Sofía Margarita Morales",
+      "documentNumber": 1234509876,
+      "email": "sofia@morales.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3190173456
+    }
+  },
+  "11": {
+    "productName": "Cojines",
+    "status": "Entregado",
+    "orderNumber": 11,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Jorge Luis Ríos",
+      "documentNumber": 2345609876,
+      "email": "jorge@rios.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3111234567
+    }
+  },
+  "12": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 12,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Sofía Alejandra Rodríguez",
+      "documentNumber": 3456709876,
+      "email": "",
+      "address": "",
+      "phoneNumber": 3190173457
+    }
+  },
+  "13": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 13,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Alberto Gómez",
+      "documentNumber": 4567809876,
+      "email": "alberto@gomez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3111234568
+    }
+  },
+  "14": {
+    "productName": "Mesa De Centro",
+    "status": "En Progreso",
+    "orderNumber": 14,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Santiago Herrera",
+      "documentNumber": 5678909876,
+      "email": "santiago@herrera.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3109021347
+    }
+  },
+  "15": {
+    "productName": "Lampara",
+    "status": "Entregado",
+    "orderNumber": 15,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Ricardo Pérez",
+      "documentNumber": 6789010987,
+      "email": "ricardo@perez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3190173458
+    }
+  },
+  "16": {
+    "productName": "Sofa",
+    "status": "En Progreso",
+    "orderNumber": 16,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Daniela Torres",
+      "documentNumber": 7890120987,
+      "email": "daniela@torres.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3111234569
+    }
+  },
+  "17": {
+    "productName": "SofaCama",
+    "status": "Entregado",
+    "orderNumber": 17,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Valeria Mendoza",
+      "documentNumber": 8901230987,
+      "email": "valeria@mendoza.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3109021347
+    }
+  },
+  "18": {
+    "productName": "Lampara",
+    "status": "Por Hacer",
+    "orderNumber": 18,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Javier García",
+      "documentNumber": 9012345681,
+      "email": "javier@garcia.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3190173463
+    }
+  },
+  "19": {
+    "productName": "SofaCama",
+    "status": "En Progreso",
+    "orderNumber": 19,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Paula Andrea García",
+      "documentNumber": 1234567891,
+      "email": "paula@andrea.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3111234570
+    }
+  },
+  "20": {
+    "productName": "Mesa De Centro",
+    "status": "Por Hacer",
+    "orderNumber": 20,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:08 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
+    "customer": {
+      "name": "Miguel Ángel Ríos",
+      "documentNumber": 2345678902,
+      "email": "miguel@rios.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3109021348
+    }
+  },
+  "21": {
+    "productName": "Lampara",
+    "status": "Entregado",
+    "orderNumber": 21,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:09 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:09 AM",
+    "customer": {
+      "name": "Luis Fernando Martínez",
+      "documentNumber": 3456789013,
+      "email": "luis@martinez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3190173459
+    }
+  },
+  "22": {
+    "productName": "Lampara",
+    "status": "En Progreso",
+    "orderNumber": 22,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:09 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:09 AM",
+    "customer": {
+      "name": "Laura Camila Torres",
+      "documentNumber": 4567890124,
+      "email": "laura@torres.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3111234571
+    }
+  },
+  "23": {
+    "productName": "Sofa",
+    "status": "Entregado",
+    "orderNumber": 23,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:09 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:09 AM",
+    "customer": {
+      "name": "José Manuel Gómez",
+      "documentNumber": 5678901235,
+      "email": "jose@gomez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3109021347
+    }
+  },
+  "24": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 24,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:09 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:09 AM",
+    "customer": {
+      "name": "Ana Patricia Ramírez",
+      "documentNumber": 6789012346,
+      "email": "ana@ramirez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3190173460
+    }
+  },
+  "25": {
+    "productName": "SofaCama",
+    "status": "En Progreso",
+    "orderNumber": 25,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:09 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:09 AM",
+    "customer": {
+      "name": "Carlos Andrés López",
+      "documentNumber": 7890123457,
+      "email": "carlos@lopez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3111234572
+    }
+  },
+  "26": {
+    "productName": "SofaCama",
+    "status": "Entregado",
+    "orderNumber": 26,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:09 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:09 AM",
+    "customer": {
+      "name": "Mónica Isabel Pérez",
+      "documentNumber": 8901234568,
+      "email": "monica@perez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3109021349
+    }
+  },
+  "27": {
+    "productName": "SofaCama",
+    "status": "Por Hacer",
+    "orderNumber": 27,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:09 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:09 AM",
+    "customer": {
+      "name": "Sergio Andrés Jiménez",
+      "documentNumber": 9012345680,
+      "email": "sergio@jimenez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3190173460
+    }
+  },
+  "28": {
+    "productName": "Lampara",
+    "status": "En Progreso",
+    "orderNumber": 28,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:09 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:09 AM",
+    "customer": {
+      "name": "Lucía Fernanda Morales",
+      "documentNumber": 1234509877,
+      "email": "lucia@morales.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3111234573
+    }
+  },
+  "29": {
+    "productName": "Sofa",
+    "status": "En Progreso",
+    "orderNumber": 29,
+    "type": "Mueble",
+    "productionDate": "Jul 18, 2024, 6:59:09 AM",
+    "deliveryDate": "Jul 18, 2024, 6:59:09 AM",
+    "customer": {
+      "name": "Sofía Alejandra Rodríguez",
+      "documentNumber": 2345609877,
+      "email": "sofia@rodriguez.com",
+      "address": "Calle 123, Piso 1, Edificio 1",
+      "phoneNumber": 3190173457
+    }
+  },
+  "100": {
+    "productName": "BBB",
+    "status": "Por Hacer",
+    "orderNumber": 100,
+    "type": "BBBBB",
+    "productionDate": "Oct 10, 2024, 12:00:00 AM",
+    "deliveryDate": "Aug 10, 2025, 12:00:00 AM",
+    "customer": {
+      "name": "AAA",
+      "documentNumber": 111,
+      "email": "AAAA",
+      "address": "AAAAA",
+      "phoneNumber": 22222
+    }
+  }
+}
