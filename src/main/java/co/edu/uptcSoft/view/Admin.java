@@ -10,7 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Admin extends JFrame implements ActionListener {
-
+    /*
     private Components components;
     private JPanel contentPanel;
     private JPanel contentTitle;
@@ -250,5 +250,11 @@ public class Admin extends JFrame implements ActionListener {
             timer.setRepeats(false); // To make the timer only execute once
             timer.start();
         }
+    }
+
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

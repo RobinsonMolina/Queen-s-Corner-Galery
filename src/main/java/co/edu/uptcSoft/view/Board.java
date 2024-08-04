@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Board extends JFrame {
+    /*
     private Components components;
     private JPanel contentPanel;
     private JPanel cardsPanel;
@@ -118,5 +119,7 @@ public class Board extends JFrame {
             }
         });
     }
+
+     */
 }
 

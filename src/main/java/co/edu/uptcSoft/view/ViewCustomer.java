@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 public class ViewCustomer implements ActionListener {
+    /*
     // private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
@@ -69,6 +70,7 @@ public class ViewCustomer implements ActionListener {
         window.add(allInformation, BorderLayout.CENTER);
     }*/
 
+    /* ________________________________________________________________
     public JPanel addSpecificOrder(){
         JLabel title = new JLabel("Cliente");
 
@@ -369,5 +371,11 @@ public class ViewCustomer implements ActionListener {
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
         }
+    }
+
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

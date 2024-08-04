@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 public class UpdateCustomer implements ActionListener {
+    /*
     //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
@@ -74,6 +75,8 @@ public class UpdateCustomer implements ActionListener {
         window.add(allInformation, BorderLayout.CENTER);
     }
     */
+
+    /*
     public JPanel addSpecificCustomer(){
         JLabel title = new JLabel("Acutualizar Cliente");
 
@@ -393,5 +396,10 @@ public class UpdateCustomer implements ActionListener {
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
         }
+    }
+    */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

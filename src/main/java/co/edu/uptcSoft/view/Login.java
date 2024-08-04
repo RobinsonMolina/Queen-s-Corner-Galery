@@ -1,8 +1,10 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.util.Objects;
 
@@ -32,10 +33,13 @@ public class Login extends Application {
     private TextField emailTxt;
     private TextField passwordTxt;
     private Button logInButton;
+
     Font font = Font.loadFont(getClass().getResourceAsStream("/styles/utilities/fonts/Buenard-Bold.ttf"), 50);
     Font font2 = Font.loadFont(getClass().getResourceAsStream("/styles/utilities/fonts/Buenard-Bold.ttf"), 20);
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
+    private Components components;
 
     public Login() {
         stage = new Stage();
@@ -49,6 +53,8 @@ public class Login extends Application {
         emailTxt = new TextField("tuemail@email.com");
         passwordTxt = new TextField("Ingresa tu Contraseña");
         logInButton = new Button("Continuar");
+
+        components = new Components();
     }
 
     @Override
@@ -119,9 +125,24 @@ public class Login extends Application {
         VBox.setMargin(emailTxt, new Insets(0, 0, 18, 0));
         VBox.setMargin(passwordTxt, new Insets(0, 0, 62, 0));
 
-
+        logInButton.setCursor(Cursor.HAND);
+        action();
     }
 
+    public void action(){
+        logInButton.setOnAction(e -> buttonAction());
+    }
+
+    public void buttonAction(){
+        if (!emailTxt.getText().equals(Logic.getInstance().getEmail())) {
+            components.messageConfirmation("Correo incorrecto");
+        }else if (!passwordTxt.getText().equals(Logic.getInstance().getPassword())){
+            components.messageConfirmation("Contraseña incorrecta");
+        }else{
+            //HeaderMenu headerMenu = HeaderMenu.getInstance();
+            //headerMenu.paneles(new Board(headerMenu.getContentPanel()).contentPanel());
+        }
+    }
     public static void main(String[] args) {
         launch(args);
     }

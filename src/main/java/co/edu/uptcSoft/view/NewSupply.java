@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NewSupply extends JFrame implements ActionListener {
+    /*
 
     private Components components;
     private JPanel contentPanel;
@@ -326,5 +327,11 @@ public class NewSupply extends JFrame implements ActionListener {
 
     public void getMaterials() {
         logic.addSupply(materialTextField.getText(), comboBoxCategory.getSelectedItem().toString(), characteristicTextField.getText(), Integer.parseInt(comboBox.getSelectedItem().toString()), comboBox2.getSelectedItem().toString(), Integer.parseInt(unitaryTextField.getText()), Integer.parseInt(totalTextField.getText()));
+    }
+
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

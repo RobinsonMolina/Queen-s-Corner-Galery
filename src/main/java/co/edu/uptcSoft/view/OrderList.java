@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class OrderList extends JFrame implements ActionListener {
-
+    /*
     private Components components;
     private JPanel contentPanel;
     private JPanel contentTitle;
@@ -331,5 +331,11 @@ public class OrderList extends JFrame implements ActionListener {
         } else {
             filter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
         }
+    }
+
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

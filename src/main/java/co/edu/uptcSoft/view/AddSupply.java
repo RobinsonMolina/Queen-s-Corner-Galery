@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 public class AddSupply extends JFrame implements ActionListener {
 
+    /*
     private Components components;
     private JPanel contentButton;
     private JPanel contentPanel;
@@ -312,5 +313,11 @@ public class AddSupply extends JFrame implements ActionListener {
 
     public void setCurrentCustomer(Customer currentCustomer) {
         this.currentCustomer = currentCustomer;
+    }
+
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

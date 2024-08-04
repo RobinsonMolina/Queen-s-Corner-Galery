@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class NewOrder implements ActionListener {
+
     //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
@@ -86,6 +87,7 @@ public class NewOrder implements ActionListener {
         table = new JTable();
         supplyList = new ArrayList<>();
     }
+
     /*public NewOrder() {
         specificOrderWindow = new JFrame("Nueva Orden");
         allInformation = new JPanel();
@@ -115,7 +117,7 @@ public class NewOrder implements ActionListener {
         window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
         window.add(allInformation, BorderLayout.CENTER);
     }*/
-
+    /*
     // 1. Menu, 2. OrderList, 3. NewCustomer
     public JPanel addSpecificOrder(int previousScreen){
         JLabel title = new JLabel("Nueva Orden");
@@ -587,5 +589,10 @@ public class NewOrder implements ActionListener {
 
     public ArrayList<Supply> getSupplyList() {
         return supplyList;
+    }
+    */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

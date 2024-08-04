@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class SupplyList extends JFrame implements ActionListener {
-
+    /*
     private Components components;
     private JPanel contentButton;
     private JPanel contentPanel;
@@ -317,5 +317,11 @@ public class SupplyList extends JFrame implements ActionListener {
         } else {
             filter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
         }
+    }
+
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

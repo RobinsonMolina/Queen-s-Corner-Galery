@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class SpecificOrder implements ActionListener {
+    /*
     //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
@@ -44,7 +45,7 @@ public class SpecificOrder implements ActionListener {
         pdf = new JButton("PDF");
         goBack = new JButton("Volver");
         previousScreen = 0;
-    }
+    }*/
     /*public SpecificOrder() {
         specificOrderWindow = new JFrame("Orden Especifica");
         allInformation = new JPanel();
@@ -75,6 +76,7 @@ public class SpecificOrder implements ActionListener {
         window.add(allInformation, BorderLayout.CENTER);
     }*/
 
+    /* _______________________________________________________________________________________________
     // Previous screen indicates if you are coming from Board (1) or List (2) (3)
     public JPanel addSpecificOrder(int previousScreen){
         JLabel title = new JLabel("Orden Especifica");
@@ -467,4 +469,10 @@ public class SpecificOrder implements ActionListener {
             }
         });
     }
+    */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
 }

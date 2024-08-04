@@ -4,49 +4,58 @@ import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Supply;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.RoundRectangle2D;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Components implements ActionListener {
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
-    private JButton buttonYes;
-    private JButton buttonNo;
-    private JFrame confirmationFrame;
-    private JFrame confirmationFrame2;
+import static javafx.scene.text.Font.loadFont;
+
+
+public class Components {
+
+    private Button buttonYes;
+    private Button buttonNo;
+    //private Frame confirmationFrame;
+    //private Frame confirmationFrame2;
     private String message;
-    private JPanel confirmationPanel;
+    private Panel confirmationPanel;
     private Logic logic = logic = Logic.getInstance(); // Get the single instance of Logic
     private String row;
-    private JPanel mainContentPanel;
+    private Panel mainContentPanel;
     private Customer currentCustomer = new Customer();
     private Supply currentSupply = new Supply();
     private ArrayList<Supply> supplyList;
     private NewOrder order;
 
-    public Components(JPanel mainContentPanel) {
+    public Components(Panel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
         supplyList = new ArrayList<>();
-        order = new NewOrder(mainContentPanel);
+        //order = new NewOrder(mainContentPanel);
     }
 
     public Components() {
     }
     // Method for creating fonts
-    public Font createFont(int style, int size) {
-        try {
-            return (style == 0) ? Font.createFont(Font.TRUETYPE_FONT, new File("src\\Utilities\\Fonts\\Buenard-Bold.ttf")).deriveFont(Font.PLAIN, size) : Font.createFont(Font.TRUETYPE_FONT, new File("src\\Utilities\\Fonts\\Buenard-Regular.ttf")).deriveFont(Font.PLAIN, size);
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static Font createFont(int style, int size) {
+        String fontFilePath = (style == 0) ? "/styles/utilities/fonts/Buenard-Bold.ttf" : "/styles/utilities/fonts/Buenard-Regular.ttf";
+
+        return loadFont(Components.class.getResourceAsStream(fontFilePath), size);
     }
 
+    /*
     // Method for rounded button
     public JButton createRoundedButton(String text, String borderColor, String fillColor, int arcw, int arch) {
         return new JButton(text) {
@@ -76,14 +85,14 @@ public class Components implements ActionListener {
                 setFocusPainted(false);
                 setBorderPainted(false);
                 setOpaque(false);
-                setFont(createFont(1, 20));
+                setFont(createFont(1, 20))
                 setForeground(Color.WHITE);
                 setBackground(Color.decode(fillColor));
                 super.updateUI();
             }
         };
     }
-
+    *//*
     public void hoverButton(JButton buttonAdd){
         buttonAdd.addMouseListener(new MouseAdapter() {
             @Override
@@ -99,7 +108,7 @@ public class Components implements ActionListener {
             }
         });
     }
-
+    *//*
     public void hoverButtonBoard(JButton buttonAdd){
         buttonAdd.addMouseListener(new MouseAdapter() {
             @Override
@@ -117,7 +126,7 @@ public class Components implements ActionListener {
             }
         });
     }
-
+    *//*
     // Method for rounded text field
     public JTextField createRoundedTextField(int arcw, int arch) {
         return new JTextField() {
@@ -151,7 +160,7 @@ public class Components implements ActionListener {
             }
         };
     }
-
+    *//*
     // Method for rounded text field
     public JPasswordField createRoundedPasswordField(int arcw, int arch) {
         return new JPasswordField() {
@@ -185,7 +194,7 @@ public class Components implements ActionListener {
             }
         };
     }
-
+    *//*
     // Method for creating a limit of characters introduced in the text field
     public void limitTextField(JTextField textField, int limit) {
         textField.addKeyListener(new KeyListener() {
@@ -208,7 +217,7 @@ public class Components implements ActionListener {
             }
         });
     }
-
+    *//*
     // window method to confirm
     public void windowConfirmation(String title, String button1, String button2, String message) {
 
@@ -251,7 +260,7 @@ public class Components implements ActionListener {
         confirmationFrame.add(confirmationPanel);
         confirmationFrame.setVisible(true);
     }
-
+    *//*
     //method overloaded to confirm the message after clicking on the yes button
     // window method to confirm
     public void windowConfirmation(String title, String button1, String button2, String message, String row) {
@@ -296,39 +305,32 @@ public class Components implements ActionListener {
         confirmationFrame.add(confirmationPanel);
         confirmationFrame.setVisible(true);
     }
-
+    */
     // Method for confirming the message after clicking on the yes button
     public void messageConfirmation(String message) {
-        confirmationFrame2 = new JFrame();
-        confirmationFrame2.setTitle("Confirmación");
-        confirmationFrame2.setSize(500, 130);
-        confirmationFrame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        confirmationFrame2.setLocationRelativeTo(null);
+        Stage stage = new Stage();
+        HBox root = new HBox();
+        Scene scene = new Scene(root);
+        Label messageLabel = new Label(message);
 
-        JPanel confirmationPanel2 = new JPanel();
-        confirmationPanel2.setBackground(Color.WHITE);
-        confirmationPanel2.setBorder(new EmptyBorder(25, 0, 0, 0));
-        confirmationPanel2.setPreferredSize(new Dimension(500, 130));
-        JLabel messageLabel = new JLabel(message);
-        messageLabel.setHorizontalAlignment(JLabel.CENTER);
         messageLabel.setFont(createFont(0, 20));
-        messageLabel.setForeground(Color.BLACK);
-        confirmationPanel2.add(messageLabel, BorderLayout.CENTER);
 
-        confirmationFrame2.add(confirmationPanel2);
-        confirmationFrame2.setVisible(true);
 
-        // Starts a timer to close the window after 2 seconds
-        Timer timer = new Timer(2000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                confirmationFrame2.dispose();
-            }
-        });
-        timer.setRepeats(false); // To make the timer only execute once
-        timer.start();
+        root.setAlignment(Pos.CENTER);
+        root.getChildren().add(messageLabel);
+
+        stage.setTitle("Mensaje de confirmación");
+        stage.setHeight(130);
+        stage.setWidth(500);
+        stage.setScene(scene);
+        stage.show();
+
+        // 2 seg
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e ->stage.close()));
+        timeline.setCycleCount(1); // Ejecutar solo una vez
+        timeline.play();
     }
-
+    /*
     // Error message
     public void windowConfirmation(String title, String button1, String message) {
 
@@ -364,7 +366,7 @@ public class Components implements ActionListener {
         confirmationFrame.add(confirmationPanel);
         confirmationFrame.setVisible(true);
     }
-
+    *//*
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonYes) {
@@ -408,7 +410,7 @@ public class Components implements ActionListener {
             confirmationFrame.dispose();
         }
     }
-
+    *//*
     public JFrame getConfirmationFrame2() {
         return confirmationFrame2;
     }
@@ -443,5 +445,5 @@ public class Components implements ActionListener {
 
     public Customer getCurrentCustomer() {
         return currentCustomer;
-    }
+    }*/
 }

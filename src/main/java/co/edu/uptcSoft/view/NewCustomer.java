@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class NewCustomer implements ActionListener {
+    /*
     //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
@@ -434,5 +435,11 @@ public class NewCustomer implements ActionListener {
         phoneTxt = new JTextField(String.valueOf(customer.getPhoneNumber()));
 
         setCustomer(customer);
+    }
+
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

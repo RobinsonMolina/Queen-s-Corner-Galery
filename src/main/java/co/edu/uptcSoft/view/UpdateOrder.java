@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class UpdateOrder implements ActionListener {
+    /*
     //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
@@ -77,6 +78,7 @@ public class UpdateOrder implements ActionListener {
     }
     */
 
+    /* _[____________________________________________________________________________
     // Previous screen indicates if you are coming from Specific Order (1), List (2), Customer (3)
     // NewCustomer (4), UpdateCustomer (5)
     public JPanel addSpecificOrder(int previousScreen){
@@ -434,5 +436,10 @@ public class UpdateOrder implements ActionListener {
             allInfoPanel.revalidate();
             allInfoPanel.repaint();
         }
+    }
+    */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class CustomerList extends JFrame implements ActionListener {
-
+    /*
     private JPanel contentPanel;
     private JPanel contentTitle;
     private JPanel contentButton;
@@ -320,5 +320,9 @@ public class CustomerList extends JFrame implements ActionListener {
         } else {
             filter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
         }
+    }*/
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

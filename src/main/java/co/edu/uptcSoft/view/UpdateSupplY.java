@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 
 public class UpdateSupplY extends JFrame implements ActionListener {
 
+    /*
     private Components components;
     private JPanel contentPanel;
     private JPanel contentTitle;
@@ -312,5 +313,11 @@ public class UpdateSupplY extends JFrame implements ActionListener {
         comboBox2.setSelectedItem(supply.getUnit());
         unitaryTextField.setText(String.valueOf(supply.getUnitPrice()));
         totalTextField.setText(String.valueOf(supply.getTotalPrice()));
+    }
+
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

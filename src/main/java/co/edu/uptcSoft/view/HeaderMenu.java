@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class HeaderMenu extends JFrame {
+    /*
     private JPanel menuPanel;
     private JPanel menuPanel2;
     private JPanel headerPanel;
@@ -216,4 +217,6 @@ public class HeaderMenu extends JFrame {
         revalidate();
         repaint();
     }
+
+     */
 }
