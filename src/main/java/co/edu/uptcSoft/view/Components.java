@@ -1,4 +1,3 @@
-
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
@@ -371,7 +370,7 @@ public class Components implements ActionListener {
         if (e.getSource() == buttonYes) {
 
             // change the content of the main panel instead of opening a new window
-            mainContentPanel.removeAll();
+                mainContentPanel.removeAll();
             if (message.contains("Orden")) {
                 logic.deleteOrder(Long.parseLong(row));
                 mainContentPanel.add(new OrderList(mainContentPanel).initializeContentPanel());
@@ -388,6 +387,7 @@ public class Components implements ActionListener {
                 mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
             } else if (message.contains("Insumo añadido")) {
                 order.setSupplyList(getSupplyList());
+                order.setCurrentCustomer(getCurrentCustomer());
                 mainContentPanel.add(order.addSpecificOrder(0));
             }
 
@@ -439,5 +439,9 @@ public class Components implements ActionListener {
 
     public void setSupplyList(ArrayList<Supply> supplyList) {
         this.supplyList = supplyList;
+    }
+
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
     }
 }

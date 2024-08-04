@@ -2,6 +2,7 @@
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Supply;
 
 import javax.swing.*;
@@ -34,6 +35,7 @@ public class AddSupply extends JFrame implements ActionListener {
     private TableRowSorter<DefaultTableModel> filter;
     private String idSupply;
     private ArrayList<Supply> supplyList;
+    private Customer currentCustomer;
 
     public AddSupply(JPanel mainContentPanel){
         this.mainContentPanel = mainContentPanel;
@@ -252,6 +254,7 @@ public class AddSupply extends JFrame implements ActionListener {
                     components.windowConfirmation("¿Está seguro de añadir el insumo: " + idSupply + "?", "Cancelar", "Añadir", "Insumo añadido con éxito");
                     addSupplyList(logic.searchSupply(idSupply));
                     components.setSupplyList(getSupplyList());
+                    components.setCurrentCustomer(getCurrentCustomer());
                 } else {
                     components.windowConfirmation("Seleccione un insumo", "Aceptar", "Insumo null");
                 }
@@ -301,5 +304,13 @@ public class AddSupply extends JFrame implements ActionListener {
 
     public void addSupplyList(Supply supply) {
         this.supplyList.add(supply);
+    }
+
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
+
+    public void setCurrentCustomer(Customer currentCustomer) {
+        this.currentCustomer = currentCustomer;
     }
 }

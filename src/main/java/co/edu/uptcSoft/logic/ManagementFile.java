@@ -12,9 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 public class ManagementFile {
 
@@ -87,7 +85,7 @@ public class ManagementFile {
     }
 
     public TreeMap<Integer, Order> readOrdersFromJson() {
-        try (FileReader reader = new FileReader(filePath + "Orders" + fileExtension)) {
+        try (FileReader reader = new FileReader("C:\\Users\\Dani\\Documents\\Uni\\ProgrammingII\\ProgrammingII2024\\Project\\Project JavaFx\\Queens-Corner-Gallery\\src\\main\\java\\co\\edu\\uptcSoft\\persistence\\Orders.json")) {
             Type orderListType = new TypeToken<TreeMap<Integer, Order>>() {}.getType();
             return gson.fromJson(reader, orderListType);
         } catch (IOException e) {
@@ -97,7 +95,7 @@ public class ManagementFile {
     }
 
     public TreeMap<Long,Customer> readCustomersFromJson() {
-        try (FileReader reader = new FileReader(filePath + "Customers" + fileExtension)) {
+        try (FileReader reader = new FileReader("C:\\Users\\Dani\\Documents\\Uni\\ProgrammingII\\ProgrammingII2024\\Project\\Project JavaFx\\Queens-Corner-Gallery\\src\\main\\java\\co\\edu\\uptcSoft\\persistence\\Customers.json")) {
             Type customerListType = new TypeToken<TreeMap<Long, Customer>>() {}.getType();
             return gson.fromJson(reader, customerListType);
         } catch (IOException e) {
@@ -107,7 +105,7 @@ public class ManagementFile {
     }
 
     public TreeMap<String, Supply> readSupplyFromJson() {
-        try (FileReader reader = new FileReader(filePath + "Supplies" + fileExtension)) {
+        try (FileReader reader = new FileReader("C:\\Users\\Dani\\Documents\\Uni\\ProgrammingII\\ProgrammingII2024\\Project\\Project JavaFx\\Queens-Corner-Gallery\\src\\main\\java\\co\\edu\\uptcSoft\\persistence\\Supplies.json")) {
             Type supplyListType = new TypeToken<TreeMap<String, Supply>>() {}.getType();
             return gson.fromJson(reader, supplyListType);
         } catch (IOException e) {
@@ -117,7 +115,7 @@ public class ManagementFile {
     }
 
     public Administrator readAdministratorFromJson() {
-        try (FileReader reader = new FileReader(filePath + "Administrator" + fileExtension)) {
+        try (FileReader reader = new FileReader("C:\\Users\\Dani\\Documents\\Uni\\ProgrammingII\\ProgrammingII2024\\Project\\Project JavaFx\\Queens-Corner-Gallery\\src\\main\\java\\co\\edu\\uptcSoft\\persistence\\Administrator.json")) {
             Type administratorType = new TypeToken<Administrator>() {}.getType();
             return gson.fromJson(reader, administratorType);
         } catch (IOException e) {

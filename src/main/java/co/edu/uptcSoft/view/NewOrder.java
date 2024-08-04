@@ -5,7 +5,6 @@ import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Materials;
 import co.edu.uptcSoft.model.Order;
 import co.edu.uptcSoft.model.Supply;
-
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
@@ -35,7 +34,6 @@ public class NewOrder implements ActionListener {
     private JTextField customerTxt;
     private JTextField phoneTxt;
     private JTextField documentTxt;
-
     private JTextField productTxt;
     private JTextField typeTxt;
     private JTextField productionDateTxt;
@@ -55,13 +53,9 @@ public class NewOrder implements ActionListener {
     private JTable table;
 
     private Logic logic = Logic.getInstance();
-    private Supply supply;
     private Object supplyListTable[][];
     private ArrayList<Supply> supplyList;
     private AddSupply addSupply;
-
-    public NewOrder() {
-    }
 
     public NewOrder(JPanel mainContentPanel) {
         allInfoPanel = mainContentPanel;
@@ -90,7 +84,6 @@ public class NewOrder implements ActionListener {
         statusOp = "Por Hacer";
 
         table = new JTable();
-        supply = new Supply();
         supplyList = new ArrayList<>();
     }
     /*public NewOrder() {
@@ -511,6 +504,7 @@ public class NewOrder implements ActionListener {
 
             addSupply = new AddSupply(allInfoPanel);
             addSupply.setSupplyList(getSupplyList());
+            addSupply.setCurrentCustomer(getCurrentCustomer());
 
             allInfoPanel.add(addSupply.initializeContentPanel());
             allInfoPanel.revalidate();
