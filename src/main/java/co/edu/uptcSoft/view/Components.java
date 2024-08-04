@@ -315,7 +315,6 @@ public class Components {
 
         messageLabel.setFont(createFont(0, 20));
 
-
         root.setAlignment(Pos.CENTER);
         root.getChildren().add(messageLabel);
 

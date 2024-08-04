@@ -51,7 +51,11 @@ public class Login extends Application {
         emailLabel = new Label("Correo");
         passwordLabel = new Label("Contraseña");
         emailTxt = new TextField("tuemail@email.com");
+        emailTxt = new TextField("nuevo@gmail.com");
+
         passwordTxt = new TextField("Ingresa tu Contraseña");
+        passwordTxt = new TextField("Nueva1234");
+
         logInButton = new Button("Continuar");
 
         components = new Components();
