@@ -177,7 +177,7 @@ public class HeaderMenu extends JFrame {
                             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(menuPanel2);
                             frame.dispose(); // Cerrar la ventana actual
                             Login login = new Login();
-                            login.createWindow();
+                            //login.createWindow();
                         }
                     }
                 });

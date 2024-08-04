@@ -1,15 +1,78 @@
 package co.edu.uptcSoft.view;
 
-import co.edu.uptcSoft.logic.Logic;
+import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
-import javax.swing.*;
-import javax.swing.border.AbstractBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Objects;
 
-public class Login implements ActionListener {
+public class Login extends Application {
 
+    private Stage stage;
+    private Scene scene;
+    private HBox root;
+    private VBox infoVBox;
+    private Image image;
+    private ImageView imageView;
+    private Label titleLabel;
+    private Label emailLabel;
+    private Label passwordLabel;
+    private TextField emailTxt;
+    private TextField passwordTxt;
+    private Button logInButton;
+    double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
+    public Login() {
+        stage = new Stage();
+        root = new HBox();
+        infoVBox = new VBox();
+        image = new Image(Objects.requireNonNull(getClass().getResource("/utilities/images/Login.jpg")).toExternalForm());
+        imageView = new ImageView(image);
+        titleLabel = new Label("Inicia Sesión");
+        emailLabel = new Label("Correo");
+        passwordLabel = new Label("Contraseña");
+        emailTxt = new TextField("tuemail@email.com");
+        passwordTxt = new TextField("Ingresa tu Contraseña");
+        logInButton = new Button("Continuar");
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+
+        imageView.setFitHeight(screenHeight);
+        imageView.setFitWidth(820);
+
+        infoVBox.setMinHeight(670);
+        infoVBox.setMinWidth(554);
+
+        root.getChildren().addAll(imageView, infoVBox);
+        root.setAlignment(Pos.CENTER);
+        root.setPrefHeight(600);
+        root.setPrefWidth(450);
+
+        scene = new Scene(root);
+        stage.setMaxHeight(screenHeight);
+        stage.setMaxWidth(screenWidth);
+        stage.setMaximized(true);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+
+    /*
     private JFrame loginWindow;
     private ImageIcon icon;
     private Image image;
@@ -149,5 +212,5 @@ public class Login implements ActionListener {
                 headerMenu.paneles(new Board(headerMenu.getContentPanel()).contentPanel());
             }
         }
-    }
+    }*/
 }
