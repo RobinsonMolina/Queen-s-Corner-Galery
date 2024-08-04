@@ -1,15 +1,63 @@
 package co.edu.uptcSoft.view;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
-public class HeaderMenu extends JFrame {
+import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class HeaderMenu {
+
+    private Stage stage;
+    private Scene scene;
+    private BorderPane root;
+    private MenuBar menuBar;
+    private Menu menu;
+    private MenuItem boardItem;
+    private MenuItem listItem;
+    private MenuItem newOrderItem;
+    private MenuItem customerItem;
+    private MenuItem supplyItem;
+    private MenuItem adminItem;
+    private MenuItem exitItem;
+
+    public HeaderMenu() {
+        stage = new Stage();
+        menuBar = new MenuBar();
+        menu = new Menu();
+        root = new BorderPane();
+        boardItem = new MenuItem("Tablero");
+        listItem = new MenuItem("Lista");
+        newOrderItem = new MenuItem("Nueva Orden");
+        customerItem = new MenuItem("Clientes");
+        supplyItem = new MenuItem("Insumos");
+        adminItem = new MenuItem("Administrador");
+        exitItem = new MenuItem("Salir");
+    }
+
+    public void screen(){
+        menu1();
+
+        scene = new Scene(root);
+        stage.setTitle("Tablero de Ordenes");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    // Complete Menu
+    public void menu1(){
+        Pane pane = new Pane();
+        pane.setPrefSize(235, 670);
+        pane.getChildren().add(menuBar);
+        pane.getStyleClass().add("custom-background");
+
+        root.setLeft(pane);
+    }
+
     /*
     private JPanel menuPanel;
     private JPanel menuPanel2;

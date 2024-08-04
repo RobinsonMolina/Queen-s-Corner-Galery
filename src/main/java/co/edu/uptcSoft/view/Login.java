@@ -139,7 +139,9 @@ public class Login extends Application {
         }else if (!passwordTxt.getText().equals(Logic.getInstance().getPassword())){
             components.messageConfirmation("Contraseña incorrecta");
         }else{
-            //HeaderMenu headerMenu = HeaderMenu.getInstance();
+            HeaderMenu headerMenu = new HeaderMenu();
+            headerMenu.screen();
+            stage.close();
             //headerMenu.paneles(new Board(headerMenu.getContentPanel()).contentPanel());
         }
     }
