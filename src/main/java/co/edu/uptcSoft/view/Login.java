@@ -1,16 +1,21 @@
 package co.edu.uptcSoft.view;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.awt.*;
+import java.io.File;
 import java.util.Objects;
 
 public class Login extends Application {
@@ -27,6 +32,8 @@ public class Login extends Application {
     private TextField emailTxt;
     private TextField passwordTxt;
     private Button logInButton;
+    Font font = Font.loadFont(getClass().getResourceAsStream("/styles/utilities/fonts/Buenard-Bold.ttf"), 50);
+    Font font2 = Font.loadFont(getClass().getResourceAsStream("/styles/utilities/fonts/Buenard-Bold.ttf"), 20);
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
@@ -34,7 +41,7 @@ public class Login extends Application {
         stage = new Stage();
         root = new HBox();
         infoVBox = new VBox();
-        image = new Image(Objects.requireNonNull(getClass().getResource("/utilities/images/Login.jpg")).toExternalForm());
+        image = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Login.jpg")).toExternalForm());
         imageView = new ImageView(image);
         titleLabel = new Label("Inicia Sesión");
         emailLabel = new Label("Correo");
@@ -47,6 +54,8 @@ public class Login extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
+        scene = new Scene(root);
+        scene.getStylesheets().add(new File("src\\main\\resources\\styles\\principal.css").toURI().toString());
 
         imageView.setFitHeight(screenHeight);
         imageView.setFitWidth(820);
@@ -54,17 +63,63 @@ public class Login extends Application {
         infoVBox.setMinHeight(670);
         infoVBox.setMinWidth(554);
 
+        info();
+
         root.getChildren().addAll(imageView, infoVBox);
         root.setAlignment(Pos.CENTER);
         root.setPrefHeight(600);
         root.setPrefWidth(450);
 
-        scene = new Scene(root);
         stage.setMaxHeight(screenHeight);
         stage.setMaxWidth(screenWidth);
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void info(){
+        HBox emailHBox = new HBox();
+        emailHBox.getChildren().add(emailLabel);
+        HBox passwordHBox = new HBox();
+        passwordHBox.getChildren().add(passwordLabel);
+
+
+        infoVBox.getChildren().addAll(titleLabel, emailHBox, emailTxt, passwordHBox, passwordTxt, logInButton);
+        infoVBox.setAlignment(Pos.CENTER);
+        infoVBox.getStyleClass().add("custom-background");
+
+        titleLabel.setFont(font);
+        emailLabel.setFont(font2);
+        passwordLabel.setFont(font2);
+        emailTxt.setFont(font2);
+        passwordTxt.setFont(font2);
+        logInButton.setFont(font2);
+
+        titleLabel.getStyleClass().add("custom-textWhite");
+        emailLabel.getStyleClass().add("custom-textWhite");
+        passwordLabel.getStyleClass().add("custom-textWhite");
+
+        emailTxt.getStyleClass().add("custom-textPurple");
+        passwordTxt.getStyleClass().add("custom-textPurple");
+        logInButton.getStyleClass().add("custom-textPurple");
+
+        // V: Width, V1: height
+        titleLabel.setPrefHeight(65);
+        emailLabel.setMinHeight(46);
+        passwordLabel.setMinHeight(46);
+        emailTxt.setMaxSize(350, 40);
+        passwordTxt.setMaxSize(350, 40);
+        logInButton.setMaxSize(350, 40);
+
+        // V: up, V1: right, V2: down, V3: left
+        VBox.setMargin(emailHBox, new Insets(0, 0, 0, 102));
+        VBox.setMargin(passwordHBox, new Insets(0, 0, 0, 102));
+
+        VBox.setMargin(titleLabel, new Insets(0, 0, 73, 0));
+        VBox.setMargin(emailTxt, new Insets(0, 0, 18, 0));
+        VBox.setMargin(passwordTxt, new Insets(0, 0, 62, 0));
+
+
     }
 
     public static void main(String[] args) {

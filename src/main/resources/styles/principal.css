@@ -1,0 +1,11 @@
+.custom-background {
+    -fx-background-color: #2F1940;
+}
+
+.custom-textWhite {
+    -fx-text-fill: #ffffff;
+}
+
+.custom-textPurple {
+    -fx-text-fill: #2F1940;
+}
