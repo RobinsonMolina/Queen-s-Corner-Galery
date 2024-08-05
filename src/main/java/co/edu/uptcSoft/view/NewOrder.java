@@ -6,6 +6,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import static co.edu.uptcSoft.view.Components.createFont;
 
@@ -32,10 +33,9 @@ public class NewOrder {
         principal.setTop(titleLabel);
         principal.setCenter(informationVBox);
         principal.setBottom(buttonsHBox);
-        principal.getStyleClass().add("border-pane");
 
-        informationVBox.setMinSize(screenWidth - 80, screenHeight - 80);
-        principal.setMinSize(screenWidth - 80, screenHeight - 80);
+        informationVBox.setPrefSize(screenWidth - 80, screenHeight - 80);
+        principal.setPrefSize(screenWidth - 80, screenHeight - 80);
         return principal;
     }
 
@@ -68,7 +68,7 @@ public class NewOrder {
         info4VB.setSpacing(20);
         info5VB.setSpacing(20);
         info6VB.setSpacing(20);
-        data.setSpacing(25);
+        data.setSpacing(15);
 
         Label product = new Label("Producto");
         Label type = new Label("Tipo");
@@ -123,6 +123,58 @@ public class NewOrder {
         orderNumberTxt.setPrefSize(180, 30);
         deliveryDateTxt.setPrefSize(180, 30);
         documentTxt.setPrefSize(180, 30);
+
+        // Font Labels
+        product.setFont(createFont(1, 20));
+        type.setFont(createFont(1, 20));
+        customer.setFont(createFont(1, 20));
+        state.setFont(createFont(1, 20));
+        productionDate.setFont(createFont(1, 20));
+        phone.setFont(createFont(1, 20));
+        orderNumber.setFont(createFont(1, 20));
+        deliveryDate.setFont(createFont(1, 20));
+        document.setFont(createFont(1, 20));
+
+        // Font Fields
+        Font customFont = createFont(1, 16);
+        String style = "-fx-font-family: '" + customFont.getName() + "'; -fx-font-size: " + (int) customFont.getSize() + "px;";
+
+        productTxt.setFont(createFont(1, 18));
+        typeTxt.setFont(createFont(1, 18));
+        customerTxt.setFont(createFont(1, 18));
+
+        stateComboB.setStyle(style);
+        productionDateTxt.setStyle(style);
+        phoneTxt.setFont(createFont(1, 18));
+
+        orderNumberTxt.setFont(createFont(1, 18));
+        deliveryDateTxt.setStyle(style);
+        documentTxt.setFont(createFont(1, 18));
+
+        // Size
+        product.setMinHeight(35);
+        type.setMinHeight(35);
+        customer.setMinHeight(35);
+
+        productTxt.setMinHeight(35);
+        typeTxt.setMinHeight(35);
+        customerTxt.setMinHeight(35);
+
+        state.setMinHeight(35);
+        productionDate.setMinHeight(35);
+        phone.setMinHeight(35);
+
+        stateComboB.setMinHeight(35);
+        productionDateTxt.setMinHeight(35);
+        phoneTxt.setMinHeight(35);
+
+        orderNumber.setMinHeight(35);
+        deliveryDate.setMinHeight(35);
+        document.setMinHeight(35);
+
+        orderNumberTxt.setMinHeight(35);
+        deliveryDateTxt.setMinHeight(35);
+        documentTxt.setMinHeight(35);
 
         data.setAlignment(Pos.CENTER);
         informationVBox.setAlignment(Pos.CENTER);
