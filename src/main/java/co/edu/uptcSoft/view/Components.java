@@ -3,13 +3,7 @@ package co.edu.uptcSoft.view;
 import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Supply;
-
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
@@ -20,7 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import static javafx.scene.text.Font.loadFont;
 
 
@@ -31,23 +24,25 @@ public class Components {
     //private Frame confirmationFrame;
     //private Frame confirmationFrame2;
     private String message;
-    private Panel confirmationPanel;
+    //private Panel confirmationPanel;
     private Logic logic = logic = Logic.getInstance(); // Get the single instance of Logic
     private String row;
-    private Panel mainContentPanel;
+    //private Panel mainContentPanel;
     private Customer currentCustomer = new Customer();
     private Supply currentSupply = new Supply();
     private ArrayList<Supply> supplyList;
     private NewOrder order;
 
+    /*
     public Components(Panel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
         supplyList = new ArrayList<>();
         //order = new NewOrder(mainContentPanel);
-    }
+    }*/
 
     public Components() {
     }
+
     // Method for creating fonts
     public static Font createFont(int style, int size) {
         String fontFilePath = (style == 0) ? "/styles/utilities/fonts/Buenard-Bold.ttf" : "/styles/utilities/fonts/Buenard-Regular.ttf";

@@ -1,14 +1,12 @@
 package co.edu.uptcSoft.view;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Screen;
-
 import static co.edu.uptcSoft.view.Components.createFont;
 
 public class NewOrder {
@@ -34,13 +32,17 @@ public class NewOrder {
         principal.setTop(titleLabel);
         principal.setCenter(informationVBox);
         principal.setBottom(buttonsHBox);
+        principal.getStyleClass().add("border-pane");
 
-        principal.setPrefSize(screenWidth - 80, screenHeight - 80);
+        informationVBox.setMinSize(screenWidth - 80, screenHeight - 80);
+        principal.setMinSize(screenWidth - 80, screenHeight - 80);
         return principal;
     }
 
     public void title(){
         titleLabel.setFont(createFont(0, 40));
+        titleLabel.setPrefHeight(112);
+        BorderPane.setAlignment(titleLabel, Pos.CENTER);
         principal.setTop(titleLabel);
     }
 
@@ -58,6 +60,15 @@ public class NewOrder {
         VBox info4VB = new VBox();
         VBox info5VB = new VBox();
         VBox info6VB = new VBox();
+
+        // Space between nodes
+        info1VB.setSpacing(20);
+        info2VB.setSpacing(20);
+        info3VB.setSpacing(20);
+        info4VB.setSpacing(20);
+        info5VB.setSpacing(20);
+        info6VB.setSpacing(20);
+        data.setSpacing(25);
 
         Label product = new Label("Producto");
         Label type = new Label("Tipo");
@@ -89,6 +100,32 @@ public class NewOrder {
         TextField documentTxt = new TextField();
         info6VB.getChildren().addAll(orderNumberTxt, deliveryDateTxt, documentTxt);
 
+        product.setPrefSize(80, 30);
+        type.setPrefSize(80, 30);
+        customer.setPrefSize(80, 30);
+
+        productTxt.setPrefSize(300, 30);
+        typeTxt.setPrefSize(300, 30);
+        customerTxt.setPrefSize(300, 30);
+
+        state.setPrefSize(154, 30);
+        productionDate.setPrefSize(154, 30);
+        phone.setPrefSize(154, 30);
+
+        stateComboB.setPrefSize(180, 30);
+        productionDateTxt.setPrefSize(180, 30);
+        phoneTxt.setPrefSize(180, 30);
+
+        orderNumber.setPrefSize(167, 30);
+        deliveryDate.setPrefSize(167, 30);
+        document.setPrefSize(167, 30);
+
+        orderNumberTxt.setPrefSize(180, 30);
+        deliveryDateTxt.setPrefSize(180, 30);
+        documentTxt.setPrefSize(180, 30);
+
+        data.setAlignment(Pos.CENTER);
+        informationVBox.setAlignment(Pos.CENTER);
         data.getChildren().addAll(info1VB, info2VB, info3VB, info4VB, info5VB, info6VB);
         informationVBox.getChildren().add(data);
     }
