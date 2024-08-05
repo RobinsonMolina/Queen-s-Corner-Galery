@@ -18,6 +18,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.io.File;
 import java.util.Objects;
+import static co.edu.uptcSoft.view.Components.createFont;
 
 public class Login extends Application {
 
@@ -34,8 +35,6 @@ public class Login extends Application {
     private TextField passwordTxt;
     private Button logInButton;
 
-    Font font = Font.loadFont(getClass().getResourceAsStream("/styles/utilities/fonts/Buenard-Bold.ttf"), 50);
-    Font font2 = Font.loadFont(getClass().getResourceAsStream("/styles/utilities/fonts/Buenard-Bold.ttf"), 20);
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
@@ -98,12 +97,12 @@ public class Login extends Application {
         infoVBox.setAlignment(Pos.CENTER);
         infoVBox.getStyleClass().add("custom-background");
 
-        titleLabel.setFont(font);
-        emailLabel.setFont(font2);
-        passwordLabel.setFont(font2);
-        emailTxt.setFont(font2);
-        passwordTxt.setFont(font2);
-        logInButton.setFont(font2);
+        titleLabel.setFont(createFont(0, 50));
+        emailLabel.setFont(createFont(0, 20));
+        passwordLabel.setFont(createFont(0, 20));
+        emailTxt.setFont(createFont(0, 20));
+        passwordTxt.setFont(createFont(0, 20));
+        logInButton.setFont(createFont(0, 20));
 
         titleLabel.getStyleClass().add("custom-textWhite");
         emailLabel.getStyleClass().add("custom-textWhite");

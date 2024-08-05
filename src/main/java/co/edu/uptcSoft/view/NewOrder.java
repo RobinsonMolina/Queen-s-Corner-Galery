@@ -1,25 +1,99 @@
 package co.edu.uptcSoft.view;
 
-import co.edu.uptcSoft.logic.Logic;
-import co.edu.uptcSoft.model.Customer;
-import co.edu.uptcSoft.model.Materials;
-import co.edu.uptcSoft.model.Order;
-import co.edu.uptcSoft.model.Supply;
-import javax.swing.*;
-import javax.swing.border.AbstractBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 
-public class NewOrder implements ActionListener {
+import static co.edu.uptcSoft.view.Components.createFont;
 
+public class NewOrder {
+
+    private BorderPane principal;
+    private Label titleLabel;
+    private VBox informationVBox;
+    private HBox buttonsHBox;
+
+    double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
+    public NewOrder() {
+        principal = new BorderPane();
+        titleLabel = new Label("Nueva Orden");
+        informationVBox = new VBox();
+    }
+
+    public BorderPane screen(){
+        title();
+        allInfo();
+
+        principal.setTop(titleLabel);
+        principal.setCenter(informationVBox);
+        principal.setBottom(buttonsHBox);
+
+        principal.setPrefSize(screenWidth - 80, screenHeight - 80);
+        return principal;
+    }
+
+    public void title(){
+        titleLabel.setFont(createFont(0, 40));
+        principal.setTop(titleLabel);
+    }
+
+    // All Center Info (VBox)
+    public void allInfo(){
+        data();
+    }
+
+    // Order Info (HB)
+    public void data(){
+        HBox data = new HBox();
+        VBox info1VB = new VBox();
+        VBox info2VB = new VBox();
+        VBox info3VB = new VBox();
+        VBox info4VB = new VBox();
+        VBox info5VB = new VBox();
+        VBox info6VB = new VBox();
+
+        Label product = new Label("Producto");
+        Label type = new Label("Tipo");
+        Label customer = new Label("Cliente");
+        info1VB.getChildren().addAll(product, type, customer);
+
+        Label state = new Label("Estado");
+        Label productionDate = new Label("Fecha Producción");
+        Label phone = new Label("Teléfono");
+        info3VB.getChildren().addAll(state, productionDate, phone);
+
+        Label orderNumber = new Label("Número de orden");
+        Label deliveryDate = new Label("Fecha de Entrega");
+        Label document = new Label("Documento");
+        info5VB.getChildren().addAll(orderNumber, deliveryDate, document);
+
+        TextField productTxt = new TextField();
+        TextField typeTxt = new TextField();
+        TextField customerTxt = new TextField();
+        info2VB.getChildren().addAll(productTxt, typeTxt, customerTxt);
+
+        ComboBox<String> stateComboB = new ComboBox<>();
+        DatePicker productionDateTxt = new DatePicker();
+        TextField phoneTxt = new TextField();
+        info4VB.getChildren().addAll(stateComboB, productionDateTxt, phoneTxt);
+
+        TextField orderNumberTxt = new TextField();
+        DatePicker deliveryDateTxt = new DatePicker();
+        TextField documentTxt = new TextField();
+        info6VB.getChildren().addAll(orderNumberTxt, deliveryDateTxt, documentTxt);
+
+        data.getChildren().addAll(info1VB, info2VB, info3VB, info4VB, info5VB, info6VB);
+        informationVBox.getChildren().add(data);
+    }
+
+    /*
     //private JFrame specificOrderWindow;
     private JPanel allInformation;
     private JPanel allInfoPanel;
@@ -88,7 +162,7 @@ public class NewOrder implements ActionListener {
         supplyList = new ArrayList<>();
     }
 
-    /*public NewOrder() {
+    public NewOrder() {
         specificOrderWindow = new JFrame("Nueva Orden");
         allInformation = new JPanel();
         allInfoPanel = new JPanel();
@@ -591,8 +665,4 @@ public class NewOrder implements ActionListener {
         return supplyList;
     }
     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

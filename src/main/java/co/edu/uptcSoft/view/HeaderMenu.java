@@ -1,5 +1,6 @@
 package co.edu.uptcSoft.view;
 
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -39,6 +40,22 @@ public class HeaderMenu {
     private Image adminImage;
     private Image exitImage;
 
+    private Label boardLabel;
+    private Label listLabel;
+    private Label newOrderLabel;
+    private Label customerLabel;
+    private Label supplyLabel;
+    private Label adminLabel;
+    private Label exitLabel;
+
+    private HBox boardHBox;
+    private HBox listHBox;
+    private HBox newOrderHBox;
+    private HBox customerHBox;
+    private HBox supplyHBox;
+    private HBox adminHBox;
+    private HBox exitHBox;
+
     private VBox head;
 
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
@@ -52,6 +69,14 @@ public class HeaderMenu {
         root = new BorderPane();
         head = new VBox();
 
+        boardHBox = new HBox();
+        listHBox = new HBox();
+        newOrderHBox = new HBox();
+        customerHBox = new HBox();
+        supplyHBox = new HBox();
+        adminHBox = new HBox();
+        exitHBox = new HBox();
+
         loadIcons();
     }
 
@@ -60,6 +85,7 @@ public class HeaderMenu {
         menu2();
         header();
         visibility();
+        actions();
 
         scene = new Scene(root);
         scene.getStylesheets().add(new File("src\\main\\resources\\styles\\principal.css").toURI().toString());
@@ -76,13 +102,13 @@ public class HeaderMenu {
         menuIcon.setPrefSize(80, screenHeight);
         menuIcon.getStyleClass().add("custom-background");
 
-        Label boardLabel = new Label("", boardImageV);
-        Label listLabel = new Label("", listImageV);
-        Label newOrderLabel = new Label("", newOrderImageV);
-        Label customerLabel = new Label("", customerImageV);
-        Label supplyLabel = new Label("", supplyImageV);
-        Label adminLabel = new Label("", adminImageV);
-        Label exitLabel = new Label("", exitImageV);
+        boardLabel = new Label("", boardImageV);
+        listLabel = new Label("", listImageV);
+        newOrderLabel = new Label("", newOrderImageV);
+        customerLabel = new Label("", customerImageV);
+        supplyLabel = new Label("", supplyImageV);
+        adminLabel = new Label("", adminImageV);
+        exitLabel = new Label("", exitImageV);
 
         VBox.setMargin(boardLabel, new Insets(10, 0, 10, 0));
         VBox.setMargin(listLabel, new Insets(10, 0, 10, 0));
@@ -110,14 +136,6 @@ public class HeaderMenu {
         menuBar.setPrefSize(235, screenHeight);
         menuBar.getStyleClass().add("custom-background");
         loadIcons();
-
-        HBox boardHBox = new HBox();
-        HBox listHBox = new HBox();
-        HBox newOrderHBox = new HBox();
-        HBox customerHBox = new HBox();
-        HBox supplyHBox = new HBox();
-        HBox adminHBox = new HBox();
-        HBox exitHBox = new HBox();
 
         Label boardLabel = new Label("Tablero");
         Label listLabel = new Label("Lista");
@@ -252,6 +270,13 @@ public class HeaderMenu {
         //head.setMaxSize(1286, 80);
         //title.setPrefHeight(2);
         root.setTop(head);
+    }
+
+    public void actions(){
+        newOrderHBox.setOnMouseClicked(event -> {
+            NewOrder order = new NewOrder();
+            root.setCenter(order.screen());
+        });
     }
 
     /*
