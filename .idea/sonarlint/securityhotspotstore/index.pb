@@ -1,12 +1,6 @@
 
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-R
-"src/co/edu/uptcSoft/view/Main.java,8\8\881853a526ab815adb6a90809556885bc22ae4f3
-W
-'src/co/edu/uptcSoft/view/NewSupply.java,2\6\26d330ebcf07c5e00b1ef6ab8dc59192caca4ea3
-T
-$src/co/edu/uptcSoft/logic/Logic.java,8\c\8cf13606c59b92904a7e8813de7a48c3149041f4
 \
 ,src/main/java/co/edu/uptcSoft/view/Main.java,1\5\15ea688126634170a0674e109a336f9f745fea73
 ]
@@ -19,3 +13,13 @@ g
 0src/main/java/co/edu/uptcSoft/view/NewOrder.java,a\8\a861bcee267ebf07496fb92f5a82df1abe845ac3
 b
 2src/main/java/co/edu/uptcSoft/view/Components.java,9\e\9eef6738c75c7eff0e148e5d9d67831b182e02ca
+a
+1src/main/java/co/edu/uptcSoft/view/OrderList.java,4\7\47953dc7b79ee3a340c9b25c702a5546dda7c6ca
+b
+2src/main/java/co/edu/uptcSoft/view/HeaderMenu.java,2\1\2142912d1bf61649dc26f668abb9b103965850f1
+^
+.src/main/java/co/edu/uptcSoft/model/Order.java,a\d\ad0ed98e13d6d80b9b2d38b1ab98ce9147edd8a8
+N
+src/main/java/module-info.java,1\c\1c89a5491fbfda3fb050196d6a239f20200296e7
+a
+1src/main/java/co/edu/uptcSoft/model/Customer.java,9\f\9fc32d3776c02278ca62fb03b28bf4ee1b1c0c13

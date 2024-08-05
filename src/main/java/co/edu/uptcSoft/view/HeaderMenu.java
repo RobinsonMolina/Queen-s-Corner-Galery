@@ -284,6 +284,11 @@ public class HeaderMenu {
             NewOrder order = new NewOrder();
             root.setCenter(order.screen());
         });
+
+        listHBox.setOnMouseClicked(event -> {
+            OrderList orderList = new OrderList();
+            root.setCenter(orderList.screen());
+        });
     }
 
     /*

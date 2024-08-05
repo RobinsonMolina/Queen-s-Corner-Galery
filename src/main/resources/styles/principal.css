@@ -13,3 +13,61 @@
 .custom-title {
     -fx-text-fill: #E1B958;
 }
+
+.rounded-text-field {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-color: gray;
+    -fx-border-radius: 15;
+    -fx-padding: 5;
+}
+
+.table-view .scroll-bar:horizontal,
+.table-view .scroll-bar:vertical {
+    -fx-opacity: 0; /* Hide the scrollbars */
+    -fx-pref-width: 0px; /* resize the scrollbar*/
+}
+
+/* General style for table header */
+.column-header {
+    -fx-background-color: #D9D9D9;
+    -fx-text-fill: #000000;
+}
+
+/* Specific style for columns 6, 7 and 8 */
+.column-header-eye {
+    -fx-background-color: #FFFFFF; /* Color of background white */
+    -fx-text-fill: #000000; /* Color of text black*/
+}
+
+.column-header-edit {
+    -fx-background-color: #FFFFFF; /* Color of background white */
+    -fx-text-fill: #000000; /* Color of text black */
+}
+
+.column-header-trash {
+    -fx-background-color: #FFFFFF; /* Color of background white */
+    -fx-text-fill: #000000; /* Color of text black */
+}
+
+.rounded-button {
+    -fx-background-color: #2F1940; /* Color de fondo */
+    -fx-text-fill: white; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+    -fx-padding: 10px 20px; /* Espaciado interno */
+    -fx-background-radius: 30px; /* Radio del borde redondeado */
+    -fx-border-radius: 30px; /* Radio del borde redondeado */
+    -fx-border-color: #000000; /* Color del borde */
+    -fx-border-width: 1px; /* Ancho del borde */
+}
+
+.rounded-button:hover {
+    -fx-background-color: #3D2A5D; /* Color más claro cuando se pasa el ratón */
+}
+
+.rounded-button:pressed {
+    -fx-background-color: #2F1940; /* Color original al presionar */
+    -fx-border-color: #000000; /* Color del borde al presionar */
+}
+
+

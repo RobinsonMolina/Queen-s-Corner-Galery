@@ -4,19 +4,20 @@ import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Supply;
 
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -31,20 +32,20 @@ public class Components {
     //private Frame confirmationFrame;
     //private Frame confirmationFrame2;
     private String message;
-    private Panel confirmationPanel;
+    //private Panel confirmationPanel;
     private Logic logic = logic = Logic.getInstance(); // Get the single instance of Logic
     private String row;
-    private Panel mainContentPanel;
+    //private Panel mainContentPanel;
     private Customer currentCustomer = new Customer();
     private Supply currentSupply = new Supply();
-    private ArrayList<Supply> supplyList;
+    //private ArrayList<Supply> supplyList;
     private NewOrder order;
 
-    public Components(Panel mainContentPanel) {
+    /*public Components(Panel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
         supplyList = new ArrayList<>();
         //order = new NewOrder(mainContentPanel);
-    }
+    }*/
 
     public Components() {
     }
@@ -55,43 +56,49 @@ public class Components {
         return loadFont(Components.class.getResourceAsStream(fontFilePath), size);
     }
 
-    /*
-    // Method for rounded button
-    public JButton createRoundedButton(String text, String borderColor, String fillColor, int arcw, int arch) {
-        return new JButton(text) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), arcw, arch);
-                super.paintComponent(g);
-                g2.dispose();
-            }
+    /*public Button createRoundedButton(String text, String borderColor, String fillColor, double arcWidth, double arcHeight) {
+        Button button = new Button(text);
 
-            @Override
-            public void paintBorder(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(Color.decode(borderColor));
-                g2.draw(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch));
-                setOpaque(false);
-                g2.dispose();
-            }
+        // Establecer el fondo del botón
+        button.setStyle("-fx-background-color: " + fillColor + "; -fx-text-fill: green; -fx-font-size: 20px;");
 
-            @Override
-            public void updateUI() {
-                setContentAreaFilled(false);
-                setFocusPainted(false);
-                setBorderPainted(false);
-                setOpaque(false);
-                setFont(createFont(1, 20))
-                setForeground(Color.WHITE);
-                setBackground(Color.decode(fillColor));
-                super.updateUI();
-            }
-        };
+        // Crear un efecto de sombra
+        /*DropShadow shadow = new DropShadow();
+        shadow.setRadius(5);
+        shadow.setOffsetX(0);
+        shadow.setOffsetY(0);
+        shadow.setColor(Color.GRAY);
+        button.setEffect(shadow);*/
+
+        // Configurar el tamaño del botón
+        //button.setPrefSize(200, 50); // Ajusta el tamaño según sea necesario
+        //button.setShape(new Rectangle(200, 50, arcWidth, arcHeight)); // Establecer forma redondeada
+        //button.setClip(new Rectangle(200, 50, arcWidth, arcHeight)); // Recortar el botón a la forma redondeada
+
+        //return button;
+   // }
+
+    public Button createRoundedButton(String text, String borderColor, String fillColor, double arcWidth, double arcHeight) {
+        Button button = new Button(text);
+
+        // Establecer el fondo y el color del texto del botón
+        button.setStyle("-fx-background-color: " + fillColor + "; -fx-text-fill: white; -fx-font-size: 16px;");
+
+        // Configurar el tamaño del botón
+        button.setPrefSize(200, 50);
+
+        // Establecer la forma redondeada del botón
+        button.setShape(new Rectangle(button.getPrefWidth(), button.getPrefHeight(), arcWidth, arcHeight));
+
+        // Configurar el clip para que el contenido se ajuste a la forma redondeada
+        button.setClip(new Rectangle(button.getPrefWidth(), button.getPrefHeight(), arcWidth, arcHeight));
+
+        // Aplicar borde redondeado
+        button.setStyle(button.getStyle() + " -fx-border-color: " + borderColor + "; -fx-border-width: 2px;");
+
+        return button;
     }
+    /*
     *//*
     public void hoverButton(JButton buttonAdd){
         buttonAdd.addMouseListener(new MouseAdapter() {
@@ -127,39 +134,46 @@ public class Components {
         });
     }
     *//*
+
+    */
     // Method for rounded text field
-    public JTextField createRoundedTextField(int arcw, int arch) {
-        return new JTextField() {
-            @Override
-            // Set the size of the field
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(Color.WHITE);
-                g2.fill(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch));
-                setOpaque(false);
-                super.paintComponent(g2);
-                g2.dispose();
-            }
+    /*public TextField createRoundedTextField(double arcWidth, double arcHeight) {
+        TextField textField = new TextField();
+        textField.getStyleClass().add("rounded-text-field");
 
+        // Create a pane to wrap the text field and apply the border
+        Pane pane = new Pane(textField) {
             @Override
-            // Draw the border of the field
-            protected void paintBorder(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getForeground());
-                g2.draw(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch));
-                setOpaque(false);
-                g2.dispose();
-            }
-
-            @Override
-            public boolean contains(int x, int y) {
-                Shape shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch);
-                return shape.contains(x, y);
+            protected void layoutChildren() {
+                super.layoutChildren();
+                // Apply rounded corners to the text field
+                Rectangle clip = new Rectangle(textField.getWidth(), textField.getHeight());
+                clip.setArcWidth(arcWidth);
+                clip.setArcHeight(arcHeight);
+                textField.setClip(clip);
             }
         };
+
+        return textField;
+    }*/
+
+    public TextField createRoundedTextField(double arcw, double arch) {
+        TextField textField = new TextField();
+        textField.getStyleClass().add("rounded-text-field");
+
+        // Create a rounded rectangle as the clip
+        Rectangle rect = new Rectangle();
+        rect.setArcWidth(arcw);
+        rect.setArcHeight(arch);
+        rect.widthProperty().bind(textField.widthProperty());
+        rect.heightProperty().bind(textField.heightProperty());
+
+        textField.setClip(rect);
+
+        return textField;
     }
+
+    /*
     *//*
     // Method for rounded text field
     public JPasswordField createRoundedPasswordField(int arcw, int arch) {
