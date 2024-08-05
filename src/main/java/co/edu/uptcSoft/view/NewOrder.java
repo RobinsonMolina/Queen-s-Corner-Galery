@@ -14,7 +14,7 @@ import static co.edu.uptcSoft.view.Components.createFont;
 
 public class NewOrder {
 
-    private BorderPane principal;
+    private VBox principal;
     private Label titleLabel;
     private VBox informationVBox;
     private HBox buttonsHBox;
@@ -23,29 +23,30 @@ public class NewOrder {
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
     public NewOrder() {
-        principal = new BorderPane();
+        principal = new VBox();
         titleLabel = new Label("Nueva Orden");
         informationVBox = new VBox();
+        buttonsHBox = new HBox();
     }
 
-    public BorderPane screen(){
+    public VBox screen(){
         title();
         allInfo();
+        buttons();
 
-        principal.setTop(titleLabel);
-        principal.setCenter(informationVBox);
-        principal.setBottom(buttonsHBox);
+        principal.getChildren().addAll(titleLabel, informationVBox);
+        principal.setAlignment(Pos.TOP_CENTER);
 
-        informationVBox.setPrefSize(screenWidth - 80, screenHeight - 80);
+        informationVBox.setPrefWidth(screenWidth - 80);
         principal.setPrefSize(screenWidth - 80, screenHeight - 80);
         return principal;
     }
 
     public void title(){
+        VBox.setMargin(titleLabel, new Insets(30, 0, 0, 0));
         titleLabel.setFont(createFont(0, 40));
         titleLabel.setPrefHeight(112);
-        BorderPane.setAlignment(titleLabel, Pos.CENTER);
-        principal.setTop(titleLabel);
+        titleLabel.setAlignment(Pos.TOP_CENTER);
     }
 
     // All Center Info (VBox)
@@ -180,7 +181,7 @@ public class NewOrder {
         documentTxt.setMinHeight(35);
 
         data.setAlignment(Pos.CENTER);
-        informationVBox.setAlignment(Pos.CENTER);
+        //informationVBox.setAlignment(Pos.CENTER);
         data.getChildren().addAll(info1VB, info2VB, info3VB, info4VB, info5VB, info6VB);
         informationVBox.getChildren().add(data);
 
@@ -204,8 +205,9 @@ public class NewOrder {
         VBox dataVBox = new VBox();
         Label title = new Label("Materiales Requeridos");
 
+        VBox.setMargin(title, new Insets(35, 0, 35, 0));
         title.setFont(createFont(0, 30));
-        title.setPrefHeight(130);
+        title.setPrefHeight(50);
 
         // Table
         TableView <Supply> tableView = new TableView<>();
@@ -246,12 +248,17 @@ public class NewOrder {
         tableView.getColumns().add(iconColumn);
 
         ScrollPane scrollPane = new ScrollPane(tableView);
-        scrollPane.setPrefSize(1286, 155);
-        tableView.setPrefSize(1286, 155);
-        //dataVBox.setMaxSize(1286, 155);
+        scrollPane.setPrefWidth(screenWidth - 80);
+        tableView.setPrefWidth(screenWidth - 80);
+        dataVBox.setPrefWidth(screenWidth - 80);
+
+        scrollPane.setPrefHeight(136);
+        tableView.setPrefHeight(136);
+        dataVBox.setPrefHeight(scrollPane.getPrefHeight() + title.getPrefHeight() + 70);
 
         dataVBox.setPadding(new Insets(0, 30, 0, 30));
         dataVBox.getChildren().addAll(title, scrollPane);
+
         informationVBox.getChildren().add(dataVBox);
     }
 
@@ -261,7 +268,14 @@ public class NewOrder {
         Button cancelButt = new Button("Cancelar");
         Button newButt = new Button("+ Agregar");
 
+        addButt.setPrefSize(107, 12);
+        cancelButt.setPrefSize(107, 12);
+        newButt.setPrefSize(107, 12);
+
+        VBox.setMargin(buttonsHBox, new Insets(20, 30, 20, 0));
+        buttonsHBox.setAlignment(Pos.CENTER_RIGHT);
         buttonsHBox.getChildren().addAll(addButt, cancelButt, newButt);
+        informationVBox.getChildren().add(buttonsHBox);
     }
 
     /*
