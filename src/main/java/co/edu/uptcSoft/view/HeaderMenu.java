@@ -1,6 +1,5 @@
 package co.edu.uptcSoft.view;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -58,6 +57,8 @@ public class HeaderMenu {
 
     private VBox head;
     private StackPane menuContainer;
+    private StackPane centerStack;
+    private Pane center;
 
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
@@ -78,7 +79,9 @@ public class HeaderMenu {
         adminHBox = new HBox();
         exitHBox = new HBox();
 
+        center = new Pane();
         menuContainer = new StackPane(menuIcon, menuBar);
+        centerStack = new StackPane(center, menuContainer);
         loadIcons();
     }
 
@@ -89,6 +92,13 @@ public class HeaderMenu {
         visibility();
         actions();
 
+        center.setMaxSize(screenWidth - 80, screenHeight - head.getHeight());
+        menuContainer.setMinSize(80, screenHeight - head.getHeight());
+
+        StackPane.setAlignment(center, Pos.CENTER_RIGHT);
+        StackPane.setAlignment(menuContainer, Pos.TOP_LEFT);
+
+        root.setCenter(centerStack);
         scene = new Scene(root);
         scene.getStylesheets().add(new File("src\\main\\resources\\styles\\principal.css").toURI().toString());
         stage.setTitle("Tablero de Ordenes");
@@ -101,8 +111,8 @@ public class HeaderMenu {
 
     // Icon Menu
     public void menu1(){
-        menuIcon.setPrefSize(80, screenHeight);
-        menuContainer.setMaxSize(80, screenHeight);
+        menuIcon.setPrefSize(80, screenHeight - head.getHeight());
+        menuContainer.setMaxSize(80, screenHeight - head.getHeight());
         menuIcon.getStyleClass().add("custom-background");
 
         boardLabel = new Label("", boardImageV);
@@ -131,12 +141,12 @@ public class HeaderMenu {
 
         menuIcon.setAlignment(Pos.CENTER);
         menuIcon.getChildren().addAll(boardLabel, listLabel, newOrderLabel, customerLabel, supplyLabel, adminLabel, exitLabel);
-        root.setLeft(menuContainer);
+        root.setCenter(centerStack);
     }
 
     // Complete Menu
     public void menu2(){
-        menuBar.setPrefSize(235, screenHeight);
+        menuBar.setPrefSize(235, screenHeight - head.getHeight());
         menuBar.getStyleClass().add("custom-background");
         loadIcons();
 
@@ -209,25 +219,6 @@ public class HeaderMenu {
         menuBar.setVisible(false);
     }
 
-    // Menu Visibility
-    public void visibility(){
-        menuIcon.setOnMouseEntered(event -> {
-            menuIcon.setVisible(false);
-            menuBar.setVisible(true);
-            menuContainer.setMinSize(235, screenHeight);
-            root.setLeft(menuContainer);
-        });
-
-        menuBar.setOnMouseExited(event -> {
-            menuBar.setVisible(false);
-            menuIcon.setVisible(true);
-            menuIcon.setMaxSize(80, screenHeight);
-            menuContainer.setMaxSize(80, screenHeight);
-            menuContainer.setAlignment(Pos.CENTER_LEFT);
-            root.setLeft(menuContainer);
-        });
-    }
-
     public void loadIcons(){
         boardImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Board.png")).toExternalForm());
         listImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/OrderList.png")).toExternalForm());
@@ -282,7 +273,29 @@ public class HeaderMenu {
     public void actions(){
         newOrderHBox.setOnMouseClicked(event -> {
             NewOrder order = new NewOrder();
-            root.setCenter(order.screen());
+            center = order.screen();
+            center.setMaxWidth(screenWidth - 80);
+            StackPane.setAlignment(center, Pos.CENTER_RIGHT);
+            root.setCenter(centerStack);
+        });
+    }
+
+    // Menu Visibility
+    public void visibility(){
+        menuIcon.setOnMouseEntered(event -> {
+            menuIcon.setVisible(false);
+            menuBar.setVisible(true);
+            menuContainer.setMaxWidth(235);
+            root.setCenter(centerStack);
+        });
+
+        menuBar.setOnMouseExited(event -> {
+            menuBar.setVisible(false);
+            menuIcon.setVisible(true);
+            menuContainer.setMaxWidth(80);
+            menuContainer.setAlignment(Pos.TOP_LEFT);
+            centerStack = new StackPane(center, menuContainer); // Pone el pane con la info sobre el menu
+            root.setCenter(centerStack);
         });
 
         listHBox.setOnMouseClicked(event -> {

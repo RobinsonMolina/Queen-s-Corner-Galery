@@ -4,6 +4,7 @@ import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Supply;
 
+import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -42,6 +43,8 @@ public class Components {
     private NewOrder order;
 
     /*public Components(Panel mainContentPanel) {
+    /*
+    public Components(Panel mainContentPanel) {
         this.mainContentPanel = mainContentPanel;
         supplyList = new ArrayList<>();
         //order = new NewOrder(mainContentPanel);

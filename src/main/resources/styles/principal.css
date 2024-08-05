@@ -71,3 +71,11 @@
 }
 
 
+
+
+.border-pane {
+    -fx-border-color: black; /* Color del borde */
+    -fx-border-width: 2; /* Grosor del borde */
+    -fx-border-style: solid; /* Estilo del borde */
+    -fx-padding: 10; /* Opcional: Espacio interno del BorderPane */
+}
