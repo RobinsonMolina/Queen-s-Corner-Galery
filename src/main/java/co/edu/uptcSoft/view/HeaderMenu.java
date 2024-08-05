@@ -1,11 +1,9 @@
 package co.edu.uptcSoft.view;
 
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,6 +39,8 @@ public class HeaderMenu {
     private Image adminImage;
     private Image exitImage;
 
+    private VBox head;
+
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
@@ -50,6 +50,7 @@ public class HeaderMenu {
         menuBar = new VBox();
         menuIcon = new VBox();
         root = new BorderPane();
+        head = new VBox();
 
         loadIcons();
     }
@@ -57,6 +58,7 @@ public class HeaderMenu {
     public void screen(){
         menu1();
         menu2();
+        header();
         visibility();
 
         scene = new Scene(root);
@@ -233,6 +235,23 @@ public class HeaderMenu {
         supplyImageV.setFitWidth(40);
         adminImageV.setFitWidth(40);
         exitImageV.setFitWidth(40);
+    }
+
+    public void header(){
+        head.getStyleClass().add("custom-background");
+
+        Label title = new Label("Queen's Corner Gallery");
+        Font fontTitle = Font.loadFont(getClass().getResourceAsStream("/styles/utilities/fonts/CinzelDecorative-Regular.ttf"), 45); // No deja cuadrar el tamaño del head. Head depende del tamaño de la letra
+
+        title.getStyleClass().add("custom-title");
+        title.setFont(fontTitle);
+        title.setAlignment(Pos.TOP_CENTER);
+        head.setAlignment(Pos.TOP_CENTER);
+
+        head.getChildren().add(title);
+        //head.setMaxSize(1286, 80);
+        //title.setPrefHeight(2);
+        root.setTop(head);
     }
 
     /*

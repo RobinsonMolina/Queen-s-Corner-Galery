@@ -9,3 +9,7 @@
 .custom-textPurple {
     -fx-text-fill: #2F1940;
 }
+
+.custom-title {
+    -fx-text-fill: #E1B958;
+}
