@@ -57,6 +57,7 @@ public class HeaderMenu {
     private HBox exitHBox;
 
     private VBox head;
+    private StackPane menuContainer;
 
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
@@ -77,6 +78,7 @@ public class HeaderMenu {
         adminHBox = new HBox();
         exitHBox = new HBox();
 
+        menuContainer = new StackPane(menuIcon, menuBar);
         loadIcons();
     }
 
@@ -100,6 +102,7 @@ public class HeaderMenu {
     // Icon Menu
     public void menu1(){
         menuIcon.setPrefSize(80, screenHeight);
+        menuContainer.setMaxSize(80, screenHeight);
         menuIcon.getStyleClass().add("custom-background");
 
         boardLabel = new Label("", boardImageV);
@@ -128,7 +131,7 @@ public class HeaderMenu {
 
         menuIcon.setAlignment(Pos.CENTER);
         menuIcon.getChildren().addAll(boardLabel, listLabel, newOrderLabel, customerLabel, supplyLabel, adminLabel, exitLabel);
-        root.setLeft(menuIcon);
+        root.setLeft(menuContainer);
     }
 
     // Complete Menu
@@ -211,13 +214,17 @@ public class HeaderMenu {
         menuIcon.setOnMouseEntered(event -> {
             menuIcon.setVisible(false);
             menuBar.setVisible(true);
-            root.setLeft(menuBar);
+            menuContainer.setMinSize(235, screenHeight);
+            root.setLeft(menuContainer);
         });
 
         menuBar.setOnMouseExited(event -> {
             menuBar.setVisible(false);
             menuIcon.setVisible(true);
-            root.setLeft(menuIcon);
+            menuIcon.setMaxSize(80, screenHeight);
+            menuContainer.setMaxSize(80, screenHeight);
+            menuContainer.setAlignment(Pos.CENTER_LEFT);
+            root.setLeft(menuContainer);
         });
     }
 
