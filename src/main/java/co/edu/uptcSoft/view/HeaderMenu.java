@@ -33,6 +33,14 @@ public class HeaderMenu {
     private ImageView adminImageV;
     private ImageView exitImageV;
 
+    private Image boardImage;
+    private Image listImage;
+    private Image newOrderImage;
+    private Image customerImage;
+    private Image supplyImage;
+    private Image adminImage;
+    private Image exitImage;
+
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
@@ -43,42 +51,13 @@ public class HeaderMenu {
         menuIcon = new VBox();
         root = new BorderPane();
 
-        Image boardImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Board.png")).toExternalForm());
-        Image listImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/OrderList.png")).toExternalForm());
-        Image newOrderImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/NewOrder.png")).toExternalForm());
-        Image customerImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Customers.png")).toExternalForm());
-        Image supplyImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Supplies.png")).toExternalForm());
-        Image adminImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Admin.png")).toExternalForm());
-        Image exitImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/LogOut.png")).toExternalForm());
-
-        boardImageV = new ImageView(boardImage);
-        listImageV = new ImageView(listImage);
-        newOrderImageV = new ImageView(newOrderImage);
-        customerImageV = new ImageView(customerImage);
-        supplyImageV = new ImageView(supplyImage);
-        adminImageV = new ImageView(adminImage);
-        exitImageV = new ImageView(exitImage);
-
-        boardImageV.setFitHeight(40);
-        listImageV.setFitHeight(40);
-        newOrderImageV.setFitHeight(40);
-        customerImageV.setFitHeight(40);
-        supplyImageV.setFitHeight(40);
-        adminImageV.setFitHeight(40);
-        exitImageV.setFitHeight(40);
-
-        boardImageV.setFitWidth(40);
-        listImageV.setFitWidth(40);
-        newOrderImageV.setFitWidth(40);
-        customerImageV.setFitWidth(40);
-        supplyImageV.setFitWidth(40);
-        adminImageV.setFitWidth(40);
-        exitImageV.setFitWidth(40);
+        loadIcons();
     }
 
     public void screen(){
         menu1();
-        //menu2();
+        menu2();
+        visibility();
 
         scene = new Scene(root);
         scene.getStylesheets().add(new File("src\\main\\resources\\styles\\principal.css").toURI().toString());
@@ -120,7 +99,7 @@ public class HeaderMenu {
         exitLabel.setCursor(Cursor.HAND);
 
         menuIcon.setAlignment(Pos.CENTER);
-        menuIcon.getChildren().addAll(boardLabel, listLabel, customerLabel, supplyLabel, adminLabel, exitLabel);
+        menuIcon.getChildren().addAll(boardLabel, listLabel, newOrderLabel, customerLabel, supplyLabel, adminLabel, exitLabel);
         root.setLeft(menuIcon);
     }
 
@@ -128,6 +107,7 @@ public class HeaderMenu {
     public void menu2(){
         menuBar.setPrefSize(235, screenHeight);
         menuBar.getStyleClass().add("custom-background");
+        loadIcons();
 
         HBox boardHBox = new HBox();
         HBox listHBox = new HBox();
@@ -203,7 +183,56 @@ public class HeaderMenu {
 
         menuBar.setAlignment(Pos.CENTER);
         menuBar.getChildren().addAll(boardHBox, listHBox, newOrderHBox, customerHBox, supplyHBox, adminHBox, exitHBox);
-        root.setLeft(menuBar);
+        menuBar.setVisible(false);
+    }
+
+    // Menu Visibility
+    public void visibility(){
+        menuIcon.setOnMouseEntered(event -> {
+            menuIcon.setVisible(false);
+            menuBar.setVisible(true);
+            root.setLeft(menuBar);
+        });
+
+        menuBar.setOnMouseExited(event -> {
+            menuBar.setVisible(false);
+            menuIcon.setVisible(true);
+            root.setLeft(menuIcon);
+        });
+    }
+
+    public void loadIcons(){
+        boardImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Board.png")).toExternalForm());
+        listImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/OrderList.png")).toExternalForm());
+        newOrderImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/NewOrder.png")).toExternalForm());
+        customerImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Customers.png")).toExternalForm());
+        supplyImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Supplies.png")).toExternalForm());
+        adminImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Admin.png")).toExternalForm());
+        exitImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/LogOut.png")).toExternalForm());
+
+        boardImageV = new ImageView(boardImage);
+        listImageV = new ImageView(listImage);
+        newOrderImageV = new ImageView(newOrderImage);
+        customerImageV = new ImageView(customerImage);
+        supplyImageV = new ImageView(supplyImage);
+        adminImageV = new ImageView(adminImage);
+        exitImageV = new ImageView(exitImage);
+
+        boardImageV.setFitHeight(40);
+        listImageV.setFitHeight(40);
+        newOrderImageV.setFitHeight(40);
+        customerImageV.setFitHeight(40);
+        supplyImageV.setFitHeight(40);
+        adminImageV.setFitHeight(40);
+        exitImageV.setFitHeight(40);
+
+        boardImageV.setFitWidth(40);
+        listImageV.setFitWidth(40);
+        newOrderImageV.setFitWidth(40);
+        customerImageV.setFitWidth(40);
+        supplyImageV.setFitWidth(40);
+        adminImageV.setFitWidth(40);
+        exitImageV.setFitWidth(40);
     }
 
     /*
