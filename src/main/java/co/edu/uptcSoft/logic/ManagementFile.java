@@ -17,7 +17,7 @@ import java.util.TreeMap;
 public class ManagementFile {
 
     private File file;
-    public static final String filePath = "src/co/edu/uptcSoft/persistence/";
+    public static final String filePath = "src/main/java/co/edu/uptcSoft/persistence/";
     public static final String fileExtension = ".json";
     private Gson gson;
 
@@ -47,7 +47,6 @@ public class ManagementFile {
     }
 
     public void writeCustomersJsonToFile(String fileName, TreeMap<Long, Customer> customerList) {
-        System.out.println("Llefa");
         Gson gsonForCustomers = new GsonBuilder()
                 // Register type adapter to remove customers from customers
                 .registerTypeAdapter(Customer.class, new JsonSerializer<Customer>() {
@@ -85,7 +84,7 @@ public class ManagementFile {
     }
 
     public TreeMap<Integer, Order> readOrdersFromJson() {
-        try (FileReader reader = new FileReader("C:\\Users\\Dani\\Documents\\Uni\\ProgrammingII\\ProgrammingII2024\\Project\\Project JavaFx\\Queens-Corner-Gallery\\src\\main\\java\\co\\edu\\uptcSoft\\persistence\\Orders.json")) {
+        try (FileReader reader = new FileReader(filePath + "Orders" + fileExtension)) {
             Type orderListType = new TypeToken<TreeMap<Integer, Order>>() {}.getType();
             return gson.fromJson(reader, orderListType);
         } catch (IOException e) {
@@ -95,7 +94,7 @@ public class ManagementFile {
     }
 
     public TreeMap<Long,Customer> readCustomersFromJson() {
-        try (FileReader reader = new FileReader("C:\\Users\\Dani\\Documents\\Uni\\ProgrammingII\\ProgrammingII2024\\Project\\Project JavaFx\\Queens-Corner-Gallery\\src\\main\\java\\co\\edu\\uptcSoft\\persistence\\Customers.json")) {
+        try (FileReader reader = new FileReader(filePath + "Customers" + fileExtension)) {
             Type customerListType = new TypeToken<TreeMap<Long, Customer>>() {}.getType();
             return gson.fromJson(reader, customerListType);
         } catch (IOException e) {
@@ -105,7 +104,7 @@ public class ManagementFile {
     }
 
     public TreeMap<String, Supply> readSupplyFromJson() {
-        try (FileReader reader = new FileReader("C:\\Users\\Dani\\Documents\\Uni\\ProgrammingII\\ProgrammingII2024\\Project\\Project JavaFx\\Queens-Corner-Gallery\\src\\main\\java\\co\\edu\\uptcSoft\\persistence\\Supplies.json")) {
+        try (FileReader reader = new FileReader(filePath + "Supplies" + fileExtension)) {
             Type supplyListType = new TypeToken<TreeMap<String, Supply>>() {}.getType();
             return gson.fromJson(reader, supplyListType);
         } catch (IOException e) {
@@ -115,7 +114,7 @@ public class ManagementFile {
     }
 
     public Administrator readAdministratorFromJson() {
-        try (FileReader reader = new FileReader("C:\\Users\\Dani\\Documents\\Uni\\ProgrammingII\\ProgrammingII2024\\Project\\Project JavaFx\\Queens-Corner-Gallery\\src\\main\\java\\co\\edu\\uptcSoft\\persistence\\Administrator.json")) {
+        try (FileReader reader = new FileReader(filePath + "Administrator" + fileExtension)) {
             Type administratorType = new TypeToken<Administrator>() {}.getType();
             return gson.fromJson(reader, administratorType);
         } catch (IOException e) {
