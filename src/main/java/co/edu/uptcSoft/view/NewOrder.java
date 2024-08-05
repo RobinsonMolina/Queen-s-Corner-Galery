@@ -1,10 +1,12 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.model.Supply;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
@@ -49,6 +51,7 @@ public class NewOrder {
     // All Center Info (VBox)
     public void allInfo(){
         data();
+        data2();
     }
 
     // Order Info (HB)
@@ -195,6 +198,63 @@ public class NewOrder {
         deliveryDateTxt.getStyleClass().add("rounded-datepicker");
         documentTxt.getStyleClass().add("rounded-textfield");
     }
+
+    // VBox Data (title, table)
+    public void data2(){
+        VBox dataVBox = new VBox();
+        Label title = new Label("Materiales Requeridos");
+
+        title.setFont(createFont(0, 30));
+        title.setPrefHeight(130);
+
+        // Table
+        TableView <Supply> tableView = new TableView<>();
+        TableColumn<Supply, String> codeColumn = new TableColumn<>("Codigo");
+        codeColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<Supply, String> materialColumn = new TableColumn<>("Material");
+        materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
+
+        TableColumn<Supply, Integer> quantityColumn = new TableColumn<>("Cantidad");
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+        TableColumn<Supply, Double> costColumn = new TableColumn<>("Costo");
+        costColumn.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+
+        TableColumn<Supply, Void> iconColumn = new TableColumn<>("Icon");
+        iconColumn.setCellFactory(column -> new TableCell<Supply, Void>() {
+            private final ImageView imageView = new ImageView(new Image("/styles/utilities/images/Trash.png"));
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    imageView.setFitWidth(20);
+                    imageView.setFitHeight(20);
+                    setGraphic(imageView);
+                }
+            }
+        });
+
+        // Add Columns
+        tableView.getColumns().add(codeColumn);
+        tableView.getColumns().add(materialColumn);
+        tableView.getColumns().add(quantityColumn);
+        tableView.getColumns().add(costColumn);
+        tableView.getColumns().add(iconColumn);
+
+        ScrollPane scrollPane = new ScrollPane(tableView);
+        scrollPane.setPrefSize(1286, 155);
+        tableView.setPrefSize(1286, 155);
+        //dataVBox.setMaxSize(1286, 155);
+
+        dataVBox.setPadding(new Insets(0, 30, 0, 30));
+        dataVBox.getChildren().addAll(title, scrollPane);
+        informationVBox.getChildren().add(dataVBox);
+    }
+
 
     /*
     //private JFrame specificOrderWindow;
