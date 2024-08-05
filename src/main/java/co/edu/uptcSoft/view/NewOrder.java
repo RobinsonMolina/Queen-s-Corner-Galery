@@ -1,6 +1,11 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.model.Customer;
+import co.edu.uptcSoft.model.Materials;
 import co.edu.uptcSoft.model.Supply;
+import com.google.gson.annotations.Expose;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -10,6 +15,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 import static co.edu.uptcSoft.view.Components.createFont;
 
 public class NewOrder {
@@ -22,11 +31,22 @@ public class NewOrder {
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
+    private String productName;
+    private String status;
+    private int orderNumber;
+    private String type;
+    private Date productionDate;
+    private Date deliveryDate;
+    private Customer customer;
+    private ArrayList<Materials> materials;
+
     public NewOrder() {
         principal = new VBox();
         titleLabel = new Label("Nueva Orden");
         informationVBox = new VBox();
         buttonsHBox = new HBox();
+
+        status = "Por Hacer";
     }
 
     public VBox screen(){
@@ -191,13 +211,26 @@ public class NewOrder {
         typeTxt.getStyleClass().add("rounded-textfield");
         customerTxt.getStyleClass().add("rounded-textfield");
 
-        stateComboB.getStyleClass().add("rounded-textfield");
+        stateComboB.getStyleClass().add("combo-box");
         productionDateTxt.getStyleClass().add("rounded-datepicker");
         phoneTxt.getStyleClass().add("rounded-textfield");
 
         orderNumberTxt.getStyleClass().add("rounded-textfield");
         deliveryDateTxt.getStyleClass().add("rounded-datepicker");
         documentTxt.getStyleClass().add("rounded-textfield");
+
+        // Combo Box
+        ObservableList<String> options = FXCollections.observableArrayList(
+                "Por Hacer",
+                "En Progreso",
+                "Entregado"
+        );
+        stateComboB.setItems(options);
+        stateComboB.getSelectionModel().select(0);
+
+        stateComboB.setOnAction(event -> {
+            status = stateComboB.getSelectionModel().getSelectedItem();
+        });
     }
 
     // VBox Data (title, table)
@@ -266,15 +299,16 @@ public class NewOrder {
     public void buttons(){
         Button addButt = new Button("+ Material");
         Button cancelButt = new Button("Cancelar");
-        Button newButt = new Button("+ Agregar");
+        Button newButt = new Button("Agregar");
 
         addButt.setPrefSize(107, 12);
         cancelButt.setPrefSize(107, 12);
         newButt.setPrefSize(107, 12);
 
+        buttonsHBox.setSpacing(25);
         VBox.setMargin(buttonsHBox, new Insets(20, 30, 20, 0));
         buttonsHBox.setAlignment(Pos.CENTER_RIGHT);
-        buttonsHBox.getChildren().addAll(addButt, cancelButt, newButt);
+        buttonsHBox.getChildren().addAll(addButt, newButt, cancelButt);
         informationVBox.getChildren().add(buttonsHBox);
     }
 

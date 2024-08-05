@@ -54,3 +54,35 @@
     -fx-background-color: #2F1940; /* Color de fondo del cuadrado de fecha seleccionada */
     -fx-text-fill: white; /* Color del texto en la fecha seleccionada */
 }
+
+/* ComBbo Box */
+.combo-box {
+    -fx-background-radius: 30; /* Esquinas del fondo */
+    -fx-border-radius: 30; /* Esquinas del borde */
+    -fx-background-color: white;
+    -fx-border-color: #2F1940;
+    -fx-border-width: 2; /* Ancho del borde */
+}
+
+/* Estilo al pasar el cursor */
+.combo-box .list-cell:hover {
+    -fx-background-color: #2F1940;
+    -fx-text-fill: white;
+}
+
+/* Fondo transparente para el recuadro detrás de las opciones */
+.combo-box-popup .list-view {
+    -fx-background-color: #2F1940;
+}
+
+/* Estilo para la opción seleccionada */
+.combo-box .combo-box .list-cell:filled:selected:hover {
+    -fx-background-color: #2F1940;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-background-radius: 30; /* Esquinas del fondo */
+    -fx-border-radius: 30; /* Esquinas del borde */
+}
