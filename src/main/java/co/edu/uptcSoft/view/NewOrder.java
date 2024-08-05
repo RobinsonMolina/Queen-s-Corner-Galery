@@ -255,6 +255,14 @@ public class NewOrder {
         informationVBox.getChildren().add(dataVBox);
     }
 
+    //Buttons
+    public void buttons(){
+        Button addButt = new Button("+ Material");
+        Button cancelButt = new Button("Cancelar");
+        Button newButt = new Button("+ Agregar");
+
+        buttonsHBox.getChildren().addAll(addButt, cancelButt, newButt);
+    }
 
     /*
     //private JFrame specificOrderWindow;
