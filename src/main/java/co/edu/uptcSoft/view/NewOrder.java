@@ -180,6 +180,20 @@ public class NewOrder {
         informationVBox.setAlignment(Pos.CENTER);
         data.getChildren().addAll(info1VB, info2VB, info3VB, info4VB, info5VB, info6VB);
         informationVBox.getChildren().add(data);
+
+        // Border Color
+        //createRoundedTextField
+        productTxt.getStyleClass().add("rounded-textfield");
+        typeTxt.getStyleClass().add("rounded-textfield");
+        customerTxt.getStyleClass().add("rounded-textfield");
+
+        stateComboB.getStyleClass().add("rounded-textfield");
+        productionDateTxt.getStyleClass().add("rounded-datepicker");
+        phoneTxt.getStyleClass().add("rounded-textfield");
+
+        orderNumberTxt.getStyleClass().add("rounded-textfield");
+        deliveryDateTxt.getStyleClass().add("rounded-datepicker");
+        documentTxt.getStyleClass().add("rounded-textfield");
     }
 
     /*

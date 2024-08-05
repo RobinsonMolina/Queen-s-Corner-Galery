@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -41,6 +42,7 @@ public class Components {
     }*/
 
     public Components() {
+        // !! Rounded text field with css, like New Order, line 190 aprox.
     }
 
     // Method for creating fonts
@@ -121,41 +123,8 @@ public class Components {
             }
         });
     }
-    *//*
-    // Method for rounded text field
-    public JTextField createRoundedTextField(int arcw, int arch) {
-        return new JTextField() {
-            @Override
-            // Set the size of the field
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(Color.WHITE);
-                g2.fill(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch));
-                setOpaque(false);
-                super.paintComponent(g2);
-                g2.dispose();
-            }
-
-            @Override
-            // Draw the border of the field
-            protected void paintBorder(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getForeground());
-                g2.draw(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch));
-                setOpaque(false);
-                g2.dispose();
-            }
-
-            @Override
-            public boolean contains(int x, int y) {
-                Shape shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch);
-                return shape.contains(x, y);
-            }
-        };
-    }
-    *//*
+    */
+    /*
     // Method for rounded text field
     public JPasswordField createRoundedPasswordField(int arcw, int arch) {
         return new JPasswordField() {
