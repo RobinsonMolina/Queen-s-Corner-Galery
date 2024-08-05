@@ -3,7 +3,9 @@ package co.edu.uptcSoft.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,7 +23,7 @@ public class HeaderMenu {
     private Stage stage;
     private Scene scene;
     private BorderPane root;
-    private VBox menuBar;
+    private VBox menuBar, menuIcon;
 
     private ImageView boardImageV;
     private ImageView listImageV;
@@ -38,6 +40,7 @@ public class HeaderMenu {
         components = new Components();
         stage = new Stage();
         menuBar = new VBox();
+        menuIcon = new VBox();
         root = new BorderPane();
 
         Image boardImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Board.png")).toExternalForm());
@@ -55,10 +58,27 @@ public class HeaderMenu {
         supplyImageV = new ImageView(supplyImage);
         adminImageV = new ImageView(adminImage);
         exitImageV = new ImageView(exitImage);
+
+        boardImageV.setFitHeight(40);
+        listImageV.setFitHeight(40);
+        newOrderImageV.setFitHeight(40);
+        customerImageV.setFitHeight(40);
+        supplyImageV.setFitHeight(40);
+        adminImageV.setFitHeight(40);
+        exitImageV.setFitHeight(40);
+
+        boardImageV.setFitWidth(40);
+        listImageV.setFitWidth(40);
+        newOrderImageV.setFitWidth(40);
+        customerImageV.setFitWidth(40);
+        supplyImageV.setFitWidth(40);
+        adminImageV.setFitWidth(40);
+        exitImageV.setFitWidth(40);
     }
 
     public void screen(){
         menu1();
+        //menu2();
 
         scene = new Scene(root);
         scene.getStylesheets().add(new File("src\\main\\resources\\styles\\principal.css").toURI().toString());
@@ -70,8 +90,42 @@ public class HeaderMenu {
         stage.show();
     }
 
-    // Complete Menu
+    // Icon Menu
     public void menu1(){
+        menuIcon.setPrefSize(80, screenHeight);
+        menuIcon.getStyleClass().add("custom-background");
+
+        Label boardLabel = new Label("", boardImageV);
+        Label listLabel = new Label("", listImageV);
+        Label newOrderLabel = new Label("", newOrderImageV);
+        Label customerLabel = new Label("", customerImageV);
+        Label supplyLabel = new Label("", supplyImageV);
+        Label adminLabel = new Label("", adminImageV);
+        Label exitLabel = new Label("", exitImageV);
+
+        VBox.setMargin(boardLabel, new Insets(10, 0, 10, 0));
+        VBox.setMargin(listLabel, new Insets(10, 0, 10, 0));
+        VBox.setMargin(newOrderLabel, new Insets(10, 0, 10, 0));
+        VBox.setMargin(customerLabel, new Insets(10, 0, 10, 0));
+        VBox.setMargin(supplyLabel, new Insets(10, 0, 10, 0));
+        VBox.setMargin(adminLabel, new Insets(10, 0, 10, 0));
+        VBox.setMargin(exitLabel, new Insets(10, 0, 10, 0));
+
+        boardLabel.setCursor(Cursor.HAND);
+        listLabel.setCursor(Cursor.HAND);
+        newOrderLabel.setCursor(Cursor.HAND);
+        customerLabel.setCursor(Cursor.HAND);
+        supplyLabel.setCursor(Cursor.HAND);
+        adminLabel.setCursor(Cursor.HAND);
+        exitLabel.setCursor(Cursor.HAND);
+
+        menuIcon.setAlignment(Pos.CENTER);
+        menuIcon.getChildren().addAll(boardLabel, listLabel, customerLabel, supplyLabel, adminLabel, exitLabel);
+        root.setLeft(menuIcon);
+    }
+
+    // Complete Menu
+    public void menu2(){
         menuBar.setPrefSize(235, screenHeight);
         menuBar.getStyleClass().add("custom-background");
 
@@ -123,22 +177,6 @@ public class HeaderMenu {
         adminHBox.getChildren().addAll(adminImageV, adminLabel);
         exitHBox.getChildren().addAll(exitImageV, exitLabel);
 
-        boardImageV.setFitHeight(40);
-        listImageV.setFitHeight(40);
-        newOrderImageV.setFitHeight(40);
-        customerImageV.setFitHeight(40);
-        supplyImageV.setFitHeight(40);
-        adminImageV.setFitHeight(40);
-        exitImageV.setFitHeight(40);
-
-        boardImageV.setFitWidth(40);
-        listImageV.setFitWidth(40);
-        newOrderImageV.setFitWidth(40);
-        customerImageV.setFitWidth(40);
-        supplyImageV.setFitWidth(40);
-        adminImageV.setFitWidth(40);
-        exitImageV.setFitWidth(40);
-
         boardHBox.setPrefHeight(60);
         listHBox.setPrefHeight(60);
         newOrderHBox.setPrefHeight(60);
@@ -146,6 +184,14 @@ public class HeaderMenu {
         supplyHBox.setPrefHeight(60);
         adminHBox.setPrefHeight(60);
         exitHBox.setPrefHeight(60);
+
+        boardHBox.setCursor(Cursor.HAND);
+        listHBox.setCursor(Cursor.HAND);
+        newOrderHBox.setCursor(Cursor.HAND);
+        customerHBox.setCursor(Cursor.HAND);
+        supplyHBox.setCursor(Cursor.HAND);
+        adminHBox.setCursor(Cursor.HAND);
+        exitHBox.setCursor(Cursor.HAND);
 
         HBox.setMargin(boardImageV, new Insets(0,0,0,30));
         HBox.setMargin(listImageV, new Insets(0,0,0,30));
