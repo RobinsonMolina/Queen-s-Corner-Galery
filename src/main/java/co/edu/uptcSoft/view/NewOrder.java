@@ -3,9 +3,10 @@ package co.edu.uptcSoft.view;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Materials;
 import co.edu.uptcSoft.model.Supply;
-import com.google.gson.annotations.Expose;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -16,6 +17,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,6 +26,7 @@ import static co.edu.uptcSoft.view.Components.createFont;
 
 public class NewOrder {
 
+    private Components components;
     private VBox principal;
     private Label titleLabel;
     private VBox informationVBox;
@@ -40,11 +44,34 @@ public class NewOrder {
     private Customer customer;
     private ArrayList<Materials> materials;
 
+    private TextField productTxt;
+    private TextField typeTxt;
+    private TextField customerTxt;
+
+    private ComboBox<String> stateComboB;
+    private DatePicker productionDateTxt;
+    private TextField phoneTxt;
+
+    private TextField orderNumberTxt;
+    private DatePicker deliveryDateTxt;
+    private TextField documentTxt;
+
     public NewOrder() {
+        components = new Components();
         principal = new VBox();
         titleLabel = new Label("Nueva Orden");
         informationVBox = new VBox();
         buttonsHBox = new HBox();
+
+        productTxt = new TextField();
+        typeTxt = new TextField();
+        customerTxt = new TextField();
+        stateComboB = new ComboBox<>();
+        productionDateTxt = new DatePicker();
+        phoneTxt = new TextField();
+        orderNumberTxt = new TextField();
+        deliveryDateTxt = new DatePicker();
+        documentTxt = new TextField();
 
         status = "Por Hacer";
     }
@@ -100,28 +127,17 @@ public class NewOrder {
         info1VB.getChildren().addAll(product, type, customer);
 
         Label state = new Label("Estado");
-        Label productionDate = new Label("Fecha Producción");
+        Label productionDateLabel = new Label("Fecha Producción");
         Label phone = new Label("Teléfono");
-        info3VB.getChildren().addAll(state, productionDate, phone);
+        info3VB.getChildren().addAll(state, productionDateLabel, phone);
 
         Label orderNumber = new Label("Número de orden");
-        Label deliveryDate = new Label("Fecha de Entrega");
+        Label deliveryDateLabel = new Label("Fecha de Entrega");
         Label document = new Label("Documento");
-        info5VB.getChildren().addAll(orderNumber, deliveryDate, document);
+        info5VB.getChildren().addAll(orderNumber, deliveryDateLabel, document);
 
-        TextField productTxt = new TextField();
-        TextField typeTxt = new TextField();
-        TextField customerTxt = new TextField();
         info2VB.getChildren().addAll(productTxt, typeTxt, customerTxt);
-
-        ComboBox<String> stateComboB = new ComboBox<>();
-        DatePicker productionDateTxt = new DatePicker();
-        TextField phoneTxt = new TextField();
         info4VB.getChildren().addAll(stateComboB, productionDateTxt, phoneTxt);
-
-        TextField orderNumberTxt = new TextField();
-        DatePicker deliveryDateTxt = new DatePicker();
-        TextField documentTxt = new TextField();
         info6VB.getChildren().addAll(orderNumberTxt, deliveryDateTxt, documentTxt);
 
         product.setPrefSize(80, 30);
@@ -133,7 +149,7 @@ public class NewOrder {
         customerTxt.setPrefSize(300, 30);
 
         state.setPrefSize(154, 30);
-        productionDate.setPrefSize(154, 30);
+        productionDateLabel.setPrefSize(154, 30);
         phone.setPrefSize(154, 30);
 
         stateComboB.setPrefSize(180, 30);
@@ -141,7 +157,7 @@ public class NewOrder {
         phoneTxt.setPrefSize(180, 30);
 
         orderNumber.setPrefSize(167, 30);
-        deliveryDate.setPrefSize(167, 30);
+        deliveryDateLabel.setPrefSize(167, 30);
         document.setPrefSize(167, 30);
 
         orderNumberTxt.setPrefSize(180, 30);
@@ -153,10 +169,10 @@ public class NewOrder {
         type.setFont(createFont(1, 20));
         customer.setFont(createFont(1, 20));
         state.setFont(createFont(1, 20));
-        productionDate.setFont(createFont(1, 20));
+        productionDateLabel.setFont(createFont(1, 20));
         phone.setFont(createFont(1, 20));
         orderNumber.setFont(createFont(1, 20));
-        deliveryDate.setFont(createFont(1, 20));
+        deliveryDateLabel.setFont(createFont(1, 20));
         document.setFont(createFont(1, 20));
 
         // Font Fields
@@ -185,7 +201,7 @@ public class NewOrder {
         customerTxt.setMinHeight(35);
 
         state.setMinHeight(35);
-        productionDate.setMinHeight(35);
+        productionDateLabel.setMinHeight(35);
         phone.setMinHeight(35);
 
         stateComboB.setMinHeight(35);
@@ -193,7 +209,7 @@ public class NewOrder {
         phoneTxt.setMinHeight(35);
 
         orderNumber.setMinHeight(35);
-        deliveryDate.setMinHeight(35);
+        deliveryDateLabel.setMinHeight(35);
         document.setMinHeight(35);
 
         orderNumberTxt.setMinHeight(35);
@@ -230,6 +246,7 @@ public class NewOrder {
 
         stateComboB.setOnAction(event -> {
             status = stateComboB.getSelectionModel().getSelectedItem();
+            System.out.println("Statutss:   " + status);
         });
     }
 
@@ -310,6 +327,103 @@ public class NewOrder {
         buttonsHBox.setAlignment(Pos.CENTER_RIGHT);
         buttonsHBox.getChildren().addAll(addButt, newButt, cancelButt);
         informationVBox.getChildren().add(buttonsHBox);
+
+        addButt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Button clicked!");
+            }
+        });
+
+        cancelButt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Lleva al board o a la página anterior
+            }
+        });
+
+        newButt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                confirmationData();
+                // Manda a la página siguiente
+            }
+        });
+    }
+
+    // Validations
+    public Long numValLong(String num){
+        try {
+            return num.length() == 10 ? Long.parseLong(num) : null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public int numValInt(String numStr){
+        try {
+            return Integer.parseInt(numStr);
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    public Date dateVal(LocalDate date){
+        return date != null ? Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()) : null;
+    }
+
+    public void confirmationData(){
+
+        LocalDate localDate1 = productionDateTxt.getValue();
+        productionDate = Date.from(localDate1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+
+        LocalDate localDate2 = deliveryDateTxt.getValue();
+        productionDate = Date.from(localDate2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        String product = productTxt.getText();
+        String type = typeTxt.getText();
+        String customer = customerTxt.getText();
+        String phone = phoneTxt.getText();
+        String orderNumber = orderNumberTxt.getText();
+        String document = documentTxt.getText();
+
+        try {
+            if (!product.isEmpty() && !type.isEmpty() && !customer.isEmpty() && !status.isEmpty() && !productionDateTxt.getValue().toString().isEmpty() && !phone.isEmpty() && !orderNumber.isEmpty() && !deliveryDateTxt.getValue().toString().isEmpty() && !document.isEmpty()){
+
+                if (numValLong(phone) != null && numValLong(document) != null){
+
+                    if (numValInt(orderNumber) != -1){
+
+                        if (!localDate1.toString().isEmpty() && !localDate2.toString().isEmpty()){
+                            // Se puede pasar a la siguiente pestaña
+                        } else {
+                            components.messageConfirmation("Ingrese una Fecha Correcta");
+                        }
+                    } else {
+                        // Ingrese un número
+                        components.messageConfirmation("Ingrese un Número de Orden Válido");
+                    }
+                } else{
+                    // Ingrese un valor de 10 dígitos
+                    components.messageConfirmation("Ingrese un Número de Teléfono o de Documento de Diez Digitos");
+                }
+
+            } else {
+                components.messageConfirmation("Ingrese Todos los Datos");
+                System.out.println("\n1: " + productTxt.getText() + "\n2: " + typeTxt.getText() + "\n3: " + customerTxt.getText() + "\n4: " + status + "\n5: " +
+                        productionDateTxt.getValue() +"\n6: " + phoneTxt.getText() + "\n7: " + orderNumberTxt.getText() + "\n8: " + deliveryDateTxt.getValue() + "\n9: " + documentTxt.getText());
+            }
+        } catch (Exception e){
+            components.messageConfirmation("Ingrese todos los datos");
+            System.out.println("\n1: " + productTxt.getText() + "\n2: " + typeTxt.getText() + "\n3: " + customerTxt.getText() + "\n4: " + status + "\n5: " +
+                    productionDateTxt.getValue() +"\n6: " + phoneTxt.getText() + "\n7: " + orderNumberTxt.getText() + "\n8: " + deliveryDateTxt.getValue() + "\n9: " + documentTxt.getText());
+            e.printStackTrace();
+        }
+
+
+
+
     }
 
     /*
