@@ -1,311 +1,291 @@
 package co.edu.uptcSoft.view;
 
+
+
 import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Customer;
+import co.edu.uptcSoft.model.Materials;
+import co.edu.uptcSoft.model.Supply;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Screen;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.File;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import static co.edu.uptcSoft.view.Components.createFont;
 
-public class NewSupply extends JFrame implements ActionListener {
-    /*
+public class NewSupply {
 
-    private Components components;
-    private JPanel contentPanel;
-    private JPanel contentTitle;
-    private JPanel materialPanel;
-    private JPanel quantityPanel;
-    private JLabel materialLabel;
-    private JLabel categoryLabel;
-    private JLabel characteristicLabel;
-    private JLabel quantityLabel;
-    private JLabel measurementLabel;
-    private JLabel unitaryLabel;
-    private JLabel totalLabel;
-    private JTextField materialTextField;
-    private JTextField characteristicTextField;
-    private JTextField unitaryTextField;
-    private JTextField totalTextField;
-    private JComboBox<String> comboBoxCategory;
-    private JComboBox<String> comboBox;
-    private JComboBox<String> comboBox2;
-    private JButton addButton;
-    private JButton cancelButton;
-    private JLabel titleLabel;
-    private JPanel mainContentPanel;
+    private Pane contentPane;
+    private BorderPane contentPane2;
+    private Label titleLabel;
+    private HBox titleBox;
+    private HBox pane1;
+    private VBox materialBox;
+    private HBox quantityBox;
+    private HBox quantityComboBox;
+    private HBox totalBox;
+    private HBox totalFieldBox;
+    private HBox buttonsBox;
+    private HBox totalButtonsBox;
+    private VBox pane2;
+    private ComboBox<Integer> comboBoxQuantity;
+    private ComboBox<String> comboBoxUnit;
+    private TextField unitaryTextField;
+    private TextField totalTextField;
+    private Button cancelButton;
+    private Button addButton;
+    private Label quantityLabel;
+    private Label unitLabel;
+    private Label priceLabel;
+    private Label totalLabel;
+
+    private Label materialLabel;
+    private TextField materialTextField;
+    private Label characteristicLabel;
+    private TextField characteristicTextField;
+    private VBox categoryBox;
+    private Label categoryLabel;
+    private ComboBox<String> comboBoxCategory;
+
     private Logic logic = Logic.getInstance();
+    private Components components;
 
-    public NewSupply(JPanel mainContentPanel) {
-        this.mainContentPanel = mainContentPanel;
-        components = new Components(mainContentPanel);
+    double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
+    public NewSupply() {
+        components = new Components();
+        contentPane = new Pane();
+        contentPane2 = new BorderPane();
+        contentPane2.setStyle("-fx-background-color: #FFFFFF;");
+        titleBox = new HBox();
     }
 
-    // Method for initializing content panel
-    public JPanel initializeContentPanel() {
-        contentPanel = new JPanel(null);
-        contentPanel.setPreferredSize(new Dimension(1366, 670));
-        contentPanel.setBackground(Color.WHITE);
-
-        // Panel title
-        initializeContentTitle();
-
-        // Panel de materiales
+    public Pane screen() {
+        contentPane2.getStylesheets().add(new File("src/main/resources/styles/principal.css").toURI().toString()); // Carga el CSS
+        title();
         panelCenter();
-
-        // Panel cantidad
         panelSouth();
-        return contentPanel;
+        initialiceButtonCancel();
+        initializeButtonAdd();
+
+        contentPane.getChildren().add(contentPane2);
+
+        return contentPane;
     }
 
-    // Method for creating title and search field
-    private void initializeContentTitle() {
-        contentTitle = new JPanel();
-        contentTitle.setLayout(null);
-        contentTitle.setBackground(Color.WHITE);
-        contentTitle.setForeground(Color.BLACK);
-        contentTitle.setPreferredSize(new Dimension(1366, 100));
+    public void title() {
 
-        // title label
-        titleLabel = new JLabel("Nuevo Insumo", JLabel.CENTER);
-        titleLabel.setForeground(Color.BLACK);
-        titleLabel.setBackground(Color.WHITE);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        titleLabel.setBounds(0, 0, 1286, 100);
+        titleBox.setPrefSize(1366, 40);
+        titleLabel = new Label("Nuevo Insumo");
+        titleLabel.setFont(createFont(0, 40));
+        titleBox.getChildren().add(titleLabel);
+        titleBox.setAlignment(Pos.CENTER);
+        titleBox.setPadding(new Insets(10, 100, 0, 100));
 
-        titleLabel.setFont(components.createFont(0, 40));
-
-        contentTitle.add(titleLabel);
-
-        contentTitle.setBounds(0, 0, 1366, 100);
-        contentPanel.add(contentTitle, BorderLayout.NORTH);
+        contentPane2.setTop(titleBox);
     }
 
-    // Method for panel center
-    private void panelCenter(){
-        // Panel materiales
-        materialPanel = new JPanel(null);
-        materialPanel.setBackground(Color.decode("#D9D9D9"));
-        materialPanel.setBounds(183, 100, 1000, 240);
+    public void panelCenter() {
 
-        // Label material
-        materialLabel = new JLabel("Material");
-        materialLabel.setFont(components.createFont(0, 24));
-        materialLabel.setForeground(Color.BLACK);
-        materialLabel.setBounds(60, 40, 400, 25);
+        pane1 = new HBox(200);
+        pane1.setPadding(new Insets(0, 50, 20, 200));  // Margen en todos los lados
+        //pane1.setPrefSize(400, 200); // Tamaño preferido para que parezca una tarjeta
 
-        materialPanel.add(materialLabel);
+        materialBox = new VBox(10);
+        materialBox.setPadding(new Insets(30));
 
-        // Label category
-        categoryLabel = new JLabel("Categoria");
-        categoryLabel.setFont(components.createFont(0, 24));
-        categoryLabel.setForeground(Color.BLACK);
-        categoryLabel.setBounds(560, 32, 400, 35);
+        materialLabel = new Label("Material");
+        materialLabel.setFont(createFont(0, 20));
+        materialLabel.setTextFill(Color.BLACK);
 
-        materialPanel.add(categoryLabel);
+        materialTextField = new TextField();
+        materialTextField.setPrefWidth(400);
+        materialTextField.setFont(createFont(1, 20));
+        materialTextField.getStyleClass().add("rounded-textfield");
 
-        // Text field material
-        materialTextField = components.createRoundedTextField(30,30);
-        materialTextField.setBounds(60, 90, 400, 34);
-        materialTextField.setFont(components.createFont(1, 20));
-        materialTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        materialPanel.add(materialTextField);
+        characteristicLabel = new Label("Características");
+        characteristicLabel.setFont(createFont(0, 20));
+        characteristicLabel.setTextFill(Color.BLACK);
 
-        // Combo box category
-        String options[] = {"Telas", "Muebles", "Decorativos", "Artesanias"};
+        characteristicTextField = new TextField();
+        characteristicTextField.setPrefWidth(400);
+        characteristicTextField.setFont(createFont(1, 20));
+        characteristicTextField.getStyleClass().add("rounded-textfield");
 
-        // Combo box quantity
-        comboBoxCategory = new JComboBox<>(options);
-        comboBoxCategory.setSelectedItem(1);
-        comboBoxCategory.setFont(components.createFont(1, 20));
-        comboBoxCategory.setBounds(560, 90, 150, 30);
-        comboBoxCategory.setMaximumRowCount(4);
-        materialPanel.add(comboBoxCategory);
+        materialBox.getChildren().addAll(materialLabel, materialTextField, characteristicLabel, characteristicTextField);
 
-        comboBoxCategory.addActionListener(this);
+        categoryBox = new VBox(10);
+        categoryBox.setPrefWidth(150);
+        categoryBox.setPrefHeight(30);
+        categoryBox.setPadding(new Insets(30));
 
-        // Label characteristic
-        characteristicLabel = new JLabel("Características");
-        characteristicLabel.setFont(components.createFont(0, 24));
-        characteristicLabel.setForeground(Color.BLACK);
-        characteristicLabel.setBounds(60, 140, 400, 25);
-        materialPanel.add(characteristicLabel);
+        categoryLabel = new Label("Categoria");
+        categoryLabel.setFont(createFont(0, 20));
+        categoryLabel.setTextFill(Color.BLACK);
 
-        // Text field characteristic
-        characteristicTextField = components.createRoundedTextField(30,30);
-        characteristicTextField.setBounds(60, 190, 400, 34);
-        characteristicTextField.setFont(components.createFont(1, 20));
-        characteristicTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        materialPanel.add(characteristicTextField);
+        comboBoxCategory = new ComboBox<>();
+        comboBoxCategory.getItems().addAll("Telas", "Muebles", "Decorativos", "Artesanias");
+        comboBoxCategory.setValue("Telas");
+
+        categoryBox.getChildren().addAll(categoryLabel, comboBoxCategory);
+
+        pane1.getChildren().addAll(materialBox, categoryBox);
+        pane1.getStyleClass().add("panel-center");
+
+        // Envolver pane1 en un VBox para evitar que se extienda
+        VBox centerWrapper = new VBox(pane1);
+        centerWrapper.setAlignment(Pos.CENTER);
+        centerWrapper.setPadding(new Insets(20, 50, 20, 50));
+
+        contentPane2.setCenter(centerWrapper);
     }
 
-    // Method for panel south
-    private void panelSouth(){
-        // Panel cantidad
-        quantityPanel = new JPanel(null);
-        quantityPanel.setBackground(Color.decode("#D9D9D9"));
-        quantityPanel.setBounds(183, 350, 1000, 240);
+    public void panelSouth() {
 
-        // Label quantity
-        quantityLabel = new JLabel("Cantidad");
-        quantityLabel.setFont(components.createFont(0, 24));
-        quantityLabel.setForeground(Color.BLACK);
-        quantityLabel.setBounds(60, 40, 200, 25);
-        quantityPanel.add(quantityLabel);
+        pane2 = new VBox(20);
+        pane2.setPadding(new Insets(10, 50, 50, 0));  // Margen en todos los lados
+        pane2.setPrefSize(400, 200); // Tamaño preferido para que parezca una tarjeta
 
-        // Combo box quantity
-        String options[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        quantityLabel = new Label("Cantidad");
+        quantityLabel.setFont(createFont(0, 20));
+        quantityLabel.setTextFill(Color.BLACK);
 
-        // Combo box quantity
-        comboBox = new JComboBox<>(options);
-        comboBox.setSelectedItem(1);
-        comboBox.setFont(components.createFont(1, 20));
-        comboBox.setBounds(60, 90, 85, 30);
-        comboBox.setMaximumRowCount(4);
-        quantityPanel.add(comboBox);
+        unitLabel = new Label("Unidad");
+        unitLabel.setFont(createFont(0, 20));
+        unitLabel.setTextFill(Color.BLACK);
 
-        // Add ActionListener to combo box
-        comboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateTotal();
-            }
+        priceLabel = new Label("Valor Unitario");
+        priceLabel.setFont(createFont(0, 20));
+        priceLabel.setTextFill(Color.BLACK);
+        priceLabel.setPadding(new Insets(0, 0, 0, 150));
+
+        quantityBox = new HBox(200);
+        quantityBox.getChildren().addAll(quantityLabel, unitLabel, priceLabel);
+        quantityBox.setAlignment(Pos.CENTER_LEFT);
+        quantityBox.setPadding(new Insets(0, 0, 0, 200));
+
+        comboBoxQuantity = new ComboBox<>();
+        comboBoxQuantity.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        comboBoxQuantity.setValue(1);
+
+        comboBoxUnit = new ComboBox<>();
+        comboBoxUnit.getItems().addAll("Cm", "Cm²", "M", "M²", "Kg", "Unidades");
+        comboBoxUnit.setValue("Cm");
+
+        TextField priceTextField = new TextField();
+        priceTextField.setPrefWidth(400);
+        priceTextField.setFont(createFont(1, 20));
+        priceTextField.getStyleClass().add("rounded-textfield");
+
+        quantityComboBox = new HBox(200);
+        quantityComboBox.getChildren().addAll(comboBoxQuantity, comboBoxUnit, priceTextField);
+        quantityComboBox.setAlignment(Pos.CENTER_LEFT);
+        quantityComboBox.setPadding(new Insets(0, 0, 0, 200));
+
+        totalLabel = new Label("Total");
+        totalLabel.setFont(createFont(0, 20));
+        totalLabel.setTextFill(Color.BLACK);
+
+        totalBox = new HBox(0);
+        totalBox.getChildren().addAll(totalLabel);
+        totalBox.setAlignment(Pos.CENTER_LEFT);
+        totalBox.setPadding(new Insets(0, 0, 0, 370));
+
+        unitaryTextField = new TextField();
+        unitaryTextField.setPrefWidth(400);
+        unitaryTextField.setFont(createFont(1, 20));
+        unitaryTextField.getStyleClass().add("rounded-textfield");
+
+        totalFieldBox = new HBox(0);
+        totalFieldBox.getChildren().addAll(unitaryTextField);
+        totalFieldBox.setAlignment(Pos.CENTER_LEFT);
+        totalFieldBox.setPadding(new Insets(0, 0, 0, 0));
+
+        cancelButton = new Button("Cancelar");
+        cancelButton.setFont(createFont(1, 20));
+        cancelButton.getStyleClass().add("rounded-button");
+        cancelButton.setOnAction(event -> initialiceButtonCancel());
+
+        addButton = new Button("Agregar");
+        addButton.setFont(createFont(1, 20));
+        addButton.getStyleClass().add("rounded-button");
+
+        buttonsBox = new HBox(50);
+        buttonsBox.getChildren().addAll(cancelButton, addButton);
+        buttonsBox.setAlignment(Pos.CENTER_LEFT);
+        buttonsBox.setPadding(new Insets(0, 0, 0, 0));
+
+        totalButtonsBox = new HBox(300);
+        totalButtonsBox.getChildren().addAll(totalFieldBox, buttonsBox);
+        totalButtonsBox.setAlignment(Pos.CENTER_LEFT);
+        totalButtonsBox.setPadding(new Insets(0, 0, 0, 200));
+
+        pane2.getChildren().addAll(quantityBox, quantityComboBox, totalBox, totalButtonsBox);
+        pane2.setAlignment(Pos.CENTER_LEFT);
+        pane2.getStyleClass().add("panel-center");
+
+        // Envolver pane2 en un VBox para evitar que se extienda
+        VBox southWrapper = new VBox(pane2);
+        southWrapper.setAlignment(Pos.CENTER);
+        southWrapper.setPadding(new Insets(20, 50, 20, 50));
+
+        contentPane2.setBottom(southWrapper);
+    }
+
+    public void initialiceButtonCancel(){
+        cancelButton.setOnAction(event -> {
+            SupplyList supplyList = new SupplyList();
+            // Clear current content
+            contentPane.getChildren().clear();
+            // Add the new content
+            contentPane.setMinSize(screenWidth - 80, screenHeight - 80);
+            contentPane.getChildren().add(supplyList.screen());
         });
-
-        // Label measurement
-        measurementLabel = new JLabel("Unidad");
-        measurementLabel.setFont(components.createFont(0, 24));
-        measurementLabel.setForeground(Color.BLACK);
-        measurementLabel.setBounds(310, 40, 100, 25);
-        quantityPanel.add(measurementLabel);
-
-        // Combo box measurement
-        String options2[] = {"Cm", "Cm²", "M", "M²", "Kg", "Unidades"};
-
-        // Combo box measurement
-        comboBox2 = new JComboBox<>(options2);
-        comboBox2.setFont(components.createFont(1, 20));
-        comboBox2.setBounds(296, 90, 105, 30);
-        comboBox2.setMaximumRowCount(4);
-        quantityPanel.add(comboBox2);
-
-        unitaryLabel = new JLabel("Valor Unitario");
-        unitaryLabel.setFont(components.createFont(0, 24));
-        unitaryLabel.setForeground(Color.BLACK);
-        unitaryLabel.setBounds(560, 40, 400, 25);
-        quantityPanel.add(unitaryLabel);
-
-        // Text field unitary
-        unitaryTextField = components.createRoundedTextField(30,30);
-        components.limitTextField(unitaryTextField, 10);
-        unitaryTextField.setColumns(9);
-        //unitaryTextField.setText("0");
-        unitaryTextField.setBounds(560, 90, 400, 34);
-        unitaryTextField.setFont(components.createFont(1, 20));
-        unitaryTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        quantityPanel.add(unitaryTextField);
-
-        // Method for updating the total when the unitary text field changes
-        unitaryTextField.getDocument().addDocumentListener(new DocumentListener() {
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                updateTotal();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                updateTotal();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                updateTotal();
-            }
-        });
-
-        // JLabel total
-        totalLabel = new JLabel("Total");
-        totalLabel.setFont(components.createFont(0, 24));
-        totalLabel.setForeground(Color.BLACK);
-        totalLabel.setBounds(60, 140, 300, 25);
-        quantityPanel.add(totalLabel);
-
-        // Text field total
-        totalTextField = components.createRoundedTextField(30,30);
-        totalTextField.setText(String.valueOf((Integer.parseInt(comboBox.getSelectedItem().toString()) * (unitaryTextField.getText().isEmpty() ? 0 : Integer.parseInt(unitaryTextField.getText())))));
-        totalTextField.setEditable(false);
-        totalTextField.setBounds(60, 190, 300, 34);
-        totalTextField.setFont(components.createFont(1, 20));
-        totalTextField.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        materialPanel.add(totalTextField);
-        quantityPanel.add(totalTextField);
-
-        //Buttons cancel and save
-        addButton = components.createRoundedButton("Agregar", "#000000", "#2F1940", 30, 30);
-        addButton.setFont(components.createFont(1, 20));
-        addButton.setPreferredSize(new Dimension(150, 40));
-        addButton.setBounds(810, 180, 150, 40);
-        quantityPanel.add(addButton);
-
-        cancelButton = components.createRoundedButton("Cancelar", "#000000", "#2F1940", 30, 30);
-        cancelButton.setFont(components.createFont(1, 20));
-        cancelButton.setPreferredSize(new Dimension(150, 40));
-        cancelButton.setBounds(650, 180, 150, 40);
-        quantityPanel.add(cancelButton);
-
-        addButton.addActionListener(this);
-        components.hoverButton(addButton);
-
-        cancelButton.addActionListener(this);
-        components.hoverButton(cancelButton);
-
-        contentPanel.add(contentTitle);
-        contentPanel.add(materialPanel);
-        contentPanel.add(quantityPanel);
-
-        add(contentPanel);
     }
 
-    // method to choose the actions of the cancel button and the update button
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        boolean validInput = false;
-        if (e.getSource() == addButton) {
-            if (validateFields()) {
+    public void initializeButtonAdd(){
+        addButton.setOnAction(event -> {
+            if(validateFields()) {
                 getMaterials();
-                mainContentPanel.removeAll();
-                mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
-                mainContentPanel.revalidate();
-                mainContentPanel.repaint();
+                SupplyList supplyList = new SupplyList();
+                // Clear current content
+                contentPane.getChildren().clear();
+                // Add the new content
+                contentPane.setMinSize(screenWidth - 80, screenHeight - 80);
+                contentPane.getChildren().add(supplyList.screen());
                 components.messageConfirmation("Insumo agregado con éxito");
-                // Close the confirmation window after 1 second
-                Timer timer = new Timer(1000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        components.getConfirmationFrame2().dispose();
-                    }
-                });
-                timer.setRepeats(false);
-                timer.start();
             }
-        } else if (e.getSource() == cancelButton) {
-            // change the content of the main panel instead of opening a new window
-            mainContentPanel.removeAll();
-            mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
-            mainContentPanel.revalidate();
-            mainContentPanel.repaint();
-        }else if (e.getSource() == comboBox) {
-            updateTotal();
-        }
+        });
+    }
+
+    public void getMaterials(){
+        logic.addSupply(materialTextField.getText(), comboBoxCategory.getValue(),
+                characteristicTextField.getText(), comboBoxQuantity.getValue(),
+                comboBoxUnit.getValue(), Integer.parseInt(unitaryTextField.getText()),
+                Integer.parseInt(totalTextField.getText()));
     }
 
     private void updateTotal() {
-        int quanty = Integer.parseInt(comboBox.getSelectedItem().toString());
+        int quantity = comboBoxQuantity.getValue();
         String unitPrice = unitaryTextField.getText();
         int price = unitPrice.isEmpty() ? 0 : Integer.parseInt(unitPrice);
-        int result = quanty * price;
+        int result = quantity * price;
         totalTextField.setText(String.valueOf(result));
     }
 
@@ -323,15 +303,5 @@ public class NewSupply extends JFrame implements ActionListener {
             return false;
         }
         return true;
-    }
-
-    public void getMaterials() {
-        logic.addSupply(materialTextField.getText(), comboBoxCategory.getSelectedItem().toString(), characteristicTextField.getText(), Integer.parseInt(comboBox.getSelectedItem().toString()), comboBox2.getSelectedItem().toString(), Integer.parseInt(unitaryTextField.getText()), Integer.parseInt(totalTextField.getText()));
-    }
-
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }

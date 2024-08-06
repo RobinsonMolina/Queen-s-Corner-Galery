@@ -383,7 +383,7 @@ public class Components {
     }
 
     // Method for confirming the message after clicking on the yes button
-    public void messageConfirmation(String message) {
+public void messageConfirmation(String message) {
         Stage stage = new Stage();
         HBox root = new HBox();
         Scene scene = new Scene(root);

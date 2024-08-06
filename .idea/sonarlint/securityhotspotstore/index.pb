@@ -21,3 +21,5 @@ b
 -src/main/java/co/edu/uptcSoft/view/Board.java,c\9\c9edd453b3bdd4829bff1c8766b49a528ce13691
 ]
 -src/main/java/co/edu/uptcSoft/view/Login.java,3\6\3661be11d33397f335c5a26f4f875b5a556fa5d0
+a
+1src/main/java/co/edu/uptcSoft/view/NewSupply.java,9\6\967201841a263552b5670ab1e52cca5471d82ed3

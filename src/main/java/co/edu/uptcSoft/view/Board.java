@@ -42,7 +42,7 @@ public class Board {
         contentPanel.getStyleClass().add("cards-panel");
         contentPanel.setPrefSize(1366, 670);
 
-        // Título
+        // Title
         HBox titleHBox = new HBox();
         Label titleLabel = new Label("Tablero");
         titleLabel.setFont(createFont(0, 60)); // Cambiar fuente del título principal
@@ -52,7 +52,7 @@ public class Board {
         titleHBox.setAlignment(Pos.CENTER);
         contentPanel.setTop(titleHBox);
 
-        // Panel de tarjetas
+        // Cards panel
         HBox cardsPanel = new HBox();
         cardsPanel.getStyleClass().add("cards-panel");
         cardsPanel.setSpacing(20);
@@ -60,19 +60,19 @@ public class Board {
         addCard(cardsPanel, "En Progreso", logic.getOrdersProgress());
         addCard(cardsPanel, "Entregado", logic.getOrdersDelivered());
 
-        // Agregar directamente el HBox de tarjetas al centro del BorderPane
+        // add the cards panel to the content panel
         contentPanel.setCenter(cardsPanel);
     }
 
     private void addCard(HBox cardsPanel, String title, ArrayList<String> orders) {
         VBox card = new VBox();
-        card.setPrefWidth(380); // Ajusta el ancho de la tarjeta
-        card.setPrefHeight(240); // Ajusta la altura de la tarjeta
+        card.setPrefWidth(380); // apply the width of the card
+        card.setPrefHeight(240); // apply the height of the card
         HBox cardHeader = new HBox();
 
-        // Título de la tarjeta
+        // Title of the card
         Label cardTitle = new Label(title);
-        cardTitle.setFont(createFont(0, 20)); // Cambiar fuente del título de la tarjeta
+        cardTitle.setFont(createFont(0, 20)); // Change the font of the title
         cardTitle.setTextFill(Color.BLACK);
         cardHeader.getChildren().add(cardTitle);
         cardHeader.setAlignment(Pos.CENTER);
@@ -82,28 +82,33 @@ public class Board {
         VBox orderPanel = new VBox();
         orderPanel.setSpacing(8);
 
-        // Botones de órdenes
+        // Add the buttons to the order panel
         for (String order : orders) {
             Button orderButton = new Button(order);
             orderButton.setPrefSize(350, 30);
             orderButton.getStyleClass().add("order-button");
-            orderButton.setFont(createFont(1, 20)); // Cambiar fuente de los botones
+            orderButton.setFont(createFont(1, 20)); // Change the font of the buttons
             changeWindow(orderButton, order);
             orderPanel.getChildren().add(orderButton);
         }
 
+
+        // add scroll pane to the card
         ScrollPane cardScrollPane = new ScrollPane(orderPanel);
-        cardScrollPane.setPrefHeight(360); // Ajusta la altura del ScrollPane
+        cardScrollPane.setPrefHeight(360); // apply the height of the ScrollPane
         cardScrollPane.setFitToWidth(true);
         cardScrollPane.setPadding(new Insets(-10, 0, 0, 0));
         card.getChildren().add(cardScrollPane);
         card.getStyleClass().add("card");
         cardTitle.getStyleClass().add("card-title");
         orderPanel.getStyleClass().add("order-panel");
+
+        // add the card to the cards panel
         cardsPanel.getChildren().add(card);
         cardsPanel.setPadding(new Insets(20, 0, 120, 60));
     }
 
+    // Method to change the window
     public void changeWindow(Button orderButton, String order) {
         orderButton.setOnAction(event -> {
             String number = extractNumber(order);// Extrae el número de la orden
@@ -116,16 +121,17 @@ public class Board {
         });
     }
 
+    // Method to extract the number from the string
     private String extractNumber(String input) {
-        // Expresión regular para encontrar números
+        // Regular expression to extract the number
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(input);
 
-        // Verificar si hay coincidencias
+        // verify if the number is found
         if (matcher.find()) {
-            return matcher.group(); // Retorna el primer número encontrado
+            return matcher.group(); // Return the first number found
         }
 
-        return null; // Si no se encuentra ningún número
+        return null; // Return null if the number is not found
     }
 }
