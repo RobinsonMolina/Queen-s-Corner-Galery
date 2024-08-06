@@ -1,7 +1,6 @@
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
-import co.edu.uptcSoft.model.Order;
 import co.edu.uptcSoft.model.Supply;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -14,11 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -27,16 +22,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.util.Callback;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableRowSorter;
-import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,9 +33,9 @@ public class SupplyList {
 
     private Components components;
     private BorderPane contentPanel;
-    private javafx.scene.control.Label titleLabel;
-    private javafx.scene.control.TextField searchTextField;
-    private javafx.scene.control.Button buttonAdd;
+    private Label titleLabel;
+    private TextField searchTextField;
+    private Button buttonAdd;
     private Logic logic = Logic.getInstance();
 
     private TableView<ObservableList<Object>> table;
@@ -66,7 +51,7 @@ public class SupplyList {
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
     public SupplyList() {
-        searchTextField = new javafx.scene.control.TextField();
+        searchTextField = new TextField();
         contentPanel = new BorderPane();
         components = new Components(SupplyList.this); // Agrega una referencia a Components
 
@@ -78,7 +63,7 @@ public class SupplyList {
         table.getStylesheets().add(new File("src/main/resources/styles/principal.css").toURI().toString());
 
 
-        titleLabel = new javafx.scene.control.Label("Insumos");
+        titleLabel = new Label("Insumos");
         titleLabel.setFont(createFont(0, 40));
     }
 
