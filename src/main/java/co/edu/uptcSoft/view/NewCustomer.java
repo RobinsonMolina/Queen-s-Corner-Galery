@@ -387,7 +387,7 @@ public class NewCustomer {
         Image editImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Edit.png")).toExternalForm());
         Image trashImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Trash.png")).toExternalForm());
 
-        orderList2 = new ArrayList<>(logic.getOrderList().values());
+        //orderList2 = new ArrayList<>(logic.getOrderList().values());
 
         // change the format desired
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
