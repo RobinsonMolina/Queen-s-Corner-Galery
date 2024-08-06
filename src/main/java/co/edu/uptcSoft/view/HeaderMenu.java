@@ -297,7 +297,7 @@ public class HeaderMenu {
 
         supplyHBox.setOnMouseClicked(event -> {
             SupplyList supplyList = new SupplyList();
-            //center = supplyList.screen();
+            center = supplyList.screen();
             center.setMaxWidth(screenWidth - 80);
             StackPane.setAlignment(center, Pos.CENTER_RIGHT);
             root.setCenter(centerStack);

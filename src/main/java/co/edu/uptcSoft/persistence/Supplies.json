@@ -1,14 +1,4 @@
 {
-  "M011": {
-    "id": "M011",
-    "material": "Madera",
-    "category": "Muebles",
-    "characteristics": "Rectangular, Color Nogal",
-    "quantity": 3,
-    "unit": "cm",
-    "unitPrice": 60000,
-    "totalPrice": 180000
-  },
   "M020": {
     "id": "M020",
     "material": "Madera",

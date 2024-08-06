@@ -43,6 +43,7 @@ public class Components {
     private NewOrder order;
     private OrderList orderList; // Agrega una referencia a OrderList
     private CustomerList customerList;
+    private SupplyList supplyList;
 
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
@@ -57,6 +58,11 @@ public class Components {
     public Components(CustomerList customerList) {
         this.customerList = customerList;
     }
+
+    public Components(SupplyList supplyList) {
+        this.supplyList = supplyList;
+    }
+
     // Method for creating fonts
     public static Font createFont(int style, int size) {
         String fontFilePath = (style == 0) ? "/styles/utilities/fonts/Buenard-Bold.ttf" : "/styles/utilities/fonts/Buenard-Regular.ttf";
@@ -416,8 +422,15 @@ public class Components {
 
             messageConfirmation(message);
         } else if (message.contains("Insumo eliminado")) {
-            /*logic.deleteSupply(row);
-            mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());*/
+            String id = row;
+            logic.deleteSupply(id); // Elimina el cliente
+
+            // Actualizar la tabla después de eliminar el cliente
+            if (supplyList != null) {
+                supplyList.refreshTable(); // Llamar al método para refrescar la tabla
+            }
+
+            messageConfirmation(message);
         } else if (message.contains("Cliente añadido")) {
             //Logica para agregar cliente
         } else if (message.contains("Cliente eliminado")) {

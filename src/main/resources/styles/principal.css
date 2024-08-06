@@ -53,7 +53,6 @@
 .rounded-button {
     -fx-background-color: #2F1940; /* Color de fondo */
     -fx-text-fill: white; /* Color del texto */
-    -fx-font-size: 14px; /* Tamaño de la fuente */
     -fx-padding: 10px 20px; /* Espaciado interno */
     -fx-background-radius: 30px; /* Radio del borde redondeado */
     -fx-border-radius: 30px; /* Radio del borde redondeado */
@@ -69,9 +68,6 @@
     -fx-background-color: #2F1940; /* Color original al presionar */
     -fx-border-color: #000000; /* Color del borde al presionar */
 }
-
-
-
 
 .border-pane {
     -fx-border-color: black; /* Color del borde */
