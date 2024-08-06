@@ -6,15 +6,23 @@ import co.edu.uptcSoft.model.Supply;
 import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import static javafx.scene.text.Font.loadFont;
 
 
@@ -22,6 +30,7 @@ public class Components {
 
     private Button buttonYes;
     private Button buttonNo;
+    private Stage stage2;
     //private Frame confirmationFrame;
     //private Frame confirmationFrame2;
     private String message;
@@ -31,20 +40,19 @@ public class Components {
     //private Panel mainContentPanel;
     private Customer currentCustomer = new Customer();
     private Supply currentSupply = new Supply();
-    private ArrayList<Supply> supplyList;
+    //private ArrayList<Supply> supplyList;
     private NewOrder order;
+    private OrderList orderList; // Agrega una referencia a OrderList
 
-    /*
-    public Components(Panel mainContentPanel) {
-        this.mainContentPanel = mainContentPanel;
-        supplyList = new ArrayList<>();
-        //order = new NewOrder(mainContentPanel);
-    }*/
+    double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
     public Components() {
-        // !! Rounded text field with css, like New Order, line 190 aprox.
     }
 
+    public Components(OrderList orderList) {
+        this.orderList = orderList;
+    }
     // Method for creating fonts
     public static Font createFont(int style, int size) {
         String fontFilePath = (style == 0) ? "/styles/utilities/fonts/Buenard-Bold.ttf" : "/styles/utilities/fonts/Buenard-Regular.ttf";
@@ -52,43 +60,49 @@ public class Components {
         return loadFont(Components.class.getResourceAsStream(fontFilePath), size);
     }
 
-    /*
-    // Method for rounded button
-    public JButton createRoundedButton(String text, String borderColor, String fillColor, int arcw, int arch) {
-        return new JButton(text) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), arcw, arch);
-                super.paintComponent(g);
-                g2.dispose();
-            }
+    /*public Button createRoundedButton(String text, String borderColor, String fillColor, double arcWidth, double arcHeight) {
+        Button button = new Button(text);
 
-            @Override
-            public void paintBorder(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(Color.decode(borderColor));
-                g2.draw(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcw, arch));
-                setOpaque(false);
-                g2.dispose();
-            }
+        // Establecer el fondo del botón
+        button.setStyle("-fx-background-color: " + fillColor + "; -fx-text-fill: green; -fx-font-size: 20px;");
 
-            @Override
-            public void updateUI() {
-                setContentAreaFilled(false);
-                setFocusPainted(false);
-                setBorderPainted(false);
-                setOpaque(false);
-                setFont(createFont(1, 20))
-                setForeground(Color.WHITE);
-                setBackground(Color.decode(fillColor));
-                super.updateUI();
-            }
-        };
+        // Crear un efecto de sombra
+        /*DropShadow shadow = new DropShadow();
+        shadow.setRadius(5);
+        shadow.setOffsetX(0);
+        shadow.setOffsetY(0);
+        shadow.setColor(Color.GRAY);
+        button.setEffect(shadow);*/
+
+        // Configurar el tamaño del botón
+        //button.setPrefSize(200, 50); // Ajusta el tamaño según sea necesario
+        //button.setShape(new Rectangle(200, 50, arcWidth, arcHeight)); // Establecer forma redondeada
+        //button.setClip(new Rectangle(200, 50, arcWidth, arcHeight)); // Recortar el botón a la forma redondeada
+
+        //return button;
+   // }
+
+    public Button createRoundedButton(String text, String borderColor, String fillColor, double arcWidth, double arcHeight) {
+        Button button = new Button(text);
+
+        // Establecer el fondo y el color del texto del botón
+        button.setStyle("-fx-background-color: " + fillColor + "; -fx-text-fill: white; -fx-font-size: 16px;");
+
+        // Configurar el tamaño del botón
+        button.setPrefSize(200, 50);
+
+        // Establecer la forma redondeada del botón
+        button.setShape(new Rectangle(button.getPrefWidth(), button.getPrefHeight(), arcWidth, arcHeight));
+
+        // Configurar el clip para que el contenido se ajuste a la forma redondeada
+        button.setClip(new Rectangle(button.getPrefWidth(), button.getPrefHeight(), arcWidth, arcHeight));
+
+        // Aplicar borde redondeado
+        button.setStyle(button.getStyle() + " -fx-border-color: " + borderColor + "; -fx-border-width: 2px;");
+
+        return button;
     }
+    /*
     *//*
     public void hoverButton(JButton buttonAdd){
         buttonAdd.addMouseListener(new MouseAdapter() {
@@ -123,8 +137,48 @@ public class Components {
             }
         });
     }
+    *//*
+
     */
+    // Method for rounded text field
+    /*public TextField createRoundedTextField(double arcWidth, double arcHeight) {
+        TextField textField = new TextField();
+        textField.getStyleClass().add("rounded-text-field");
+
+        // Create a pane to wrap the text field and apply the border
+        Pane pane = new Pane(textField) {
+            @Override
+            protected void layoutChildren() {
+                super.layoutChildren();
+                // Apply rounded corners to the text field
+                Rectangle clip = new Rectangle(textField.getWidth(), textField.getHeight());
+                clip.setArcWidth(arcWidth);
+                clip.setArcHeight(arcHeight);
+                textField.setClip(clip);
+            }
+        };
+
+        return textField;
+    }*/
+
+    public TextField createRoundedTextField(double arcw, double arch) {
+        TextField textField = new TextField();
+        textField.getStyleClass().add("rounded-text-field");
+
+        // Create a rounded rectangle as the clip
+        Rectangle rect = new Rectangle();
+        rect.setArcWidth(arcw);
+        rect.setArcHeight(arch);
+        rect.widthProperty().bind(textField.widthProperty());
+        rect.heightProperty().bind(textField.heightProperty());
+
+        textField.setClip(rect);
+
+        return textField;
+    }
+
     /*
+    *//*
     // Method for rounded text field
     public JPasswordField createRoundedPasswordField(int arcw, int arch) {
         return new JPasswordField() {
@@ -224,10 +278,10 @@ public class Components {
         confirmationFrame.add(confirmationPanel);
         confirmationFrame.setVisible(true);
     }
-    *//*
+    */
     //method overloaded to confirm the message after clicking on the yes button
     // window method to confirm
-    public void windowConfirmation(String title, String button1, String button2, String message, String row) {
+    /*public void windowConfirmation(String title, String button1, String button2, String message, String row) {
 
         this.message = message;
         this.row = row;
@@ -268,8 +322,55 @@ public class Components {
 
         confirmationFrame.add(confirmationPanel);
         confirmationFrame.setVisible(true);
+    }*/
+
+
+    // es este----------------------------------------------------->>>>>>>>>>>>>>>>>>
+    public void windowConfirmation(String title, String button1, String button2, String message, String row) {
+        this.message = message;
+        this.row = row;
+
+        stage2 = new Stage();
+        VBox root = new VBox(10);
+        HBox messageHBox = new HBox();
+        HBox buttonPanel = new HBox(50);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/styles/principal.css").toExternalForm());
+        Label messageLabel = new Label(title);
+
+        messageLabel.setFont(createFont(0, 20));
+
+        messageHBox.setAlignment(Pos.CENTER);
+        messageHBox.getChildren().add(messageLabel);
+
+        Button buttonNo = new Button(button1);
+        buttonNo.getStyleClass().add("rounded-button");
+        buttonNo.getStyleClass().add("rounded-button:hover");
+        buttonNo.getStyleClass().add("rounded-button:pressed");
+        buttonNo.setPrefSize(150, 34);
+        buttonNo.setOnAction(event -> handleButtonNoAction());
+        buttonPanel.getChildren().add(buttonNo);
+
+        Button buttonYes = new Button(button2);
+        buttonYes.getStyleClass().add("rounded-button");
+        buttonYes.getStyleClass().add("rounded-button:hover");
+        buttonYes.getStyleClass().add("rounded-button:pressed");
+        buttonYes.setPrefSize(150, 34);
+        buttonYes.setOnAction(event -> handleButtonYesAction());
+        buttonPanel.getChildren().add(buttonYes);
+
+        buttonPanel.setAlignment(Pos.CENTER);
+
+        root.getChildren().addAll(messageHBox, buttonPanel);
+
+
+        stage2.setTitle("Mensaje de confirmación");
+        stage2.setHeight(130);
+        stage2.setWidth(500);
+        stage2.setScene(scene);
+        stage2.show();
     }
-    */
+
     // Method for confirming the message after clicking on the yes button
     public void messageConfirmation(String message) {
         Stage stage = new Stage();
@@ -293,6 +394,42 @@ public class Components {
         timeline.setCycleCount(1); // Ejecutar solo una vez
         timeline.play();
     }
+
+    private void handleButtonNoAction() {
+        stage2.close();
+    }
+
+    private void handleButtonYesAction() {
+        // change the content of the main panel instead of opening a new window
+        if (message.contains("Orden")) {
+            long orderNumber = Long.parseLong(row);
+            logic.deleteOrder(orderNumber); // Eliminar la orden
+
+            // Actualizar la tabla después de eliminar la orden
+            if (orderList != null) {
+                orderList.refreshTable(); // Llamar al método para refrescar la tabla
+            }
+
+            messageConfirmation(message);
+        } else if (message.contains("Insumo eliminado")) {
+            /*logic.deleteSupply(row);
+            mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());*/
+        } else if (message.contains("Cliente añadido")) {
+            /*new NewCustomer(mainContentPanel).addCustomerLogic(currentCustomer);
+            mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());*/
+        } else if (message.contains("Cliente eliminado")) {
+            /*logic.deleteCustomer(Long.parseLong(row));
+            mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());*/
+        } else if (message.contains("Insumo agregado")) {
+            //mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
+        } else if (message.contains("Insumo añadido")) {
+            /*order.setSupplyList(getSupplyList());
+            order.setCurrentCustomer(getCurrentCustomer());
+            mainContentPanel.add(order.addSpecificOrder(0));*/
+        }
+        stage2.close();
+    }
+
     /*
     // Error message
     public void windowConfirmation(String title, String button1, String message) {

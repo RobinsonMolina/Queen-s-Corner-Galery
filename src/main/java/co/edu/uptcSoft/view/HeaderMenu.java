@@ -278,6 +278,14 @@ public class HeaderMenu {
             StackPane.setAlignment(center, Pos.CENTER_RIGHT);
             root.setCenter(centerStack);
         });
+
+        listHBox.setOnMouseClicked(event -> {
+            OrderList orderList = new OrderList();
+            center = orderList.screen();
+            center.setMaxWidth(screenWidth - 80);
+            StackPane.setAlignment(center, Pos.CENTER_RIGHT);
+            root.setCenter(centerStack);
+        });
     }
 
     // Menu Visibility
