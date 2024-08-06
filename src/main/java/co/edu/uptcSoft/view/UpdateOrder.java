@@ -1,445 +1,686 @@
 package co.edu.uptcSoft.view;
 
-import org.w3c.dom.ls.LSOutput;
-
-import javax.swing.*;
-import javax.swing.border.AbstractBorder;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Customer;
+import co.edu.uptcSoft.model.Materials;
+import co.edu.uptcSoft.model.Order;
+import co.edu.uptcSoft.model.Supply;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.stage.Screen;
+import javafx.util.Callback;
+import java.io.File;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
-public class UpdateOrder implements ActionListener {
-    /*
-    //private JFrame specificOrderWindow;
-    private JPanel allInformation;
-    private JPanel allInfoPanel;
-    //private JPanel window;
-    private JPanel dataSpecificOrder;
+import static co.edu.uptcSoft.view.Components.createFont;
+
+public class UpdateOrder {
+
+    private Logic logic = Logic.getInstance();
+    private Pane root;
     private Components components;
+    private VBox principal;
+    private Label titleLabel;
+    private VBox informationVBox;
+    private HBox buttonsHBox;
 
-    private JButton add;
-    private JButton save;
-    private JButton cancel;
+    private TableView<ObservableList<Object>> table;
+    private FilteredList<ObservableList<Object>> filteredData;
+    private ArrayList<Supply> orderList2;
+    private HBox hBoxTable;
 
-    private int previousScreen;
+    double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
-    public UpdateOrder(JPanel mainContentPanel) {
-        allInfoPanel = mainContentPanel;
-        allInfoPanel = new JPanel();
-        components = new Components(mainContentPanel);
+    private String productName;
+    private String status;
+    private int orderNumber;
+    private String type;
+    private Date productionDate;
+    private Date deliveryDate;
+    private Customer customer;
+    private ArrayList<Materials> materials;
 
-        allInformation = new JPanel();
-        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
-        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
-        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+    private TextField productTxt;
+    private TextField typeTxt;
+    private TextField customerTxt;
 
-        add = new JButton("+ Material");
-        save = new JButton("Aceptar");
-        cancel = new JButton("Cancelar");
-        previousScreen = 0;
-    }
-    /*
+    private ComboBox<String> stateComboB;
+    private DatePicker productionDateTxt;
+    private TextField phoneTxt;
+
+    private TextField orderNumberTxt;
+    private DatePicker deliveryDateTxt;
+    private TextField documentTxt;
+
+    private Long documentId;
+    private Order order;
+
     public UpdateOrder() {
-        specificOrderWindow = new JFrame("Actualizar Orden");
-        allInformation = new JPanel();
-        allInfoPanel = new JPanel();
-        window = new JPanel(new BorderLayout());
-        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
-        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
-        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+        root = new Pane();
         components = new Components();
+        principal = new VBox();
+        titleLabel = new Label("Actualizar Orden");
+        informationVBox = new VBox();
+        buttonsHBox = new HBox();
+
+        productTxt = new TextField();
+        typeTxt = new TextField();
+        customerTxt = new TextField();
+        stateComboB = new ComboBox<>();
+        productionDateTxt = new DatePicker();
+        phoneTxt = new TextField();
+        orderNumberTxt = new TextField();
+        deliveryDateTxt = new DatePicker();
+        documentTxt = new TextField();
+
+        status = "Por Hacer";
+
+        hBoxTable = new HBox();
+        hBoxTable.setPrefSize(screenWidth - 80, 136);
+        table = new TableView<>();
+        applyRowStyles();
+        table.getStylesheets().add(new File("src/main/resources/styles/principal.css").toURI().toString());
+
+        orderList2 = new ArrayList<>();
+        customer = new Customer();
     }
 
-    public  void createWindow(){
-        specificOrderWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        specificOrderWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        specificOrderWindow.setSize(1366, 670);
+    public void loadOrder(){
 
-        addSpecificOrder();
-        setWindow();
-        specificOrderWindow.add(window);
-        specificOrderWindow.setVisible(true);
+        Customer cus = logic.searchCustomer(order.getCustomer());
+
+        productTxt = new TextField(order.getProductName());
+        typeTxt = new TextField(order.getType());
+        customerTxt = new TextField(cus.getName());
+
+        status = order.getStatus();
+        //productionDateTxt = new DatePicker(LocalDate.from(order.getProductionDate()));
+        phoneTxt = new TextField("" + cus.getPhoneNumber());
+
+        orderNumberTxt = new TextField("" + order.getOrderNumber());
+        //deliveryDateTxt;
+        documentTxt = new TextField("" + cus.getDocumentNumber());
     }
 
-    public  void setWindow(){
-        HeaderMenu headerMenu = new HeaderMenu();
 
-        window.add(headerMenu.getMenuPanel(), BorderLayout.WEST);
-        window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
-        window.add(allInformation, BorderLayout.CENTER);
-    }
-    */
+    public Pane screen(){
+        title();
+        allInfo();
+        contentTable();
+        buttons();
 
-    /* _[____________________________________________________________________________
-    // Previous screen indicates if you are coming from Specific Order (1), List (2), Customer (3)
-    // NewCustomer (4), UpdateCustomer (5)
-    public JPanel addSpecificOrder(int previousScreen){
-        JLabel title = new JLabel("Actualizar Orden");
-        this.previousScreen = previousScreen;
+        principal.getChildren().addAll(titleLabel, informationVBox);
+        principal.setAlignment(Pos.TOP_CENTER);
 
-        allInfoPanel.setPreferredSize(new Dimension(1286, 590));
+        informationVBox.setPrefWidth(screenWidth - 80);
+        principal.setPrefSize(screenWidth - 80, screenHeight - 80);
 
-        title.setFont(components.createFont(0, 40));
-        title.setPreferredSize(new Dimension(389, 47));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        root.getChildren().add(principal);
+        principal.setPrefSize(screenWidth - 80, screenHeight - 80);
 
-        allInfoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        allInfoPanel.add(Box.createVerticalStrut(30));
-        allInfoPanel.add(title);
-        allInfoPanel.add(Box.createVerticalStrut(35));
-        setSpecificData();
-        dataSpecificOrder.setPreferredSize(new Dimension(1286, 200));
-        dataSpecificOrder.setBorder(new EmptyBorder(0, 55, 0, 55));
-
-        allInfoPanel.add(dataSpecificOrder);
-
-        table();
-        allInfoPanel.setBackground(Color.WHITE);
-        dataSpecificOrder.setBackground(Color.WHITE);
-
-        allInformation.add(allInfoPanel);
-        return allInfoPanel;
+        return root;
     }
 
-    public void setSpecificData(){
-        JLabel product = new JLabel("Producto");
-        JLabel type = new JLabel("Tipo");
-        JLabel customer = new JLabel("Cliente");
-        JLabel state = new JLabel("Estado");
-        JLabel productionDate = new JLabel("Fecha Producción");
-        JLabel phone = new JLabel("Teléfono");
-        JLabel orderNumber = new JLabel("Número de orden");
-        JLabel deliveryDate = new JLabel("Fecha de Entrega");
-        JLabel document = new JLabel("Documento");
+    public void loadCustomer(){
+        customer = logic.searchCustomer(documentId);
 
-        String[] options = {"Por Hacer", "En Progreso", "Entregado"};
-        JTextField productTxt = new JTextField("Sofacama");
-        JTextField typeTxt = new JTextField("Mueble");
-        JTextField customerTxt = new JTextField("Juan David Pérez");
-        JComboBox <String> stateCombo = new JComboBox<> (options);
-        JTextField productionDateTxt = new JTextField("26/06/2024");
-        JTextField phoneTxt = new JTextField("3133333333");
-        JTextField orderNumberTxt = new JTextField("001");
-        JTextField deliveryDateTxt = new JTextField("30/06/2024");
-        JTextField documentTxt = new JTextField("10544444");
+        customerTxt = new TextField(customer.getName());
+        phoneTxt = new TextField(String.valueOf(customer.getPhoneNumber()));
+        documentTxt = new TextField(String.valueOf(customer.getDocumentNumber()));
+    }
 
-        product.setFont(components.createFont(0, 20));
-        type.setFont(components.createFont(0, 20));
-        customer.setFont(components.createFont(0, 20));
-        state.setFont(components.createFont(0, 20));
-        productionDate.setFont(components.createFont(0, 20));
-        phone.setFont(components.createFont(0, 20));
-        orderNumber.setFont(components.createFont(0, 20));
-        deliveryDate.setFont(components.createFont(0, 20));
-        document.setFont(components.createFont(0, 20));
-        productTxt.setFont(components.createFont(1, 20));
-        typeTxt.setFont(components.createFont(1, 20));
-        customerTxt.setFont(components.createFont(1, 20));
-        stateCombo.setFont(components.createFont(1, 20));
-        productionDateTxt.setFont(components.createFont(1, 20));
-        phoneTxt.setFont(components.createFont(1, 20));
-        orderNumberTxt.setFont(components.createFont(1, 20));
-        deliveryDateTxt.setFont(components.createFont(1, 20));
-        documentTxt.setFont(components.createFont(1, 20));
+    public void title(){
+        VBox.setMargin(titleLabel, new Insets(30, 0, 0, 0));
+        titleLabel.setFont(createFont(0, 40));
+        titleLabel.setPrefHeight(112);
+        titleLabel.setAlignment(Pos.TOP_CENTER);
+    }
 
-        // ComboBox
-        stateCombo.setRenderer(new DefaultListCellRenderer() {
+    // All Center Info (VBox)
+    public void allInfo(){
+        data();
+        data2();
+    }
+
+    // Order Info (HB)
+    public void data(){
+        HBox data = new HBox();
+        VBox info1VB = new VBox();
+        VBox info2VB = new VBox();
+        VBox info3VB = new VBox();
+        VBox info4VB = new VBox();
+        VBox info5VB = new VBox();
+        VBox info6VB = new VBox();
+
+        // Space between nodes
+        info1VB.setSpacing(20);
+        info2VB.setSpacing(20);
+        info3VB.setSpacing(20);
+        info4VB.setSpacing(20);
+        info5VB.setSpacing(20);
+        info6VB.setSpacing(20);
+        data.setSpacing(15);
+
+        Label product = new Label("Producto");
+        Label type = new Label("Tipo");
+        Label customer = new Label("Cliente");
+        info1VB.getChildren().addAll(product, type, customer);
+
+        Label state = new Label("Estado");
+        Label productionDateLabel = new Label("Fecha Producción");
+        Label phone = new Label("Teléfono");
+        info3VB.getChildren().addAll(state, productionDateLabel, phone);
+
+        Label orderNumber = new Label("Número de orden");
+        Label deliveryDateLabel = new Label("Fecha de Entrega");
+        Label document = new Label("Documento");
+        info5VB.getChildren().addAll(orderNumber, deliveryDateLabel, document);
+
+        info2VB.getChildren().addAll(productTxt, typeTxt, customerTxt);
+        info4VB.getChildren().addAll(stateComboB, productionDateTxt, phoneTxt);
+        info6VB.getChildren().addAll(orderNumberTxt, deliveryDateTxt, documentTxt);
+
+        product.setPrefSize(80, 30);
+        type.setPrefSize(80, 30);
+        customer.setPrefSize(80, 30);
+
+        productTxt.setPrefSize(300, 30);
+        typeTxt.setPrefSize(300, 30);
+        customerTxt.setPrefSize(300, 30);
+
+        state.setPrefSize(154, 30);
+        productionDateLabel.setPrefSize(154, 30);
+        phone.setPrefSize(154, 30);
+
+        stateComboB.setPrefSize(180, 30);
+        productionDateTxt.setPrefSize(180, 30);
+        phoneTxt.setPrefSize(180, 30);
+
+        orderNumber.setPrefSize(167, 30);
+        deliveryDateLabel.setPrefSize(167, 30);
+        document.setPrefSize(167, 30);
+
+        orderNumberTxt.setPrefSize(180, 30);
+        deliveryDateTxt.setPrefSize(180, 30);
+        documentTxt.setPrefSize(180, 30);
+
+        // Font Labels
+        product.setFont(createFont(1, 20));
+        type.setFont(createFont(1, 20));
+        customer.setFont(createFont(1, 20));
+        state.setFont(createFont(1, 20));
+        productionDateLabel.setFont(createFont(1, 20));
+        phone.setFont(createFont(1, 20));
+        orderNumber.setFont(createFont(1, 20));
+        deliveryDateLabel.setFont(createFont(1, 20));
+        document.setFont(createFont(1, 20));
+
+        // Font Fields
+        Font customFont = createFont(1, 16);
+        String style = "-fx-font-family: '" + customFont.getName() + "'; -fx-font-size: " + (int) customFont.getSize() + "px;";
+
+        productTxt.setFont(createFont(1, 18));
+        typeTxt.setFont(createFont(1, 18));
+        customerTxt.setFont(createFont(1, 18));
+
+        stateComboB.setStyle(style);
+        productionDateTxt.setStyle(style);
+        phoneTxt.setFont(createFont(1, 18));
+
+        orderNumberTxt.setFont(createFont(1, 18));
+        deliveryDateTxt.setStyle(style);
+        documentTxt.setFont(createFont(1, 18));
+
+        // Size
+        product.setMinHeight(35);
+        type.setMinHeight(35);
+        customer.setMinHeight(35);
+
+        productTxt.setMinHeight(35);
+        typeTxt.setMinHeight(35);
+        customerTxt.setMinHeight(35);
+
+        state.setMinHeight(35);
+        productionDateLabel.setMinHeight(35);
+        phone.setMinHeight(35);
+
+        stateComboB.setMinHeight(35);
+        productionDateTxt.setMinHeight(35);
+        phoneTxt.setMinHeight(35);
+
+        orderNumber.setMinHeight(35);
+        deliveryDateLabel.setMinHeight(35);
+        document.setMinHeight(35);
+
+        orderNumberTxt.setMinHeight(35);
+        deliveryDateTxt.setMinHeight(35);
+        documentTxt.setMinHeight(35);
+
+        data.setAlignment(Pos.CENTER);
+        //informationVBox.setAlignment(Pos.CENTER);
+        data.getChildren().addAll(info1VB, info2VB, info3VB, info4VB, info5VB, info6VB);
+        informationVBox.getChildren().add(data);
+
+        // Border Color
+        //createRoundedTextField
+        productTxt.getStyleClass().add("rounded-textfield");
+        typeTxt.getStyleClass().add("rounded-textfield");
+        customerTxt.getStyleClass().add("rounded-textfield");
+
+        stateComboB.getStyleClass().add("combo-box");
+        productionDateTxt.getStyleClass().add("rounded-datepicker");
+        phoneTxt.getStyleClass().add("rounded-textfield");
+
+        orderNumberTxt.getStyleClass().add("rounded-textfield");
+        deliveryDateTxt.getStyleClass().add("rounded-datepicker");
+        documentTxt.getStyleClass().add("rounded-textfield");
+
+        // Combo Box
+        ObservableList<String> options = FXCollections.observableArrayList(
+                "Por Hacer",
+                "En Progreso",
+                "Entregado"
+        );
+        stateComboB.setItems(options);
+        stateComboB.getSelectionModel().select(0);
+
+        stateComboB.setOnAction(event -> {
+            status = stateComboB.getSelectionModel().getSelectedItem();
+            System.out.println("Statutss:   " + status);
+        });
+    }
+
+    // VBox Data (title, table)
+    public void data2(){
+        VBox dataVBox = new VBox();
+        Label title = new Label("Materiales Requeridos");
+
+        VBox.setMargin(title, new Insets(35, 0, 35, 0));
+        title.setFont(createFont(0, 30));
+        title.setPrefHeight(50);
+
+        // Table
+        dataVBox.setMaxHeight(hBoxTable.getPrefHeight() + title.getPrefHeight() + 70);
+
+        dataVBox.setPadding(new Insets(0, 30, 0, 30));
+        dataVBox.getChildren().addAll(title, hBoxTable);
+
+        informationVBox.getChildren().add(dataVBox);
+    }
+
+    //Buttons
+    public void buttons(){
+        Button addButt = new Button("+ Material");
+        Button cancelButt = new Button("Cancelar");
+        Button newButt = new Button("Agregar");
+
+        addButt.setPrefSize(107, 12);
+        cancelButt.setPrefSize(107, 12);
+        newButt.setPrefSize(107, 12);
+
+        buttonsHBox.setSpacing(25);
+        VBox.setMargin(buttonsHBox, new Insets(20, 30, 20, 0));
+        buttonsHBox.setAlignment(Pos.CENTER_RIGHT);
+        buttonsHBox.getChildren().addAll(addButt, newButt, cancelButt);
+        informationVBox.getChildren().add(buttonsHBox);
+
+        addButt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-                if (isSelected) {
-                    c.setBackground(Color.decode("#D9D9D9"));
-                } else {
-                    c.setBackground(Color.WHITE);
-                }
-
-                return c;
+            public void handle(ActionEvent event) {
+                AddSupply list = new AddSupply();
+                list.setOrder(order);
+                list.setPag(2);
+                root.getChildren().clear();
+                root.setMinSize(screenWidth - 80, screenHeight - 80);
+                root.getChildren().add(list.screen());
             }
         });
-        stateCombo.setBackground(Color.WHITE);
-        stateCombo.isPopupVisible();
 
-        int borderRadius = 5;
-        Color borderColor = Color.decode("#2F1940");
+        cancelButt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Lleva al board o a la página anterior
+            }
+        });
 
-        productTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        typeTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        customerTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        stateCombo.setBorder(new RoundedBorder(borderRadius, borderColor));
-        productionDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        orderNumberTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        deliveryDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        documentTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
+        newButt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                confirmationData();
+                // Manda a la página siguiente
+            }
+        });
 
-        product.setPreferredSize(new Dimension(99, 30));
-        type.setPreferredSize(new Dimension(99, 30));
-        customer.setPreferredSize(new Dimension(99, 30));
-
-        productTxt.setPreferredSize(new Dimension(300, 35));
-        typeTxt.setPreferredSize(new Dimension(300, 35));
-        customerTxt.setPreferredSize(new Dimension(300, 35));
-
-        state.setPreferredSize(new Dimension(187, 30));
-        productionDate.setPreferredSize(new Dimension(187, 30));
-        phone.setPreferredSize(new Dimension(187, 30));
-        orderNumber.setPreferredSize(new Dimension(187, 30));
-        deliveryDate.setPreferredSize(new Dimension(187, 30));
-        document.setPreferredSize(new Dimension(187, 30));
-
-        stateCombo.setPreferredSize(new Dimension(180, 35));
-        orderNumberTxt.setPreferredSize(new Dimension(180, 35));
-        productionDateTxt.setPreferredSize(new Dimension(180, 35));
-        deliveryDateTxt.setPreferredSize(new Dimension(180, 35));
-        phoneTxt.setPreferredSize(new Dimension(180, 35));
-        documentTxt.setPreferredSize(new Dimension(180, 35));
-
-        dataSpecificOrder.add(product);
-        dataSpecificOrder.add(productTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(state);
-        dataSpecificOrder.add(stateCombo);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-
-        dataSpecificOrder.add(orderNumber);
-        dataSpecificOrder.add(orderNumberTxt);
-
-        dataSpecificOrder.add(type);
-        dataSpecificOrder.add(typeTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(productionDate);
-        dataSpecificOrder.add(productionDateTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(deliveryDate);
-        dataSpecificOrder.add(deliveryDateTxt);
-
-        dataSpecificOrder.add(customer);
-        dataSpecificOrder.add(customerTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(phone);
-        dataSpecificOrder.add(phoneTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(document);
-        dataSpecificOrder.add(documentTxt);
+        addButt.getStyleClass().add("rounded-button");
+        cancelButt.getStyleClass().add("rounded-button");
+        newButt.getStyleClass().add("rounded-button");
     }
 
+    // Validations
+    public Long numValLong(String num){
+        try {
+            return num.length() == 10 ? Long.parseLong(num) : null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
-    public void table(){
-        JPanel jPanel = new JPanel(new BorderLayout());
-        JLabel materialsTitle = new JLabel("Materiales Requeridos");
+    public int numValInt(String numStr){
+        try {
+            return Integer.parseInt(numStr);
+        } catch (Exception e) {
+            return -1;
+        }
+    }
 
-        materialsTitle.setFont(components.createFont(0, 30));
-        materialsTitle.setPreferredSize(new Dimension(380, 30));
-        materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
+    public void confirmationData(){
 
-        ImageIcon icon = new ImageIcon("src/Utilities/Images/Trash.png");
-        Image image = icon.getImage();
-        ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        LocalDate localDate1 =  LocalDate.of(1000, 1, 1);
+        LocalDate localDate2 = LocalDate.of(1000, 1, 1);;
 
-        Object[][] data = {
-                {"01", "Chenille", 5, 475000, defIcon},
-                {"02", "Cuero Sintético", 5, 450000, defIcon},
-                {"03", "Pana", 3, 300000, defIcon},
+        try {
+            localDate1 = productionDateTxt.getValue();
+            productionDate = Date.from(localDate1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+            localDate2 = deliveryDateTxt.getValue();
+            productionDate = Date.from(localDate2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        } catch (Exception e){
+
+        }
+
+        String product = productTxt.getText();
+        String type = typeTxt.getText();
+        String customer = customerTxt.getText();
+        String phone = phoneTxt.getText();
+        String orderNumber = orderNumberTxt.getText();
+        String document = documentTxt.getText();
+
+        try {
+            if (!product.isEmpty() && !type.isEmpty() && !customer.isEmpty() && !status.isEmpty() && !productionDateTxt.getValue().toString().isEmpty() && !phone.isEmpty() && !orderNumber.isEmpty() && !deliveryDateTxt.getValue().toString().isEmpty() && !document.isEmpty()){
+
+                if (numValLong(phone) != null && numValLong(document) != null){
+
+                    if (numValInt(orderNumber) != -1){
+
+                        if (!localDate1.toString().isEmpty() && !localDate2.toString().isEmpty()){
+                            if (!orderList2.isEmpty()){
+                                // Se puede
+                            } else {
+                                components.messageConfirmation("Debe de Tener al Menos un Insumo");
+                            }
+                        } else {
+                            components.messageConfirmation("Ingrese una Fecha Correcta");
+                        }
+                    } else {
+                        // Ingrese un número
+                        components.messageConfirmation("Ingrese un Número de Orden Válido");
+                    }
+                } else{
+                    // Ingrese un valor de 10 dígitos
+                    components.messageConfirmation("Ingrese un Número de Diez Digitos");
+                }
+
+            } else {
+                components.messageConfirmation("Ingrese Todos los Datos");
+            }
+        } catch (Exception e){
+            components.messageConfirmation("Ingrese todos los datos");
+            e.printStackTrace();
+        }
+    }
+
+    // Table __________________
+    public void contentTable() {
+        table.setMaxHeight(136);
+        table.setMaxWidth(screenWidth - 80);
+        hBoxTable.setPrefHeight(136);
+        //informationVBox.getStyleClass().add("custom-background");
+
+        // Create the columns
+        TableColumn<ObservableList<Object>, String> id = new TableColumn<>("Código");
+        id.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 0 && row.get(0) instanceof String)
+                    ? new SimpleStringProperty((String) row.get(0))
+                    : new SimpleStringProperty("");
+        });
+        id.setPrefWidth(((screenWidth - 80) - 100)/4); // Adjust the width of the column
+        applyHeaderFont(id, 0, 20); // Apply the font to the header
+        applyCellFont(id, 1,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, String> material = new TableColumn<>("Material");
+        material.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 1 && row.get(1) instanceof String)
+                    ? new SimpleStringProperty((String) row.get(1))
+                    : new SimpleStringProperty("");
+        });
+        material.setPrefWidth(((screenWidth - 80) - 100)/4);
+        applyHeaderFont(material, 0, 20); // Apply the font to the header
+        applyCellFont(material, 1,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, Integer> quantity = new TableColumn<>("Cantidad");
+        quantity.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 2 && row.get(2) instanceof Integer)
+                    ? new SimpleIntegerProperty((Integer) row.get(2)).asObject()
+                    : new SimpleIntegerProperty(0).asObject();
+        });
+        quantity.setPrefWidth(((screenWidth - 80) - 100)/4); // Adjust the width of the column
+        applyHeaderFont(quantity, 0, 20); // Apply the font to the header
+        applyCellFont(quantity, 1,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, Long> total = new TableColumn<>("Total");
+        total.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 3 && row.get(3) instanceof Long)
+                    ? new SimpleLongProperty((Long) row.get(3)).asObject()
+                    : new SimpleLongProperty(0).asObject();
+        });
+        total.setPrefWidth(((screenWidth - 80) - 100)/4);
+        applyHeaderFont(total, 0, 20); // Apply the font to the header
+        applyCellFont(total, 1,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, ImageView> trash = new TableColumn<>("");
+        trash.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
+            @Override
+            public ObservableValue<ImageView> call(TableColumn.CellDataFeatures<ObservableList<Object>, ImageView> cellData) {
+                ObservableList<Object> row = cellData.getValue();
+                if (row != null && row.size() > 4 && row.get(4) instanceof ImageView) {
+                    return new SimpleObjectProperty<>((ImageView) row.get(4));
+                } else {
+                    return new SimpleObjectProperty<>(new ImageView());
+                }
+            }
+        });
+        trash.setPrefWidth(50);
+        trash.setCellFactory(column -> createCellWithBackgroundColor("white"));
+        trash.getStyleClass().add("column-header-trash"); // Aplicar la clase CSS para la columna 'eye'
+
+        table.getColumns().addAll(id, material, quantity, total, trash);
+        applyRowStyles();
+
+        filteredData = new FilteredList<>(getOrderList(), p -> true);
+        table.setItems(filteredData);
+
+        // Añadir la tabla al HBox y configurar el HBox
+        hBoxTable.getChildren().clear(); // Limpiar cualquier contenido anterior en hBoxTable
+        initializeIconColumns();
+
+        hBoxTable.getChildren().add(table);
+        hBoxTable.setAlignment(Pos.CENTER);
+
+        informationVBox.getChildren().add(hBoxTable);
+    }
+
+    public ObservableList<ObservableList<Object>> getOrderList() {
+        ObservableList<ObservableList<Object>> data = FXCollections.observableArrayList();
+
+        Image trashImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Trash.png")).toExternalForm());
+
+        //orderList2 = new ArrayList<>(logic.getSupplyList().values());
+
+        for (Supply supply : orderList2) {
+            ImageView trashView = new ImageView(trashImage);
+            trashView.setFitWidth(24);
+            trashView.setFitHeight(24);
+            trashView.setPreserveRatio(true);
+
+            // Agregar las filas con los iconos
+            ObservableList<Object> row = FXCollections.observableArrayList(
+                    supply.getId(),
+                    supply.getMaterial(),
+                    supply.getQuantity(),
+                    supply.getTotalPrice(),
+                    trashView  // Delete icon
+            );
+            data.add(row);
+        }
+        return data;
+    }
+
+    // Metodo para aplicar estilos a las filas
+    private void applyRowStyles() {
+        // Configurar fábrica de filas para aplicar estilos alternados
+        table.setRowFactory(new Callback<TableView<ObservableList<Object>>, TableRow<ObservableList<Object>>>() {
+            @Override
+            public TableRow<ObservableList<Object>> call(TableView<ObservableList<Object>> tableView) {
+                return new TableRow<>() {
+                    @Override
+                    protected void updateItem(ObservableList<Object> item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setStyle(""); // Limpiar estilo para filas vacías
+                        } else {
+                            // Aplicar colores alternados a las filas
+                            if (getIndex() % 2 == 0) {
+                                setStyle("-fx-background-color: white;"); // blanco para filas pares
+                            } else {
+                                setStyle("-fx-background-color: #D9D9D9;"); // gris claro para filas impares
+                            }
+                        }
+                    }
+                };
+            }
+        });
+    }
+
+    private <T> TableCell<ObservableList<Object>, T> createCellWithBackgroundColor(String color) {
+        return new TableCell<>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setStyle("");
+                } else {
+                    setText(null);
+                    setGraphic((Node) item);
+                    setStyle("-fx-background-color: " + color + ";");
+                }
+            }
         };
+    }
 
-        String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo", ""};
+    public void initializeIconColumns() {
+        // Obtener todas las columnas
+        TableColumn<ObservableList<Object>, ImageView> trashColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(4);
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+        // Añadir EventHandler a la columna de "borrar"
+        trashColumn.setCellFactory(column -> new TableCell<>() {
             @Override
-            public Class<?> getColumnClass(int column) {
-                if (column == 4) {
-                    return Icon.class;
-                }
-                return super.getColumnClass(column);
-            }
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        JTable table = new JTable(model);
-        table.setRowHeight(34);
-        table.setShowGrid(false);
-        table.getColumnModel().getColumn(4).setMaxWidth(50);
-        table.setPreferredSize(new Dimension(1286, 156));
-
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(Color.decode("#D9D9D9"));
-        header.setPreferredSize(new Dimension(283, 34));
-
-        header.setDefaultRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Focuses the text
-                if (c instanceof JLabel) {
-                    JLabel label = (JLabel) c;
-                    label.setFont(components.createFont(0, 20));
-                    label.setHorizontalAlignment(JLabel.CENTER);
-                    label.setVerticalAlignment(JLabel.CENTER);
-                }
-
-                // Change column header color
-                if (column == 4) {
-                    c.setBackground(Color.WHITE);
+            protected void updateItem(ImageView item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
                 } else {
-                    c.setBackground(header.getBackground());
-                }
+                    setGraphic(item);
+                    setOnMouseClicked(event -> {
+                        if (event.getClickCount() == 1 && !isEmpty()) {
+                            int rowIndex = getIndex();
+                            String index = orderList2.get(rowIndex).getId();
 
-                return c;
+                            components.windowConfirmation(
+                                    "¿Está seguro de eliminar esta orden?",
+                                    "Cancelar", "Eliminar", "Orden eliminada con éxito",
+                                    index);
+                        }
+                    });
+                }
             }
         });
+    }
 
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+    // Agrega un método para actualizar la tabla
+    public void refreshTable() {
+        table.setItems(getOrderList());
+        filteredData.setPredicate(filteredData.getPredicate());
+    }
 
+    // Method to apply font to the cells
+    private <T> void applyCellFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        column.setCellFactory(new Callback<TableColumn<ObservableList<Object>, T>, TableCell<ObservableList<Object>, T>>() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                // Focuses the text
-                if (cell instanceof JLabel) {
-                    JLabel label = (JLabel) cell;
-                    label.setFont(components.createFont(1, 20));
-                    label.setHorizontalAlignment(JLabel.CENTER);
-                    label.setVerticalAlignment(JLabel.CENTER);
-                }
-
-                // Change the color of the rows
-                if (row % 2 == 0) {
-                    cell.setBackground(Color.white);
-                } else {
-                    cell.setBackground(Color.decode("#D9D9D9"));
-                }
-
-                return cell;
+            public TableCell<ObservableList<Object>, T> call(TableColumn<ObservableList<Object>, T> param) {
+                return new TableCell<>() {
+                    @Override
+                    protected void updateItem(T item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            setText(null);
+                        } else {
+                            setText(item.toString());
+                            setFont(components.createFont(1, 20));
+                        }
+                    }
+                };
             }
         });
-
-        JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(1286, 136));
-        tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
-
-        jPanel.add(materialsTitle, BorderLayout.NORTH);
-        jPanel.add(tableScrollPane, BorderLayout.CENTER);
-        jPanel.add(buttons(), BorderLayout.SOUTH);
-        jPanel.setBorder(new EmptyBorder(10, 55, 0, 55));
-
-        jPanel.setPreferredSize(new Dimension(1286, 155));
-        jPanel.setBackground(Color.white);
-        tableScrollPane.setBackground(Color.white);
-        allInfoPanel.add(jPanel);
     }
 
-    public class RoundedBorder extends AbstractBorder {
-        private final int radius;
-        private final Color borderColor;
-
-        public RoundedBorder(int radius, Color borderColor) {
-            this.radius = radius;
-            this.borderColor = borderColor;
-        }
-
-        @Override
-        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            Graphics2D g2d = (Graphics2D) g.create();
-
-            g2d.setColor(borderColor);
-            if (borderColor == null) {
-                g2d.setStroke(new BasicStroke(4));
-            }
-            g2d.drawRoundRect(x, y, width, height, radius, radius);
-            g2d.dispose();
-        }
-
-        @Override
-        public Insets getBorderInsets(Component c) {
-            return new Insets(this.radius, this.radius, this.radius, this.radius);
-        }
-
-        @Override
-        public Insets getBorderInsets(Component c, Insets insets) {
-            insets.left = insets.top = insets.right = insets.bottom = this.radius;
-            return insets;
-        }
+    // Method to apply font to the header
+    private <T> void applyHeaderFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        javafx.scene.control.Label label = new javafx.scene.control.Label(column.getText());
+        label.setFont(createFont(style, size));
+        column.setText(""); // Remove the default header text
+        column.setGraphic(label);
     }
 
-    public JPanel buttons() {
-        JPanel buttons = new JPanel(new FlowLayout());
-
-        buttons.add(Box.createHorizontalStrut(700));
-        buttons.add(add);
-        buttons.add(save);
-        buttons.add(cancel);
-
-        add.setBackground(Color.decode("#2F1940"));
-        save.setBackground(Color.decode("#2F1940"));
-        cancel.setBackground(Color.decode("#2F1940"));
-
-        add.setFont(components.createFont(1, 20));
-        save.setFont(components.createFont(1, 20));
-        cancel.setFont(components.createFont(1, 20));
-
-        add.setForeground(Color.white);
-        save.setForeground(Color.white);
-        cancel.setForeground(Color.white);
-
-        add.setPreferredSize(new Dimension(127, 32));
-        save.setPreferredSize(new Dimension(127, 32));
-        cancel.setPreferredSize(new Dimension(127, 32));
-
-        add.setBorder((new RoundedBorder(10, null)));
-        save.setBorder((new RoundedBorder(10, null)));
-        cancel.setBorder((new RoundedBorder(10, null)));
-
-        add.addActionListener(this);
-        save.addActionListener(this);
-        cancel.addActionListener(this);
-
-        buttons.setBackground(Color.white);
-        return buttons;
+    public Long getDocumentId() {
+        return documentId;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == cancel) {
-            allInfoPanel.removeAll();
-
-            if (previousScreen == 1){
-                // Board
-                allInfoPanel.add(new SpecificOrder(allInfoPanel).addSpecificOrder(1));
-            } else if (previousScreen == 2) {
-                // List
-                allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
-            } else if (previousScreen == 3) {
-                // List - Specific - Update
-                allInfoPanel.add(new SpecificOrder(allInfoPanel).addSpecificOrder(2));
-            }
-
-            allInfoPanel.revalidate();
-            allInfoPanel.repaint();
-        }
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
     }
-    */
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

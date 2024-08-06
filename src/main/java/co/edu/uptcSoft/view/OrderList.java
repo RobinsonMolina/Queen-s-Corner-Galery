@@ -471,11 +471,11 @@ public class OrderList {
                         if (event.getClickCount() == 1 && !isEmpty()) {
                             int rowIndex = getIndex();
                             UpdateOrder uOrder = new UpdateOrder();
-                            //  Clear current content
+                            uOrder.setOrder(logic.searchOrder(rowIndex));
+                            uOrder.loadOrder();
                             contentPanel.getChildren().clear();
-                            // Add the new content
                             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
-                            //contentPanel.getChildren().add(uOrder.screen());
+                            contentPanel.getChildren().add(uOrder.screen());
                         }
                     });
                 }

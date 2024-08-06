@@ -19,7 +19,7 @@
   },
   "3": {
     "productName": "Silla de Oficina",
-    "status": "Finalizado",
+    "status": "Entregado",
     "orderNumber": 3,
     "type": "Mueble",
     "productionDate": "Jul 18, 2024, 6:59:08 AM",
@@ -46,7 +46,7 @@
   },
   "6": {
     "productName": "Espejo de Pared",
-    "status": "Finalizado",
+    "status": "Entregado",
     "orderNumber": 6,
     "type": "Decoración",
     "productionDate": "Jul 18, 2024, 6:59:08 AM",
@@ -73,7 +73,7 @@
   },
   "9": {
     "productName": "Mesa de Noche",
-    "status": "Finalizado",
+    "status": "Entregado",
     "orderNumber": 9,
     "type": "Mueble",
     "productionDate": "Jul 18, 2024, 6:59:08 AM",
@@ -100,7 +100,7 @@
   },
   "12": {
     "productName": "Estantería de Libros",
-    "status": "Finalizado",
+    "status": "Entregado",
     "orderNumber": 12,
     "type": "Mueble",
     "productionDate": "Jul 18, 2024, 6:59:08 AM",
@@ -127,7 +127,7 @@
   },
   "15": {
     "productName": "Mesita de Centro",
-    "status": "Finalizado",
+    "status": "Entregado",
     "orderNumber": 15,
     "type": "Mueble",
     "productionDate": "Jul 18, 2024, 6:59:08 AM",
@@ -154,7 +154,7 @@
   },
   "18": {
     "productName": "Mesa de Jardín",
-    "status": "Finalizado",
+    "status": "Entregado",
     "orderNumber": 18,
     "type": "Mueble",
     "productionDate": "Jul 18, 2024, 6:59:08 AM",
@@ -181,7 +181,7 @@
   },
   "21": {
     "productName": "Estufa de Cocina",
-    "status": "Finalizado",
+    "status": "Entregado",
     "orderNumber": 21,
     "type": "Electrodoméstico",
     "productionDate": "Jul 18, 2024, 6:59:08 AM",

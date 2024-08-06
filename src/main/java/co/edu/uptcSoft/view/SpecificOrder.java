@@ -367,7 +367,12 @@ public class SpecificOrder {
         addButt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Button clicked!");
+                UpdateOrder update = new UpdateOrder();
+                update.setOrder(order);
+                update.loadOrder();
+                root.getChildren().clear();
+                root.setMinSize(screenWidth - 80, screenHeight - 80);
+                root.getChildren().add(update.screen());
             }
         });
 

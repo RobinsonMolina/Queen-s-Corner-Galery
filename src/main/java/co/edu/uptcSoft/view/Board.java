@@ -108,11 +108,12 @@ public class Board {
         orderButton.setOnAction(event -> {
             String number = extractNumber(order);// Extrae el número de la orden
             SpecificOrder sOrder = new SpecificOrder();
-            // Clear current content
+            assert number != null;
+            sOrder.setOrder(logic.searchOrder(Integer.parseInt(number)));
+            sOrder.loadOrder();
             contentPanel.getChildren().clear();
-            // Add the new content
             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
-            contentPanel.getChildren().add(sOrder.screen(/*number*/));
+            contentPanel.getChildren().add(sOrder.screen());
         });
     }
 

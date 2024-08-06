@@ -1,6 +1,7 @@
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Order;
 import co.edu.uptcSoft.model.Supply;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -51,6 +52,8 @@ public class AddSupply {
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
     private String idSupply;
+    private Order order;
+    int pag; // 1. NewOrder, 2. UpdateOrder
 
     public AddSupply() {
         searchTextField = new TextField();
@@ -66,6 +69,7 @@ public class AddSupply {
 
         titleLabel = new Label("Insumos");
         titleLabel.setFont(createFont(0, 40));
+        pag = 1;
     }
 
     public BorderPane screen() {
@@ -323,11 +327,19 @@ public class AddSupply {
         buttonAdd.setText("Seleccionar");
 
         buttonAdd.setOnAction(event -> {
-            NewOrder newOrder = new NewOrder();
-
-            contentPanel.getChildren().clear();
-            contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
-            contentPanel.getChildren().add(newOrder.screen());
+            if (pag == 1){
+                NewOrder newOrder = new NewOrder();
+                contentPanel.getChildren().clear();
+                contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
+                contentPanel.getChildren().add(newOrder.screen());
+            } else if (pag == 2) {
+                UpdateOrder update = new UpdateOrder();
+                update.setOrder(order);
+                update.loadOrder();
+                contentPanel.getChildren().clear();
+                contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
+                contentPanel.getChildren().add(update.screen());
+            }
         });
 
         buttonAdd.setPrefSize(150, 34);
@@ -388,5 +400,21 @@ public class AddSupply {
                 };
             }
         });
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public int getPag() {
+        return pag;
+    }
+
+    public void setPag(int pag) {
+        this.pag = pag;
     }
 }

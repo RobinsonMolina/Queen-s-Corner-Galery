@@ -249,7 +249,10 @@ public class UpdateCustomer {
         cancelButt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Lleva al board o a la página anterior
+                CustomerList list = new CustomerList();
+                root.getChildren().clear();
+                root.setMinSize(screenWidth - 80, screenHeight - 80);
+                root.getChildren().add(list.screen());
             }
         });
 
