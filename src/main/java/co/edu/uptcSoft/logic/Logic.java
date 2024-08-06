@@ -37,9 +37,9 @@ public class Logic {
     }
 
     public void addOrder(String productName, String status, int orderNumber, String type, Date productionDate,
-                         Date deliveryDate, Long customerId, ArrayList<Materials> materials) {
+                         Date deliveryDate, Long customerId, ArrayList<Materials> materials, Customer customer1) {
         Order order = new Order(productName, status, orderNumber, type, productionDate, deliveryDate, customerId, null);
-        Customer customer1 = searchCustomer(customerId);
+
         if (!customerList.containsKey(customer1.getDocumentNumber())) {
             addCustomer(customer1.getName(), customer1.getDocumentNumber(), customer1.getEmail(), customer1.getAddress(), customer1.getPhoneNumber(), order);
         } else {

@@ -1,6 +1,7 @@
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Order;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -53,6 +54,8 @@ public class NewCustomer {
     private TextField documentTxt;
     private TextField adressTxt;
 
+    private Customer customer;
+
     public NewCustomer() {
         root = new Pane();
         components = new Components();
@@ -74,6 +77,7 @@ public class NewCustomer {
         table.getStylesheets().add(new File("src/main/resources/styles/principal.css").toURI().toString());
 
         orderList2 = new ArrayList<>();
+        customer = new Customer();
     }
 
     public Pane screen(){
@@ -220,7 +224,12 @@ public class NewCustomer {
         addButt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                confirmationData();
                 NewOrder newOrder = new NewOrder();
+                System.out.println(customer);
+                newOrder.setCustomer(customer);
+                newOrder.setDocumentId(customer.getDocumentNumber());
+                newOrder.loadCustomer(customer);
                 root.getChildren().clear();
                 root.setMinSize(screenWidth - 80, screenHeight - 80);
                 root.getChildren().add(newOrder.screen());
@@ -269,6 +278,7 @@ public class NewCustomer {
 
                 if (numValLong(phone) != null && numValLong(document) != null){
 
+                    customer = new Customer(name, Long.parseLong(document), email, address, Long.parseLong(phone));
                     if (!orderList2.isEmpty()){
                         // Se puede
                     } else {

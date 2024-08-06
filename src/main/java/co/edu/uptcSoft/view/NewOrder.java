@@ -3,6 +3,7 @@ package co.edu.uptcSoft.view;
 import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Materials;
+import co.edu.uptcSoft.model.Order;
 import co.edu.uptcSoft.model.Supply;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -122,8 +123,8 @@ public class NewOrder {
         return root;
     }
 
-    public void loadCustomer(){
-        customer = logic.searchCustomer(documentId);
+    public void loadCustomer(Customer customer){
+        this.customer = customer;
 
         customerTxt = new TextField(customer.getName());
         phoneTxt = new TextField(String.valueOf(customer.getPhoneNumber()));
@@ -346,7 +347,10 @@ public class NewOrder {
             @Override
             public void handle(ActionEvent event) {
                 confirmationData();
-                // Manda a la página siguiente
+                CustomerList list = new CustomerList();
+                root.getChildren().clear();
+                root.setMinSize(screenWidth - 80, screenHeight - 80);
+                root.getChildren().add(list.screen());
             }
         });
 
@@ -382,31 +386,35 @@ public class NewOrder {
             productionDate = Date.from(localDate1.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
             localDate2 = deliveryDateTxt.getValue();
-            productionDate = Date.from(localDate2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            deliveryDate = Date.from(localDate2.atStartOfDay(ZoneId.systemDefault()).toInstant());
         } catch (Exception e){
 
         }
 
         String product = productTxt.getText();
         String type = typeTxt.getText();
-        String customer = customerTxt.getText();
+        String customerT = customerTxt.getText();
         String phone = phoneTxt.getText();
         String orderNumber = orderNumberTxt.getText();
         String document = documentTxt.getText();
 
         try {
-            if (!product.isEmpty() && !type.isEmpty() && !customer.isEmpty() && !status.isEmpty() && !productionDateTxt.getValue().toString().isEmpty() && !phone.isEmpty() && !orderNumber.isEmpty() && !deliveryDateTxt.getValue().toString().isEmpty() && !document.isEmpty()){
+            if (!product.isEmpty() && !type.isEmpty() && !customerT.isEmpty() && !status.isEmpty() && !productionDateTxt.getValue().toString().isEmpty() && !phone.isEmpty() && !orderNumber.isEmpty() && !deliveryDateTxt.getValue().toString().isEmpty() && !document.isEmpty()){
 
                 if (numValLong(phone) != null && numValLong(document) != null){
 
                     if (numValInt(orderNumber) != -1){
 
                         if (!localDate1.toString().isEmpty() && !localDate2.toString().isEmpty()){
-                            if (!orderList2.isEmpty()){
-                                // Se puede
-                            } else {
-                                components.messageConfirmation("Debe de Tener al Menos un Insumo");
-                            }
+                            // Add Customer
+                            logic.addCustomer(customer.getName(), customer.getDocumentNumber(), customer.getEmail(), customer.getAddress(), customer.getPhoneNumber(), new Order(product, status, Integer.parseInt(orderNumber), type, productionDate,
+                                    deliveryDate, Long.parseLong(document), null));
+
+
+                            logic.addOrder(product, status, Integer.parseInt(orderNumber), type, productionDate,
+                                    deliveryDate, Long.parseLong(document), null, customer);
+                            components.messageConfirmation("Añadido Correctamente");
+
                         } else {
                             components.messageConfirmation("Ingrese una Fecha Correcta");
                         }
@@ -652,5 +660,13 @@ public class NewOrder {
 
     public void setDocumentId(Long documentId) {
         this.documentId = documentId;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

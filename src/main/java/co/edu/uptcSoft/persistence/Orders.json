@@ -1,21 +1,12 @@
 {
-  "1": {
-    "productName": "SofaCama",
-    "status": "Por Hacer",
-    "orderNumber": 1,
-    "type": "Mueble",
-    "productionDate": "Jul 18, 2024, 6:59:08 AM",
-    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
-    "customerId": 3547801234
-  },
   "2": {
-    "productName": "Mesa de Comedor",
-    "status": "En Progreso",
+    "productName": "jkhkjh",
+    "status": "Por Hacer",
     "orderNumber": 2,
-    "type": "Mueble",
-    "productionDate": "Jul 18, 2024, 6:59:08 AM",
-    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
-    "customerId": 9081235678
+    "type": "kjhkjh",
+    "productionDate": "Aug 9, 2024, 12:00:00 AM",
+    "deliveryDate": "Aug 13, 2024, 12:00:00 AM",
+    "customerId": 1111111111
   },
   "3": {
     "productName": "Silla de Oficina",
@@ -63,13 +54,13 @@
     "customerId": 8901234567
   },
   "8": {
-    "productName": "Silla de Comedor",
-    "status": "En Progreso",
+    "productName": "iuhiuhiIU",
+    "status": "Por Hacer",
     "orderNumber": 8,
-    "type": "Mueble",
-    "productionDate": "Jul 18, 2024, 6:59:08 AM",
-    "deliveryDate": "Jul 18, 2024, 6:59:08 AM",
-    "customerId": 7650981234
+    "type": "iuhiuh",
+    "productionDate": "Aug 16, 2024, 12:00:00 AM",
+    "deliveryDate": "Aug 14, 2024, 12:00:00 AM",
+    "customerId": 1111111111
   },
   "9": {
     "productName": "Mesa de Noche",
