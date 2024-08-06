@@ -328,7 +328,10 @@ public class NewOrder {
         addButt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Button clicked!");
+                AddSupply list = new AddSupply();
+                root.getChildren().clear();
+                root.setMinSize(screenWidth - 80, screenHeight - 80);
+                root.getChildren().add(list.screen());
             }
         });
 

@@ -92,6 +92,10 @@ public class Logic {
         return ordersDelivered;
     }
 
+    public Order searchOrder(int id) {
+        return orderList.get(id);
+    }
+
     //////////////////////////////SUPPLY///////////////////////////////////////////
 
     public void addSupply(String material, String category, String characteristics, int quantity, String unit, int unitPrice, int totalPrice) {

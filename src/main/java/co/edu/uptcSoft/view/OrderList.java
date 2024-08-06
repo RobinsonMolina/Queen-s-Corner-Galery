@@ -447,9 +447,9 @@ public class OrderList {
                             int rowIndex = getIndex();
                             int index = orderList2.get(rowIndex).getOrderNumber();
                             SpecificOrder oSpecific = new SpecificOrder();
-                            // Clear current content
+                            oSpecific.setOrder(logic.searchOrder(index));
+                            oSpecific.loadOrder();
                             contentPanel.getChildren().clear();
-                            // Add the new content
                             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
                             contentPanel.getChildren().add(oSpecific.screen());
                         }

@@ -1,7 +1,9 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Materials;
+import co.edu.uptcSoft.model.Order;
 import co.edu.uptcSoft.model.Supply;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,13 +18,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
-import java.time.LocalDate;
-import java.time.ZoneId;
+
 import java.util.ArrayList;
 import java.util.Date;
 import static co.edu.uptcSoft.view.Components.createFont;
 
 public class SpecificOrder {
+
+    private Logic logic = Logic.getInstance();
 
     private Pane root;
     private Components components;
@@ -55,6 +58,8 @@ public class SpecificOrder {
     private DatePicker deliveryDateTxt;
     private TextField documentTxt;
 
+    private Order order;
+
     public SpecificOrder() {
         root = new Pane();
         components = new Components();
@@ -74,6 +79,36 @@ public class SpecificOrder {
         documentTxt = new TextField();
 
         status = "Por Hacer";
+        order = new Order();
+    }
+
+    public void loadOrder(){
+
+        Customer cus = logic.searchCustomer(order.getCustomer());
+
+        productTxt = new TextField(order.getProductName());
+        typeTxt = new TextField(order.getType());
+        customerTxt = new TextField(cus.getName());
+
+        status = order.getStatus();
+        //productionDateTxt = new DatePicker(LocalDate.from(order.getProductionDate()));
+        phoneTxt = new TextField("" + cus.getPhoneNumber());
+
+        orderNumberTxt = new TextField("" + order.getOrderNumber());
+        //deliveryDateTxt;
+        documentTxt = new TextField("" + cus.getDocumentNumber());
+
+        productTxt.setEditable(false);
+        typeTxt.setEditable(false);
+        customerTxt.setEditable(false);
+
+        //status.setEditable(false);
+        //.setEditable(false);
+        phoneTxt.setEditable(false);
+
+        orderNumberTxt.setEditable(false);
+        //.setEditable(false);
+        documentTxt.setEditable(false);
     }
 
     public Pane screen() {
@@ -317,18 +352,16 @@ public class SpecificOrder {
 
     //Buttons
     public void buttons(){
-        Button addButt = new Button("+ Material");
-        Button cancelButt = new Button("Cancelar");
-        Button newButt = new Button("Agregar");
+        Button addButt = new Button("Actualizar");
+        Button cancelButt = new Button("Regresar");
 
         addButt.setPrefSize(107, 12);
         cancelButt.setPrefSize(107, 12);
-        newButt.setPrefSize(107, 12);
 
         buttonsHBox.setSpacing(25);
         VBox.setMargin(buttonsHBox, new Insets(20, 30, 20, 0));
         buttonsHBox.setAlignment(Pos.CENTER_RIGHT);
-        buttonsHBox.getChildren().addAll(addButt, newButt, cancelButt);
+        buttonsHBox.getChildren().addAll(addButt, cancelButt);
         informationVBox.getChildren().add(buttonsHBox);
 
         addButt.setOnAction(new EventHandler<ActionEvent>() {
@@ -341,93 +374,22 @@ public class SpecificOrder {
         cancelButt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Lleva al board o a la página anterior
-            }
-        });
-
-        newButt.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                confirmationData();
-                // Manda a la página siguiente
+                OrderList list = new OrderList();
+                root.getChildren().clear();
+                root.setMinSize(screenWidth - 80, screenHeight - 80);
+                root.getChildren().add(list.screen());
             }
         });
 
         addButt.getStyleClass().add("rounded-button");
         cancelButt.getStyleClass().add("rounded-button");
-        newButt.getStyleClass().add("rounded-button");
     }
 
-    // Validations
-    public Long numValLong(String num){
-        try {
-            return num.length() == 10 ? Long.parseLong(num) : null;
-        } catch (Exception e) {
-            return null;
-        }
+    public Order getOrder() {
+        return order;
     }
 
-    public int numValInt(String numStr){
-        try {
-            return Integer.parseInt(numStr);
-        } catch (Exception e) {
-            return -1;
-        }
-    }
-
-    public void confirmationData(){
-
-        LocalDate localDate1 =  LocalDate.of(1000, 1, 1);
-        LocalDate localDate2 = LocalDate.of(1000, 1, 1);;
-
-        try {
-            localDate1 = productionDateTxt.getValue();
-            productionDate = Date.from(localDate1.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-            localDate2 = deliveryDateTxt.getValue();
-            productionDate = Date.from(localDate2.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        } catch (Exception e){
-
-        }
-
-        String product = productTxt.getText();
-        String type = typeTxt.getText();
-        String customer = customerTxt.getText();
-        String phone = phoneTxt.getText();
-        String orderNumber = orderNumberTxt.getText();
-        String document = documentTxt.getText();
-
-        try {
-            if (!product.isEmpty() && !type.isEmpty() && !customer.isEmpty() && !status.isEmpty() && !productionDateTxt.getValue().toString().isEmpty() && !phone.isEmpty() && !orderNumber.isEmpty() && !deliveryDateTxt.getValue().toString().isEmpty() && !document.isEmpty()){
-
-                if (numValLong(phone) != null && numValLong(document) != null){
-
-                    if (numValInt(orderNumber) != -1){
-
-                        if (!localDate1.toString().isEmpty() && !localDate2.toString().isEmpty()){
-                            // Se puede pasar a la siguiente pestaña
-                        } else {
-                            components.messageConfirmation("Ingrese una Fecha Correcta");
-                        }
-                    } else {
-                        // Ingrese un número
-                        components.messageConfirmation("Ingrese un Número de Orden Válido");
-                    }
-                } else{
-                    // Ingrese un valor de 10 dígitos
-                    components.messageConfirmation("Ingrese un Número de Teléfono o de Documento de Diez Digitos");
-                }
-
-            } else {
-                components.messageConfirmation("Ingrese Todos los Datos");
-                System.out.println("\n1: " + productTxt.getText() + "\n2: " + typeTxt.getText() + "\n3: " + customerTxt.getText() + "\n4: " + status + "\n5: " +
-                        productionDateTxt.getValue() +"\n6: " + phoneTxt.getText() + "\n7: " + orderNumberTxt.getText() + "\n8: " + deliveryDateTxt.getValue() + "\n9: " + documentTxt.getText());
-            }
-        } catch (Exception e){
-            components.messageConfirmation("Ingrese todos los datos");
-            System.out.println("\n1: " + productTxt.getText() + "\n2: " + typeTxt.getText() + "\n3: " + customerTxt.getText() + "\n4: " + status + "\n5: " +
-                    productionDateTxt.getValue() +"\n6: " + phoneTxt.getText() + "\n7: " + orderNumberTxt.getText() + "\n8: " + deliveryDateTxt.getValue() + "\n9: " + documentTxt.getText());
-            e.printStackTrace();
-        }
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
