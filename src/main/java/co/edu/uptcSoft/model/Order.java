@@ -13,20 +13,20 @@ public class Order implements Comparable<Order> {
     @Expose private String type;
     @Expose private Date productionDate;
     @Expose private Date deliveryDate;
-    @Expose private Customer customer;
+    @Expose private Long customerId;
     @Expose private ArrayList<Materials> materials;
 
     public Order() {
     }
 
-    public Order(String productName, String status, int orderNumber, String type, Date productionDate, Date deliveryDate, Customer customer, ArrayList<Materials> materials) {
+    public Order(String productName, String status, int orderNumber, String type, Date productionDate, Date deliveryDate, Long customer, ArrayList<Materials> materials) {
         this.productName = productName;
         this.status = status;
         this.orderNumber = orderNumber;
         this.type = type;
         this.productionDate = productionDate;
         this.deliveryDate = deliveryDate;
-        this.customer = customer;
+        this.customerId = customer;
         this.materials = materials;
     }
 
@@ -78,12 +78,12 @@ public class Order implements Comparable<Order> {
         this.deliveryDate = deliveryDate;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Long getCustomer() {
+        return customerId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomer(Long customer) {
+        this.customerId = customer;
     }
 
     public ArrayList<Materials> getMaterials() {
@@ -108,7 +108,7 @@ public class Order implements Comparable<Order> {
                 ", type='" + type + '\'' +
                 ", productionDate=" + productionDate +
                 ", deliveryDate=" + deliveryDate +
-                ", customer=" + customer +
+                ", customer=" + customerId +
                 ", materials=" + materials +
                 '}';
     }

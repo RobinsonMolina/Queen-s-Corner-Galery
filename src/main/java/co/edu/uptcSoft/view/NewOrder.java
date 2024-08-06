@@ -72,6 +72,8 @@ public class NewOrder {
     private DatePicker deliveryDateTxt;
     private TextField documentTxt;
 
+    private Long documentId;
+
     public NewOrder() {
         root = new Pane();
         components = new Components();
@@ -97,7 +99,9 @@ public class NewOrder {
         table = new TableView<>();
         applyRowStyles();
         table.getStylesheets().add(new File("src/main/resources/styles/principal.css").toURI().toString());
+
         orderList2 = new ArrayList<>();
+        customer = new Customer();
     }
 
     public Pane screen(){
@@ -116,6 +120,14 @@ public class NewOrder {
         principal.setPrefSize(screenWidth - 80, screenHeight - 80);
 
         return root;
+    }
+
+    public void loadCustomer(){
+        customer = logic.searchCustomer(documentId);
+
+        customerTxt = new TextField(customer.getName());
+        phoneTxt = new TextField(String.valueOf(customer.getPhoneNumber()));
+        documentTxt = new TextField(String.valueOf(customer.getDocumentNumber()));
     }
 
     public void title(){
@@ -629,5 +641,13 @@ public class NewOrder {
         label.setFont(createFont(style, size));
         column.setText(""); // Remove the default header text
         column.setGraphic(label);
+    }
+
+    public Long getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
     }
 }

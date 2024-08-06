@@ -37,14 +37,15 @@ public class Logic {
     }
 
     public void addOrder(String productName, String status, int orderNumber, String type, Date productionDate,
-                         Date deliveryDate, Customer customer, ArrayList<Materials> materials) {
-        Order order = new Order(productName, status, orderNumber, type, productionDate, deliveryDate, customer, null);
-        if (!customerList.containsKey(customer.getDocumentNumber())) {
-            addCustomer(customer.getName(), customer.getDocumentNumber(), customer.getEmail(), customer.getAddress(), customer.getPhoneNumber(), order);
+                         Date deliveryDate, Long customerId, ArrayList<Materials> materials) {
+        Order order = new Order(productName, status, orderNumber, type, productionDate, deliveryDate, customerId, null);
+        Customer customer1 = searchCustomer(customerId);
+        if (!customerList.containsKey(customer1.getDocumentNumber())) {
+            addCustomer(customer1.getName(), customer1.getDocumentNumber(), customer1.getEmail(), customer1.getAddress(), customer1.getPhoneNumber(), order);
         } else {
-            Customer customer2 = customerList.get(customer.getDocumentNumber());
+            Customer customer2 = customerList.get(customer1.getDocumentNumber());
             customer2.addOrder(order);
-            order.setCustomer(customer2);
+            order.setCustomer(customer2.getDocumentNumber());
         }
         orderList.put(orderNumber, order);
         ordersCard();
@@ -140,18 +141,18 @@ public class Logic {
         boolean hasOrders = false;
         for (Map.Entry<Integer, Order> entry : orderList.entrySet()) {
             Order existingOrder = entry.getValue();
-            Customer existingCustomer = existingOrder.getCustomer();
+            Customer existingCustomer = searchCustomer(existingOrder.getCustomer());
 
             if (existingCustomer != null && existingCustomer.getDocumentNumber() == documentNumber) {
                 hasOrders = true;
                 customer.addOrder(existingOrder);
-                existingOrder.setCustomer(customer);
+                existingOrder.setCustomer(customer.getDocumentNumber());
             }
         }
 
         if (!hasOrders && order != null) {
             customer.addOrder(order);
-            order.setCustomer(customer);
+            order.setCustomer(customer.getDocumentNumber());
         }
 
         customerList.put(documentNumber, customer);

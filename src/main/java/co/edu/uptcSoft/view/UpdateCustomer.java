@@ -238,6 +238,8 @@ public class UpdateCustomer {
             @Override
             public void handle(ActionEvent event) {
                 NewOrder newOrder = new NewOrder();
+                newOrder.setDocumentId(documentId);
+                newOrder.loadCustomer();
                 root.getChildren().clear();
                 root.setMinSize(screenWidth - 80, screenHeight - 80);
                 root.getChildren().add(newOrder.screen());

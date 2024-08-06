@@ -1,5 +1,6 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Order;
 import co.edu.uptcSoft.logic.Logic;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -293,12 +294,22 @@ public class OrderList {
             trashView.setFitHeight(24);
             trashView.setPreserveRatio(true);
 
+            Customer customer = new Customer();
+            try {
+
+                Logic logic1 = new Logic();
+                customer = logic1.searchCustomer(order.getCustomer());
+            } catch (Exception e){
+
+            }
+
             // Add the rows with the icons
             ObservableList<Object> row = FXCollections.observableArrayList(
+
                     order.getOrderNumber(),
                     order.getProductName(),
-                    order.getCustomer().getName(),
-                    order.getCustomer().getPhoneNumber(),
+                    customer.getName(),
+                    customer.getPhoneNumber(),
                     formato.format(order.getDeliveryDate()),
                     eyeView,   // View icon
                     editView,  // Edit icon
