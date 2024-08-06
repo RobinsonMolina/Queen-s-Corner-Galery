@@ -370,12 +370,13 @@ public class SupplyList {
         buttonAdd.setText("Agregar");
 
         buttonAdd.setOnAction(event -> {
-            NewOrder newOrder = new NewOrder();
-            // Clear the current content
             contentPanel.getChildren().clear();
+            NewSupply newSupply = new NewSupply();
+            // Clear the current content
+
             //  Add the new content
             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
-            contentPanel.getChildren().add(newOrder.screen());
+            contentPanel.getChildren().add(newSupply.screen());
         });
 
         buttonAdd.setPrefSize(150, 34);
