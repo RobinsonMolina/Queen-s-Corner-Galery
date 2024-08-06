@@ -1,445 +1,302 @@
 package co.edu.uptcSoft.view;
 
-import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
-import javax.swing.*;
-import javax.swing.border.AbstractBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import co.edu.uptcSoft.model.Materials;
+import co.edu.uptcSoft.model.Order;
+import co.edu.uptcSoft.model.Supply;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.stage.Screen;
+import java.util.ArrayList;
+import static co.edu.uptcSoft.view.Components.createFont;
 
-public class NewCustomer implements ActionListener {
-    /*
-    //private JFrame specificOrderWindow;
-    private JPanel allInformation;
-    private JPanel allInfoPanel;
-    //private JPanel window;
-    private JPanel dataSpecificOrder;
+public class NewCustomer {
+
+    private Pane root;
     private Components components;
-    private JButton add;
-    private JButton save;
-    private JButton cancel;
+    private VBox principal;
+    private Label titleLabel;
+    private VBox informationVBox;
+    private HBox buttonsHBox;
 
-    private JTextField nameTxt;
-    private JTextField emailTxt;
-    private JTextField phoneTxt;
-    private JTextField documentTxt;
-    private JTextField addressTxt;
+    double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
-    private Logic logic;
-    private String name;
-    private long document;
-    private String email;
-    private String address;
-    private long phoneNumber;
+    private ArrayList<Order> ordes;
 
-    private Customer customer;
-    private JTable table;
+    private TextField nameTxt;
+    private TextField emailTxt;
 
-    public NewCustomer(){
+    private TextField phoneTxt;
+    private TextField documentTxt;
+    private TextField adressTxt;
 
+    public NewCustomer() {
+        root = new Pane();
+        components = new Components();
+        principal = new VBox();
+        titleLabel = new Label("Nuevo Cliente");
+        informationVBox = new VBox();
+        buttonsHBox = new HBox();
+
+        nameTxt = new TextField();
+        emailTxt = new TextField();
+        adressTxt = new TextField();
+        phoneTxt = new TextField();
+        documentTxt = new TextField();
     }
 
-    public NewCustomer(JPanel mainContentPanel) {
-        allInfoPanel = mainContentPanel;
-        allInfoPanel = new JPanel();
-        components = new Components(mainContentPanel);
-        allInformation = new JPanel();
-        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
-        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
-        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
+    public Pane screen(){
+        title();
+        allInfo();
+        buttons();
 
-        add = new JButton("+ Orden");
-        save = new JButton("Aceptar");
-        cancel = new JButton("Cancelar");
+        principal.getChildren().addAll(titleLabel, informationVBox);
+        principal.setAlignment(Pos.TOP_CENTER);
 
-        nameTxt = new JTextField();
-        emailTxt = new JTextField();
-        phoneTxt = new JTextField();
-        documentTxt = new JTextField();
-        addressTxt = new JTextField();
+        informationVBox.setPrefWidth(screenWidth - 80);
+        principal.setPrefSize(screenWidth - 80, screenHeight - 80);
 
-        logic = Logic.getInstance();
-        customer = new Customer();
-        table = new JTable();
+        root.getChildren().add(principal);
+        principal.setPrefSize(screenWidth - 80, screenHeight - 80);
+
+        return root;
     }
 
-    public JPanel addSpecificOrder(){
-        JLabel title = new JLabel("Crear Cliente");
-
-        allInfoPanel.setPreferredSize(new Dimension(1286, 590));
-
-        title.setFont(components.createFont(0, 40));
-        title.setPreferredSize(new Dimension(389, 47));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        allInfoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        allInfoPanel.add(Box.createVerticalStrut(30));
-        allInfoPanel.add(title);
-        allInfoPanel.add(Box.createVerticalStrut(30));
-        setSpecificData();
-        dataSpecificOrder.setPreferredSize(new Dimension(886, 200));
-        dataSpecificOrder.setBorder(new EmptyBorder(0, 200, 0, 200));
-
-        allInfoPanel.add(dataSpecificOrder);
-
-        table();
-        allInfoPanel.setBackground(Color.WHITE);
-        dataSpecificOrder.setBackground(Color.WHITE);
-
-        allInformation.add(allInfoPanel);
-        return allInfoPanel;
+    public void title(){
+        VBox.setMargin(titleLabel, new Insets(30, 0, 0, 0));
+        titleLabel.setFont(createFont(0, 40));
+        titleLabel.setPrefHeight(112);
+        titleLabel.setAlignment(Pos.TOP_CENTER);
     }
 
-    public void setSpecificData(){
-        JLabel name = new JLabel("Nombre");
-        JLabel email = new JLabel("Email");
-        JLabel phone = new JLabel("Teléfono");
-        JLabel document = new JLabel("Documento");
-        JLabel address = new JLabel("Dirección");
-
-        name.setFont(components.createFont(0, 20));
-        email.setFont(components.createFont(0, 20));
-        phone.setFont(components.createFont(0, 20));
-        document.setFont(components.createFont(0, 20));
-        address.setFont(components.createFont(0, 20));
-
-        nameTxt.setFont(components.createFont(1, 20));
-        emailTxt.setFont(components.createFont(1, 20));
-        phoneTxt.setFont(components.createFont(1, 20));
-        documentTxt.setFont(components.createFont(1, 20));
-        addressTxt.setFont(components.createFont(1, 20));
-
-        int borderRadius = 5;
-        Color borderColor = Color.decode("#2F1940");
-
-        nameTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        emailTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        addressTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        documentTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-
-        name.setPreferredSize(new Dimension(116, 30));
-        email.setPreferredSize(new Dimension(116, 30));
-        address.setPreferredSize(new Dimension(116, 30));
-
-        nameTxt.setPreferredSize(new Dimension(300, 35));
-        emailTxt.setPreferredSize(new Dimension(300, 35));
-        addressTxt.setPreferredSize(new Dimension(300, 35));
-
-        phone.setPreferredSize(new Dimension(116, 30));
-        document.setPreferredSize(new Dimension(116, 30));
-
-        phoneTxt.setPreferredSize(new Dimension(300, 35));
-        documentTxt.setPreferredSize(new Dimension(300, 35));
-
-        dataSpecificOrder.add(name);
-        dataSpecificOrder.add(nameTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(54));
-
-        dataSpecificOrder.add(document);
-        dataSpecificOrder.add(documentTxt);
-
-        dataSpecificOrder.add(email);
-        dataSpecificOrder.add(emailTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(54));
-
-        dataSpecificOrder.add(address);
-        dataSpecificOrder.add(addressTxt);
-
-        dataSpecificOrder.add(phone);
-        dataSpecificOrder.add(phoneTxt);
-
-        dataSpecificOrder.add(Box.createHorizontalStrut(470));
+    // All Center Info (VBox)
+    public void allInfo(){
+        data();
+        data2();
     }
 
+    // Order Info (HB)
+    public void data(){
+        HBox data = new HBox();
+        VBox info1VB = new VBox();
+        VBox info2VB = new VBox();
+        VBox info3VB = new VBox();
+        VBox info4VB = new VBox();
 
-    public void table(){
-        JPanel jPanel = new JPanel(new BorderLayout());
-        JLabel materialsTitle = new JLabel("Productos Ordenados");
+        // Space between nodes
+        info1VB.setSpacing(20);
+        info2VB.setSpacing(20);
+        info3VB.setSpacing(20);
+        info4VB.setSpacing(20);
+        data.setSpacing(15);
 
-        materialsTitle.setFont(components.createFont(0, 30));
-        materialsTitle.setPreferredSize(new Dimension(380, 30));
-        materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
+        Label name = new Label("Nombre");
+        Label email = new Label("Email");
+        Label phone = new Label("Celular");
+        Label document = new Label("Documento");
+        Label address = new Label("Dirección");
 
-        ImageIcon icon = new ImageIcon("src/Utilities/Images/Trash.png");
-        Image image = icon.getImage();
-        ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        info1VB.getChildren().addAll(name, email, phone);
+        info3VB.getChildren().addAll(document, address);
+        info2VB.getChildren().addAll(nameTxt, emailTxt, phoneTxt);
+        info4VB.getChildren().addAll(documentTxt, adressTxt);
 
-        Object[][] data = {
+        name.setPrefSize(80, 30);
+        email.setPrefSize(80, 30);
+        phone.setPrefSize(80, 30);
+        document.setPrefSize(154, 30);
+        address.setPrefSize(154, 30);
 
-        };
+        nameTxt.setPrefSize(300, 30);
+        emailTxt.setPrefSize(300, 30);
+        phoneTxt.setPrefSize(180, 30);
+        documentTxt.setPrefSize(180, 30);
+        adressTxt.setPrefSize(300, 30);
 
-        String[] columnNames = {"Numero de Orden", "Producto", "Fecha de Entrega", "", ""};
+        // Font Labels
+        name.setFont(createFont(1, 20));
+        email.setFont(createFont(1, 20));
+        phone.setFont(createFont(1, 20));
+        document.setFont(createFont(1, 20));
+        address.setFont(createFont(1, 20));
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-            @Override
-            public Class<?> getColumnClass(int column) {
-                if (column == 3 || column == 4) {
-                    return Icon.class;
-                }
-                return super.getColumnClass(column);
-            }
+        nameTxt.setFont(createFont(1, 18));
+        emailTxt.setFont(createFont(1, 18));
+        phoneTxt.setFont(createFont(1, 18));
+        documentTxt.setFont(createFont(1, 18));
+        adressTxt.setFont(createFont(1, 18));
+
+        // Size
+        name.setMinHeight(35);
+        email.setMinHeight(35);
+        phone.setMinHeight(35);
+        document.setMinHeight(35);
+        address.setMinHeight(35);
+
+        nameTxt.setMinHeight(35);
+        emailTxt.setMinHeight(35);
+        phoneTxt.setMinHeight(35);
+        documentTxt.setMinHeight(35);
+        adressTxt.setMinHeight(35);
+
+        data.setAlignment(Pos.CENTER);
+        data.getChildren().addAll(info1VB, info2VB, info3VB, info4VB);
+        informationVBox.getChildren().add(data);
+
+        // Border Color
+        nameTxt.getStyleClass().add("rounded-textfield");
+        emailTxt.getStyleClass().add("rounded-textfield");
+        adressTxt.getStyleClass().add("rounded-textfield");
+        phoneTxt.getStyleClass().add("rounded-textfield");
+        documentTxt.getStyleClass().add("rounded-textfield");
+    }
+
+    // VBox Data (title, table)
+    public void data2(){
+        VBox dataVBox = new VBox();
+        Label title = new Label("Materiales Requeridos");
+
+        VBox.setMargin(title, new Insets(35, 0, 35, 0));
+        title.setFont(createFont(0, 30));
+        title.setPrefHeight(50);
+
+        // Table
+        TableView <Order> tableView = new TableView<>();
+        TableColumn<Order, String> codeColumn = new TableColumn<>("Número de Orden");
+        //codeColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<Order, String> materialColumn = new TableColumn<>("Producto");
+        //materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
+
+        TableColumn<Order, Integer> quantityColumn = new TableColumn<>("Fecha de Entrega");
+        //quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+        TableColumn<Order, Void> iconColumn = new TableColumn<>("Icon");
+        iconColumn.setCellFactory(column -> new TableCell<Order, Void>() {
+            private final ImageView imageView = new ImageView(new Image("/styles/utilities/images/Trash.png"));
 
             @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        table = new JTable(model);
-        table.setRowHeight(34);
-        table.setShowGrid(false);
-        table.getColumnModel().getColumn(3).setMaxWidth(50);
-        table.getColumnModel().getColumn(4).setMaxWidth(50);
-        table.setPreferredSize(new Dimension(1286, 156));
-
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(Color.decode("#D9D9D9"));
-        header.setPreferredSize(new Dimension(283, 34));
-
-        header.setDefaultRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Focuses the text
-                if (c instanceof JLabel) {
-                    JLabel label = (JLabel) c;
-                    label.setFont(components.createFont(0, 20));
-                    label.setHorizontalAlignment(JLabel.CENTER);
-                    label.setVerticalAlignment(JLabel.CENTER);
-                }
-
-                // Change column header color
-                if (column == 3 || column == 4) {
-                    c.setBackground(Color.WHITE);
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
                 } else {
-                    c.setBackground(header.getBackground());
+                    imageView.setFitWidth(20);
+                    imageView.setFitHeight(20);
+                    setGraphic(imageView);
                 }
-
-                return c;
             }
         });
 
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        // Add Columns
+        tableView.getColumns().add(codeColumn);
+        tableView.getColumns().add(materialColumn);
+        tableView.getColumns().add(quantityColumn);
+        tableView.getColumns().add(iconColumn);
 
+        ScrollPane scrollPane = new ScrollPane(tableView);
+        scrollPane.setPrefWidth(screenWidth - 80);
+        tableView.setPrefWidth(screenWidth - 80);
+        dataVBox.setPrefWidth(screenWidth - 80);
+
+        scrollPane.setPrefHeight(136);
+        tableView.setPrefHeight(136);
+        dataVBox.setPrefHeight(scrollPane.getPrefHeight() + title.getPrefHeight() + 70);
+
+        dataVBox.setPadding(new Insets(0, 30, 0, 30));
+        dataVBox.getChildren().addAll(title, scrollPane);
+
+        informationVBox.getChildren().add(dataVBox);
+    }
+
+    //Buttons
+    public void buttons(){
+        Button addButt = new Button("+ Order");
+        Button cancelButt = new Button("Cancelar");
+        Button newButt = new Button("Agregar");
+
+        addButt.setPrefSize(107, 12);
+        cancelButt.setPrefSize(107, 12);
+        newButt.setPrefSize(107, 12);
+
+        buttonsHBox.setSpacing(25);
+        VBox.setMargin(buttonsHBox, new Insets(20, 30, 20, 0));
+        buttonsHBox.setAlignment(Pos.CENTER_RIGHT);
+        buttonsHBox.getChildren().addAll(addButt, newButt, cancelButt);
+        informationVBox.getChildren().add(buttonsHBox);
+
+        addButt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                // Focuses the text
-                if (cell instanceof JLabel) {
-                    JLabel label = (JLabel) cell;
-                    label.setFont(components.createFont(1, 20));
-                    label.setHorizontalAlignment(JLabel.CENTER);
-                    label.setVerticalAlignment(JLabel.CENTER);
-                }
-
-                // Change the color of the rows
-                if (row % 2 == 0) {
-                    cell.setBackground(Color.white);
-                } else {
-                    cell.setBackground(Color.decode("#D9D9D9"));
-                }
-
-                return cell;
+            public void handle(ActionEvent event) {
+                System.out.println("Button clicked!");
             }
         });
 
-        setupTableMouseListener(table);
-        JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(1286, 155));
-        tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
-
-        jPanel.add(materialsTitle, BorderLayout.NORTH);
-        jPanel.add(tableScrollPane, BorderLayout.CENTER);
-        jPanel.add(buttons(), BorderLayout.SOUTH);
-        jPanel.setBorder(new EmptyBorder(10, 55, 0, 55));
-
-        jPanel.setPreferredSize(new Dimension(1286, 155));
-        jPanel.setBackground(Color.white);
-        tableScrollPane.setBackground(Color.white);
-
-        allInfoPanel.add(Box.createVerticalStrut(35));
-        allInfoPanel.add(jPanel);
-    }
-
-    public class RoundedBorder extends AbstractBorder {
-        private final int radius;
-        private final Color borderColor;
-
-        public RoundedBorder(int radius, Color borderColor) {
-            this.radius = radius;
-            this.borderColor = borderColor;
-        }
-
-        @Override
-        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            Graphics2D g2d = (Graphics2D) g.create();
-
-            g2d.setColor(borderColor);
-            if (borderColor == null) {
-                g2d.setStroke(new BasicStroke(4));
-            }
-            g2d.drawRoundRect(x, y, width, height, radius, radius);
-            g2d.dispose();
-        }
-
-        @Override
-        public Insets getBorderInsets(Component c) {
-            return new Insets(this.radius, this.radius, this.radius, this.radius);
-        }
-
-        @Override
-        public Insets getBorderInsets(Component c, Insets insets) {
-            insets.left = insets.top = insets.right = insets.bottom = this.radius;
-            return insets;
-        }
-    }
-
-    public JPanel buttons() {
-        JPanel buttons = new JPanel(new FlowLayout());
-
-        buttons.add(Box.createHorizontalStrut(700));
-        buttons.add(add);
-        buttons.add(save);
-        buttons.add(cancel);
-
-        add.setBackground(Color.decode("#2F1940"));
-        save.setBackground(Color.decode("#2F1940"));
-        cancel.setBackground(Color.decode("#2F1940"));
-
-        add.setFont(components.createFont(1, 20));
-        save.setFont(components.createFont(1, 20));
-        cancel.setFont(components.createFont(1, 20));
-
-        add.setForeground(Color.white);
-        save.setForeground(Color.white);
-        cancel.setForeground(Color.white);
-
-        add.setPreferredSize(new Dimension(127, 32));
-        save.setPreferredSize(new Dimension(127, 32));
-        cancel.setPreferredSize(new Dimension(127, 32));
-
-        add.setBorder((new RoundedBorder(10, null)));
-        save.setBorder((new RoundedBorder(10, null)));
-        cancel.setBorder((new RoundedBorder(10, null)));
-
-        add.addActionListener(this);
-        save.addActionListener(this);
-        cancel.addActionListener(this);
-
-        buttons.setBackground(Color.white);
-        return buttons;
-    }
-
-    private void setupTableMouseListener(JTable table) {
-        table.addMouseListener(new MouseAdapter() {
+        cancelButt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                int column = table.columnAtPoint(e.getPoint());
-                int row = table.rowAtPoint(e.getPoint());
-
-                if (column == 3) {
-                    // change the content of the main panel instead of opening a new window
-                    allInfoPanel.removeAll();
-                    allInfoPanel.add(new UpdateOrder(allInfoPanel).addSpecificOrder(4));
-                    allInfoPanel.revalidate();
-                    allInfoPanel.repaint();
-                } else if (column == 4) {
-                    String valor = String.valueOf(table.getValueAt(row, 0).toString());
-                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
-
-                }
+            public void handle(ActionEvent event) {
+                // Lleva al board o a la página anterior
             }
         });
-    }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == add) {
-            addCurrent();
-            if (name.isEmpty() || document == 0 || email.isEmpty() || address.isEmpty() || phoneNumber == 0) {
-                components.windowConfirmation("Ingrese todos los datos del cliente", "Aceptar", "Datos del Cliente");
-            } else {
-
-                allInfoPanel.removeAll();
-                NewOrder order = new NewOrder(allInfoPanel);
-                order.setCurrentCustomer(getCustomer());
-
-                allInfoPanel.add(order.addSpecificOrder(3));
-                allInfoPanel.revalidate();
-                allInfoPanel.repaint();
+        newButt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                confirmationData();
+                // Manda a la página siguiente
             }
+        });
 
-        } else if (e.getSource() == save) {
-            addCurrent();
-            addCustomer();
-        } else if (e.getSource() == cancel) {
-            allInfoPanel.removeAll();
-            allInfoPanel.add(new CustomerList(allInfoPanel).initializeContentPanel());
-            allInfoPanel.revalidate();
-            allInfoPanel.repaint();
-        }
+        addButt.getStyleClass().add("rounded-button");
+        cancelButt.getStyleClass().add("rounded-button");
+        newButt.getStyleClass().add("rounded-button");
     }
 
-    public void addCurrent(){
+    // Validations
+    public Long numValLong(String num){
         try {
-            name = nameTxt.getText();
-            document = Long.parseLong(documentTxt.getText());
-            email = emailTxt.getText();
-            address = addressTxt.getText();
-            phoneNumber = Long.parseLong(phoneTxt.getText());
-            setCustomer(new Customer(name, document, email, address, phoneNumber));
+            return num.length() == 10 ? Long.parseLong(num) : null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void confirmationData(){
+
+        String name = nameTxt.getText();
+        String email = emailTxt.getText();
+        String phone = phoneTxt.getText();
+        String document = documentTxt.getText();
+        String address = adressTxt.getText();
+
+        try {
+            if (!name.isEmpty() && !email.isEmpty() && !phone.isEmpty() && !address.isEmpty() && !document.isEmpty()){
+
+                if (numValLong(phone) != null && numValLong(document) != null){
+
+                    // Se puede
+                } else{
+                    // Ingrese un valor de 10 dígitos
+                    components.messageConfirmation("Ingrese un Número de Diez Digitos");
+                }
+
+            } else {
+                components.messageConfirmation("Ingrese Todos los Datos");
+            }
         } catch (Exception e){
-            //e.printStackTrace();
+            components.messageConfirmation("Ingrese todos los datos");
+            e.printStackTrace();
         }
-
-    }
-
-    public void addCustomer(){
-        if (name.isEmpty() || document == 0 || email.isEmpty() || address.isEmpty() || phoneNumber == 0) {
-            components.windowConfirmation("Ingrese todos los datos del cliente", "Aceptar", "Datos del Cliente");
-        } else if (table.getRowCount() == 0) {
-            components.windowConfirmation("Debe de tener al menos una Producto Ordenado", "Aceptar", "Producto Ordenado");
-        } else {
-            components.windowConfirmation("¿Está seguro de añadir este cliente?", "Cancelar", "Añadir", "Cliente añadido con éxito");
-            components.setCurrentCustomer(getCustomer());
-        }
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public void addCustomerLogic(Customer custo){
-        logic.addCustomer(custo.getName(), custo.getDocumentNumber(), custo.getEmail(), custo.getAddress(), custo.getPhoneNumber(), null);
-    }
-
-    public void addCompleteCustomer(Customer customer){
-        nameTxt = new JTextField(customer.getName());
-        documentTxt = new JTextField(String.valueOf(customer.getDocumentNumber()));
-        emailTxt = new JTextField(customer.getEmail());
-        addressTxt = new JTextField(customer.getAddress());
-        phoneTxt = new JTextField(String.valueOf(customer.getPhoneNumber()));
-
-        setCustomer(customer);
-    }
-
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }

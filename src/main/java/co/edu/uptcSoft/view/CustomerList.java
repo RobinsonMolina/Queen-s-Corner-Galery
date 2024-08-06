@@ -340,7 +340,7 @@ public class CustomerList  {
             contentPanel.getChildren().clear();
             // Agregar el nuevo contenido
             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
-            //contentPanel.getChildren().add(newCustomer.screen());
+            contentPanel.getChildren().add(newCustomer.screen());
         });
 
         buttonAdd.setPrefSize(150, 34);
