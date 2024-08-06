@@ -1,10 +1,12 @@
 package co.edu.uptcSoft.view;
 
+import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Materials;
 import co.edu.uptcSoft.model.Order;
 import co.edu.uptcSoft.model.Supply;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -37,6 +39,7 @@ import static co.edu.uptcSoft.view.Components.createFont;
 
 public class NewOrder {
 
+    private Logic logic = Logic.getInstance();
     private Pane root;
     private Components components;
     private VBox principal;
@@ -46,7 +49,7 @@ public class NewOrder {
 
     private TableView<ObservableList<Object>> table;
     private FilteredList<ObservableList<Object>> filteredData;
-    private ArrayList<Order> orderList2;
+    private ArrayList<Supply> orderList2;
     private HBox hBoxTable;
 
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
@@ -388,7 +391,11 @@ public class NewOrder {
                     if (numValInt(orderNumber) != -1){
 
                         if (!localDate1.toString().isEmpty() && !localDate2.toString().isEmpty()){
-                            // Se puede pasar a la siguiente pestaña
+                            if (!orderList2.isEmpty()){
+                                // Se puede
+                            } else {
+                                components.messageConfirmation("Debe de Tener al Menos un Insumo");
+                            }
                         } else {
                             components.messageConfirmation("Ingrese una Fecha Correcta");
                         }
@@ -398,18 +405,14 @@ public class NewOrder {
                     }
                 } else{
                     // Ingrese un valor de 10 dígitos
-                    components.messageConfirmation("Ingrese un Número de Teléfono o de Documento de Diez Digitos");
+                    components.messageConfirmation("Ingrese un Número de Diez Digitos");
                 }
 
             } else {
                 components.messageConfirmation("Ingrese Todos los Datos");
-                System.out.println("\n1: " + productTxt.getText() + "\n2: " + typeTxt.getText() + "\n3: " + customerTxt.getText() + "\n4: " + status + "\n5: " +
-                        productionDateTxt.getValue() +"\n6: " + phoneTxt.getText() + "\n7: " + orderNumberTxt.getText() + "\n8: " + deliveryDateTxt.getValue() + "\n9: " + documentTxt.getText());
             }
         } catch (Exception e){
             components.messageConfirmation("Ingrese todos los datos");
-            System.out.println("\n1: " + productTxt.getText() + "\n2: " + typeTxt.getText() + "\n3: " + customerTxt.getText() + "\n4: " + status + "\n5: " +
-                    productionDateTxt.getValue() +"\n6: " + phoneTxt.getText() + "\n7: " + orderNumberTxt.getText() + "\n8: " + deliveryDateTxt.getValue() + "\n9: " + documentTxt.getText());
             e.printStackTrace();
         }
     }
@@ -421,48 +424,50 @@ public class NewOrder {
         hBoxTable.setPrefHeight(136);
         //informationVBox.getStyleClass().add("custom-background");
 
-        TableColumn<ObservableList<Object>, Integer> numOrder = new TableColumn<>("N°. Orden");
-        numOrder.setCellValueFactory(cellData -> {
+        // Create the columns
+        TableColumn<ObservableList<Object>, String> id = new TableColumn<>("Código");
+        id.setCellValueFactory(cellData -> {
             ObservableList<Object> row = cellData.getValue();
-            return (row != null && row.size() > 0 && row.get(0) instanceof Integer)
-                    ? new SimpleIntegerProperty((Integer) row.get(0)).asObject()
-                    : new SimpleIntegerProperty(0).asObject();
+            return (row != null && row.size() > 0 && row.get(0) instanceof String)
+                    ? new SimpleStringProperty((String) row.get(0))
+                    : new SimpleStringProperty("");
         });
-        numOrder.setPrefWidth(((screenWidth - 80) - 100)/4); // Ajusta el ancho de la columna
+        id.setPrefWidth(((screenWidth - 80) - 100)/4); // Adjust the width of the column
+        applyHeaderFont(id, 0, 20); // Apply the font to the header
+        applyCellFont(id, 1,20); // Apply the font to the cell
 
-        TableColumn<ObservableList<Object>, String> nameProduct = new TableColumn<>("Producto");
-        nameProduct.setCellValueFactory(cellData -> {
+        TableColumn<ObservableList<Object>, String> material = new TableColumn<>("Material");
+        material.setCellValueFactory(cellData -> {
             ObservableList<Object> row = cellData.getValue();
             return (row != null && row.size() > 1 && row.get(1) instanceof String)
                     ? new SimpleStringProperty((String) row.get(1))
                     : new SimpleStringProperty("");
         });
-        nameProduct.setPrefWidth(((screenWidth - 80) - 100)/4);
+        material.setPrefWidth(((screenWidth - 80) - 100)/4);
+        applyHeaderFont(material, 0, 20); // Apply the font to the header
+        applyCellFont(material, 1,20); // Apply the font to the cell
 
-        TableColumn<ObservableList<Object>, String> deliveryDate = new TableColumn<>("Fecha De Entrega");
-        deliveryDate.setCellValueFactory(cellData -> {
+        TableColumn<ObservableList<Object>, Integer> quantity = new TableColumn<>("Cantidad");
+        quantity.setCellValueFactory(cellData -> {
             ObservableList<Object> row = cellData.getValue();
-            return (row != null && row.size() > 2 && row.get(2) instanceof String)
-                    ? new SimpleStringProperty((String) row.get(2))
-                    : new SimpleStringProperty("");
+            return (row != null && row.size() > 2 && row.get(2) instanceof Integer)
+                    ? new SimpleIntegerProperty((Integer) row.get(2)).asObject()
+                    : new SimpleIntegerProperty(0).asObject();
         });
-        deliveryDate.setPrefWidth(((screenWidth - 80) - 100)/4);
+        quantity.setPrefWidth(((screenWidth - 80) - 100)/4); // Adjust the width of the column
+        applyHeaderFont(quantity, 0, 20); // Apply the font to the header
+        applyCellFont(quantity, 1,20); // Apply the font to the cell
 
-        TableColumn<ObservableList<Object>, ImageView> edit = new TableColumn<>("");
-        edit.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
-            @Override
-            public ObservableValue<ImageView> call(TableColumn.CellDataFeatures<ObservableList<Object>, ImageView> cellData) {
-                ObservableList<Object> row = cellData.getValue();
-                if (row != null && row.size() > 3 && row.get(3) instanceof ImageView) {
-                    return new SimpleObjectProperty<>((ImageView) row.get(3));
-                } else {
-                    return new SimpleObjectProperty<>(new ImageView());
-                }
-            }
+        TableColumn<ObservableList<Object>, Long> total = new TableColumn<>("Total");
+        total.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 3 && row.get(3) instanceof Long)
+                    ? new SimpleLongProperty((Long) row.get(3)).asObject()
+                    : new SimpleLongProperty(0).asObject();
         });
-        edit.setPrefWidth(50);
-        edit.setCellFactory(column -> createCellWithBackgroundColor("white"));
-        edit.getStyleClass().add("column-header-edit"); // Aplicar la clase CSS para la columna 'eye'
+        total.setPrefWidth(((screenWidth - 80) - 100)/4);
+        applyHeaderFont(total, 0, 20); // Apply the font to the header
+        applyCellFont(total, 1,20); // Apply the font to the cell
 
         TableColumn<ObservableList<Object>, ImageView> trash = new TableColumn<>("");
         trash.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
@@ -480,7 +485,7 @@ public class NewOrder {
         trash.setCellFactory(column -> createCellWithBackgroundColor("white"));
         trash.getStyleClass().add("column-header-trash"); // Aplicar la clase CSS para la columna 'eye'
 
-        table.getColumns().addAll(numOrder, nameProduct, deliveryDate, edit, trash);
+        table.getColumns().addAll(id, material, quantity, total, trash);
         applyRowStyles();
 
         filteredData = new FilteredList<>(getOrderList(), p -> true);
@@ -499,20 +504,11 @@ public class NewOrder {
     public ObservableList<ObservableList<Object>> getOrderList() {
         ObservableList<ObservableList<Object>> data = FXCollections.observableArrayList();
 
-        Image editImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Edit.png")).toExternalForm());
         Image trashImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Trash.png")).toExternalForm());
 
-        //orderList2 = new ArrayList<>(logic.getOrderList().values());
+        //orderList2 = new ArrayList<>(logic.getSupplyList().values());
 
-        // change the format desired
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-
-        for (Order order : orderList2) {
-            ImageView editView = new ImageView(editImage);
-            editView.setFitWidth(24);
-            editView.setFitHeight(24);
-            editView.setPreserveRatio(true);
-
+        for (Supply supply : orderList2) {
             ImageView trashView = new ImageView(trashImage);
             trashView.setFitWidth(24);
             trashView.setFitHeight(24);
@@ -520,11 +516,11 @@ public class NewOrder {
 
             // Agregar las filas con los iconos
             ObservableList<Object> row = FXCollections.observableArrayList(
-                    order.getOrderNumber(),
-                    order.getProductName(),
-                    formato.format(order.getDeliveryDate()),
-                    editView,  // Editar icono
-                    trashView  // Eliminar icono
+                    supply.getId(),
+                    supply.getMaterial(),
+                    supply.getQuantity(),
+                    supply.getTotalPrice(),
+                    trashView  // Delete icon
             );
             data.add(row);
         }
@@ -577,32 +573,7 @@ public class NewOrder {
 
     public void initializeIconColumns() {
         // Obtener todas las columnas
-        TableColumn<ObservableList<Object>, ImageView> editColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(3);
         TableColumn<ObservableList<Object>, ImageView> trashColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(4);
-
-        // Añadir EventHandler a la columna de "editar"
-        editColumn.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(ImageView item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(item);
-                    setOnMouseClicked(event -> {
-                        if (event.getClickCount() == 1 && !isEmpty()) {
-                            int rowIndex = getIndex();
-                            UpdateOrder uOrder = new UpdateOrder();
-                            // Limpiar el contenido actual
-                            root.getChildren().clear();
-                            // Agregar el nuevo contenido
-                            root.setMinSize(screenWidth - 80, screenHeight - 80);
-                            //contentPanel.getChildren().add(uOrder.screen());
-                        }
-                    });
-                }
-            }
-        });
 
         // Añadir EventHandler a la columna de "borrar"
         trashColumn.setCellFactory(column -> new TableCell<>() {
@@ -616,13 +587,12 @@ public class NewOrder {
                     setOnMouseClicked(event -> {
                         if (event.getClickCount() == 1 && !isEmpty()) {
                             int rowIndex = getIndex();
-                            int index = orderList2.get(rowIndex).getOrderNumber();
-                            String orderNumberStr = String.valueOf(index);
+                            String index = orderList2.get(rowIndex).getId();
 
                             components.windowConfirmation(
                                     "¿Está seguro de eliminar esta orden?",
                                     "Cancelar", "Eliminar", "Orden eliminada con éxito",
-                                    orderNumberStr);
+                                    index);
                         }
                     });
                 }
@@ -634,5 +604,34 @@ public class NewOrder {
     public void refreshTable() {
         table.setItems(getOrderList());
         filteredData.setPredicate(filteredData.getPredicate());
+    }
+
+    // Method to apply font to the cells
+    private <T> void applyCellFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        column.setCellFactory(new Callback<TableColumn<ObservableList<Object>, T>, TableCell<ObservableList<Object>, T>>() {
+            @Override
+            public TableCell<ObservableList<Object>, T> call(TableColumn<ObservableList<Object>, T> param) {
+                return new TableCell<>() {
+                    @Override
+                    protected void updateItem(T item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            setText(null);
+                        } else {
+                            setText(item.toString());
+                            setFont(components.createFont(1, 20));
+                        }
+                    }
+                };
+            }
+        });
+    }
+
+    // Method to apply font to the header
+    private <T> void applyHeaderFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        javafx.scene.control.Label label = new javafx.scene.control.Label(column.getText());
+        label.setFont(createFont(style, size));
+        column.setText(""); // Remove the default header text
+        column.setGraphic(label);
     }
 }

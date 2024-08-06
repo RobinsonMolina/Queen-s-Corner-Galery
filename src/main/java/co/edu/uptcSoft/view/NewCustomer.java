@@ -308,6 +308,8 @@ public class NewCustomer {
                     : new SimpleIntegerProperty(0).asObject();
         });
         numOrder.setPrefWidth(((screenWidth - 80) - 100)/4); // Ajusta el ancho de la columna
+        applyHeaderFont(numOrder, 0, 20); // Apply the font to the header
+        applyCellFont(numOrder, 1,20); // Apply the font to the cell
 
         TableColumn<ObservableList<Object>, String> nameProduct = new TableColumn<>("Producto");
         nameProduct.setCellValueFactory(cellData -> {
@@ -317,6 +319,8 @@ public class NewCustomer {
                     : new SimpleStringProperty("");
         });
         nameProduct.setPrefWidth(((screenWidth - 80) - 100)/4);
+        applyHeaderFont(nameProduct, 0, 20); // Apply the font to the header
+        applyCellFont(nameProduct, 1,20); // Apply the font to the cell
 
         TableColumn<ObservableList<Object>, String> deliveryDate = new TableColumn<>("Fecha De Entrega");
         deliveryDate.setCellValueFactory(cellData -> {
@@ -326,6 +330,8 @@ public class NewCustomer {
                     : new SimpleStringProperty("");
         });
         deliveryDate.setPrefWidth(((screenWidth - 80) - 100)/4);
+        applyHeaderFont(deliveryDate, 0, 20); // Apply the font to the header
+        applyCellFont(deliveryDate, 1,20); // Apply the font to the cell
 
         TableColumn<ObservableList<Object>, ImageView> edit = new TableColumn<>("");
         edit.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
@@ -381,7 +387,7 @@ public class NewCustomer {
         Image editImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Edit.png")).toExternalForm());
         Image trashImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Trash.png")).toExternalForm());
 
-        //orderList2 = new ArrayList<>(logic.getOrderList().values());
+        orderList2 = new ArrayList<>(logic.getOrderList().values());
 
         // change the format desired
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -513,5 +519,34 @@ public class NewCustomer {
     public void refreshTable() {
         table.setItems(getOrderList());
         filteredData.setPredicate(filteredData.getPredicate());
+    }
+
+    // Method to apply font to the cells
+    private <T> void applyCellFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        column.setCellFactory(new Callback<TableColumn<ObservableList<Object>, T>, TableCell<ObservableList<Object>, T>>() {
+            @Override
+            public TableCell<ObservableList<Object>, T> call(TableColumn<ObservableList<Object>, T> param) {
+                return new TableCell<>() {
+                    @Override
+                    protected void updateItem(T item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            setText(null);
+                        } else {
+                            setText(item.toString());
+                            setFont(components.createFont(1, 20));
+                        }
+                    }
+                };
+            }
+        });
+    }
+
+    // Method to apply font to the header
+    private <T> void applyHeaderFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        javafx.scene.control.Label label = new javafx.scene.control.Label(column.getText());
+        label.setFont(createFont(style, size));
+        column.setText(""); // Remove the default header text
+        column.setGraphic(label);
     }
 }
