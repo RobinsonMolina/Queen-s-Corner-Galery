@@ -286,6 +286,22 @@ public class HeaderMenu {
             StackPane.setAlignment(center, Pos.CENTER_RIGHT);
             root.setCenter(centerStack);
         });
+
+        customerHBox.setOnMouseClicked(event -> {
+            CustomerList customerList = new CustomerList();
+            center = customerList.screen();
+            center.setMaxWidth(screenWidth - 80);
+            StackPane.setAlignment(center, Pos.CENTER_RIGHT);
+            root.setCenter(centerStack);
+        });
+
+        supplyHBox.setOnMouseClicked(event -> {
+            SupplyList supplyList = new SupplyList();
+            //center = supplyList.screen();
+            center.setMaxWidth(screenWidth - 80);
+            StackPane.setAlignment(center, Pos.CENTER_RIGHT);
+            root.setCenter(centerStack);
+        });
     }
 
     // Menu Visibility

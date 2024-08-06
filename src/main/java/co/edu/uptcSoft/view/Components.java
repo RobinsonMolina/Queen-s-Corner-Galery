@@ -42,6 +42,7 @@ public class Components {
     //private ArrayList<Supply> supplyList;
     private NewOrder order;
     private OrderList orderList; // Agrega una referencia a OrderList
+    private CustomerList customerList;
 
     double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
@@ -51,6 +52,10 @@ public class Components {
 
     public Components(OrderList orderList) {
         this.orderList = orderList;
+    }
+
+    public Components(CustomerList customerList) {
+        this.customerList = customerList;
     }
     // Method for creating fonts
     public static Font createFont(int style, int size) {
@@ -414,11 +419,17 @@ public class Components {
             /*logic.deleteSupply(row);
             mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());*/
         } else if (message.contains("Cliente añadido")) {
-            /*new NewCustomer(mainContentPanel).addCustomerLogic(currentCustomer);
-            mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());*/
+            //Logica para agregar cliente
         } else if (message.contains("Cliente eliminado")) {
-            /*logic.deleteCustomer(Long.parseLong(row));
-            mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());*/
+            long numDocument = Long.parseLong(row);
+            logic.deleteCustomer(numDocument); // Elimina el cliente
+
+            // Actualizar la tabla después de eliminar el cliente
+            if (customerList != null) {
+                customerList.refreshTable(); // Llamar al método para refrescar la tabla
+            }
+
+            messageConfirmation(message);
         } else if (message.contains("Insumo agregado")) {
             //mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
         } else if (message.contains("Insumo añadido")) {
