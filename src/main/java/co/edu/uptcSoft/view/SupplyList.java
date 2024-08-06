@@ -1,7 +1,31 @@
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Order;
 import co.edu.uptcSoft.model.Supply;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
+import javafx.util.Callback;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,315 +37,480 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class SupplyList extends JFrame implements ActionListener {
-    /*
+import static co.edu.uptcSoft.view.Components.createFont;
+
+public class SupplyList {
+
     private Components components;
-    private JPanel contentButton;
-    private JPanel contentPanel;
-    private JPanel contentTitle;
-    private JLabel titleLabel;
-    private JTextField searchTextField;
-    private JButton buttonAdd;
-    private JPanel mainContentPanel;
-    private Object supplyListTable[][];
+    private BorderPane contentPanel;
+    private javafx.scene.control.Label titleLabel;
+    private javafx.scene.control.TextField searchTextField;
+    private javafx.scene.control.Button buttonAdd;
     private Logic logic = Logic.getInstance();
-    private TableRowSorter<DefaultTableModel> filter;
+
+    private TableView<ObservableList<Object>> table;
+    private FilteredList<ObservableList<Object>> filteredData;
+    private ArrayList<Supply> orderList2;
+
+    private ObservableList<ObservableList<Object>> orderList;
+
+    private HBox hBoxTitle;
+    private HBox hBoxTable;
+
+    double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
+    public SupplyList() {
+        searchTextField = new javafx.scene.control.TextField();
+        contentPanel = new BorderPane();
+        components = new Components(SupplyList.this); // Agrega una referencia a Components
+
+        hBoxTitle = new HBox(300);
+        hBoxTable = new HBox();
+        hBoxTable.setPrefSize(1366, 400);
+        table = new TableView<>();
+        applyRowStyles();
+        table.getStylesheets().add(new File("src/main/resources/styles/principal.css").toURI().toString());
 
 
-    public SupplyList(JPanel mainContentPanel){
-        this.mainContentPanel = mainContentPanel;
-        components = new Components(mainContentPanel);
+        titleLabel = new javafx.scene.control.Label("Insumos");
+        titleLabel.setFont(createFont(0, 40));
     }
 
-    // Method for initializing content panel
-    public JPanel initializeContentPanel() {
-        contentPanel = new JPanel(new BorderLayout());
-        contentPanel.setPreferredSize(new Dimension(1366, 590));
-
-        initializeContentTitle();
-        initializeTable();
-
-        // Rounded button panel
-        contentButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        contentButton.setBackground(Color.WHITE);
-        contentButton.setBorder(new EmptyBorder(23, 1055, 25, 0));
-
-        buttonAdd = components.createRoundedButton("Agregar", "#000000", "#2F1940", 30, 30);
-        buttonAdd.setPreferredSize(new Dimension(150, 34));
-        buttonAdd.addActionListener(this); // permited to go to the new supply window
-        components.hoverButton(buttonAdd); // configure the button to change the background color when hovered
-
-        contentButton.add(buttonAdd);
-
-        contentPanel.add(contentButton, BorderLayout.SOUTH);
-
-        add(contentPanel);
+    public BorderPane screen() {
+        title();
+        contentTable();
+        initializeButtonAdd();
         return contentPanel;
     }
 
-    // Method for creating title and search field
-    private void initializeContentTitle() {
-        contentTitle = new JPanel();
-        contentTitle.setLayout(null);
-        contentTitle.setBackground(Color.WHITE);
-        contentTitle.setForeground(Color.BLACK);
-        contentTitle.setPreferredSize(new Dimension(1286, 100));
+    public void title() {
+        hBoxTitle.setAlignment(Pos.CENTER_RIGHT);
+        hBoxTitle.setPadding(new Insets(55, 120, 0, 0));
 
-        // title label
-        titleLabel = new JLabel("Insumos", JLabel.CENTER);
-        titleLabel.setForeground(Color.BLACK);
-        titleLabel.setBackground(Color.WHITE);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        titleLabel.setBounds(0, 0, 1286, 100);
+        searchTextField = components.createRoundedTextField(30, 30);
+        searchTextField.setPadding(new Insets(0, 10, 0, 10));
+        searchTextField.setPrefWidth(200);
+        searchTextField.setPrefHeight(45);
+        searchTextField.setFont(createFont(1, 20));
 
-        titleLabel.setFont(components.createFont(0, 40));
+        // Create the search icon
+        javafx.scene.image.Image searchIcon = new javafx.scene.image.Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Glass.png")).toExternalForm());
+        ImageView searchIconView = new ImageView(searchIcon);
+        searchIconView.setFitWidth(24);  // Width of the icon
+        searchIconView.setFitHeight(24); // Height of the icon
+        searchIconView.setPreserveRatio(true); // To preserve the aspect ratio
 
-        contentTitle.add(titleLabel);
+        // Create a StackPane to superpose the icon over the text field
+        StackPane searchStackPane = new StackPane();
+        searchStackPane.getChildren().addAll(searchTextField, searchIconView);
 
-        // Rounded search field
-        searchTextField = components.createRoundedTextField(30,30);
-        searchTextField.setBounds(928, 45, 200, 45);
-        searchTextField.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 15));
-        searchTextField.setFont(components.createFont(1, 20));
+        // Align the icon to the right of the text field
+        StackPane.setAlignment(searchIconView, Pos.CENTER_LEFT);
+        searchIconView.setTranslateX(5); // Adjust the position of the icon
 
-        // Add icon to the right of the search field
-        ImageIcon searchIcon = new ImageIcon("src\\Utilities\\Images\\Glass.png");
-        Image scaledSearchIcon = searchIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-        JLabel searchLabel = new JLabel(new ImageIcon(scaledSearchIcon));
-        searchLabel.setBounds(5, 12, 24, 24);
-        searchTextField.add(searchLabel);
+        // Create a listener to filter the table
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(supply -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
 
-        titleLabel.add(searchTextField);
-        contentTitle.setBounds(0, 0, 1286, 100);
-        contentPanel.add(contentTitle, BorderLayout.NORTH);
-
-        // Add DocumentListener to the JTextField to filter the table
-        searchTextField.getDocument().addDocumentListener(new DocumentListener() {
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                filterTable();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                filterTable();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                filterTable();
-            }
+                String lowerCaseFilter = newValue.toLowerCase();
+                // Adjust the logic according to the columns you want to filter
+                if (supply.get(0).toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter by id
+                } else if (supply.get(1).toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter by Material
+                } else if (supply.get(2).toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter by Category
+                } else if (supply.get(3).toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter by Characteristics
+                } else if (supply.get(4) != null && supply.get(4).toString().contains(lowerCaseFilter)) {
+                    return true; // Filter by Unit Price
+                }else if (supply.get(5) != null && supply.get(5).toString().contains(lowerCaseFilter)) {
+                    return true; // Filter by Quantity
+                }else if (supply.get(6) != null && supply.get(6).toString().contains(lowerCaseFilter)) {
+                    return true; // Filter by Total
+                }
+                return false; // No match
+            });
         });
+
+        hBoxTitle.getChildren().addAll(titleLabel, searchStackPane);
+        contentPanel.setTop(hBoxTitle);
     }
 
-    // Method for initializing table
-    private void initializeTable() {
-        // Data of the table
-        String[] columnNames = {"Código", "Material", "Categoria", "Características", "Valor Unitario", "Cantidad", "Total", "", ""};
+    public void contentTable() {
 
-        // Table model
-        DefaultTableModel model = new DefaultTableModel(getSuppliesList(), columnNames) {
+        //table.setPrefSize(1050, 400); // width and height of the table
+        table.setPrefHeight(400);
+        table.setPrefWidth(1250);
+
+        // Create the columns
+        TableColumn<ObservableList<Object>, String> id = new TableColumn<>("Código");
+        id.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 0 && row.get(0) instanceof String)
+                    ? new SimpleStringProperty((String) row.get(0))
+                    : new SimpleStringProperty("");
+        });
+        id.setPrefWidth(120); // Adjust the width of the column
+        applyHeaderFont(id, 0, 20); // Apply the font to the header
+        applyCellFont(id, 0,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, String> material = new TableColumn<>("Material");
+        material.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 1 && row.get(1) instanceof String)
+                    ? new SimpleStringProperty((String) row.get(1))
+                    : new SimpleStringProperty("");
+        });
+        material.setPrefWidth(150);
+        applyHeaderFont(material, 0, 20); // Apply the font to the header
+        applyCellFont(material, 0,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, String> category = new TableColumn<>("Categoria");
+        category.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 2 && row.get(2) instanceof String)
+                    ? new SimpleStringProperty((String) row.get(2))
+                    : new SimpleStringProperty("");
+        });
+        category.setPrefWidth(150);
+        applyHeaderFont(category, 0, 20); // Apply the font to the header
+        applyCellFont(category, 0,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, String> characteristics = new TableColumn<>("Características");
+        characteristics.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 3 && row.get(3) instanceof String)
+                    ? new SimpleStringProperty((String) row.get(3))
+                    : new SimpleStringProperty("");
+        });
+        characteristics.setPrefWidth(310);
+        applyHeaderFont(characteristics, 0, 20); // Apply the font to the header
+        applyCellFont(characteristics, 0,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, Long> unitPrice = new TableColumn<>("Valor Unitario");
+        unitPrice.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 4 && row.get(4) instanceof Long)
+                    ? new SimpleLongProperty((Long) row.get(4)).asObject()
+                    : new SimpleLongProperty(0).asObject();
+        });
+        unitPrice.setPrefWidth(150);
+        applyHeaderFont(unitPrice, 0, 20); // Apply the font to the header
+        applyCellFont(unitPrice, 0,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, Integer> quantity = new TableColumn<>("Cantidad");
+        quantity.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 5 && row.get(5) instanceof Integer)
+                    ? new SimpleIntegerProperty((Integer) row.get(5)).asObject()
+                    : new SimpleIntegerProperty(0).asObject();
+        });
+        quantity.setPrefWidth(150); // Adjust the width of the column
+        applyHeaderFont(quantity, 0, 20); // Apply the font to the header
+        applyCellFont(quantity, 0,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, Long> total = new TableColumn<>("Total");
+        total.setCellValueFactory(cellData -> {
+            ObservableList<Object> row = cellData.getValue();
+            return (row != null && row.size() > 6 && row.get(6) instanceof Long)
+                    ? new SimpleLongProperty((Long) row.get(6)).asObject()
+                    : new SimpleLongProperty(0).asObject();
+        });
+        total.setPrefWidth(120);
+        applyHeaderFont(total, 0, 20); // Apply the font to the header
+        applyCellFont(total, 0,20); // Apply the font to the cell
+
+        TableColumn<ObservableList<Object>, ImageView> edit = new TableColumn<>("");
+        edit.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
             @Override
-            public Class<?> getColumnClass(int column) {
-                return (column == 7 || column == 8) ? Icon.class : super.getColumnClass(column);
-            }
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        // Table
-        JTable table = new JTable(model);
-        table.setFont(components.createFont(1, 20));
-        table.setForeground(Color.decode("#2F2F2F"));
-        table.setRowHeight(34);
-        table.setShowGrid(false);
-        setColumnWidths(table);
-
-        // TableRowSorter for filtering
-        filter = new TableRowSorter<>(model);
-        table.setRowSorter(filter);
-
-        // Table header
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(Color.decode("#D9D9D9"));
-        header.setPreferredSize(new Dimension(283, 34));
-        header.setFont(components.createFont(0, 20));
-
-        // Move configuration of renderer after setting font
-        header.setDefaultRenderer(createHeaderRenderer(header.getFont()));
-        table.setDefaultRenderer(Object.class, createTableRowRenderer());
-
-        // configure the MouseListener for the table
-        setupTableMouseListener(table);
-
-        // Scroll pane of table
-        JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(1134, 136));
-        tableScrollPane.setBorder(new EmptyBorder(20, 0, 0, 0));
-        tableScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
-
-        // Panel of table
-        JPanel tablePanel = new JPanel(new BorderLayout());
-        tablePanel.add(tableScrollPane, BorderLayout.CENTER);
-        tablePanel.setBorder(new EmptyBorder(10, 80, 0, 60));
-        tablePanel.setPreferredSize(new Dimension(1366, 136));
-        tablePanel.setBackground(Color.white);
-        tableScrollPane.setBackground(Color.white);
-        contentPanel.add(tablePanel, BorderLayout.CENTER);
-    }
-
-    // Method for setting column widths
-    private void setColumnWidths(JTable table) {
-        table.getColumnModel().getColumn(0).setPreferredWidth(120);// Esto ajusta el ancho máximo de la columna 0
-        table.getColumnModel().getColumn(1).setPreferredWidth(150);
-        table.getColumnModel().getColumn(2).setPreferredWidth(150);
-        table.getColumnModel().getColumn(3).setPreferredWidth(310);
-        table.getColumnModel().getColumn(4).setPreferredWidth(150);
-        table.getColumnModel().getColumn(5).setPreferredWidth(150);
-        table.getColumnModel().getColumn(6).setPreferredWidth(120);
-        table.getColumnModel().getColumn(7).setPreferredWidth(50);
-        table.getColumnModel().getColumn(8).setPreferredWidth(50);
-    }
-
-    // Method for creating header renderer
-    private DefaultTableCellRenderer createHeaderRenderer(Font headerFont) {
-        return new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Focuses the text
-                if (c instanceof JLabel) {
-                    JLabel label = (JLabel) c;
-                    label.setHorizontalAlignment(JLabel.CENTER);
-                    label.setVerticalAlignment(JLabel.CENTER);
-                    label.setFont(headerFont);// set font
-                    label.setForeground(Color.BLACK); // set color of text
-                }
-
-                // Change column header color
-                if (column == 7 || column == 8) {
-                    c.setBackground(Color.WHITE);
+            public ObservableValue<ImageView> call(TableColumn.CellDataFeatures<ObservableList<Object>, ImageView> cellData) {
+                ObservableList<Object> row = cellData.getValue();
+                if (row != null && row.size() > 7 && row.get(7) instanceof ImageView) {
+                    return new SimpleObjectProperty<>((ImageView) row.get(7));
                 } else {
-                    c.setBackground(table.getTableHeader().getBackground());
-                }
-
-                return c;
-            }
-        };
-    }
-
-    // Method for creating table row renderer
-    private DefaultTableCellRenderer createTableRowRenderer() {
-        return new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Focuses the text
-                if (cell instanceof JLabel) {
-                    JLabel label = (JLabel) cell;
-                    label.setHorizontalAlignment(JLabel.CENTER);
-                    label.setVerticalAlignment(JLabel.CENTER);
-                }
-
-                // Change the color of the rows
-                if (row % 2 == 0) {
-                    cell.setBackground(Color.WHITE);
-                } else {
-                    cell.setBackground(Color.decode("#D9D9D9"));
-                }
-
-                return cell;
-            }
-        };
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttonAdd) {
-            // change the content of the main panel instead of opening a new window
-            mainContentPanel.removeAll();
-            mainContentPanel.add(new NewSupply(mainContentPanel).initializeContentPanel());
-            mainContentPanel.revalidate();
-            mainContentPanel.repaint();
-        }
-    }
-
-    // Method for configuring the MouseListener, view line 173
-    private void setupTableMouseListener(JTable table) {
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int column = table.columnAtPoint(e.getPoint());
-                int row = table.rowAtPoint(e.getPoint());
-                String valor;
-                if (column == 7) {
-                    valor = table.getValueAt(row, 0).toString();
-                    components.windowConfirmation("¿Está seguro de eliminar este insumo?", "Cancelar", "Eliminar", "Insumo eliminado con éxito", valor);
-                } else if (column == 8) {
-                    // change the content of the main panel instead of opening a new window
-                    valor = table.getValueAt(row, 0).toString();
-                    mainContentPanel.removeAll();
-                    mainContentPanel.add(new UpdateSupplY(mainContentPanel).initializeContentPanel(valor));
-                    mainContentPanel.revalidate();
-                    mainContentPanel.repaint();
+                    return new SimpleObjectProperty<>(new ImageView());
                 }
             }
         });
+        edit.setPrefWidth(50);
+        edit.setCellFactory(column -> createCellWithBackgroundColor("white"));
+        edit.getStyleClass().add("column-header-edit"); // Apply the CSS class for the 'eye' column
+
+        TableColumn<ObservableList<Object>, ImageView> trash = new TableColumn<>("");
+        trash.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
+            @Override
+            public ObservableValue<ImageView> call(TableColumn.CellDataFeatures<ObservableList<Object>, ImageView> cellData) {
+                ObservableList<Object> row = cellData.getValue();
+                if (row != null && row.size() > 8 && row.get(8) instanceof ImageView) {
+                    return new SimpleObjectProperty<>((ImageView) row.get(8));
+                } else {
+                    return new SimpleObjectProperty<>(new ImageView());
+                }
+            }
+        });
+        trash.setPrefWidth(50);
+        trash.setCellFactory(column -> createCellWithBackgroundColor("white"));
+        trash.getStyleClass().add("column-header-trash"); // Apply the CSS class for the 'eye' column
+
+        table.getColumns().addAll(id, material, category, characteristics, unitPrice, quantity, total, edit, trash);
+        applyRowStyles();
+
+        // Call the method to initialize the filtering
+        initializeFilter();
+
+        filteredData = new FilteredList<>(getSupplyList(), p -> true);
+        table.setItems(filteredData);
+
+        // Add the table to hBoxTable and configure hBoxTable
+        hBoxTable.getChildren().clear(); // Clear any previous content in hBoxTable
+        initializeIconColumns();
+
+        hBoxTable.getChildren().add(table);
+        hBoxTable.setAlignment(Pos.CENTER);
+        hBoxTable.setPadding(new javafx.geometry.Insets(20, 0, 200, 0));
+
+
+        contentPanel.setCenter(hBoxTable);
     }
 
-    // Method for getting the order list and its icons
-    public Object[][] getSuppliesList() {
+    // Method to get the supply list
+    public ObservableList<ObservableList<Object>> getSupplyList() {
+        ObservableList<ObservableList<Object>> data = FXCollections.observableArrayList();
 
-        ImageIcon icon2 = new ImageIcon("src\\Utilities\\Images\\Edit.png");
-        Image image2 = icon2.getImage();
-        ImageIcon pencilIcon = new ImageIcon(image2.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        // Load the images
+        javafx.scene.image.Image editImage = new javafx.scene.image.Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Edit.png")).toExternalForm());
+        javafx.scene.image.Image trashImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Trash.png")).toExternalForm());
 
-        ImageIcon icon3 = new ImageIcon("src\\Utilities\\Images\\Trash.png");
-        Image image3 = icon3.getImage();
-        ImageIcon trashIcon = new ImageIcon(image3.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        // get the supply list
+        orderList2 = new ArrayList<>(logic.getSupplyList().values());
 
-        ArrayList<Supply> supplyList = new ArrayList<>(logic.getSupplyList().values());
-
-        supplyListTable = new Object[supplyList.size()][9];
         // change the format desired
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
-        for (int i = 0; i < supplyList.size(); i++) {
-            supplyListTable[i][0] = supplyList.get(i).getId();
-            supplyListTable[i][1] = supplyList.get(i).getMaterial();
-            supplyListTable[i][2] = supplyList.get(i).getCategory();
-            supplyListTable[i][3] = supplyList.get(i).getCharacteristics();
-            supplyListTable[i][4] = supplyList.get(i).getUnitPrice();
-            supplyListTable[i][5] = supplyList.get(i).getQuantity();
-            supplyListTable[i][6] = supplyList.get(i).getTotalPrice();
-            supplyListTable[i][7] = trashIcon;
-            supplyListTable[i][8] = pencilIcon;
+        for (Supply supply : orderList2) {
+            // Create new instances of ImageView for each row
+            ImageView editView = new ImageView(editImage);
+            editView.setFitWidth(24);
+            editView.setFitHeight(24);
+            editView.setPreserveRatio(true);
+
+            ImageView trashView = new ImageView(trashImage);
+            trashView.setFitWidth(24);
+            trashView.setFitHeight(24);
+            trashView.setPreserveRatio(true);
+
+            // Add the rows with the icons
+            ObservableList<Object> row = FXCollections.observableArrayList(
+                    supply.getId(),
+                    supply.getMaterial(),
+                    supply.getCategory(),
+                    supply.getCharacteristics(),
+                    supply.getUnitPrice(),
+                    supply.getQuantity(),
+                    supply.getTotalPrice(),
+                    editView,  // Edit icon
+                    trashView  // Delete icon
+            );
+            data.add(row);
         }
-        return supplyListTable;
+        return data;
     }
 
-    // Method for filtering table
-    private void filterTable() {
-        String text = searchTextField.getText();
-        if (text.trim().length() == 0) {
-            filter.setRowFilter(null);
-        } else {
-            filter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-        }
+    // Method to apply font to the header
+    private <T> void applyHeaderFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        javafx.scene.control.Label label = new javafx.scene.control.Label(column.getText());
+        label.setFont(createFont(style, size));
+        column.setText(""); // Remove the default header text
+        column.setGraphic(label);
     }
 
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    // Method to apply font to the cells
+    private void applyRowStyles() {
+        // Configure the factory for the rows to apply alternate row styles
+        table.setRowFactory(new Callback<TableView<ObservableList<Object>>, TableRow<ObservableList<Object>>>() {
+            @Override
+            public TableRow<ObservableList<Object>> call(TableView<ObservableList<Object>> tableView) {
+                return new TableRow<>() {
+                    @Override
+                    protected void updateItem(ObservableList<Object> item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setStyle(""); // clear style for empty rows
+                        } else {
+                            // Apply alternate row colors
+                            if (getIndex() % 2 == 0) {
+                                setStyle("-fx-background-color: white;"); // white for even rows
+                            } else {
+                                setStyle("-fx-background-color: #D9D9D9;"); // grey for odd rows
+                            }
+                        }
+                    }
+                };
+            }
+        });
+    }
 
+    // Method to create a cell with a white background for the column 'ver', 'editar' and 'borrar'
+    private <T> TableCell<ObservableList<Object>, T> createCellWithBackgroundColor(String color) {
+        return new TableCell<>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setStyle("");
+                } else {
+                    setText(null);
+                    setGraphic((Node) item);
+                    setStyle("-fx-background-color: " + color + ";");
+                }
+            }
+        };
+    }
+
+    // Method to create button agregar
+    private void initializeButtonAdd() {
+        buttonAdd = new Button();
+        buttonAdd.setText("Agregar");
+
+        buttonAdd.setOnAction(event -> {
+            NewOrder newOrder = new NewOrder();
+            // Clear the current content
+            contentPanel.getChildren().clear();
+            //  Add the new content
+            contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
+            contentPanel.getChildren().add(newOrder.screen());
+        });
+
+        buttonAdd.setPrefSize(150, 34);
+
+        buttonAdd.getStyleClass().add("rounded-button");
+        buttonAdd.getStyleClass().add("rounded-button:hover");
+        buttonAdd.getStyleClass().add("rounded-button:pressed");
+        buttonAdd.setFont(createFont(0, 20));
+        HBox buttonAddBox = new HBox(buttonAdd);
+        buttonAddBox.setAlignment(Pos.CENTER_RIGHT);
+        buttonAddBox.setPadding(new Insets(-300, 120, 0, 0));
+        contentPanel.setBottom(buttonAddBox);
+    }
+
+    //  Method to initialize the filter
+    private void initializeFilter() {
+        // Initialize the filtered list with the original data
+        filteredData = new FilteredList<>(getSupplyList(), p -> true);
+
+        // Configure the filter for the TextField
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(row -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true; // Show all rows if the search field is empty
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Filter by any String column
+                return row.stream().anyMatch(data -> {
+                    if (data instanceof String) {
+                        return ((String) data).toLowerCase().contains(lowerCaseFilter);
+                    }
+                    return false;
+                });
+            });
+        });
+
+        // Set the `FilteredList` in the table
+        table.setItems(filteredData);
+    }
+
+    // Method to initialize the icon columns
+    public void initializeIconColumns() {
+        // Get all columns
+        TableColumn<ObservableList<Object>, ImageView> editColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(7);
+        TableColumn<ObservableList<Object>, ImageView> trashColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(8);
+
+        // Añadir EventHandler a la columna de "editar"
+        editColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(ImageView item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(item);
+                    setOnMouseClicked(event -> {
+                        if (event.getClickCount() == 1 && !isEmpty()) {
+                            int rowIndex = getIndex();
+                            UpdateSupplY uSupply = new UpdateSupplY();
+                            // Clear current content
+                            contentPanel.getChildren().clear();
+                            // Add the new content
+                            contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
+                            //contentPanel.getChildren().add(uSupply.screen());
+                        }
+                    });
+                }
+            }
+        });
+
+        // Add EventHandler to the column 'borrar'
+        trashColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(ImageView item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(item);
+                    setOnMouseClicked(event -> {
+                        if (event.getClickCount() == 1 && !isEmpty()) {
+                            int rowIndex = getIndex();
+                            String index = orderList2.get(rowIndex).getId();
+
+                            components.windowConfirmation(
+                                    "¿Está seguro de eliminar este insumo?",
+                                    "Cancelar", "Eliminar", "Insumo eliminado con éxito",
+                                    index);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    // Method to refresh the table
+    public void refreshTable() {
+        table.setItems(getSupplyList());
+        filteredData.setPredicate(filteredData.getPredicate());
+    }
+
+    // Method to apply font to the cells
+    private <T> void applyCellFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        column.setCellFactory(new Callback<TableColumn<ObservableList<Object>, T>, TableCell<ObservableList<Object>, T>>() {
+            @Override
+            public TableCell<ObservableList<Object>, T> call(TableColumn<ObservableList<Object>, T> param) {
+                return new TableCell<>() {
+                    @Override
+                    protected void updateItem(T item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            setText(null);
+                        } else {
+                            setText(item.toString());
+                            setFont(components.createFont(0, 20));
+                        }
+                    }
+                };
+            }
+        });
     }
 }

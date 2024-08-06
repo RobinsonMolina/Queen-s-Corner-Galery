@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static co.edu.uptcSoft.view.Components.createFont;
+
 public class OrderList {
 
     private Components components;
@@ -63,6 +65,7 @@ public class OrderList {
 
 
         titleLabel = new Label("Lista De Ordenes");
+        titleLabel.setFont(createFont(0, 40));
     }
 
     public BorderPane screen() {
@@ -98,26 +101,26 @@ public class OrderList {
         StackPane.setAlignment(searchIconView, Pos.CENTER_LEFT);
         searchIconView.setTranslateX(5); // Adjust the position of the icon
 
+        // Create a listener to filter the table
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(order -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-
                 String lowerCaseFilter = newValue.toLowerCase();
-                // Aquí ajusta la lógica según las columnas que deseas filtrar
+                // Adjust the logic according to the columns you want to filter
                 if (order.get(0).toString().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filtro por N°. Orden
+                    return true; // Filter by Order Number
                 } else if (order.get(1).toString().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filtro por Producto
+                    return true; // Filter by Product
                 } else if (order.get(2).toString().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filtro por Nombre Cliente
+                    return true; // Filter by Customer Name
                 } else if (order.get(3) != null && order.get(3).toString().contains(lowerCaseFilter)) {
-                    return true; // Filtro por Telefono
+                    return true; // Filter by Phone
                 } else if (order.get(4).toString().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filtro por Fecha De Entrega
+                    return true; // Filter by Delivery Date
                 }
-                return false; // No coincide
+                return false; // No match
             });
         });
 
@@ -127,10 +130,10 @@ public class OrderList {
 
     public void contentTable() {
 
-        //table.setPrefSize(1050, 400); // width and height of the table
         table.setPrefHeight(400);
         table.setPrefWidth(1125);
 
+        // Create the columns
         TableColumn<ObservableList<Object>, Integer> numOrder = new TableColumn<>("N°. Orden");
         numOrder.setCellValueFactory(cellData -> {
             ObservableList<Object> row = cellData.getValue();
@@ -138,7 +141,9 @@ public class OrderList {
                     ? new SimpleIntegerProperty((Integer) row.get(0)).asObject()
                     : new SimpleIntegerProperty(0).asObject();
         });
-        numOrder.setPrefWidth(125); // Ajusta el ancho de la columna
+        numOrder.setPrefWidth(125); // Adjust the width of the column
+        applyHeaderFont(numOrder, 0, 20); // Apply the font to the header
+        applyCellFont(numOrder, 0,20); // Apply the font to the cell
 
         TableColumn<ObservableList<Object>, String> nameProduct = new TableColumn<>("Producto");
         nameProduct.setCellValueFactory(cellData -> {
@@ -148,6 +153,8 @@ public class OrderList {
                     : new SimpleStringProperty("");
         });
         nameProduct.setPrefWidth(185);
+        applyHeaderFont(nameProduct, 0, 20); // Apply the font to the header
+        applyCellFont(nameProduct, 0,20); // Apply the font to the cell
 
         TableColumn<ObservableList<Object>, String> nameCustomer = new TableColumn<>("Nombre Cliente");
         nameCustomer.setCellValueFactory(cellData -> {
@@ -157,6 +164,8 @@ public class OrderList {
                     : new SimpleStringProperty("");
         });
         nameCustomer.setPrefWidth(275);
+        applyHeaderFont(nameCustomer, 0, 20); // Apply the font to the header
+        applyCellFont(nameCustomer, 0,20); // Apply the font to the cell
 
         TableColumn<ObservableList<Object>, Long> phone = new TableColumn<>("Telefono");
         phone.setCellValueFactory(cellData -> {
@@ -166,6 +175,8 @@ public class OrderList {
                     : new SimpleLongProperty(0).asObject();
         });
         phone.setPrefWidth(180);
+        applyHeaderFont(phone, 0, 20); // Apply the font to the header
+        applyCellFont(phone, 0,20); // Apply the font to the cell
 
         TableColumn<ObservableList<Object>, String> deliveryDate = new TableColumn<>("Fecha De Entrega");
         deliveryDate.setCellValueFactory(cellData -> {
@@ -175,6 +186,8 @@ public class OrderList {
                     : new SimpleStringProperty("");
         });
         deliveryDate.setPrefWidth(210);
+        applyHeaderFont(deliveryDate, 0, 20); // Apply the font to the header
+        applyCellFont(deliveryDate, 0,20); //  Apply the font style to the cells
 
         TableColumn<ObservableList<Object>, ImageView> eye = new TableColumn<>("");
         eye.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
@@ -190,7 +203,7 @@ public class OrderList {
         });
         eye.setPrefWidth(50);
         eye.setCellFactory(column -> createCellWithBackgroundColor("white"));
-        eye.getStyleClass().add("column-header-eye"); // Aplicar la clase CSS para la columna 'eye'
+        eye.getStyleClass().add("column-header-eye"); // Apply the CSS class for the 'eye' column
 
         TableColumn<ObservableList<Object>, ImageView> edit = new TableColumn<>("");
         edit.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
@@ -206,7 +219,7 @@ public class OrderList {
         });
         edit.setPrefWidth(50);
         edit.setCellFactory(column -> createCellWithBackgroundColor("white"));
-        edit.getStyleClass().add("column-header-edit"); // Aplicar la clase CSS para la columna 'eye'
+        edit.getStyleClass().add("column-header-edit"); // Apply the CSS class for the 'eye' column
 
         TableColumn<ObservableList<Object>, ImageView> trash = new TableColumn<>("");
         trash.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
@@ -225,19 +238,19 @@ public class OrderList {
                 phone.getPrefWidth() + deliveryDate.getPrefWidth() + eye.getPrefWidth() + edit.getPrefWidth()));
 
         trash.setCellFactory(column -> createCellWithBackgroundColor("white"));
-        trash.getStyleClass().add("column-header-trash"); // Aplicar la clase CSS para la columna 'eye'
+        trash.getStyleClass().add("column-header-trash"); // Apply the CSS class for the 'eye' column
 
         table.getColumns().addAll(numOrder, nameProduct, nameCustomer, phone, deliveryDate, eye, edit, trash);
         applyRowStyles();
 
-        // Llama al método para inicializar el filtrado
+        // Call the method to initialize the filtering
         initializeFilter();
 
         filteredData = new FilteredList<>(getOrderList(), p -> true);
         table.setItems(filteredData);
 
-        // Añadir la tabla al HBox y configurar el HBox
-        hBoxTable.getChildren().clear(); // Limpiar cualquier contenido anterior en hBoxTable
+        // Add the table to hBoxTable and configure hBoxTable
+        hBoxTable.getChildren().clear(); // Clear any previous content in hBoxTable
         initializeIconColumns();
 
         hBoxTable.getChildren().add(table);
@@ -248,26 +261,27 @@ public class OrderList {
         contentPanel.setCenter(hBoxTable);
     }
 
+    // Method to get the order list
     public ObservableList<ObservableList<Object>> getOrderList() {
         ObservableList<ObservableList<Object>> data = FXCollections.observableArrayList();
 
-        // Cargar las imágenes
+        // Load the images
         Image eyeImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Eye.png")).toExternalForm());
         Image editImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Edit.png")).toExternalForm());
         Image trashImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Trash.png")).toExternalForm());
 
-        // Supongamos que orderList es tu ArrayList de órdenes
+        // get the order list
         orderList2 = new ArrayList<>(logic.getOrderList().values());
 
         // change the format desired
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
         for (Order order : orderList2) {
-            // Crear nuevas instancias de ImageView para cada fila
+            // Create new instances of ImageView for each row
             ImageView eyeView = new ImageView(eyeImage);
-            eyeView.setFitWidth(24);  // Ancho del icono
-            eyeView.setFitHeight(24); // Alto del icono
-            eyeView.setPreserveRatio(true); // Para preservar la proporción
+            eyeView.setFitWidth(24);  // Width of the icon
+            eyeView.setFitHeight(24); // Height of the icon
+            eyeView.setPreserveRatio(true);  // To preserve the aspect ratio
 
             ImageView editView = new ImageView(editImage);
             editView.setFitWidth(24);
@@ -279,16 +293,16 @@ public class OrderList {
             trashView.setFitHeight(24);
             trashView.setPreserveRatio(true);
 
-            // Agregar las filas con los iconos
+            // Add the rows with the icons
             ObservableList<Object> row = FXCollections.observableArrayList(
                     order.getOrderNumber(),
                     order.getProductName(),
                     order.getCustomer().getName(),
                     order.getCustomer().getPhoneNumber(),
                     formato.format(order.getDeliveryDate()),
-                    eyeView,   // Ver icono
-                    editView,  // Editar icono
-                    trashView  // Eliminar icono
+                    eyeView,   // View icon
+                    editView,  // Edit icon
+                    trashView  // Delete icon
             );
             data.add(row);
         }
@@ -297,9 +311,17 @@ public class OrderList {
         return data;
     }
 
-    // Metodo para aplicar estilos a las filas
+    // Method to apply font to the header
+    private <T> void applyHeaderFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        javafx.scene.control.Label label = new javafx.scene.control.Label(column.getText());
+        label.setFont(createFont(style, size));
+        column.setText(""); // Remove the default header text
+        column.setGraphic(label);
+    }
+
+    // Method to apply font to the cells
     private void applyRowStyles() {
-        // Configurar fábrica de filas para aplicar estilos alternados
+        // Configure the factory for the rows to apply alternate row styles
         table.setRowFactory(new Callback<TableView<ObservableList<Object>>, TableRow<ObservableList<Object>>>() {
             @Override
             public TableRow<ObservableList<Object>> call(TableView<ObservableList<Object>> tableView) {
@@ -308,13 +330,13 @@ public class OrderList {
                     protected void updateItem(ObservableList<Object> item, boolean empty) {
                         super.updateItem(item, empty);
                         if (empty || item == null) {
-                            setStyle(""); // Limpiar estilo para filas vacías
+                            setStyle(""); // clear style for empty rows
                         } else {
-                            // Aplicar colores alternados a las filas
+                            //  Apply alternate row colors
                             if (getIndex() % 2 == 0) {
-                                setStyle("-fx-background-color: white;"); // blanco para filas pares
+                                setStyle("-fx-background-color: white;"); // white for even rows
                             } else {
-                                setStyle("-fx-background-color: #D9D9D9;"); // gris claro para filas impares
+                                setStyle("-fx-background-color: #D9D9D9;"); // grey for odd rows
                             }
                         }
                     }
@@ -323,6 +345,7 @@ public class OrderList {
         });
     }
 
+    // Method to create a cell with a white background for the column 'ver', 'editar' and 'borrar'
     private <T> TableCell<ObservableList<Object>, T> createCellWithBackgroundColor(String color) {
         return new TableCell<>() {
             @Override
@@ -346,9 +369,9 @@ public class OrderList {
         buttonAdd = new Button("Agregar");
         buttonAdd.setOnAction(event -> {
             NewOrder newOrder = new NewOrder();
-            // Limpiar el contenido actual
+            // Clear current content
             contentPanel.getChildren().clear();
-            // Agregar el nuevo contenido
+            // Add the new content
             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
             contentPanel.getChildren().add(newOrder.screen());
         });
@@ -358,25 +381,27 @@ public class OrderList {
         buttonAdd.getStyleClass().add("rounded-button");
         buttonAdd.getStyleClass().add("rounded-button:hover");
         buttonAdd.getStyleClass().add("rounded-button:pressed");
+        buttonAdd.setFont(createFont(0, 20));
         HBox buttonAddBox = new HBox(buttonAdd);
         buttonAddBox.setAlignment(Pos.CENTER_RIGHT);
         buttonAddBox.setPadding(new Insets(-300, 80, 0, 0));
         contentPanel.setBottom(buttonAddBox);
     }
 
+    // Method to initialize the filter
     private void initializeFilter() {
-        // Inicializa la lista filtrada con los datos originales
+        // Initialize the filtered list with the original data
         filteredData = new FilteredList<>(getOrderList(), p -> true);
 
-        // Configura el filtro del TextField
+        // Configure the filter for the TextField
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(row -> {
                 if (newValue == null || newValue.isEmpty()) {
-                    return true; // Muestra todas las filas si el campo de búsqueda está vacío
+                    return true; // Show all rows if the search field is empty
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                // Filtra según el texto en cualquier columna que sea de tipo String
+                // Filter by any String column
                 return row.stream().anyMatch(data -> {
                     if (data instanceof String) {
                         return ((String) data).toLowerCase().contains(lowerCaseFilter);
@@ -386,17 +411,18 @@ public class OrderList {
             });
         });
 
-        // Establece el `FilteredList` en la tabla
+        // Set the `FilteredList` in the table
         table.setItems(filteredData);
     }
 
+    // Method to initialize the icon columns
     public void initializeIconColumns() {
-        // Obtener todas las columnas
+        // Get all columns
         TableColumn<ObservableList<Object>, ImageView> eyeColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(5);
         TableColumn<ObservableList<Object>, ImageView> editColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(6);
         TableColumn<ObservableList<Object>, ImageView> trashColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(7);
 
-        // Añadir EventHandler a la columna de "ver"
+        // Add EventHandler to the column 'ver'
         eyeColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(ImageView item, boolean empty) {
@@ -410,9 +436,9 @@ public class OrderList {
                             int rowIndex = getIndex();
                             int index = orderList2.get(rowIndex).getOrderNumber();
                             SpecificOrder oSpecific = new SpecificOrder();
-                            // Limpiar el contenido actual
+                            // Clear current content
                             contentPanel.getChildren().clear();
-                            // Agregar el nuevo contenido
+                            // Add the new content
                             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
                             contentPanel.getChildren().add(oSpecific.screen());
                         }
@@ -421,7 +447,7 @@ public class OrderList {
             }
         });
 
-        // Añadir EventHandler a la columna de "editar"
+        // Add EventHandler to the column 'editar'
         editColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(ImageView item, boolean empty) {
@@ -434,9 +460,9 @@ public class OrderList {
                         if (event.getClickCount() == 1 && !isEmpty()) {
                             int rowIndex = getIndex();
                             UpdateOrder uOrder = new UpdateOrder();
-                            // Limpiar el contenido actual
+                            //  Clear current content
                             contentPanel.getChildren().clear();
-                            // Agregar el nuevo contenido
+                            // Add the new content
                             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
                             //contentPanel.getChildren().add(uOrder.screen());
                         }
@@ -445,7 +471,7 @@ public class OrderList {
             }
         });
 
-        // Añadir EventHandler a la columna de "borrar"
+        // Add EventHandler to the column 'borrar'
         trashColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(ImageView item, boolean empty) {
@@ -471,9 +497,30 @@ public class OrderList {
         });
     }
 
-    // Agrega un método para actualizar la tabla
+    // Method to refresh the table
     public void refreshTable() {
         table.setItems(getOrderList());
         filteredData.setPredicate(filteredData.getPredicate());
+    }
+
+    // Method to apply font to the cells
+    private <T> void applyCellFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        column.setCellFactory(new Callback<TableColumn<ObservableList<Object>, T>, TableCell<ObservableList<Object>, T>>() {
+            @Override
+            public TableCell<ObservableList<Object>, T> call(TableColumn<ObservableList<Object>, T> param) {
+                return new TableCell<>() {
+                    @Override
+                    protected void updateItem(T item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            setText(null);
+                        } else {
+                            setText(item.toString());
+                            setFont(components.createFont(0, 20));
+                        }
+                    }
+                };
+            }
+        });
     }
 }

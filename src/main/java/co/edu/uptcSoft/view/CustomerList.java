@@ -48,6 +48,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static co.edu.uptcSoft.view.Components.createFont;
+
 public class CustomerList  {
 
     private Components components;
@@ -83,6 +85,7 @@ public class CustomerList  {
 
 
         titleLabel = new javafx.scene.control.Label("Lista De Clientes");
+        titleLabel.setFont(createFont(0, 40));
     }
 
     public BorderPane screen() {
@@ -96,12 +99,12 @@ public class CustomerList  {
         hBoxTitle.setAlignment(Pos.CENTER_RIGHT);
         hBoxTitle.setPadding(new javafx.geometry.Insets(55, 80, 0, 0));
 
-        titleLabel.setFont(components.createFont(0, 40));
+        //titleLabel.setFont(components.createFont(0, 40));
         searchTextField = components.createRoundedTextField(30, 30);
         searchTextField.setPadding(new javafx.geometry.Insets(0, 0, 0, 10));
         searchTextField.setPrefWidth(200);
         searchTextField.setPrefHeight(45);
-        searchTextField.setFont(components.createFont(1, 20));
+        //searchTextField.setFont(components.createFont(1, 20));
 
         // Create the search icon
         javafx.scene.image.Image searchIcon = new javafx.scene.image.Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Glass.png")).toExternalForm());
@@ -118,6 +121,7 @@ public class CustomerList  {
         StackPane.setAlignment(searchIconView, Pos.CENTER_LEFT);
         searchIconView.setTranslateX(5); // Adjust the position of the icon
 
+        // Create a listener to filter the table
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(customer -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -125,15 +129,15 @@ public class CustomerList  {
                 }
 
                 String lowerCaseFilter = newValue.toLowerCase();
-                // Aquí ajusta la lógica según las columnas que deseas filtrar
+                // Adjust the logic according to the columns you want to filter
                 if (customer.get(0).toString().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filtro por N°. Documento
+                    return true; // Filter by Document Number
                 } else if (customer.get(1).toString().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filtro por Nombre
+                    return true; // Filter by Name
                 } else if (customer.get(2).toString().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filtro por Email
+                    return true; // Filter by Email
                 }
-                return false; // No coincide
+                return false; // No match
             });
         });
 
@@ -147,6 +151,7 @@ public class CustomerList  {
         table.setPrefHeight(400);
         table.setPrefWidth(1150);
 
+        // Create the columns
         TableColumn<ObservableList<Object>, Long> numDocumento = new TableColumn<>("N°. Documento");
         numDocumento.setCellValueFactory(cellData -> {
             ObservableList<Object> row = cellData.getValue();
@@ -154,7 +159,9 @@ public class CustomerList  {
                     ? new SimpleLongProperty((Long) row.get(0)).asObject()
                     : new SimpleLongProperty(0).asObject();
         });
-        numDocumento.setPrefWidth(200); // Ajusta el ancho de la columna
+        numDocumento.setPrefWidth(200); // adjust column width
+        applyHeaderFont(numDocumento, 0, 20); // Apply the font to the header
+        applyCellFont(numDocumento, 0,20); // Apply the font style
 
         TableColumn<ObservableList<Object>, String> nameCustomer = new TableColumn<>("Nombre Cliente");
         nameCustomer.setCellValueFactory(cellData -> {
@@ -164,6 +171,8 @@ public class CustomerList  {
                     : new SimpleStringProperty("");
         });
         nameCustomer.setPrefWidth(400);
+        applyHeaderFont(nameCustomer, 0, 20); //Apply the font to the header
+        applyCellFont(nameCustomer, 0,20); // Apply the font to the cell
 
         TableColumn<ObservableList<Object>, String> email = new TableColumn<>("Correo");
         email.setCellValueFactory(cellData -> {
@@ -173,6 +182,8 @@ public class CustomerList  {
                     : new SimpleStringProperty("");
         });
         email.setPrefWidth(400);
+        applyHeaderFont(email, 0, 20); // Apply the font to the header
+        applyCellFont(email, 0,20); // Apply the font to the cell
 
         TableColumn<ObservableList<Object>, ImageView> eye = new TableColumn<>("");
         eye.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
@@ -188,7 +199,7 @@ public class CustomerList  {
         });
         eye.setPrefWidth(50);
         eye.setCellFactory(column -> createCellWithBackgroundColor("white"));
-        eye.getStyleClass().add("column-header-eye"); // Aplicar la clase CSS para la columna 'eye'
+        eye.getStyleClass().add("column-header-eye"); /// Apply
 
         TableColumn<ObservableList<Object>, ImageView> edit = new TableColumn<>("");
         edit.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
@@ -204,7 +215,7 @@ public class CustomerList  {
         });
         edit.setPrefWidth(50);
         edit.setCellFactory(column -> createCellWithBackgroundColor("white"));
-        edit.getStyleClass().add("column-header-edit"); // Aplicar la clase CSS para la columna 'eye'
+        edit.getStyleClass().add("column-header-edit"); // Apply the CSS class for the 'eye' column
 
         TableColumn<ObservableList<Object>, ImageView> trash = new TableColumn<>("");
         trash.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<Object>, ImageView>, ObservableValue<ImageView>>() {
@@ -220,46 +231,46 @@ public class CustomerList  {
         });
         trash.setPrefWidth(50);
         trash.setCellFactory(column -> createCellWithBackgroundColor("white"));
-        trash.getStyleClass().add("column-header-trash"); // Aplicar la clase CSS para la columna 'eye'
+        trash.getStyleClass().add("column-header-trash"); // Apply the CSS class for the 'eye' column
 
         table.getColumns().addAll(numDocumento, nameCustomer, email, eye, edit, trash);
         applyRowStyles();
 
-        // Llama al método para inicializar el filtrado
+        // Call the method to initialize the filter
         initializeFilter();
 
-        filteredData = new FilteredList<>(getOrderList(), p -> true);
+        filteredData = new FilteredList<>(getCustomerList(), p -> true);
         table.setItems(filteredData);
 
-        // Añadir la tabla al HBox y configurar el HBox
-        hBoxTable.getChildren().clear(); // Limpiar cualquier contenido anterior en hBoxTable
+        // Add the table to the HBox and configure the HBox
+        hBoxTable.getChildren().clear(); // Clear any previous content in hBoxTable
         initializeIconColumns();
 
         hBoxTable.getChildren().add(table);
         hBoxTable.setAlignment(Pos.CENTER);
         hBoxTable.setPadding(new javafx.geometry.Insets(20, 0, 200, 0));
 
-
         contentPanel.setCenter(hBoxTable);
     }
 
-    public ObservableList<ObservableList<Object>> getOrderList() {
+    // Method to get the customer list
+    public ObservableList<ObservableList<Object>> getCustomerList() {
         ObservableList<ObservableList<Object>> data = FXCollections.observableArrayList();
 
-        // Cargar las imágenes
+        // Load the images
         javafx.scene.image.Image eyeImage = new javafx.scene.image.Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Eye.png")).toExternalForm());
         javafx.scene.image.Image editImage = new javafx.scene.image.Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Edit.png")).toExternalForm());
         javafx.scene.image.Image trashImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Trash.png")).toExternalForm());
 
-        // Supongamos que orderList es tu ArrayList de órdenes
+        // get the customer list
         orderList2 = new ArrayList<>(logic.getCustomerList().values());
 
         for (Customer customer : orderList2) {
-            // Crear nuevas instancias de ImageView para cada fila
+            // Create new instances of ImageView for each row
             ImageView eyeView = new ImageView(eyeImage);
-            eyeView.setFitWidth(24);  // Ancho del icono
-            eyeView.setFitHeight(24); // Alto del icono
-            eyeView.setPreserveRatio(true); // Para preservar la proporción
+            eyeView.setFitWidth(24);  // Width of the icon
+            eyeView.setFitHeight(24); // Height of the icon
+            eyeView.setPreserveRatio(true); // To preserve the aspect ratio
 
             ImageView editView = new ImageView(editImage);
             editView.setFitWidth(24);
@@ -271,14 +282,14 @@ public class CustomerList  {
             trashView.setFitHeight(24);
             trashView.setPreserveRatio(true);
 
-            // Agregar las filas con los iconos
+            // Add the rows with the icons
             ObservableList<Object> row = FXCollections.observableArrayList(
                     customer.getDocumentNumber(),
                     customer.getName(),
                     customer.getEmail(),
-                    eyeView,   // Ver icono
-                    editView,  // Editar icono
-                    trashView  // Eliminar icono
+                    eyeView,   //  View icon
+                    editView,  // Edit icon
+                    trashView  // Delete icon
             );
             data.add(row);
         }
@@ -287,9 +298,17 @@ public class CustomerList  {
         return data;
     }
 
-    // Metodo para aplicar estilos a las filas
+    // Method to apply font to the header
+    private <T> void applyHeaderFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        javafx.scene.control.Label label = new javafx.scene.control.Label(column.getText());
+        label.setFont(createFont(style, size));
+        column.setText(""); // Remove the default header text
+        column.setGraphic(label);
+    }
+
+    // Method to apply font to the cells
     private void applyRowStyles() {
-        // Configurar fábrica de filas para aplicar estilos alternados
+        // Configure the factory for the rows to apply alternate row styles
         table.setRowFactory(new Callback<TableView<ObservableList<Object>>, TableRow<ObservableList<Object>>>() {
             @Override
             public TableRow<ObservableList<Object>> call(TableView<ObservableList<Object>> tableView) {
@@ -298,13 +317,13 @@ public class CustomerList  {
                     protected void updateItem(ObservableList<Object> item, boolean empty) {
                         super.updateItem(item, empty);
                         if (empty || item == null) {
-                            setStyle(""); // Limpiar estilo para filas vacías
+                            setStyle(""); // clear style for empty rows
                         } else {
-                            // Aplicar colores alternados a las filas
+                            //  Apply alternate row colors
                             if (getIndex() % 2 == 0) {
-                                setStyle("-fx-background-color: white;"); // blanco para filas pares
+                                setStyle("-fx-background-color: white;"); // white for even rows
                             } else {
-                                setStyle("-fx-background-color: #D9D9D9;"); // gris claro para filas impares
+                                setStyle("-fx-background-color: #D9D9D9;"); // grey for odd rows
                             }
                         }
                     }
@@ -313,6 +332,7 @@ public class CustomerList  {
         });
     }
 
+    // Method to create a cell with a white background for the column 'ver', 'editar' and 'borrar'
     private <T> TableCell<ObservableList<Object>, T> createCellWithBackgroundColor(String color) {
         return new TableCell<>() {
             @Override
@@ -331,14 +351,14 @@ public class CustomerList  {
         };
     }
 
-    // Method for creating button agregar
+    // Method to create button agregar
     private void initializeButtonAdd() {
         buttonAdd = new Button("Agregar");
         buttonAdd.setOnAction(event -> {
             NewCustomer newCustomer = new NewCustomer();
-            // Limpiar el contenido actual
+            // Clear current content
             contentPanel.getChildren().clear();
-            // Agregar el nuevo contenido
+            // Add the new content
             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
             //contentPanel.getChildren().add(newCustomer.screen());
         });
@@ -348,25 +368,27 @@ public class CustomerList  {
         buttonAdd.getStyleClass().add("rounded-button");
         buttonAdd.getStyleClass().add("rounded-button:hover");
         buttonAdd.getStyleClass().add("rounded-button:pressed");
+        buttonAdd.setFont(createFont(0, 20));
         HBox buttonAddBox = new HBox(buttonAdd);
         buttonAddBox.setAlignment(Pos.CENTER_RIGHT);
         buttonAddBox.setPadding(new Insets(-300, 80, 0, 0));
         contentPanel.setBottom(buttonAddBox);
     }
 
+    // Method to initialize the filter
     private void initializeFilter() {
-        // Inicializa la lista filtrada con los datos originales
-        filteredData = new FilteredList<>(getOrderList(), p -> true);
+        //
+        filteredData = new FilteredList<>(getCustomerList(), p -> true);
 
-        // Configura el filtro del TextField
+        // Configure the filter for the TextField
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(row -> {
                 if (newValue == null || newValue.isEmpty()) {
-                    return true; // Muestra todas las filas si el campo de búsqueda está vacío
+                    return true; // Show all rows if the search field is empty
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                // Filtra según el texto en cualquier columna que sea de tipo String
+                // Filter by any String column
                 return row.stream().anyMatch(data -> {
                     if (data instanceof String) {
                         return ((String) data).toLowerCase().contains(lowerCaseFilter);
@@ -376,17 +398,17 @@ public class CustomerList  {
             });
         });
 
-        // Establece el `FilteredList` en la tabla
+        // Set the `FilteredList` in the table
         table.setItems(filteredData);
     }
 
     public void initializeIconColumns() {
-        // Obtener todas las columnas
+        // Get all columns
         TableColumn<ObservableList<Object>, ImageView> eyeColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(3);
         TableColumn<ObservableList<Object>, ImageView> editColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(4);
         TableColumn<ObservableList<Object>, ImageView> trashColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(5);
 
-        // Añadir EventHandler a la columna de "ver"
+        // Add EventHandler to the column 'ver'
         eyeColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(ImageView item, boolean empty) {
@@ -400,9 +422,9 @@ public class CustomerList  {
                             int rowIndex = getIndex();
                             long index = orderList2.get(rowIndex).getDocumentNumber();
                             ViewCustomer vCustomer = new ViewCustomer();
-                            // Limpiar el contenido actual
+                            // Clear current content
                             contentPanel.getChildren().clear();
-                            // Agregar el nuevo contenido
+                            // Add the new content
                             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
                             //contentPanel.getChildren().add(vCustomer.screen());
                         }
@@ -411,7 +433,7 @@ public class CustomerList  {
             }
         });
 
-        // Añadir EventHandler a la columna de "editar"
+        // Add EventHandler to the column 'editar'
         editColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(ImageView item, boolean empty) {
@@ -424,9 +446,9 @@ public class CustomerList  {
                         if (event.getClickCount() == 1 && !isEmpty()) {
                             int rowIndex = getIndex();
                             UpdateOrder uOrder = new UpdateOrder();
-                            // Limpiar el contenido actual
+                            // Clear current content
                             contentPanel.getChildren().clear();
-                            // Agregar el nuevo contenido
+                            //  Add the new content
                             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
                             //contentPanel.getChildren().add(uOrder.screen());
                         }
@@ -435,7 +457,7 @@ public class CustomerList  {
             }
         });
 
-        // Añadir EventHandler a la columna de "borrar"
+        // Add EventHandler to the column 'borrar'
         trashColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(ImageView item, boolean empty) {
@@ -461,9 +483,30 @@ public class CustomerList  {
         });
     }
 
-    // Agrega un método para actualizar la tabla
+    // Method to refresh the table
     public void refreshTable() {
-        table.setItems(getOrderList());
+        table.setItems(getCustomerList());
         filteredData.setPredicate(filteredData.getPredicate());
+    }
+
+    // Method to apply font to the cells
+    private <T> void applyCellFont(TableColumn<ObservableList<Object>, T> column, int style, int size) {
+        column.setCellFactory(new Callback<TableColumn<ObservableList<Object>, T>, TableCell<ObservableList<Object>, T>>() {
+            @Override
+            public TableCell<ObservableList<Object>, T> call(TableColumn<ObservableList<Object>, T> param) {
+                return new TableCell<>() {
+                    @Override
+                    protected void updateItem(T item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            setText(null);
+                        } else {
+                            setText(item.toString());
+                            setFont(components.createFont(0, 20));
+                        }
+                    }
+                };
+            }
+        });
     }
 }
