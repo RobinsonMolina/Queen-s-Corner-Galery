@@ -278,6 +278,14 @@ public class HeaderMenu {
             StackPane.setAlignment(center, Pos.CENTER_RIGHT);
             root.setCenter(centerStack);
         });
+
+        listHBox.setOnMouseClicked(event -> {
+            OrderList orderList = new OrderList();
+            center = orderList.screen();
+            center.setMaxWidth(screenWidth - 80);
+            StackPane.setAlignment(center, Pos.CENTER_RIGHT);
+            root.setCenter(centerStack);
+        });
     }
 
     // Menu Visibility
@@ -296,11 +304,6 @@ public class HeaderMenu {
             menuContainer.setAlignment(Pos.TOP_LEFT);
             centerStack = new StackPane(center, menuContainer); // Pone el pane con la info sobre el menu
             root.setCenter(centerStack);
-        });
-
-        listHBox.setOnMouseClicked(event -> {
-            OrderList orderList = new OrderList();
-            root.setCenter(orderList.screen());
         });
     }
 

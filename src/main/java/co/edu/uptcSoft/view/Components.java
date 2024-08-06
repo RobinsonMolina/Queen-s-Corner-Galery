@@ -14,12 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,6 +29,7 @@ public class Components {
 
     private Button buttonYes;
     private Button buttonNo;
+    private Stage stage2;
     //private Frame confirmationFrame;
     //private Frame confirmationFrame2;
     private String message;
@@ -41,16 +41,16 @@ public class Components {
     private Supply currentSupply = new Supply();
     //private ArrayList<Supply> supplyList;
     private NewOrder order;
+    private OrderList orderList; // Agrega una referencia a OrderList
 
-    /*public Components(Panel mainContentPanel) {
-    /*
-    public Components(Panel mainContentPanel) {
-        this.mainContentPanel = mainContentPanel;
-        supplyList = new ArrayList<>();
-        //order = new NewOrder(mainContentPanel);
-    }*/
+    double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
     public Components() {
+    }
+
+    public Components(OrderList orderList) {
+        this.orderList = orderList;
     }
     // Method for creating fonts
     public static Font createFont(int style, int size) {
@@ -277,10 +277,10 @@ public class Components {
         confirmationFrame.add(confirmationPanel);
         confirmationFrame.setVisible(true);
     }
-    *//*
+    */
     //method overloaded to confirm the message after clicking on the yes button
     // window method to confirm
-    public void windowConfirmation(String title, String button1, String button2, String message, String row) {
+    /*public void windowConfirmation(String title, String button1, String button2, String message, String row) {
 
         this.message = message;
         this.row = row;
@@ -321,8 +321,55 @@ public class Components {
 
         confirmationFrame.add(confirmationPanel);
         confirmationFrame.setVisible(true);
+    }*/
+
+
+    // es este----------------------------------------------------->>>>>>>>>>>>>>>>>>
+    public void windowConfirmation(String title, String button1, String button2, String message, String row) {
+        this.message = message;
+        this.row = row;
+
+        stage2 = new Stage();
+        VBox root = new VBox(10);
+        HBox messageHBox = new HBox();
+        HBox buttonPanel = new HBox(50);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/styles/principal.css").toExternalForm());
+        Label messageLabel = new Label(title);
+
+        messageLabel.setFont(createFont(0, 20));
+
+        messageHBox.setAlignment(Pos.CENTER);
+        messageHBox.getChildren().add(messageLabel);
+        
+        Button buttonNo = new Button(button1);
+        buttonNo.getStyleClass().add("rounded-button");
+        buttonNo.getStyleClass().add("rounded-button:hover");
+        buttonNo.getStyleClass().add("rounded-button:pressed");
+        buttonNo.setPrefSize(150, 34);
+        buttonNo.setOnAction(event -> handleButtonNoAction());
+        buttonPanel.getChildren().add(buttonNo);
+
+        Button buttonYes = new Button(button2);
+        buttonYes.getStyleClass().add("rounded-button");
+        buttonYes.getStyleClass().add("rounded-button:hover");
+        buttonYes.getStyleClass().add("rounded-button:pressed");
+        buttonYes.setPrefSize(150, 34);
+        buttonYes.setOnAction(event -> handleButtonYesAction());
+        buttonPanel.getChildren().add(buttonYes);
+
+        buttonPanel.setAlignment(Pos.CENTER);
+
+        root.getChildren().addAll(messageHBox, buttonPanel);
+        
+
+        stage2.setTitle("Mensaje de confirmación");
+        stage2.setHeight(130);
+        stage2.setWidth(500);
+        stage2.setScene(scene);
+        stage2.show();
     }
-    */
+
     // Method for confirming the message after clicking on the yes button
     public void messageConfirmation(String message) {
         Stage stage = new Stage();
@@ -346,6 +393,42 @@ public class Components {
         timeline.setCycleCount(1); // Ejecutar solo una vez
         timeline.play();
     }
+
+    private void handleButtonNoAction() {
+        stage2.close();
+    }
+
+    private void handleButtonYesAction() {
+        // change the content of the main panel instead of opening a new window
+        if (message.contains("Orden")) {
+            long orderNumber = Long.parseLong(row);
+            logic.deleteOrder(orderNumber); // Eliminar la orden
+
+            // Actualizar la tabla después de eliminar la orden
+            if (orderList != null) {
+                orderList.refreshTable(); // Llamar al método para refrescar la tabla
+            }
+
+            messageConfirmation(message);
+        } else if (message.contains("Insumo eliminado")) {
+            /*logic.deleteSupply(row);
+            mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());*/
+        } else if (message.contains("Cliente añadido")) {
+            /*new NewCustomer(mainContentPanel).addCustomerLogic(currentCustomer);
+            mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());*/
+        } else if (message.contains("Cliente eliminado")) {
+            /*logic.deleteCustomer(Long.parseLong(row));
+            mainContentPanel.add(new CustomerList(mainContentPanel).initializeContentPanel());*/
+        } else if (message.contains("Insumo agregado")) {
+            //mainContentPanel.add(new SupplyList(mainContentPanel).initializeContentPanel());
+        } else if (message.contains("Insumo añadido")) {
+            /*order.setSupplyList(getSupplyList());
+            order.setCurrentCustomer(getCurrentCustomer());
+            mainContentPanel.add(order.addSpecificOrder(0));*/
+        }
+        stage2.close();
+    }
+
     /*
     // Error message
     public void windowConfirmation(String title, String button1, String message) {

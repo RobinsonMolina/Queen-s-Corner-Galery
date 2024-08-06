@@ -39,6 +39,7 @@ public class OrderList {
 
     private TableView<ObservableList<Object>> table;
     private FilteredList<ObservableList<Object>> filteredData;
+    private ArrayList<Order> orderList2;
 
     private ObservableList<ObservableList<Object>> orderList;
 
@@ -49,10 +50,11 @@ public class OrderList {
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
     public OrderList() {
-        components = new Components();
+        searchTextField = new TextField();
         contentPanel = new BorderPane();
+        components = new Components(OrderList.this);
 
-        hBoxTitle = new HBox(200);
+        hBoxTitle = new HBox(300);
         hBoxTable = new HBox();
         hBoxTable.setPrefSize(1366, 400);
         table = new TableView<>();
@@ -63,24 +65,20 @@ public class OrderList {
         titleLabel = new Label("Lista De Ordenes");
     }
 
-    public BorderPane screen( ) {
-        //this.principal = root;
-        //principal.setPrefSize(1366, 670);
+    public BorderPane screen() {
         title();
         contentTable();
         initializeButtonAdd();
-        //principal.setPrefSize(screenWidth - 80, screenHeight - 80);
-        //principal.setCenter(contentPanel);
-        //principal.setBottom(buttonAdd); // Agregar el botón en la parte inferior
         return contentPanel;
     }
 
     public void title() {
-        hBoxTitle.setAlignment(Pos.CENTER);
-        hBoxTitle.setPadding(new Insets(55, 0, 0, 0));
+        hBoxTitle.setAlignment(Pos.CENTER_RIGHT);
+        hBoxTitle.setPadding(new Insets(55, 80, 0, 0));
 
         titleLabel.setFont(components.createFont(0, 40));
         searchTextField = components.createRoundedTextField(30, 30);
+        searchTextField.setPadding(new Insets(0, 0, 0, 10));
         searchTextField.setPrefWidth(200);
         searchTextField.setPrefHeight(45);
         searchTextField.setFont(components.createFont(1, 20));
@@ -99,6 +97,29 @@ public class OrderList {
         // Align the icon to the right of the text field
         StackPane.setAlignment(searchIconView, Pos.CENTER_LEFT);
         searchIconView.setTranslateX(5); // Adjust the position of the icon
+
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(order -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+                // Aquí ajusta la lógica según las columnas que deseas filtrar
+                if (order.get(0).toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filtro por N°. Orden
+                } else if (order.get(1).toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filtro por Producto
+                } else if (order.get(2).toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filtro por Nombre Cliente
+                } else if (order.get(3) != null && order.get(3).toString().contains(lowerCaseFilter)) {
+                    return true; // Filtro por Telefono
+                } else if (order.get(4).toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filtro por Fecha De Entrega
+                }
+                return false; // No coincide
+            });
+        });
 
         hBoxTitle.getChildren().addAll(titleLabel, searchStackPane);
         contentPanel.setTop(hBoxTitle);
@@ -212,10 +233,16 @@ public class OrderList {
         // Llama al método para inicializar el filtrado
         initializeFilter();
 
-        table.setItems(getOrderList());
+        filteredData = new FilteredList<>(getOrderList(), p -> true);
+        table.setItems(filteredData);
+
+        // Añadir la tabla al HBox y configurar el HBox
+        hBoxTable.getChildren().clear(); // Limpiar cualquier contenido anterior en hBoxTable
+        initializeIconColumns();
+
         hBoxTable.getChildren().add(table);
         hBoxTable.setAlignment(Pos.CENTER);
-        hBoxTable.setPadding(new Insets(20, 0, 200, -120));
+        hBoxTable.setPadding(new Insets(20, 0, 200, 0));
 
 
         contentPanel.setCenter(hBoxTable);
@@ -230,12 +257,12 @@ public class OrderList {
         Image trashImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Trash.png")).toExternalForm());
 
         // Supongamos que orderList es tu ArrayList de órdenes
-        ArrayList<Order> orderList = new ArrayList<>(logic.getOrderList().values());
+        orderList2 = new ArrayList<>(logic.getOrderList().values());
 
         // change the format desired
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
-        for (Order order : orderList) {
+        for (Order order : orderList2) {
             // Crear nuevas instancias de ImageView para cada fila
             ImageView eyeView = new ImageView(eyeImage);
             eyeView.setFitWidth(24);  // Ancho del icono
@@ -265,6 +292,7 @@ public class OrderList {
             );
             data.add(row);
         }
+
 
         return data;
     }
@@ -313,30 +341,16 @@ public class OrderList {
         };
     }
 
-    private void initializeButtonBottom() {
-        buttonAdd = new Button("Agregar Orden");
-        buttonAdd.setOnAction(event -> {
-            // Lógica para agregar una orden
-            System.out.println("Botón 'Agregar Orden' presionado");
-        });
-        // Establecer el estilo del botón si es necesario
-        buttonAdd.setStyle("-fx-pref-width: 200; -fx-pref-height: 50; -fx-font-size: 16px;");
-        HBox hBoxButton = new HBox(buttonAdd);
-        hBoxButton.setAlignment(Pos.CENTER);
-        hBoxButton.setPadding(new Insets(-400,0,0,0)); // Espaciado alrededor del botón
-        contentPanel.setBottom(hBoxButton); // Establecer el HBox que contiene el botón en la parte inferior
-    }
-
     // Method for creating button agregar
     private void initializeButtonAdd() {
         buttonAdd = new Button("Agregar");
         buttonAdd.setOnAction(event -> {
-            NewOrder order = new NewOrder();
+            NewOrder newOrder = new NewOrder();
             // Limpiar el contenido actual
             contentPanel.getChildren().clear();
             // Agregar el nuevo contenido
             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
-            contentPanel.getChildren().add(order.screen());
+            contentPanel.getChildren().add(newOrder.screen());
         });
 
         buttonAdd.setPrefSize(150, 34);
@@ -346,12 +360,12 @@ public class OrderList {
         buttonAdd.getStyleClass().add("rounded-button:pressed");
         HBox buttonAddBox = new HBox(buttonAdd);
         buttonAddBox.setAlignment(Pos.CENTER_RIGHT);
-        buttonAddBox.setPadding(new Insets(-300, 60, 0, 0));
+        buttonAddBox.setPadding(new Insets(-300, 80, 0, 0));
         contentPanel.setBottom(buttonAddBox);
     }
 
     private void initializeFilter() {
-        // Inicializa la lista filtrada
+        // Inicializa la lista filtrada con los datos originales
         filteredData = new FilteredList<>(getOrderList(), p -> true);
 
         // Configura el filtro del TextField
@@ -362,7 +376,7 @@ public class OrderList {
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                // Filtra según el texto en cualquier columna
+                // Filtra según el texto en cualquier columna que sea de tipo String
                 return row.stream().anyMatch(data -> {
                     if (data instanceof String) {
                         return ((String) data).toLowerCase().contains(lowerCaseFilter);
@@ -376,317 +390,90 @@ public class OrderList {
         table.setItems(filteredData);
     }
 
+    public void initializeIconColumns() {
+        // Obtener todas las columnas
+        TableColumn<ObservableList<Object>, ImageView> eyeColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(5);
+        TableColumn<ObservableList<Object>, ImageView> editColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(6);
+        TableColumn<ObservableList<Object>, ImageView> trashColumn = (TableColumn<ObservableList<Object>, ImageView>) table.getColumns().get(7);
 
-    /*
-    private Components components;
-    private JPanel contentPanel;
-    private JPanel contentTitle;
-    private JPanel contentButton;
-    private JLabel titleLabel;
-    private JTextField searchTextField;
-    private JButton buttonAdd;
-    private JTable table;
-    private DefaultTableModel model;
-    private Object orderListTable[][];
-    private Logic logic = Logic.getInstance();
-    private JPanel mainContentPanel;
-    private TableRowSorter<DefaultTableModel> filter;
-
-    public OrderList(JPanel mainContentPanel) {
-        this.mainContentPanel = mainContentPanel;
-        components = new Components(mainContentPanel);
-        contentPanel = new JPanel(new BorderLayout());
-    }
-
-    // Method for initializing content panel
-    public JPanel initializeContentPanel() {
-        contentPanel.setPreferredSize(new Dimension(1286, 590));
-
-        initializeContentTitle();
-        initializeTable();
-
-        // Rounded button panel
-        contentButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        contentButton.setBackground(Color.WHITE);
-        contentButton.setBorder(new EmptyBorder(23, 1058, 25, 0));
-
-        // Button add
-        buttonAdd = components.createRoundedButton("Agregar", "#000000", "#2F1940", 30, 30);
-        buttonAdd.setPreferredSize(new Dimension(150, 34));
-        contentButton.add(buttonAdd);
-
-        buttonAdd.addActionListener(this);
-
-        contentPanel.add(contentButton, BorderLayout.SOUTH);
-
-        add(contentPanel);
-        return contentPanel;
-    }
-
-    // Method for creating title
-    private void initializeContentTitle() {
-        contentTitle = new JPanel();
-        contentTitle.setLayout(null);
-        contentTitle.setBackground(Color.WHITE);
-        contentTitle.setForeground(Color.BLACK);
-        contentTitle.setPreferredSize(new Dimension(1286, 100));
-
-        // title label
-        titleLabel = new JLabel("Lista De Ordenes", JLabel.CENTER);
-        titleLabel.setForeground(Color.BLACK);
-        titleLabel.setBackground(Color.WHITE);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        titleLabel.setBounds(0, 0, 1286, 100);
-
-        titleLabel.setFont(components.createFont(0, 40));
-
-        contentTitle.add(titleLabel);
-
-        // Rounded search field
-        searchTextField = components.createRoundedTextField(30,30);
-        searchTextField.setBounds(888, 45, 200, 45);
-        searchTextField.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 15));
-        searchTextField.setFont(components.createFont(1, 20));
-
-        // Add icon to the right of the search field
-        ImageIcon searchIcon = new ImageIcon("src\\Utilities\\Images\\Glass.png");
-        Image scaledSearchIcon = searchIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-        JLabel searchLabel = new JLabel(new ImageIcon(scaledSearchIcon));
-        searchLabel.setBounds(5, 12, 24, 24);
-        searchTextField.add(searchLabel);
-
-        titleLabel.add(searchTextField);
-        contentTitle.setBounds(0, 0, 1286, 100);
-        contentPanel.add(contentTitle, BorderLayout.NORTH);
-
-        // Add DocumentListener to the JTextField to filter the table
-        searchTextField.getDocument().addDocumentListener(new DocumentListener() {
-
+        // Añadir EventHandler a la columna de "ver"
+        eyeColumn.setCellFactory(column -> new TableCell<>() {
             @Override
-            public void insertUpdate(DocumentEvent e) {
-                filterTable();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                filterTable();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                filterTable();
+            protected void updateItem(ImageView item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(item);
+                    setOnMouseClicked(event -> {
+                        if (event.getClickCount() == 1 && !isEmpty()) {
+                            int rowIndex = getIndex();
+                            int index = orderList2.get(rowIndex).getOrderNumber();
+                            SpecificOrder oSpecific = new SpecificOrder();
+                            // Limpiar el contenido actual
+                            contentPanel.getChildren().clear();
+                            // Agregar el nuevo contenido
+                            contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
+                            //contentPanel.getChildren().add(oSpecific.screen());
+                        }
+                    });
+                }
             }
         });
-    }
 
-    // Method for initializing table
-    public void initializeTable() {
-        // Data of the table
-        String[] columnNames = {"Nº. Orden", "Producto", "Nombre Cliente", "Telefono", "Fecha De Entrega", "", "", ""};
-
-        // Table model
-        model = new DefaultTableModel(getOrderList(), columnNames) {
-            // Method for setting the column class
+        // Añadir EventHandler a la columna de "editar"
+        editColumn.setCellFactory(column -> new TableCell<>() {
             @Override
-            public Class<?> getColumnClass(int column) {
-                return (column == 5 || column == 6 || column == 7) ? Icon.class : super.getColumnClass(column);
-            }
-
-            // Method for checking if the cell is editable
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        // Table
-        table = new JTable(model);
-        table.setFont(components.createFont(1, 20));
-        table.setForeground(Color.decode("#2F2F2F"));
-        table.setRowHeight(34);
-        table.setShowGrid(false);
-        setColumnWidths(table);
-
-        // TableRowSorter for filtering
-        filter = new TableRowSorter<>(model);
-        table.setRowSorter(filter);
-
-        // Table header
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(Color.decode("#D9D9D9"));
-        header.setPreferredSize(new Dimension(283, 34));
-        header.setFont(components.createFont(0, 20));
-
-        // Move configuration of renderer after setting font
-        header.setDefaultRenderer(createHeaderRenderer(header.getFont()));
-        table.setDefaultRenderer(Object.class, createTableRowRenderer());
-
-        // Configurar el MouseListener para la tabla
-        setupTableMouseListener(table);
-
-        // Scroll pane of table
-        JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(1134, 136));
-        tableScrollPane.setBorder(new EmptyBorder(20, 0, 0, 0));
-        tableScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
-        tableScrollPane.getViewport().setBackground(Color.WHITE);// change background of content scroll pane
-        tableScrollPane.setBackground(Color.WHITE); // change background of scroll pane
-
-        // Panel of table
-        JPanel tablePanel = new JPanel(new BorderLayout());
-        tablePanel.add(tableScrollPane, BorderLayout.CENTER);
-        tablePanel.setBorder(new EmptyBorder(10, 80, 0, 60));
-        tablePanel.setPreferredSize(new Dimension(1366, 136));
-        tablePanel.setBackground(Color.WHITE);
-
-        contentPanel.add(tablePanel, BorderLayout.CENTER);
-    }
-
-    // Method for setting column widths
-    private void setColumnWidths(JTable table) {
-        table.getColumnModel().getColumn(0).setPreferredWidth(150);// Esto ajusta el ancho máximo de la columna 0
-        table.getColumnModel().getColumn(1).setPreferredWidth(200);
-        table.getColumnModel().getColumn(2).setPreferredWidth(300);
-        table.getColumnModel().getColumn(3).setPreferredWidth(200);
-        table.getColumnModel().getColumn(4).setPreferredWidth(250);
-        table.getColumnModel().getColumn(5).setPreferredWidth(50);
-        table.getColumnModel().getColumn(6).setPreferredWidth(50);
-        table.getColumnModel().getColumn(7).setPreferredWidth(50);
-    }
-
-    // Method for creating header renderer
-    private DefaultTableCellRenderer createHeaderRenderer(Font headerFont) {
-        return new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Focuses the text
-                if (c instanceof JLabel) {
-                    JLabel label = (JLabel) c;
-                    label.setHorizontalAlignment(JLabel.CENTER);
-                    label.setVerticalAlignment(JLabel.CENTER);
-                    label.setFont(headerFont);// set font
-                    label.setForeground(Color.BLACK); // set color of text
-                }
-
-                // Change column header color
-                if (column == 5 || column == 6 || column == 7) {
-                    c.setBackground(Color.WHITE);
+            protected void updateItem(ImageView item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
                 } else {
-                    c.setBackground(table.getTableHeader().getBackground());
+                    setGraphic(item);
+                    setOnMouseClicked(event -> {
+                        if (event.getClickCount() == 1 && !isEmpty()) {
+                            int rowIndex = getIndex();
+                            UpdateOrder uOrder = new UpdateOrder();
+                            // Limpiar el contenido actual
+                            contentPanel.getChildren().clear();
+                            // Agregar el nuevo contenido
+                            contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
+                            //contentPanel.getChildren().add(uOrder.screen());
+                        }
+                    });
                 }
-                return c;
             }
-        };
-    }
+        });
 
-    // Method for creating table row renderer
-    private DefaultTableCellRenderer createTableRowRenderer() {
-        return new DefaultTableCellRenderer() {
+        // Añadir EventHandler a la columna de "borrar"
+        trashColumn.setCellFactory(column -> new TableCell<>() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Focuses the text
-                if (cell instanceof JLabel) {
-                    JLabel label = (JLabel) cell;
-                    label.setHorizontalAlignment(JLabel.CENTER);
-                    label.setVerticalAlignment(JLabel.CENTER);
-                }
-
-                // Change the color of the rows
-                if (row % 2 == 0) {
-                    cell.setBackground(Color.WHITE);
+            protected void updateItem(ImageView item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
                 } else {
-                    cell.setBackground(Color.decode("#D9D9D9"));
-                }
-                return cell;
-            }
-        };
-    }
+                    setGraphic(item);
+                    setOnMouseClicked(event -> {
+                        if (event.getClickCount() == 1 && !isEmpty()) {
+                            int rowIndex = getIndex();
+                            int index = orderList2.get(rowIndex).getOrderNumber();
+                            String orderNumberStr = String.valueOf(index);
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttonAdd) {
-            // change the content of the main panel instead of opening a new window
-            mainContentPanel.removeAll();
-            mainContentPanel.add(new NewOrder(mainContentPanel).addSpecificOrder(2));
-            mainContentPanel.revalidate();
-            mainContentPanel.repaint();
-        }
-    }
-
-    // Method for configuring the MouseListener, view line 175
-    private void setupTableMouseListener(JTable table) {
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int column = table.columnAtPoint(e.getPoint());
-                int row = table.rowAtPoint(e.getPoint());
-                if (column == 5) {
-                    // change the content of the main panel instead of opening a new window
-                    mainContentPanel.removeAll();
-                    mainContentPanel.add(new SpecificOrder(mainContentPanel).addSpecificOrder(3));
-                    mainContentPanel.revalidate();
-                    mainContentPanel.repaint();
-                } else if (column == 6) {
-                    // change the content of the main panel instead of opening a new window
-                    mainContentPanel.removeAll();
-                    mainContentPanel.add(new UpdateOrder(mainContentPanel).addSpecificOrder(2));
-                    mainContentPanel.revalidate();
-                    mainContentPanel.repaint();
-                } else if (column == 7) {
-                    String valor = table.getValueAt(row, 0).toString();
-                    components.windowConfirmation("¿Está seguro de eliminar esta orden?", "Cancelar", "Eliminar", "Orden eliminada con éxito", valor);
-
+                            components.windowConfirmation(
+                                    "¿Está seguro de eliminar esta orden?",
+                                    "Cancelar", "Eliminar", "Orden eliminada con éxito",
+                                    orderNumberStr);
+                        }
+                    });
                 }
             }
         });
     }
 
-    // Method for getting the order list and its icons
-    public Object[][] getOrderList() {
-
-        ImageIcon icon = new ImageIcon("src\\Utilities\\Images\\Eye.png");
-        Image image = icon.getImage();
-        ImageIcon eyeIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-
-        ImageIcon icon2 = new ImageIcon("src\\Utilities\\Images\\Edit.png");
-        Image image2 = icon2.getImage();
-        ImageIcon pencilIcon = new ImageIcon(image2.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-
-        ImageIcon icon3 = new ImageIcon("src\\Utilities\\Images\\Trash.png");
-        Image image3 = icon3.getImage();
-        ImageIcon trashIcon = new ImageIcon(image3.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-
-        ArrayList<Order> orderList = new ArrayList<>(logic.getOrderList().values());
-
-        orderListTable = new Object[orderList.size()][8];
-        // change the format desired
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-
-        for (int i = 0; i < orderList.size(); i++) {
-            orderListTable[i][0] = orderList.get(i).getOrderNumber();
-            orderListTable[i][1] = orderList.get(i).getProductName();
-            orderListTable[i][2] = orderList.get(i).getCustomer().getName();
-            orderListTable[i][3] = orderList.get(i).getCustomer().getPhoneNumber();
-            orderListTable[i][4] = formato.format(orderList.get(i).getDeliveryDate());
-            orderListTable[i][5] = eyeIcon;
-            orderListTable[i][6] = pencilIcon;
-            orderListTable[i][7] = trashIcon;
-        }
-        return orderListTable;
+    // Agrega un método para actualizar la tabla
+    public void refreshTable() {
+        table.setItems(getOrderList());
+        filteredData.setPredicate(filteredData.getPredicate());
     }
-
-    // Method for filtering table
-    private void filterTable() {
-        String text = searchTextField.getText();
-        if (text.trim().length() == 0) {
-            filter.setRowFilter(null);
-        } else {
-            filter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-        }
-    }
-    */
 }
