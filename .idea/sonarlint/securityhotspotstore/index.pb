@@ -19,3 +19,5 @@ b
 0src/main/java/co/edu/uptcSoft/view/NewOrder.java,a\8\a861bcee267ebf07496fb92f5a82df1abe845ac3
 ]
 -src/main/java/co/edu/uptcSoft/view/Board.java,c\9\c9edd453b3bdd4829bff1c8766b49a528ce13691
+]
+-src/main/java/co/edu/uptcSoft/view/Login.java,3\6\3661be11d33397f335c5a26f4f875b5a556fa5d0

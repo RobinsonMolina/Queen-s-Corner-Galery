@@ -271,6 +271,15 @@ public class HeaderMenu {
     }
 
     public void actions(){
+
+        boardHBox.setOnMouseClicked(event -> {
+            Board board = new Board();
+            center = board.screen();
+            center.setMaxWidth(screenWidth - 80);
+            StackPane.setAlignment(center, Pos.CENTER_RIGHT);
+            root.setCenter(centerStack);
+        });
+
         newOrderHBox.setOnMouseClicked(event -> {
             NewOrder order = new NewOrder();
             center = order.screen();
