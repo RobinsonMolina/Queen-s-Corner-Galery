@@ -1,478 +1,433 @@
 package co.edu.uptcSoft.view;
 
-import javax.swing.*;
-import javax.swing.border.AbstractBorder;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import co.edu.uptcSoft.model.Customer;
+import co.edu.uptcSoft.model.Materials;
+import co.edu.uptcSoft.model.Supply;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.stage.Screen;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import static co.edu.uptcSoft.view.Components.createFont;
 
-public class SpecificOrder implements ActionListener {
-    /*
-    //private JFrame specificOrderWindow;
-    private JPanel allInformation;
-    private JPanel allInfoPanel;
-    //private JPanel window;
-    private JPanel dataSpecificOrder;
+public class SpecificOrder {
+
+    private Pane root;
     private Components components;
+    private VBox principal;
+    private Label titleLabel;
+    private VBox informationVBox;
+    private HBox buttonsHBox;
 
-    private JPanel buttons;
-    private JButton delete;
-    private JButton update;
-    private JButton pdf;
-    private JButton goBack;
-    private int previousScreen;
+    double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+    double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
-    public SpecificOrder(JPanel mainContentPanel) {
-        allInfoPanel = mainContentPanel;
-        allInfoPanel = new JPanel();
-        components = new Components(mainContentPanel);
+    private String productName;
+    private String status;
+    private int orderNumber;
+    private String type;
+    private Date productionDate;
+    private Date deliveryDate;
+    private Customer customer;
+    private ArrayList<Materials> materials;
 
-        allInformation = new JPanel();
-        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
-        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
-        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
+    private TextField productTxt;
+    private TextField typeTxt;
+    private TextField customerTxt;
 
-        buttons = new JPanel(new FlowLayout());
-        delete = new JButton("Eliminar");
-        update = new JButton("Actualizar");
-        pdf = new JButton("PDF");
-        goBack = new JButton("Volver");
-        previousScreen = 0;
-    }*/
-    /*public SpecificOrder() {
-        specificOrderWindow = new JFrame("Orden Especifica");
-        allInformation = new JPanel();
-        allInfoPanel = new JPanel();
-        window = new JPanel(new BorderLayout());
-        allInformation.setLayout(new BoxLayout(allInformation, BoxLayout.Y_AXIS));
-        allInfoPanel.setLayout(new BoxLayout(allInfoPanel, BoxLayout.Y_AXIS));
-        dataSpecificOrder = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 24));
-        createWindow();
+    private ComboBox<String> stateComboB;
+    private DatePicker productionDateTxt;
+    private TextField phoneTxt;
+
+    private TextField orderNumberTxt;
+    private DatePicker deliveryDateTxt;
+    private TextField documentTxt;
+
+    public SpecificOrder() {
+        root = new Pane();
+        components = new Components();
+        principal = new VBox();
+        titleLabel = new Label("Orden Específica");
+        informationVBox = new VBox();
+        buttonsHBox = new HBox();
+
+        productTxt = new TextField();
+        typeTxt = new TextField();
+        customerTxt = new TextField();
+        stateComboB = new ComboBox<>();
+        productionDateTxt = new DatePicker();
+        phoneTxt = new TextField();
+        orderNumberTxt = new TextField();
+        deliveryDateTxt = new DatePicker();
+        documentTxt = new TextField();
+
+        status = "Por Hacer";
     }
 
-    public  void createWindow(){
-        specificOrderWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        specificOrderWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        specificOrderWindow.setSize(1366, 670);
+    public Pane screen() {
+        title();
+        allInfo();
+        buttons();
 
-        addSpecificOrder();
-        setWindow();
-        specificOrderWindow.add(window);
-        specificOrderWindow.setVisible(true);
+        principal.getChildren().addAll(titleLabel, informationVBox);
+        principal.setAlignment(Pos.TOP_CENTER);
+
+        informationVBox.setPrefWidth(screenWidth - 80);
+        principal.setPrefSize(screenWidth - 80, screenHeight - 80);
+        root.getChildren().add(principal);
+        principal.setPrefSize(screenWidth - 80, screenHeight - 80);
+
+        return root;
     }
 
-    public  void setWindow(){
-        HeaderMenu headerMenu = new HeaderMenu();
-
-        window.add(headerMenu.getMenuPanel(), BorderLayout.WEST);
-        window.add(headerMenu.getHeaderPanel(), BorderLayout.NORTH);
-        window.add(allInformation, BorderLayout.CENTER);
-    }*/
-
-    /* _______________________________________________________________________________________________
-    // Previous screen indicates if you are coming from Board (1) or List (2) (3)
-    public JPanel addSpecificOrder(int previousScreen){
-        JLabel title = new JLabel("Orden Especifica");
-        this.previousScreen = previousScreen;
-
-        allInfoPanel.setPreferredSize(new Dimension(1286, 590));
-
-        title.setFont(components.createFont(0, 40));
-        title.setPreferredSize(new Dimension(389, 47));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        allInfoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        allInfoPanel.add(Box.createVerticalStrut(30));
-        allInfoPanel.add(title);
-        allInfoPanel.add(Box.createVerticalStrut(35));
-        setSpecificData();
-        dataSpecificOrder.setPreferredSize(new Dimension(1286, 200));
-        dataSpecificOrder.setBorder(new EmptyBorder(0, 55, 0, 55));
-
-        allInfoPanel.add(dataSpecificOrder);
-
-        table();
-        allInfoPanel.setBackground(Color.WHITE);
-        dataSpecificOrder.setBackground(Color.WHITE);
-
-        allInformation.add(allInfoPanel);
-
-        return allInfoPanel;
+    public void title(){
+        VBox.setMargin(titleLabel, new Insets(30, 0, 0, 0));
+        titleLabel.setFont(createFont(0, 40));
+        titleLabel.setPrefHeight(112);
+        titleLabel.setAlignment(Pos.TOP_CENTER);
     }
 
-    public void setSpecificData(){
-        JLabel product = new JLabel("Producto");
-        JLabel type = new JLabel("Tipo");
-        JLabel customer = new JLabel("Cliente");
-        JLabel state = new JLabel("Estado");
-        JLabel productionDate = new JLabel("Fecha Producción");
-        JLabel phone = new JLabel("Teléfono");
-        JLabel orderNumber = new JLabel("Número de orden");
-        JLabel deliveryDate = new JLabel("Fecha de Entrega");
-        JLabel document = new JLabel("Documento");
+    // All Center Info (VBox)
+    public void allInfo(){
+        data();
+        data2();
+    }
 
-        String[] options = {"Por Hacer", "En Progreso", "Entregado"};
-        JTextField productTxt = new JTextField("Sofacama");
-        JTextField typeTxt = new JTextField("Mueble");
-        JTextField customerTxt = new JTextField("Juan David Pérez");
-        JComboBox <String> stateCombo = new JComboBox<> (options);
-        JTextField productionDateTxt = new JTextField("26/06/2024");
-        JTextField phoneTxt = new JTextField("3133333333");
-        JTextField orderNumberTxt = new JTextField("001");
-        JTextField deliveryDateTxt = new JTextField("30/06/2024");
-        JTextField documentTxt = new JTextField("10544444");
+    // Order Info (HB)
+    public void data(){
+        HBox data = new HBox();
+        VBox info1VB = new VBox();
+        VBox info2VB = new VBox();
+        VBox info3VB = new VBox();
+        VBox info4VB = new VBox();
+        VBox info5VB = new VBox();
+        VBox info6VB = new VBox();
 
-        product.setFont(components.createFont(0, 20));
-        type.setFont(components.createFont(0, 20));
-        customer.setFont(components.createFont(0, 20));
-        state.setFont(components.createFont(0, 20));
-        productionDate.setFont(components.createFont(0, 20));
-        phone.setFont(components.createFont(0, 20));
-        orderNumber.setFont(components.createFont(0, 20));
-        deliveryDate.setFont(components.createFont(0, 20));
-        document.setFont(components.createFont(0, 20));
+        // Space between nodes
+        info1VB.setSpacing(20);
+        info2VB.setSpacing(20);
+        info3VB.setSpacing(20);
+        info4VB.setSpacing(20);
+        info5VB.setSpacing(20);
+        info6VB.setSpacing(20);
+        data.setSpacing(15);
 
-        productTxt.setFont(components.createFont(1, 20));
-        typeTxt.setFont(components.createFont(1, 20));
-        customerTxt.setFont(components.createFont(1, 20));
-        stateCombo.setFont(components.createFont(1, 20));
-        productionDateTxt.setFont(components.createFont(1, 20));
-        phoneTxt.setFont(components.createFont(1, 20));
-        orderNumberTxt.setFont(components.createFont(1, 20));
-        deliveryDateTxt.setFont(components.createFont(1, 20));
-        documentTxt.setFont(components.createFont(1, 20));
+        Label product = new Label("Producto");
+        Label type = new Label("Tipo");
+        Label customer = new Label("Cliente");
+        info1VB.getChildren().addAll(product, type, customer);
 
-        productTxt.setEditable(false);
-        typeTxt.setEditable(false);
-        customerTxt.setEditable(false);
-        productionDateTxt.setEditable(false);
-        phoneTxt.setEditable(false);
-        orderNumberTxt.setEditable(false);
-        deliveryDateTxt.setEditable(false);
-        documentTxt.setEditable(false);
+        Label state = new Label("Estado");
+        Label productionDateLabel = new Label("Fecha Producción");
+        Label phone = new Label("Teléfono");
+        info3VB.getChildren().addAll(state, productionDateLabel, phone);
 
-        // ComboBox
-        stateCombo.setRenderer(new DefaultListCellRenderer() {
+        Label orderNumber = new Label("Número de orden");
+        Label deliveryDateLabel = new Label("Fecha de Entrega");
+        Label document = new Label("Documento");
+        info5VB.getChildren().addAll(orderNumber, deliveryDateLabel, document);
+
+        info2VB.getChildren().addAll(productTxt, typeTxt, customerTxt);
+        info4VB.getChildren().addAll(stateComboB, productionDateTxt, phoneTxt);
+        info6VB.getChildren().addAll(orderNumberTxt, deliveryDateTxt, documentTxt);
+
+        product.setPrefSize(80, 30);
+        type.setPrefSize(80, 30);
+        customer.setPrefSize(80, 30);
+
+        productTxt.setPrefSize(300, 30);
+        typeTxt.setPrefSize(300, 30);
+        customerTxt.setPrefSize(300, 30);
+
+        state.setPrefSize(154, 30);
+        productionDateLabel.setPrefSize(154, 30);
+        phone.setPrefSize(154, 30);
+
+        stateComboB.setPrefSize(180, 30);
+        productionDateTxt.setPrefSize(180, 30);
+        phoneTxt.setPrefSize(180, 30);
+
+        orderNumber.setPrefSize(167, 30);
+        deliveryDateLabel.setPrefSize(167, 30);
+        document.setPrefSize(167, 30);
+
+        orderNumberTxt.setPrefSize(180, 30);
+        deliveryDateTxt.setPrefSize(180, 30);
+        documentTxt.setPrefSize(180, 30);
+
+        // Font Labels
+        product.setFont(createFont(1, 20));
+        type.setFont(createFont(1, 20));
+        customer.setFont(createFont(1, 20));
+        state.setFont(createFont(1, 20));
+        productionDateLabel.setFont(createFont(1, 20));
+        phone.setFont(createFont(1, 20));
+        orderNumber.setFont(createFont(1, 20));
+        deliveryDateLabel.setFont(createFont(1, 20));
+        document.setFont(createFont(1, 20));
+
+        // Font Fields
+        Font customFont = createFont(1, 16);
+        String style = "-fx-font-family: '" + customFont.getName() + "'; -fx-font-size: " + (int) customFont.getSize() + "px;";
+
+        productTxt.setFont(createFont(1, 18));
+        typeTxt.setFont(createFont(1, 18));
+        customerTxt.setFont(createFont(1, 18));
+
+        stateComboB.setStyle(style);
+        productionDateTxt.setStyle(style);
+        phoneTxt.setFont(createFont(1, 18));
+
+        orderNumberTxt.setFont(createFont(1, 18));
+        deliveryDateTxt.setStyle(style);
+        documentTxt.setFont(createFont(1, 18));
+
+        // Size
+        product.setMinHeight(35);
+        type.setMinHeight(35);
+        customer.setMinHeight(35);
+
+        productTxt.setMinHeight(35);
+        typeTxt.setMinHeight(35);
+        customerTxt.setMinHeight(35);
+
+        state.setMinHeight(35);
+        productionDateLabel.setMinHeight(35);
+        phone.setMinHeight(35);
+
+        stateComboB.setMinHeight(35);
+        productionDateTxt.setMinHeight(35);
+        phoneTxt.setMinHeight(35);
+
+        orderNumber.setMinHeight(35);
+        deliveryDateLabel.setMinHeight(35);
+        document.setMinHeight(35);
+
+        orderNumberTxt.setMinHeight(35);
+        deliveryDateTxt.setMinHeight(35);
+        documentTxt.setMinHeight(35);
+
+        data.setAlignment(Pos.CENTER);
+        //informationVBox.setAlignment(Pos.CENTER);
+        data.getChildren().addAll(info1VB, info2VB, info3VB, info4VB, info5VB, info6VB);
+        informationVBox.getChildren().add(data);
+
+        // Border Color
+        //createRoundedTextField
+        productTxt.getStyleClass().add("rounded-textfield");
+        typeTxt.getStyleClass().add("rounded-textfield");
+        customerTxt.getStyleClass().add("rounded-textfield");
+
+        stateComboB.getStyleClass().add("combo-box");
+        productionDateTxt.getStyleClass().add("rounded-datepicker");
+        phoneTxt.getStyleClass().add("rounded-textfield");
+
+        orderNumberTxt.getStyleClass().add("rounded-textfield");
+        deliveryDateTxt.getStyleClass().add("rounded-datepicker");
+        documentTxt.getStyleClass().add("rounded-textfield");
+
+        // Combo Box
+        ObservableList<String> options = FXCollections.observableArrayList(
+                "Por Hacer",
+                "En Progreso",
+                "Entregado"
+        );
+        stateComboB.setItems(options);
+        stateComboB.getSelectionModel().select(0);
+
+        stateComboB.setOnAction(event -> {
+            status = stateComboB.getSelectionModel().getSelectedItem();
+            System.out.println("Statutss:   " + status);
+        });
+    }
+
+    // VBox Data (title, table)
+    public void data2(){
+        VBox dataVBox = new VBox();
+        Label title = new Label("Materiales Requeridos");
+
+        VBox.setMargin(title, new Insets(35, 0, 35, 0));
+        title.setFont(createFont(0, 30));
+        title.setPrefHeight(50);
+
+        // Table
+        TableView <Supply> tableView = new TableView<>();
+        TableColumn<Supply, String> codeColumn = new TableColumn<>("Codigo");
+        codeColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<Supply, String> materialColumn = new TableColumn<>("Material");
+        materialColumn.setCellValueFactory(new PropertyValueFactory<>("material"));
+
+        TableColumn<Supply, Integer> quantityColumn = new TableColumn<>("Cantidad");
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+        TableColumn<Supply, Double> costColumn = new TableColumn<>("Costo");
+        costColumn.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+
+        TableColumn<Supply, Void> iconColumn = new TableColumn<>("Icon");
+        iconColumn.setCellFactory(column -> new TableCell<Supply, Void>() {
+            private final ImageView imageView = new ImageView(new Image("/styles/utilities/images/Trash.png"));
+
             @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-                if (isSelected) {
-                    c.setBackground(Color.decode("#D9D9D9"));
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
                 } else {
-                    c.setBackground(Color.WHITE);
-                }
-
-                return c;
-            }
-        });
-        stateCombo.setBackground(Color.WHITE);
-        stateCombo.isPopupVisible();
-
-        int borderRadius = 5;
-        Color borderColor = Color.decode("#2F1940");
-
-        productTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        typeTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        customerTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        stateCombo.setBorder(new RoundedBorder(borderRadius, borderColor));
-        productionDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        phoneTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        orderNumberTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        deliveryDateTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-        documentTxt.setBorder(new RoundedBorder(borderRadius, borderColor));
-
-        product.setPreferredSize(new Dimension(99, 30));
-        type.setPreferredSize(new Dimension(99, 30));
-        customer.setPreferredSize(new Dimension(99, 30));
-
-        productTxt.setPreferredSize(new Dimension(300, 35));
-        typeTxt.setPreferredSize(new Dimension(300, 35));
-        customerTxt.setPreferredSize(new Dimension(300, 35));
-
-        state.setPreferredSize(new Dimension(187, 30));
-        productionDate.setPreferredSize(new Dimension(187, 30));
-        phone.setPreferredSize(new Dimension(187, 30));
-        orderNumber.setPreferredSize(new Dimension(187, 30));
-        deliveryDate.setPreferredSize(new Dimension(187, 30));
-        document.setPreferredSize(new Dimension(187, 30));
-
-        stateCombo.setPreferredSize(new Dimension(180, 35));
-        orderNumberTxt.setPreferredSize(new Dimension(180, 35));
-        productionDateTxt.setPreferredSize(new Dimension(180, 35));
-        deliveryDateTxt.setPreferredSize(new Dimension(180, 35));
-        phoneTxt.setPreferredSize(new Dimension(180, 35));
-        documentTxt.setPreferredSize(new Dimension(180, 35));
-
-        dataSpecificOrder.add(product);
-        dataSpecificOrder.add(productTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(state);
-        dataSpecificOrder.add(stateCombo);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-
-        dataSpecificOrder.add(orderNumber);
-        dataSpecificOrder.add(orderNumberTxt);
-
-        dataSpecificOrder.add(type);
-        dataSpecificOrder.add(typeTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(productionDate);
-        dataSpecificOrder.add(productionDateTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(deliveryDate);
-        dataSpecificOrder.add(deliveryDateTxt);
-
-        dataSpecificOrder.add(customer);
-        dataSpecificOrder.add(customerTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(phone);
-        dataSpecificOrder.add(phoneTxt);
-        dataSpecificOrder.add(Box.createHorizontalStrut(15));
-
-        dataSpecificOrder.add(document);
-        dataSpecificOrder.add(documentTxt);
-    }
-
-
-    public void table(){
-        JPanel jPanel = new JPanel(new BorderLayout());
-        JLabel materialsTitle = new JLabel("Materiales Requeridos");
-
-        materialsTitle.setFont(components.createFont(0, 30));
-        materialsTitle.setPreferredSize(new Dimension(380, 30));
-        materialsTitle.setHorizontalTextPosition(JLabel.LEFT);
-
-        ImageIcon icon = new ImageIcon("src/Utilities/Images/Trash.png");
-        Image image = icon.getImage();
-        ImageIcon defIcon = new ImageIcon(image.getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-
-        Object[][] data = {
-                {"01", "Chenille", 5, 475000, defIcon},
-                {"02", "Cuero Sintético", 5, 450000, defIcon},
-                {"03", "Pana", 3, 300000, defIcon},
-        };
-
-        String[] columnNames = {"Codigo", "Material", "Cantidad", "Costo", ""};
-
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-            @Override
-            public Class<?> getColumnClass(int column) {
-                if (column == 4) {
-                    return Icon.class;
-                }
-                return super.getColumnClass(column);
-            }
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        JTable table = new JTable(model);
-        table.setRowHeight(34);
-        table.setShowGrid(false);
-        table.setPreferredSize(new Dimension(1286, 156));
-        table.getColumnModel().getColumn(4).setMaxWidth(50);
-        setupTableMouseListener(table);
-
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(Color.decode("#D9D9D9"));
-
-        header.setDefaultRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Focuses the text
-                if (c instanceof JLabel) {
-                    JLabel label = (JLabel) c;
-                    label.setFont(components.createFont(0, 20));
-                    label.setHorizontalAlignment(JLabel.CENTER);
-                    label.setVerticalAlignment(JLabel.CENTER);
-                }
-
-                // Change column header color
-                if (column == 4) {
-                    c.setBackground(Color.WHITE);
-                } else {
-                    c.setBackground(header.getBackground());
-                }
-
-                return c;
-            }
-        });
-
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                // Focuses the text
-                if (cell instanceof JLabel) {
-                    JLabel label = (JLabel) cell;
-                    label.setHorizontalAlignment(JLabel.CENTER);
-                    label.setVerticalAlignment(JLabel.CENTER);
-                    label.setFont(components.createFont(1, 20));
-                }
-
-                // Change the color of the rows
-                if (row % 2 == 0) {
-                    cell.setBackground(Color.white);
-                } else {
-                    cell.setBackground(Color.decode("#D9D9D9"));
-                }
-
-                return cell;
-            }
-        });
-
-        header.setPreferredSize(new Dimension(283, 34));
-        JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setBorder(new EmptyBorder(30, 0, 0, 0));
-        tableScrollPane.setPreferredSize(new Dimension(1286, 155));
-
-        jPanel.add(materialsTitle, BorderLayout.NORTH);
-        jPanel.add(tableScrollPane, BorderLayout.CENTER);
-        jPanel.add(buttons(), BorderLayout.SOUTH);
-        jPanel.setBorder(new EmptyBorder(10, 55, 0, 55));
-
-        jPanel.setPreferredSize(new Dimension(1286, 155));
-        jPanel.setBackground(Color.white);
-        tableScrollPane.setBackground(Color.white);
-        allInfoPanel.add(jPanel);
-    }
-
-    public class RoundedBorder extends AbstractBorder {
-        private final int radius;
-        private final Color borderColor;
-
-        public RoundedBorder(int radius, Color borderColor) {
-            this.radius = radius;
-            this.borderColor = borderColor;
-        }
-
-        @Override
-        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            Graphics2D g2d = (Graphics2D) g.create();
-
-            g2d.setColor(borderColor);
-            if (borderColor == null) {
-                g2d.setStroke(new BasicStroke(4));
-            }
-            g2d.drawRoundRect(x, y, width, height, radius, radius);
-            g2d.dispose();
-        }
-
-        @Override
-        public Insets getBorderInsets(Component c) {
-            return new Insets(this.radius, this.radius, this.radius, this.radius);
-        }
-
-        @Override
-        public Insets getBorderInsets(Component c, Insets insets) {
-            insets.left = insets.top = insets.right = insets.bottom = this.radius;
-            return insets;
-        }
-    }
-
-    public JPanel buttons() {
-        buttons.add(Box.createHorizontalStrut(600));
-        buttons.add(delete);
-        buttons.add(update);
-        buttons.add(pdf);
-        buttons.add(goBack);
-
-        delete.setBackground(Color.decode("#2F1940"));
-        update.setBackground(Color.decode("#2F1940"));
-        pdf.setBackground(Color.decode("#2F1940"));
-        goBack.setBackground(Color.decode("#2F1940"));
-
-        delete.setFont(components.createFont(1, 20));
-        update.setFont(components.createFont(1, 20));
-        pdf.setFont(components.createFont(1, 20));
-        goBack.setFont(components.createFont(1, 20));
-
-        delete.setForeground(Color.white);
-        update.setForeground(Color.white);
-        pdf.setForeground(Color.white);
-        buttons.setBackground(Color.white);
-        goBack.setForeground(Color.white);
-
-        delete.setPreferredSize(new Dimension(127, 32));
-        update.setPreferredSize(new Dimension(127, 32));
-        pdf.setPreferredSize(new Dimension(127, 32));
-        goBack.setPreferredSize(new Dimension(127, 32));
-
-        delete.setBorder((new RoundedBorder(10, null)));
-        update.setBorder((new RoundedBorder(10, null)));
-        pdf.setBorder((new RoundedBorder(10, null)));
-        goBack.setBorder((new RoundedBorder(10, null)));
-
-        delete.addActionListener(this);
-        update.addActionListener(this);
-        pdf.addActionListener(this);
-        goBack.addActionListener(this);
-
-        return buttons;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == update) {
-            allInfoPanel.removeAll();
-            allInfoPanel.add(new UpdateOrder(allInfoPanel).addSpecificOrder(previousScreen));
-            allInfoPanel.revalidate();
-            allInfoPanel.repaint();
-
-        } else if (e.getSource() == goBack) {
-            allInfoPanel.removeAll();
-
-            if (previousScreen == 1){
-                // Board
-                allInfoPanel.add(new Board(allInfoPanel).contentPanel());
-            } else if (previousScreen == 2 || previousScreen == 3) {
-                // List && List - Specific - Update
-                allInfoPanel.add(new OrderList(allInfoPanel).initializeContentPanel());
-            }
-
-            allInfoPanel.revalidate();
-            allInfoPanel.repaint();
-        }
-    }
-
-    private void setupTableMouseListener(JTable table) {
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int column = table.columnAtPoint(e.getPoint());
-                int row = table.rowAtPoint(e.getPoint());
-
-                if (column == 4) {
-                    String valor = String.valueOf(table.getValueAt(row, 0).toString());
-                    components.windowConfirmation("¿Está seguro de eliminar este material?", "Cancelar", "Eliminar", "Material eliminado con éxito", valor);
+                    imageView.setFitWidth(20);
+                    imageView.setFitHeight(20);
+                    setGraphic(imageView);
                 }
             }
         });
-    }
-    */
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
+        // Add Columns
+        tableView.getColumns().add(codeColumn);
+        tableView.getColumns().add(materialColumn);
+        tableView.getColumns().add(quantityColumn);
+        tableView.getColumns().add(costColumn);
+        tableView.getColumns().add(iconColumn);
+
+        ScrollPane scrollPane = new ScrollPane(tableView);
+        scrollPane.setPrefWidth(screenWidth - 80);
+        tableView.setPrefWidth(screenWidth - 80);
+        dataVBox.setPrefWidth(screenWidth - 80);
+
+        scrollPane.setPrefHeight(136);
+        tableView.setPrefHeight(136);
+        dataVBox.setPrefHeight(scrollPane.getPrefHeight() + title.getPrefHeight() + 70);
+
+        dataVBox.setPadding(new Insets(0, 30, 0, 30));
+        dataVBox.getChildren().addAll(title, scrollPane);
+
+        informationVBox.getChildren().add(dataVBox);
     }
 
+    //Buttons
+    public void buttons(){
+        Button addButt = new Button("+ Material");
+        Button cancelButt = new Button("Cancelar");
+        Button newButt = new Button("Agregar");
+
+        addButt.setPrefSize(107, 12);
+        cancelButt.setPrefSize(107, 12);
+        newButt.setPrefSize(107, 12);
+
+        buttonsHBox.setSpacing(25);
+        VBox.setMargin(buttonsHBox, new Insets(20, 30, 20, 0));
+        buttonsHBox.setAlignment(Pos.CENTER_RIGHT);
+        buttonsHBox.getChildren().addAll(addButt, newButt, cancelButt);
+        informationVBox.getChildren().add(buttonsHBox);
+
+        addButt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Button clicked!");
+            }
+        });
+
+        cancelButt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Lleva al board o a la página anterior
+            }
+        });
+
+        newButt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                confirmationData();
+                // Manda a la página siguiente
+            }
+        });
+
+        addButt.getStyleClass().add("rounded-button");
+        cancelButt.getStyleClass().add("rounded-button");
+        newButt.getStyleClass().add("rounded-button");
+    }
+
+    // Validations
+    public Long numValLong(String num){
+        try {
+            return num.length() == 10 ? Long.parseLong(num) : null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public int numValInt(String numStr){
+        try {
+            return Integer.parseInt(numStr);
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    public void confirmationData(){
+
+        LocalDate localDate1 =  LocalDate.of(1000, 1, 1);
+        LocalDate localDate2 = LocalDate.of(1000, 1, 1);;
+
+        try {
+            localDate1 = productionDateTxt.getValue();
+            productionDate = Date.from(localDate1.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+            localDate2 = deliveryDateTxt.getValue();
+            productionDate = Date.from(localDate2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        } catch (Exception e){
+
+        }
+
+        String product = productTxt.getText();
+        String type = typeTxt.getText();
+        String customer = customerTxt.getText();
+        String phone = phoneTxt.getText();
+        String orderNumber = orderNumberTxt.getText();
+        String document = documentTxt.getText();
+
+        try {
+            if (!product.isEmpty() && !type.isEmpty() && !customer.isEmpty() && !status.isEmpty() && !productionDateTxt.getValue().toString().isEmpty() && !phone.isEmpty() && !orderNumber.isEmpty() && !deliveryDateTxt.getValue().toString().isEmpty() && !document.isEmpty()){
+
+                if (numValLong(phone) != null && numValLong(document) != null){
+
+                    if (numValInt(orderNumber) != -1){
+
+                        if (!localDate1.toString().isEmpty() && !localDate2.toString().isEmpty()){
+                            // Se puede pasar a la siguiente pestaña
+                        } else {
+                            components.messageConfirmation("Ingrese una Fecha Correcta");
+                        }
+                    } else {
+                        // Ingrese un número
+                        components.messageConfirmation("Ingrese un Número de Orden Válido");
+                    }
+                } else{
+                    // Ingrese un valor de 10 dígitos
+                    components.messageConfirmation("Ingrese un Número de Teléfono o de Documento de Diez Digitos");
+                }
+
+            } else {
+                components.messageConfirmation("Ingrese Todos los Datos");
+                System.out.println("\n1: " + productTxt.getText() + "\n2: " + typeTxt.getText() + "\n3: " + customerTxt.getText() + "\n4: " + status + "\n5: " +
+                        productionDateTxt.getValue() +"\n6: " + phoneTxt.getText() + "\n7: " + orderNumberTxt.getText() + "\n8: " + deliveryDateTxt.getValue() + "\n9: " + documentTxt.getText());
+            }
+        } catch (Exception e){
+            components.messageConfirmation("Ingrese todos los datos");
+            System.out.println("\n1: " + productTxt.getText() + "\n2: " + typeTxt.getText() + "\n3: " + customerTxt.getText() + "\n4: " + status + "\n5: " +
+                    productionDateTxt.getValue() +"\n6: " + phoneTxt.getText() + "\n7: " + orderNumberTxt.getText() + "\n8: " + deliveryDateTxt.getValue() + "\n9: " + documentTxt.getText());
+            e.printStackTrace();
+        }
+    }
 }

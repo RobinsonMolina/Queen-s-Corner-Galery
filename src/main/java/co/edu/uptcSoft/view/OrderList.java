@@ -414,7 +414,7 @@ public class OrderList {
                             contentPanel.getChildren().clear();
                             // Agregar el nuevo contenido
                             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
-                            //contentPanel.getChildren().add(oSpecific.screen());
+                            contentPanel.getChildren().add(oSpecific.screen());
                         }
                     });
                 }

@@ -3,7 +3,6 @@ package co.edu.uptcSoft.view;
 import co.edu.uptcSoft.logic.Logic;
 import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Supply;
-
 import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -12,6 +11,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
@@ -346,7 +347,7 @@ public class Components {
 
         messageHBox.setAlignment(Pos.CENTER);
         messageHBox.getChildren().add(messageLabel);
-        
+
         Button buttonNo = new Button(button1);
         buttonNo.getStyleClass().add("rounded-button");
         buttonNo.getStyleClass().add("rounded-button:hover");
@@ -366,7 +367,7 @@ public class Components {
         buttonPanel.setAlignment(Pos.CENTER);
 
         root.getChildren().addAll(messageHBox, buttonPanel);
-        
+
 
         stage2.setTitle("Mensaje de confirmación");
         stage2.setHeight(130);
