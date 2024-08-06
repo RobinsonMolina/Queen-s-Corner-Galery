@@ -17,3 +17,5 @@ b
 2src/main/java/co/edu/uptcSoft/view/SupplyList.java,f\4\f4704f250d55b5c3b6e3f6e772d35fbf67004805
 `
 0src/main/java/co/edu/uptcSoft/view/NewOrder.java,a\8\a861bcee267ebf07496fb92f5a82df1abe845ac3
+]
+-src/main/java/co/edu/uptcSoft/view/Board.java,c\9\c9edd453b3bdd4829bff1c8766b49a528ce13691
