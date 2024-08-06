@@ -47,6 +47,7 @@ public class NewCustomer {
     double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
     private TableView<ObservableList<Object>> table;
+    private FilteredList<ObservableList<Object>> filteredData;
     private ArrayList<Order> orderList2;
     private HBox hBoxTable;
     private ArrayList<Order> ordes;
@@ -77,6 +78,7 @@ public class NewCustomer {
         table = new TableView<>();
         applyRowStyles();
         table.getStylesheets().add(new File("src/main/resources/styles/principal.css").toURI().toString());
+        orderList2 = new ArrayList<>();
     }
 
     public Pane screen(){
@@ -206,7 +208,7 @@ public class NewCustomer {
 
     //Buttons
     public void buttons(){
-        Button addButt = new Button("+ Order");
+        Button addButt = new Button("+ Orden");
         Button cancelButt = new Button("Cancelar");
         Button newButt = new Button("Agregar");
 
@@ -223,7 +225,10 @@ public class NewCustomer {
         addButt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Button clicked!");
+                NewOrder newOrder = new NewOrder();
+                root.getChildren().clear();
+                root.setMinSize(screenWidth - 80, screenHeight - 80);
+                root.getChildren().add(newOrder.screen());
             }
         });
 
@@ -269,7 +274,11 @@ public class NewCustomer {
 
                 if (numValLong(phone) != null && numValLong(document) != null){
 
-                    // Se puede
+                    if (!orderList2.isEmpty()){
+                        // Se puede
+                    } else {
+                        components.messageConfirmation("Debe de Tener al Menos una Orden");
+                    }
                 } else{
                     // Ingrese un valor de 10 dígitos
                     components.messageConfirmation("Ingrese un Número de Diez Digitos");
@@ -353,6 +362,9 @@ public class NewCustomer {
         table.getColumns().addAll(numOrder, nameProduct, deliveryDate, edit, trash);
         applyRowStyles();
 
+        filteredData = new FilteredList<>(getOrderList(), p -> true);
+        table.setItems(filteredData);
+
         // Añadir la tabla al HBox y configurar el HBox
         hBoxTable.getChildren().clear(); // Limpiar cualquier contenido anterior en hBoxTable
         initializeIconColumns();
@@ -369,8 +381,7 @@ public class NewCustomer {
         Image editImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Edit.png")).toExternalForm());
         Image trashImage = new Image(Objects.requireNonNull(getClass().getResource("/styles/utilities/images/Trash.png")).toExternalForm());
 
-        // Supongamos que orderList es tu ArrayList de órdenes
-        orderList2 = new ArrayList<>();
+        //orderList2 = new ArrayList<>(logic.getOrderList().values());
 
         // change the format desired
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -496,5 +507,11 @@ public class NewCustomer {
                 }
             }
         });
+    }
+
+    // Agrega un método para actualizar la tabla
+    public void refreshTable() {
+        table.setItems(getOrderList());
+        filteredData.setPredicate(filteredData.getPredicate());
     }
 }
