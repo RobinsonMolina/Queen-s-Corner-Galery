@@ -5,6 +5,6 @@ module co.edu.uptcSoft {
     requires java.desktop;
 
     opens co.edu.uptcSoft.view to javafx.fxml;
-    opens co.edu.uptcSoft.model to com.google.gson;
+    opens co.edu.uptcSoft.model to com.google.gson, javafx.base;
     exports co.edu.uptcSoft.view;
 }
