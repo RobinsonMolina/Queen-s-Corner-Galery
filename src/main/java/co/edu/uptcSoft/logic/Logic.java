@@ -167,6 +167,10 @@ public class Logic {
         managementFile.writeCustomersJsonToFile("Customers", customerList);
     }
 
+    public Customer searchCustomer(Long id) {
+        return customerList.get(id);
+    }
+
     public String Email(String email) {
 
         String[] parts = email.split("@");

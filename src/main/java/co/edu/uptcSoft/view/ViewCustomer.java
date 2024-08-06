@@ -1,6 +1,7 @@
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
+import co.edu.uptcSoft.model.Customer;
 import co.edu.uptcSoft.model.Order;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -53,6 +54,9 @@ public class ViewCustomer {
     private TextField documentTxt;
     private TextField adressTxt;
 
+    private Customer customer;
+    private Long documentId;
+
     public ViewCustomer() {
         root = new Pane();
         components = new Components();
@@ -73,9 +77,12 @@ public class ViewCustomer {
         applyRowStyles();
         table.getStylesheets().add(new File("src/main/resources/styles/principal.css").toURI().toString());
         orderList2 = new ArrayList<>();
+
+        customer = new Customer();
     }
 
     public Pane screen(){
+        loadCustomer();
         title();
         allInfo();
         contentTable();
@@ -91,6 +98,23 @@ public class ViewCustomer {
         principal.setPrefSize(screenWidth - 80, screenHeight - 80);
 
         return root;
+    }
+
+    public void loadCustomer(){
+        customer = logic.searchCustomer(documentId);
+        orderList2 = new ArrayList<>(customer.getOrders());
+
+        nameTxt = new TextField(customer.getName());
+        emailTxt = new TextField(customer.getEmail());
+        adressTxt = new TextField(customer.getAddress());
+        phoneTxt = new TextField(String.valueOf(customer.getPhoneNumber()));
+        documentTxt = new TextField(String.valueOf(customer.getDocumentNumber()));
+
+        nameTxt.setEditable(false);
+        emailTxt.setEditable(false);
+        adressTxt.setEditable(false);
+        phoneTxt.setEditable(false);
+        documentTxt.setEditable(false);
     }
 
     public void title(){
@@ -215,52 +239,14 @@ public class ViewCustomer {
         cancelButt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Lleva al board o a la página anterior
+                CustomerList list = new CustomerList();
+                root.getChildren().clear();
+                root.setMinSize(screenWidth - 80, screenHeight - 80);
+                root.getChildren().add(list.screen());
             }
         });
 
         cancelButt.getStyleClass().add("rounded-button");
-    }
-
-    // Validations
-    public Long numValLong(String num){
-        try {
-            return num.length() == 10 ? Long.parseLong(num) : null;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public void confirmationData(){
-
-        String name = nameTxt.getText();
-        String email = emailTxt.getText();
-        String phone = phoneTxt.getText();
-        String document = documentTxt.getText();
-        String address = adressTxt.getText();
-
-        try {
-            if (!name.isEmpty() && !email.isEmpty() && !phone.isEmpty() && !address.isEmpty() && !document.isEmpty()){
-
-                if (numValLong(phone) != null && numValLong(document) != null){
-
-                    if (!orderList2.isEmpty()){
-                        // Se puede
-                    } else {
-                        components.messageConfirmation("Debe de Tener al Menos una Orden");
-                    }
-                } else{
-                    // Ingrese un valor de 10 dígitos
-                    components.messageConfirmation("Ingrese un Número de Diez Digitos");
-                }
-
-            } else {
-                components.messageConfirmation("Ingrese Todos los Datos");
-            }
-        } catch (Exception e){
-            components.messageConfirmation("Ingrese todos los datos");
-            e.printStackTrace();
-        }
     }
 
     // Table __________________
@@ -518,5 +504,13 @@ public class ViewCustomer {
         label.setFont(createFont(style, size));
         column.setText(""); // Remove the default header text
         column.setGraphic(label);
+    }
+
+    public Long getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
     }
 }

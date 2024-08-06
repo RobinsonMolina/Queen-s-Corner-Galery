@@ -92,6 +92,8 @@ public class CustomerList  {
         title();
         contentTable();
         initializeButtonAdd();
+
+        contentPanel.setPrefSize(screenWidth - 80, screenHeight - 80);
         return contentPanel;
     }
 
@@ -422,9 +424,8 @@ public class CustomerList  {
                             int rowIndex = getIndex();
                             long index = orderList2.get(rowIndex).getDocumentNumber();
                             ViewCustomer vCustomer = new ViewCustomer();
-                            // Clear current content
+                            vCustomer.setDocumentId(index);
                             contentPanel.getChildren().clear();
-                            // Add the new content
                             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
                             contentPanel.getChildren().add(vCustomer.screen());
                         }
