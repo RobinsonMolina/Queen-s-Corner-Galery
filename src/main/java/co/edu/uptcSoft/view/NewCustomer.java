@@ -1,10 +1,7 @@
 package co.edu.uptcSoft.view;
 
 import co.edu.uptcSoft.logic.Logic;
-import co.edu.uptcSoft.model.Customer;
-import co.edu.uptcSoft.model.Materials;
 import co.edu.uptcSoft.model.Order;
-import co.edu.uptcSoft.model.Supply;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,14 +15,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.util.Callback;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -193,7 +187,7 @@ public class NewCustomer {
         VBox dataVBox = new VBox();
         Label title = new Label("Materiales Requeridos");
 
-        VBox.setMargin(title, new Insets(35, 0, 35, 0));
+        VBox.setMargin(title, new Insets(35, 0, 35, 100));
         title.setFont(createFont(0, 30));
         title.setPrefHeight(50);
 

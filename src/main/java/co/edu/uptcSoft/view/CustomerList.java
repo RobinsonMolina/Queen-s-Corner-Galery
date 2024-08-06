@@ -426,7 +426,7 @@ public class CustomerList  {
                             contentPanel.getChildren().clear();
                             // Add the new content
                             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
-                            //contentPanel.getChildren().add(vCustomer.screen());
+                            contentPanel.getChildren().add(vCustomer.screen());
                         }
                     });
                 }
