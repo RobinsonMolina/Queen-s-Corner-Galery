@@ -446,12 +446,12 @@ public class CustomerList  {
                     setOnMouseClicked(event -> {
                         if (event.getClickCount() == 1 && !isEmpty()) {
                             int rowIndex = getIndex();
-                            UpdateOrder uOrder = new UpdateOrder();
-                            // Clear current content
+                            long index = orderList2.get(rowIndex).getDocumentNumber();
+                            UpdateCustomer update = new UpdateCustomer();
+                            update.setDocumentId(index);
                             contentPanel.getChildren().clear();
-                            //  Add the new content
                             contentPanel.setMinSize(screenWidth - 80, screenHeight - 80);
-                            //contentPanel.getChildren().add(uOrder.screen());
+                            contentPanel.getChildren().add(update.screen());
                         }
                     });
                 }

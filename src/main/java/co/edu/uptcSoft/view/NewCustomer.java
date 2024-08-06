@@ -72,6 +72,7 @@ public class NewCustomer {
         table = new TableView<>();
         applyRowStyles();
         table.getStylesheets().add(new File("src/main/resources/styles/principal.css").toURI().toString());
+
         orderList2 = new ArrayList<>();
     }
 
@@ -185,7 +186,7 @@ public class NewCustomer {
     // VBox Data (title, table)
     public void data2(){
         VBox dataVBox = new VBox();
-        Label title = new Label("Materiales Requeridos");
+        Label title = new Label("Productos Ordenados");
 
         VBox.setMargin(title, new Insets(35, 0, 35, 100));
         title.setFont(createFont(0, 30));

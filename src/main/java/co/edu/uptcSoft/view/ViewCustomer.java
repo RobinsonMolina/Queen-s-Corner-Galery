@@ -76,8 +76,8 @@ public class ViewCustomer {
         table = new TableView<>();
         applyRowStyles();
         table.getStylesheets().add(new File("src/main/resources/styles/principal.css").toURI().toString());
-        orderList2 = new ArrayList<>();
 
+        orderList2 = new ArrayList<>();
         customer = new Customer();
     }
 
