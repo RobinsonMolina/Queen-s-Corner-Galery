@@ -13,3 +13,7 @@ h
 8src/main/java/co/edu/uptcSoft/persistence/Customers.json,0\d\0dece648275aec72c017782287c7c7c732b974d3
 e
 5src/main/java/co/edu/uptcSoft/persistence/Orders.json,2\e\2e0c535802e84bb9d844247ae29abc0c942c1ffe
+b
+2src/main/java/co/edu/uptcSoft/view/SupplyList.java,f\4\f4704f250d55b5c3b6e3f6e772d35fbf67004805
+`
+0src/main/java/co/edu/uptcSoft/view/NewOrder.java,a\8\a861bcee267ebf07496fb92f5a82df1abe845ac3
